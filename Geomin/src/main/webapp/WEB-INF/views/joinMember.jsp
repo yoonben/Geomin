@@ -42,6 +42,11 @@ window.addEventListener('load', function(){
 </script>
 
 <style>
+input[type=text]{
+	height:100%; 
+	width:99%;
+}
+
 input[type=radio]{
 	height:18px; 
 	width:18px;
@@ -51,6 +56,23 @@ input[type=checkbox]{
 	width:18px;
 }
 
+select{
+    	height:30px; 
+    	width:150px;
+        transition: all 3s ease-in;	//모든 속성을 1초동안 ease-in
+    }
+    
+select:hover{
+    	height:30px; 
+    	width:150px;
+    }
+    
+select:active{ 		
+    	height:30px; 
+    	width:150px;
+    }
+    
+    
 </style>
 
 
@@ -68,7 +90,7 @@ input[type=checkbox]{
 		<tr>
 			<th>아이디 <span style='color:#FF0000;'>*</span></th>
 			<td><input type='text' name='loginId' id='loginId' placeholder='공백없이 영문/숫자 6-15자' 
-						style="height:100%; width:99%" required='required' pattern='[A-Za-z0-9]{6,15}'></td>
+						required='required' pattern='[A-Za-z0-9]{6,15}'></td>
 			<td>중복확인버튼</td>
 		</tr>
 		<tr>
@@ -85,32 +107,38 @@ input[type=checkbox]{
 		</tr>
 		<tr>
 			<th>이름 <span style='color:#FF0000;'>*</span></th>
-			<td><input type='text' name='loginId' id='loginId' placeholder='아이디를 입력해주세요' style="height:100%; width:99%" required='required'></td>
+			<td><input type='text' name='mName' id='mName' placeholder='아이디를 입력해주세요' required='required'></td>
 			<td></td>
 		</tr>
 		<tr>
 			<th>생년월일 <span style='color:#FF0000;'>*</span></th>
 			<td>
-				<select id="year" style="height:30px; width:150px; transition: .3s ease-in;" required='required'>
+				<select id="year" required='required'>
 					<option>선택</option>
 				</select>년  &nbsp; &nbsp;
-				<select id="month" style="height:30px; width:150px; transition: .3s ease-in;" required='required'>
+				<select id="month" required='required'>
 					<option>선택</option>
 				</select>월  &nbsp; &nbsp;
-				<select id="day" style="height:30px; width:150px; transition: .3s ease-in;" required='required'>
+				<select id="day"  required='required'>
 					<option>선택</option>
 				</select>일
             </td>
             <td></td>
 		</tr>
 		<tr>
+			<th>주소</th>
+			<td><input type='text' name='mAddr' id='mAddr' placeholder='이메일 주소를 입력하세요' ></td>
+			<td></td>
+		</tr>
+		<tr>
 			<th>이메일주소</th>
-			<td><input type='password' name='loginPw' id='loginPw' placeholder='이메일 주소를 입력하세요' style="height:100%; width:99%"></td>
+			<td><input type='text' name='email' id='email' placeholder='이메일 주소를 입력하세요' ></td>
 			<td></td>
 		</tr>
 		<tr>
 			<th>휴대폰 번호 <span style='color:#FF0000;'>*</span></th>
-			<td><input type='text' name='loginId' id='loginId' placeholder='공백, (-)없이  숫자' style="height:100%; width:99%" required='required'></td>
+			<td><input type='text' name='mPhone' id=''mPhone'' placeholder='공백, (-)없이  숫자' 
+								maxlength='11' required='required' ></td>
 			<td></td>
 		</tr>
 		<tr>
