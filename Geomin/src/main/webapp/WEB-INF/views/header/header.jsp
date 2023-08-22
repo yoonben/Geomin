@@ -27,6 +27,7 @@
         }
 
         #header>.gnb_box>h1 {
+        	
             max-width: 400px;
             position: absolute;
             top: 50%;
@@ -34,14 +35,20 @@
             transform: translate(0, -50%);
         }
 
-        #header .gnb_box .cnt_gnb {
+        #header>.gnb_box>.cnt_gnb {
+        	font-size: 2rem;
             position: absolute;
             width: 380px;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
         }
-
+        
+        #header>.gnb_box>.cnt_gnb>h1 {
+        	font-size: 2rem;
+        	font-weight: 800;
+        }
+	
         #header .gnb_box .gnb {
             float: right;
         }
@@ -131,7 +138,7 @@
         <div id='header'>
             <div class="gnb_box">
 				<h1>
-                    <img src="./main.png" alt="">
+                    <img src="/resources/img/main.png" alt="">
                 </h1>
 
                 <div class='cnt_gnb'>
