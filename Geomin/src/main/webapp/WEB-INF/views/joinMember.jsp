@@ -41,9 +41,24 @@ window.addEventListener('load', function(){
 	}
 </script>
 
+<style>
+input[type=radio]{
+	height:18px; 
+	width:18px;
+}
+input[type=checkbox]{
+	height:18px; 
+	width:18px;
+}
+
+</style>
+
+
 </head>
 <body>
-
+<!-- 헤더영역 시작 -->
+<%@include file="header/header.jsp" %>
+<!-- 헤더영역 끝 -->
 
 <form name='joinMember' id='joinMember' action='' method='post'>
 	<table style='border:1px solid;width:800px;height:1000px;'>
@@ -112,8 +127,8 @@ window.addEventListener('load', function(){
 		<tr>
 			<th>성별</th>
 			<td>
-				<input type='radio' name='mGender' id='mGender' value='남자' style="height:18px; width:18px"> 남자
-				<input type='radio' name='mGender' id='mGender' value='여자' style="height:18px; width:18px">	여자		
+				<label><input type='radio' name='mGender' id='mGender' value='남자' > 남자</label>
+				<label><input type='radio' name='mGender' id='mGender' value='여자' > 여자	</label>	
 			</td>
 			<td></td>
 		</tr>
@@ -125,18 +140,24 @@ window.addEventListener('load', function(){
 		<tr>
 			<th></th>
 			<td>
-				<input type='checkbox' name='marketingAgree' id='marketingAgree' value='notAgree' style="height:18px; width:18px" 
-																			onclick="handleCheckboxClick(this)"> 없음
-				<input type='checkbox' name='marketingAgree' id='marketingAgree' value='emailAgree' style="height:18px; width:18px"> 이메일		
-				<input type='checkbox' name='marketingAgree' id='marketingAgree' value='smsAgree' style="height:18px; width:18px"> SMS(문자)		
+				<label><input type='checkbox' name='marketingAgree' id='marketingAgree' value='notAgree' 
+																onclick="handleCheckboxClick(this)"> 없음</label>
+				<label><input type='checkbox' name='marketingAgree' id='marketingAgree' value='emailAgree' > 이메일</label>		
+				<label><input type='checkbox' name='marketingAgree' id='marketingAgree' value='smsAgree' > SMS(문자)</label>	
 			</td>
 			<td></td>
 		</tr>
 		<tr>
-			<th colspan='3'><input type='submit' name='joinSubmit' id='joinSubmit' value='회원가입하기'></th>
+			<th colspan='3'>
+				<input type='submit' name='joinSubmit' id='joinSubmit' value='회원가입하기'>
+			</th>
 		</tr>
 	</table>
 </form>	
+	
+	
+	
+	
 	
 </body>
 </html>
