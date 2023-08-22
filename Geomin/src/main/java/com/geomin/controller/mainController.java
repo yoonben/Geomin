@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 
 @Controller
-@RequestMapping("/Geomin*")
+@RequestMapping("/geomin*")
 public class mainController {
 	
 	@GetMapping("/main")
