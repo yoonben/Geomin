@@ -154,11 +154,11 @@
 
 			<div class='navi'>
                 <ul>
-                    <li id="helloService"><a>서비스 안내</a></li>
+                    <li id="helloService"><a href="/geomin/main">서비스 안내</a></li>
                     <li id="studyService"><a>학습 서비스</a></li><!-- <a href="" ></a> -->
                     <li id="subscribeService"><a>구독서비스</a></li><!-- <a href="" ></a> -->
                     <li id="teacherService"><a>강사마당</a></li><!-- <a href=""></a> -->
-                    <li id="adminService"><a>관리마당</a></li><!-- <a href=""></a> -->
+                    <li id="adminService"><a href="/geomin/manager">관리마당</a></li><!-- <a href=""></a> -->
                 </ul>
             </div>
         </div>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.geomin.mapper.ManagerMapper">
+	<insert id="packageInsert">
+		insert into package (pkgid, pkgname, difficulty, personnel , fixedprice, discountrate, finalprice, pkgcontent)
+		values (LPAD(PACKAGE_SQL.nextval, 4, '0'), #{pkgname}, #{difficulty}, #{personnel}, #{fixedprice}, #{discountrate}, #{finalprice}, #{pkgcontent})
+	</insert>
+	
+  </mapper>
