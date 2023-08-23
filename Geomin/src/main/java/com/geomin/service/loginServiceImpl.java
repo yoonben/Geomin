@@ -18,4 +18,9 @@ public class loginServiceImpl implements loginService {
 	        return loginMapper.idCheck(memberid);
 	    }
 
+	@Override
+	public String register(memberVO memberVo) {
+		return loginMapper.register(memberVo);
+	}
+
 }

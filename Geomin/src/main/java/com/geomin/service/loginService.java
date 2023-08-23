@@ -8,4 +8,6 @@ import com.geomin.VO.memberVO;
 public interface loginService {
 
 	public int idCheck(String memberid);
+	
+	public String register(memberVO memberVo);
 }
