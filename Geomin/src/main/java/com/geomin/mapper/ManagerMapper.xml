@@ -8,4 +8,28 @@
 		values (LPAD(PACKAGE_SQL.nextval, 4, '0'), #{pkgname}, #{difficulty}, #{personnel}, #{fixedprice}, #{discountrate}, #{finalprice}, #{pkgcontent})
 	</insert>
 	
+	<select id="packageList" resultType="com.geomin.VO.packageVO">
+	select * 
+	from (	select package.*,rownum rn 
+        from (
+				select *
+				from package
+				order by pkgid
+			) package where 1 = 1 <include refid="criteria"/>
+		) where rn between #{startNo} and #{endNo}
+	</select>
+	
+	<sql id="criteria">
+ 	 	<choose>
+ 	 		<when test="searchField == 'pkgname'">
+ 	 			and pkgname like '%'||#{searchWord}||'%'
+ 	 		</when>
+ 	 		<when test="searchField == 'author'">
+ 	 			and pkgcontent like '%'||#{pkgcontent}||'%'
+ 	 		</when>
+ 	 		<when test="searchField  == 'content'">
+ 	 			and difficulty like '%'||#{difficulty}||'%'
+ 	 		</when>
+ 	 	</choose>
+ 	 </sql>
   </mapper>
