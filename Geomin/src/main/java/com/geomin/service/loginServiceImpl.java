@@ -14,8 +14,8 @@ public class loginServiceImpl implements loginService {
 	
 	
 	@Override
-	public int idCheck(memberVO memberVo) {
-		return loginMapper.idCheck(memberVo);
-	}
+	 public int idCheck(String memberid) {
+	        return loginMapper.idCheck(memberid);
+	    }
 
 }

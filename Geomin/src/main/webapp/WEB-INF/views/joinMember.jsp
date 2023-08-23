@@ -6,10 +6,35 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
 
 <script type='text/javascript'>
 
 window.addEventListener('load', function(){
+	
+	// 아이디 중복 체크 
+	$("#idCheck").click(function(){
+		 // var loginId = {loginId : $("#loginId").val()};
+		 const loginId = document.getElementById('loginId').value;
+		 console.log('loginId : ' , loginId);
+			 
+		 $.ajax({
+		  url : "/geomin/idCheck",
+		  type : "post",
+		  data : {loginId : loginId},
+		  success : function(data) {
+		  
+		   if(data == 1) {
+		   		$("#result").text("이미 사용중인 아이디 입니다.");
+		   		$("#result").attr("style", "color:#f00");    
+		   } else {
+		    	$("#result").text("사용 가능한 아이디 입니다.");
+		    	$("#result").attr("style", "color:#00f");
+		   }
+		  }
+		 });  // ajax 끝
+		});
+	
 	
 	// 생년월일 처리
 	$(document).ready(
@@ -39,6 +64,10 @@ window.addEventListener('load', function(){
 	    }
 	  }
 	}
+	
+	
+
+	
 </script>
 
 <style>
@@ -89,10 +118,15 @@ select:active{
 			<th colspan='2'><h2>회원가입</h2></th>
 		</tr>
 		<tr>
-			<th>아이디 <span style='color:#FF0000;'>*</span></th>
+			<th rowspan='2'>아이디 <span style='color:#FF0000;'>*</span></th>
 			<td><input type='text' name='loginId' id='loginId' placeholder='공백없이 영문/숫자 6-15자' 
-						required='required' pattern='[A-Za-z0-9]{6,15}'></td>
-			<td>중복확인버튼</td>
+						required='required' pattern='^(?=.*[A-Za-z0-9])[A-Za-z0-9]{6,15}$'></td>
+			<td><input type='button' name='idCheck' id='idCheck' value='중복확인버튼'></td>
+		</tr>
+		<tr>
+			<th id='result'>아이디를 확인해주세요.</th>
+			<td></td>
+			<td></td>
 		</tr>
 		<tr>
 			<th>비밀번호 <span style='color:#FF0000;'>*</span></th>

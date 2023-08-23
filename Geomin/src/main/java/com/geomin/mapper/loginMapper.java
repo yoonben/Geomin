@@ -4,5 +4,5 @@ import com.geomin.VO.memberVO;
 
 public interface loginMapper {
 
-	public int idCheck(memberVO memberVo);
+	public int idCheck(String memberid);
 }

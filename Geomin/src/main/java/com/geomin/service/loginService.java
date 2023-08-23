@@ -7,5 +7,5 @@ import com.geomin.VO.memberVO;
 @Service
 public interface loginService {
 
-	public int idCheck(memberVO memberVo);
+	public int idCheck(String memberid);
 }
