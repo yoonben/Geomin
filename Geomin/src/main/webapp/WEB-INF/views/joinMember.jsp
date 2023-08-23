@@ -82,6 +82,7 @@ select:active{
 <%@include file="header/header.jsp" %>
 <!-- 헤더영역 끝 -->
 
+<!--  회원가입 폼 시작 -->
 <form name='joinMember' id='joinMember' action='' method='post'>
 	<table style='border:1px solid;width:800px;height:1000px;'>
 		<tr>
@@ -127,7 +128,7 @@ select:active{
 		</tr>
 		<tr>
 			<th>주소</th>
-			<td><input type='text' name='mAddr' id='mAddr' placeholder='이메일 주소를 입력하세요' ></td>
+			<td><input type='text' name='mAddr' id='mAddr' placeholder='주소를 입력하세요' ></td>
 			<td></td>
 		</tr>
 		<tr>
@@ -155,8 +156,8 @@ select:active{
 		<tr>
 			<th>성별</th>
 			<td>
-				<label><input type='radio' name='mGender' id='mGender' value='남자' > 남자</label>
-				<label><input type='radio' name='mGender' id='mGender' value='여자' > 여자	</label>	
+				<label><input type='radio' name='mGender' id='mGender' value='M' > 남자</label>
+				<label><input type='radio' name='mGender' id='mGender' value='W' > 여자</label>	
 			</td>
 			<td></td>
 		</tr>
@@ -182,7 +183,7 @@ select:active{
 		</tr>
 	</table>
 </form>	
-	
+<!--  회원가입 폼 끝 -->	
 	
 	
 	
