@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.geomin.VO.HelloVO;
 import com.geomin.service.HelloService;
-import com.geomin.vo.HelloVO;
 
 @Controller
 @RequestMapping("/geomin/subscribe/*")

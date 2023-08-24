@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.geomin.vo.HelloVO;
+import com.geomin.VO.HelloVO;
 
 @Service
 public interface HelloService {
