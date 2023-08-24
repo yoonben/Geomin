@@ -7,126 +7,57 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+	<style type="text/css">
+			#container>#section>.subnavi>ul{
+	    		text-align: left;
+	    		list-style-type: none;
+	    	}
+	        #container>#section>.subnavi>ul>li{
+	    		padding-left: 60px;
+	            margin-top: 25px;
+	            font-size: 14px;
+	    	}
+	</style>
 <script type="text/javascript" src="/resources/js/common.js"></script>
-<script>
-window.addEventListener('load', function(){
-	
-	// 패키지 등록 버튼
-	packgeInsertbtn.addEventListener('click', function(e){
-		
-		e.preventDefault();
-		
-		let obj={
-				pkgname : document.querySelector('#pkgname').value
-				, difficulty : document.querySelector('#difficulty').value
-				, personnel : document.querySelector('#personnel').value
-				, fixedprice : document.querySelector('#fixedprice').value
-				, discountrate : document.querySelector('#discountrate').value
-				, finalprice : document.querySelector('#finalprice').value
-				, pkgcontent : document.querySelector('#pkgcontent').value
-			}
-		
-		console.log(obj);
-		
-		fetchPost('/geomin/packageInsert', obj, (map)=>{
-			if(map.result == 'success'){
-				alert('패키지가 등록되었습니다.');
-			}else{
-				document.getElementById('message').innerHTML = map.msg;
-			}
-		});
-	})
-	
-	// 패키지명 입력 제한
-    pkgname.addEventListener("blur", function() {
-        const inputValue = pkgname.value;
-        const regex = /^[A-Za-z0-9]{6}$/; // 영문 대소문자와 숫자 6자
-
-        if (!regex.test(inputValue)) {
-        	document.getElementById('message').innerHTML = "공백 없이 영문, 숫자 6자로 입력하세요.";
-        	pkgname.focus();
-        } else {
-        	document.getElementById('message').innerHTML = "";
-        }
-    });
-	
-    // 할인율 입력 필드에 입력 제한을 설정
-    discountrate.addEventListener("blur", function() {
-        const inputValue = discountrate.value;
-        const regex = /^(30|3[1-9]|[4-6]\d|70)(\.\d{1,2})?$/; // 30에서 70까지의 숫자 혹은 소수점 2자리까지 허용하는 정규표현식
-
-        if (!regex.test(inputValue)) {
-        	document.getElementById('message').innerHTML = "할인율은 30에서 70 사이의 숫자만 입력가능합니다.";
-        	discountrate.focus();
-        } else {
-        	document.getElementById('message').innerHTML = "";
-        }
-    });
-    
-    
-    // 판매가를 입력해주는 코드
-    function calculateFinalPrice() {
-		const fixedPrice = parseFloat(document.querySelector('#fixedprice').value);
-		const discountRate = parseFloat(document.querySelector('#discountrate').value);
-		
-		if (!isNaN(fixedPrice) && !isNaN(discountRate)) {
-			const finalPrice = fixedPrice * (1 - discountRate / 100);
-			document.querySelector('#finalprice').value = finalPrice.toFixed(0);
-		}
-	}
-    
- 	// 정가와 할인율 입력 시 판매가 자동 계산
-    discountrate.addEventListener("blur", calculateFinalPrice);
-	fixedprice.addEventListener("blur", calculateFinalPrice);
-	
-	ListBtn.addEventListener('click', function(e){
-		
-		let obj={
-			searchField : document.querySelector('#searchField').value
-			, searchText : document.querySelector('#searchText').value
-		}
-		
-		fetchPost('/geomin/packgeList', obj, (map)=>{
-			if(map.result == 'success'){
-				
-			}else{
-				document.getElementById('listTable').innerHTML = 
-					"<tr>"
-					+"      <td colspan='7'>등록된 패키지가 없습니다</td>"
-					+"   </tr>";
-			}
-		
-	})
-	})
-});
-</script>
+<script type="text/javascript" src="/resources/js/packge.js"></script>
 
 </head>
 <body>
 <div id='container'>
 	<%@include file="../header/header.jsp" %>
-	
 	<div id='section'>
             <div class='subnavi'>
-				
+				<ul>
+                    <li><a id="subnavi1">학습콘텐츠 등록</a></li>
+                   	<li><a id="subnavi2">게시판</a></li>
+                   	<li><a id="subnavi2">- 공지 사항</a></li>
+                   	<li><a id="subnavi2">- Q&A</a></li>
+                   	<li><a id="subnavi2">매출 관리</a></li>
+                   	<li><a id="subnavi2">- 매출 집계</a></li>
+                   	<li><a id="subnavi2">- 매출 조회</a></li>
+               	</ul>
             </div>
              <div class='content'>
+             	<input type="hidden" id="pkgnameCheck" value="0">
+             	<input type="hidden" id="personnelCheck" value="0">
+             	<input type="hidden" id="fixedpriceCheck" value="0">
+             	<input type="hidden" id="discountrateCheck" value="0">
+             	<input type="hidden" id="pkgcontentCheck" value="0">
              	<div id="gardenBtn">
              		<button type="button" class="btn btn-outline-primary" id="InsertBtn">등록</button>
              		<button type="button" class="btn btn-outline-primary" id="ListBtn">조회</button>
              	</div>
              	
-             	<div id="packgeList">
+             	<div id="packgeList" style="display: none;">
              		<form class="d-flex" role="search">
 	             		<select id="searchField" name="searchField" class="form-select" size="3" aria-label="Size 3 select example">
 						  <option selected value="pkgname">콘텐츠명</option>
 						  <option value="pkgcontent">콘텐츠 내용</option>
 						  <option value="difficulty">학습 난이도</option>
 						</select>
-       				 <input class="form-control me-2" id="searchText" name="searchWord" type="search" placeholder="Search" aria-label="Search">
-        			 <button class="btn btn-outline-success" type="submit">Search</button>
       				</form>
+       				 <input class="form-control me-2" id="searchWord" name="searchWord" type="search" placeholder="Search" aria-label="Search">
+        			 <button class="btn btn-outline-success" id="Search" type="submit">Search</button>
              		<table class="table">
 					  <thead>
 					    <tr>
@@ -140,16 +71,15 @@ window.addEventListener('load', function(){
 					    </tr>
 					  </thead>
 					  <tbody class="table-group-divider" id="listTable">
-					    <tr>
-					      <th scope="row">3</th>
-					      <td colspan="2">Larry the Bird</td>
-					      <td>@twitter</td>
-					    </tr>
+					    
 					  </tbody>
 					</table>
+					<nav aria-label="Page navigation example" id="pageNavi">
+				
+				  	</nav>
              	</div>
              	
-             	<div id="packgeInsert" style="display: none;">
+             	<div id="packgeInsert">
              		<form>
              		<div id="message"></div>
              			
@@ -157,9 +87,9 @@ window.addEventListener('load', function(){
              		<div>
              			<p>학습 난이도</p>
              			<select id="difficulty" name="difficulty" class="form-select" aria-label="Default select example">
-							 <option selected value="1">초급</option>
-							 <option value="2">중급</option>
-							 <option value="3">상급</option>
+							 <option selected value="초급">초급</option>
+							 <option value="중급">중급</option>
+							 <option value="고급">고급</option>
 						</select>
              		</div>
              		<div><p>학습 가능 인원</p><input id="personnel" name="personnel" class="form-control" type="text" aria-label="default input example"></div>
@@ -167,7 +97,6 @@ window.addEventListener('load', function(){
              		<div><p>할인율</p><input id="discountrate" name="discountrate" id="discountrate" name="discountrate" class="form-control" type="text" placeholder="30 ~ 70(%)" aria-label="default input example"></div>
              		<div><p>판매가(원)</p><input id="finalprice" name="finalprice" class="form-control" type="text" aria-label="default input example"></div>
              		<div><p>판매 내용</p> <textarea id="pkgcontent" name="pkgcontent" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea></div>
-             			
              		<input id="packgeInsertbtn" type="submit" class="btn btn-outline-primary" value="패키지 등록">
 	             	</form>
              	</div>

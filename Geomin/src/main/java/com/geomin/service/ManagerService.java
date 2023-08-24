@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.geomin.VO.Criteria;
+import com.geomin.VO.PageDto;
 import com.geomin.VO.packageVO;
 import com.geomin.mapper.ManagerMapper;
 
@@ -21,11 +23,19 @@ public class ManagerService implements ManagerServiceImpl{
 	}
 
 	@Override
-	public List<packageVO> packageList(Criteria vo) {
-		List<packageVO> list = manager.packageList(vo);
+	public List<packageVO> packageList(Criteria cri, Model model) {
 		
+		List<packageVO> list = manager.packageList(cri);
 		
 		return list;
+	}
+
+	@Override
+	public int totalCnt(Criteria cri) {
+		
+		int totalCnt = manager.totalCnt(cri);
+		
+		return totalCnt;
 	}
 
 }

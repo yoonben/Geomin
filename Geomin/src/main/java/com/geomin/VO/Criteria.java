@@ -9,10 +9,10 @@ public class Criteria {
 	private String searchWord;	// 검색어
 	
 	int pageNo = 1;		// 요청 페이지 번호
-	int amount = 10;	// 한페이지당 게시물 수
+	int amount = 5;	// 한페이지당 게시물 수
 	
 	int startNo = 1;
-	int endNo = 10;
+	int endNo = 5;
 	
 	public void setPageNo(int pageNo) {
 		this.pageNo = pageNo;

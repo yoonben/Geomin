@@ -13,6 +13,7 @@
         #container>#section>.subnavi>ul>li{
     		padding-left: 60px;
             margin-top: 25px;
+            font-size: 14px;
     	}
     	#introduction1{
     		width: 630px;

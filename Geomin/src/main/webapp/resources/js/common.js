@@ -1,5 +1,3 @@
-console.log('common.js~~~~~~~~~~~~~~~~~~~~~~~~~~')
-
 // get방식 요청
 function fetchGet(url, callback){
 	try{
