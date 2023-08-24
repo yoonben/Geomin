@@ -5,7 +5,7 @@
   <mapper namespace="com.geomin.mapper.ManagerMapper">
 	<insert id="packageInsert">
 		insert into package (pkgid, pkgname, difficulty, personnel , fixedprice, discountrate, finalprice, pkgcontent)
-		values (LPAD(PACKAGE_SQL.nextval, 4, '0'), #{pkgname}, #{difficulty}, #{personnel}, #{fixedprice}, #{discountrate}, #{finalprice}, #{pkgcontent})
+		values (LPAD(PACKAGE_SEQ.nextval, 4, '0'), #{pkgname}, #{difficulty}, #{personnel}, #{fixedprice}, #{discountrate}, #{finalprice}, #{pkgcontent})
 	</insert>
 	
 	<select id="packageList" resultType="com.geomin.VO.packageVO">
@@ -19,16 +19,20 @@
 		) where rn between #{startNo} and #{endNo}
 	</select>
 	
+	<select id="totalCnt" resultType="int">
+ 		select count(*) from package where 1 = 1 <include refid="criteria"/>
+ 	</select>
+	
 	<sql id="criteria">
  	 	<choose>
  	 		<when test="searchField == 'pkgname'">
  	 			and pkgname like '%'||#{searchWord}||'%'
  	 		</when>
- 	 		<when test="searchField == 'author'">
- 	 			and pkgcontent like '%'||#{pkgcontent}||'%'
+ 	 		<when test="searchField == 'pkgcontent'">
+ 	 			and pkgcontent like '%'||#{searchWord}||'%'
  	 		</when>
- 	 		<when test="searchField  == 'content'">
- 	 			and difficulty like '%'||#{difficulty}||'%'
+ 	 		<when test="searchField  == 'difficulty'">
+ 	 			and difficulty like '%'||#{searchWord}||'%'
  	 		</when>
  	 	</choose>
  	 </sql>

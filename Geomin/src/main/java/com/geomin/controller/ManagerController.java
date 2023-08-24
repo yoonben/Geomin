@@ -1,5 +1,6 @@
 package com.geomin.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.geomin.VO.Criteria;
+import com.geomin.VO.PageDto;
 import com.geomin.VO.packageVO;
 import com.geomin.service.ManagerService;
 
@@ -32,7 +34,6 @@ public class ManagerController extends CommonRestController{
 	public @ResponseBody Map<String, Object> packageInsert(@RequestBody packageVO vo, Model model) {
 		
 		try {
-
 			int res = manager.packageInsert(vo);
 			
 			Map<String, Object> map = responseWriteMap(res);
@@ -46,13 +47,22 @@ public class ManagerController extends CommonRestController{
 	}
 	
 	@PostMapping("/packgeList")
-	public @ResponseBody Map<String, Object> packgeList(@RequestBody Criteria criteria) {
+	public @ResponseBody Map<String, Object> packgeList(@RequestBody Criteria cri ,Model model) {
 		
 		try {
 			
-			Map<String, Object> map;
+			Map<String, Object> map = responseMap(REST_SUCCESS, "리스트 조회");
 			
-			return null;
+			// 리스트 조회
+			List<packageVO> packagelist = manager.packageList(cri, model);
+			int total = manager.totalCnt(cri);
+			PageDto  pageDto = new PageDto(cri, total);
+			
+			map.put("packagelist", packagelist);
+			map.put("total", total);
+			map.put("pageDto", pageDto);
+			
+			return map;
 
 		} catch (Exception e) {
 			e.printStackTrace();

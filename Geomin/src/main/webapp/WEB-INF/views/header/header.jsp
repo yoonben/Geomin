@@ -138,7 +138,8 @@
         <div id='header'>
             <div class="gnb_box">
 				<h1>
-                    <img src="/resources/img/main.png" alt="">
+
+              	  <img src="/resources/img/main.png" alt="">
                 </h1>
 
                 <div class='cnt_gnb'>
