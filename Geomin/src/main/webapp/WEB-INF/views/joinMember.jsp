@@ -107,27 +107,81 @@ window.addEventListener('load', function(){
 	}
 
 	
-	// 생년월일 처리
-	$(document).ready(
-		    function () {
-	        for (var i = 2023; i > 1920; i--) {
-	            $('#year').append('<option value="' + i + '">' + i + '</option>');
-	        }
-	        for (var i = 1; i < 13; i++) {
-	            $('#month').append('<option value="' + i + '">' + i + '</option>');
-	        }
-	        for (var i = 1; i < 32; i++) {
-	            $('#day').append('<option value="' + i + '">' + i + '</option>');
-	        }
+	// 생년월일 옵션값 처리
+	$(document).ready(function () {
+    for (var i = 2023; i > 1920; i--) {
+        $('#year').append('<option value="' + i + '">' + i + '</option>');
+    }
+    for (var i = 1; i < 13; i++) {
+        $('#month').append('<option value="' + i + '">' + i + '</option>');
+    }
+    for (var i = 1; i < 32; i++) {
+        $('#day').append('<option value="' + i + '">' + i + '</option>');
+    }
+})
+
+	//생년월일 yyyy-MM-dd 형식 처리
+	function submitForm() {
+	    // 생년월일을 구성
+	    let year = document.getElementById("year").value;
+	    let month = document.getElementById("month").value;
+	    let day = document.getElementById("day").value;
+	
+	    // 월과 일이 한 자리 수인 경우 두 자리로 변경
+	    if (month.length === 1) {
+	        month = "0" + month;
 	    }
-	)
+	    if (day.length === 1) {
+	        day = "0" + day;
+	    }
+	
+	    // 변환된 생년월일 값을 문자열로 조합
+	    const formattedBirthdate = year + "-" + month + "-" + day;
+	
+	    // 생년월일을 hidden 필드에 설정
+	    document.getElementById("mbirthdate").value = formattedBirthdate;
+	}	
+	
+	year.addEventListener("blur", submitForm);
+	month.addEventListener("blur", submitForm);
+	day.addEventListener("blur", submitForm);
+	
+	// 회원가입 성공 메세지  alert창 처리
+	joinSubmit.addEventListener('click', function(){
+		
+		let loginId = document.getElementById('loginId').value;
+	    let loginPw = document.getElementById('loginPw').value;
+	    let loginPwCheck = document.getElementById('loginPwCheck').value;
+	    
+	    // 필요한 정보를 확인하고 alert 메시지를 생성합니다.
+	    let message = "회원가입 정보를 확인해주세요.\n\n";
+	    
+	    if (loginId.trim() === "") {
+	        message += "아이디를 입력하세요.\n";
+	    }
+	    if (loginPw.trim() === "") {
+	        message += "비밀번호를 입력하세요.\n";
+	    }
+	    if (loginPwCheck.trim() === "") {
+	        message += "비밀번호 확인을 입력하세요.\n";
+	    }
+	    
+	    // 만약 확인할 정보가 없다면 바로 회원가입을 진행합니다.
+	    if (message === "회원가입 정보를 확인해주세요.\n\n") {
+		    alert("회원가입이 성공적으로 완료되었습니다.");
+		    return true; // 회원가입 진행
+		} else {
+	    	alert("아직 빈 칸이 있습니다. 빈 칸을 입력해주세요.");
+		    return false; // 회원가입 막음
+		}	
+	});
 
-});	
+});
 
-	// 라디오버튼  클릭시 나머지 버튼 클릭 철회 처리 
+	// 라디오버튼  클릭시 나머지 버튼 클릭 철회 처리 (db에 1개만 저장되도록 / 2개이상하려면 컬럼 추가)
 	function handleCheckboxClick(checkbox) {
 	  if (checkbox.checked) {
-	    var checkboxes = document.getElementsByName('marketingAgree');
+	    var checkboxes = document.getElementsByName('marketingagree');
 	    for (var i = 0; i < checkboxes.length; i++) {
 	      if (checkboxes[i] !== checkbox) {
 	        checkboxes[i].checked = false;
@@ -136,9 +190,8 @@ window.addEventListener('load', function(){
 	  }
 	}	
 	
-
-	
 </script>
+
 
 <style>
 input[type=text]{
@@ -157,22 +210,26 @@ input[type=checkbox]{
 
 select{
     	height:30px; 
-    	width:150px;
+    	width:120px;
         transition: all 3s ease-in;	//모든 속성을 1초동안 ease-in
     }
     
 select:hover{
     	height:30px; 
-    	width:150px;
+    	width:120px;
     }
     
 select:active{ 		
     	height:30px; 
-    	width:150px;
+    	width:120px;
     }
-    
-    
+
+.btn{
+	height:30px; 
+   	width:120px;
+}  
 </style>
+
 
 
 </head>
@@ -182,14 +239,16 @@ select:active{
 <!-- 헤더영역 끝 -->
 
 <!--  회원가입 폼 시작 -->
-<form name='joinMember' id='joinMember' action='/geomin/login' method='post'>
-	<table style='border:1px solid;width:800px;height:1000px;'>
+<form name='joinMember' id='joinMember' action='/geomin/login' method='POST'>
+	<!-- 생년월일 형식 저장한 값  히든 처리 -->
+	<input type="hidden" id="mbirthdate" name="mbirthdate">
+	<table style='border:1px solid;width:700px;height:900px;margin: 80px auto;' >
 		<tr>
 			<th colspan='2'><h2>회원가입</h2></th>
 		</tr>
 		<tr>
 			<th>아이디 <span style='color:#FF0000;'>*</span></th>
-			<td><input type='text' name='loginId' id='loginId' placeholder='공백없이 영문/숫자 6-15자' 
+			<td><input type='text' name='memberid' id='loginId' placeholder='공백없이 영문/숫자 6-15자' 
 						required='required' pattern='^(?=.*[A-Za-z0-9])[A-Za-z0-9]{6,15}$'
 						maxlength='15' ></td>
 			<td><input type='button' name='idCheck' id='idCheck' value='중복확인버튼'></td>
@@ -201,7 +260,7 @@ select:active{
 		</tr>
 		<tr>
 			<th>비밀번호 <span style='color:#FF0000;'>*</span></th>
-			<td><input type='password' name='loginPw' id='loginPw' placeholder='공백없이 영문(대/소문자) 숫자 및 특수문자 조합 8-15자' 
+			<td><input type='password' name='mpassword' id='loginPw' placeholder='공백없이 영문(대/소문자) 숫자 및 특수문자 조합 8-15자' 
 						style="height:100%; width:99%" required='required' pattern='^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$'></td>
 			<td></td>
 		</tr>
@@ -218,47 +277,46 @@ select:active{
 		</tr>
 		<tr>
 			<th>이름 <span style='color:#FF0000;'>*</span></th>
-			<td><input type='text' name='mName' id='mName' placeholder='아이디를 입력해주세요' required='required'></td>
+			<td><input type='text' name='mname' id='mName' placeholder='아이디를 입력해주세요' required='required'></td>
 			<td></td>
 		</tr>
 		<tr>
 			<th>생년월일 <span style='color:#FF0000;'>*</span></th>
 			<td>
-				<select id="year" required='required'>
+				<select id="year"  name="year" required='required'  value='' >
 					<option>선택</option>
 				</select>년  &nbsp; &nbsp;
-				<select id="month" required='required'>
-					<option>선택</option>
+				<select id="month" name="month" required='required'  value='' >
+					<option >선택</option>
 				</select>월  &nbsp; &nbsp;
-				<select id="day"  required='required'>
-					<option>선택</option>
+				<select id="day"   name="day" required='required'  value='' >
+					<option >선택</option>
 				</select>일
             </td>
-            <td></td>
 		</tr>
 		<tr>
 			<th>주소</th>
-			<td><input type='text' name='mAddr' id='mAddr' placeholder='주소를 입력하세요' ></td>
+			<td><input type='text' name='maddr' id='mAddr' placeholder='주소를 입력하세요' ></td>
 			<td></td>
 		</tr>
 		<tr>
 			<th>이메일주소</th>
-			<td><input type='text' name='email' id='email' placeholder='이메일 주소를 입력하세요' ></td>
+			<td><input type='text' name='memail' id='email' placeholder='이메일 주소를 입력하세요' ></td>
 			<td></td>
 		</tr>
 		<tr>
 			<th>휴대폰 번호 <span style='color:#FF0000;'>*</span></th>
-			<td><input type='text' name='mPhone' id=''mPhone'' placeholder='공백, (-)없이  숫자' 
+			<td><input type='text' name='mphone' id='mPhone' placeholder='공백, (-)없이  숫자' 
 								maxlength='11' required='required' ></td>
 			<td></td>
 		</tr>
 		<tr>
 			<th>회원구분 <span style='color:#FF0000;'>*</span></th>
 			<td>				
-				<select id="mType" style="height:30px; width:150px" required='required'>
-					<option>학습관리자</option>
-					<option>학습자</option>
-					<option>운영관리자</option>
+				<select id="mType" name='mtype' style="height:30px; width:150px" required='required'>
+					<option value='T'>학습관리자</option>
+					<option value='S'>학습자</option>
+					<option value='A'>운영관리자</option>
 				</select>
 			</td>
 			<td></td>
@@ -266,8 +324,8 @@ select:active{
 		<tr>
 			<th>성별</th>
 			<td>
-				<label><input type='radio' name='mGender' id='mGender' value='M' > 남자</label>
-				<label><input type='radio' name='mGender' id='mGender' value='W' > 여자</label>	
+				<label><input type='radio' name='mgender' id='mGender' value='M' > 남자</label>
+				<label><input type='radio' name='mgender' id='mGender' value='W' > 여자</label>	
 			</td>
 			<td></td>
 		</tr>
@@ -279,25 +337,27 @@ select:active{
 		<tr>
 			<th></th>
 			<td>
-				<label><input type='checkbox' name='marketingAgree' id='marketingAgree' value='notAgree' 
+				<label><input type='checkbox' name='marketingagree' id='marketingAgree' value='notAgree' 
 																onclick="handleCheckboxClick(this)"> 없음</label>
-				<label><input type='checkbox' name='marketingAgree' id='marketingAgree' value='emailAgree'
+				<label><input type='checkbox' name='marketingagree' id='marketingAgree' value='emailAgree'
 																onclick="handleCheckboxClick(this)" > 이메일</label>		
-				<label><input type='checkbox' name='marketingAgree' id='marketingAgree' value='smsAgree' 
+				<label><input type='checkbox' name='marketingagree' id='marketingAgree' value='smsAgree' 
 																onclick="handleCheckboxClick(this)"> SMS(문자)</label>	
 			</td>
 			<td></td>
 		</tr>
 		<tr>
 			<th colspan='3'>
-				<input type='submit' name='joinSubmit' id='joinSubmit' value='회원가입하기'>
+				<input type='submit' name='joinSubmit' id='joinSubmit' class="btn" value='회원가입하기'>
+				<input type="reset" id = "btnReset" value="다시 작성" class="btn">
+				<input type="button" id = "mainPageGo" onclick='location.href="/geomin/main"' value="가입 취소" class="btn">
 			</th>
 		</tr>
 	</table>
 </form>	
 <!--  회원가입 폼 끝 -->	
-	
-	
+
+
 	
 	
 </body>

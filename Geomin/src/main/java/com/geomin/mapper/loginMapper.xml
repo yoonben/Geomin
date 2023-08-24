@@ -14,4 +14,10 @@
  					 values(#{memberid}, #{mname}, #{mpassword}, #{mtype}, #{mphone}
           					, #{memail}, #{maddr}, #{mbirthdate}, #{mgender}, #{marketingagree})
   	</insert>
+  	
+  	
+  	<select id='login' resultType='com.geomin.VO.memberVO'>
+  		select * from member where memberid = #{memberid}
+  	</select>
+  	
   </mapper>

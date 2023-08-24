@@ -146,7 +146,7 @@
                 </div>
 
                 <div class="gnb">
-                    <a href="">로그인</a>
+                    <a href="/geomin/login">로그인</a>
                     <a> / </a>
                     <a href="/geomin/joinMember">회원 가입</a>
                 </div>

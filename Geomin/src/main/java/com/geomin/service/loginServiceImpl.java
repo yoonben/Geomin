@@ -23,4 +23,9 @@ public class loginServiceImpl implements loginService {
 		return loginMapper.register(memberVo);
 	}
 
+	@Override
+	public memberVO login(memberVO memberVo) {
+		return loginMapper.login(memberVo);
+	}
+
 }

@@ -108,7 +108,7 @@
                 	<h5>"게임으로 배우는 어린이 바둑 교실"은 바둑을 처음 접하는 사람들을 위한 온라인 서비스입니다. <br/>
                          	간편한 규칙 설명과 튜토리얼을 통해 누구나 쉽게 바둑을 배울 수 있습니다. <br/>
                         	 언제 어디서나 접속하여 바둑의 재미를 느껴보세요.</h5>
-                        	<button type="button" class="btn btn-primary">로그인</button>
+                        	<button type="button" class="btn btn-primary" onclick='location.href="/geomin/login"'>로그인</button>
 							<button type="button" class="btn btn-secondary" id="introductionbtn">이용 가이드</button>
              	</div>
              	
