@@ -90,6 +90,7 @@
     )
 	</script>
 </head>
+
 <body>
 <div id='container'>
 	<%@include file="header/header.jsp" %>
