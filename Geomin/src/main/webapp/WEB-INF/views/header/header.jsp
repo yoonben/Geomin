@@ -27,6 +27,7 @@
         }
 
         #header>.gnb_box>h1 {
+        	
             max-width: 400px;
             position: absolute;
             top: 50%;
@@ -34,14 +35,20 @@
             transform: translate(0, -50%);
         }
 
-        #header .gnb_box .cnt_gnb {
+        #header>.gnb_box>.cnt_gnb {
+        	font-size: 2rem;
             position: absolute;
             width: 380px;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
         }
-
+        
+        #header>.gnb_box>.cnt_gnb>h1 {
+        	font-size: 2rem;
+        	font-weight: 800;
+        }
+	
         #header .gnb_box .gnb {
             float: right;
         }
@@ -131,7 +138,11 @@
         <div id='header'>
             <div class="gnb_box">
 				<h1>
+<<<<<<< HEAD
                     <!-- <img src="./main.png" alt=""> -->
+=======
+                    <img src="/resources/img/main.png" alt="">
+>>>>>>> refs/remotes/origin/master
                 </h1>
 
                 <div class='cnt_gnb'>
@@ -139,18 +150,19 @@
                 </div>
 
                 <div class="gnb">
-                    <a href="">로그인 /</a>
-                    <a href="">회원 가입</a>
+                    <a href="">로그인</a>
+                    <a> / </a>
+                    <a href="/geomin/joinMember">회원 가입</a>
                 </div>
 	        </div>
 
 			<div class='navi'>
                 <ul>
-                    <li id="helloService"><a>서비스 안내</a></li>
+                    <li id="helloService"><a href="/geomin/main">서비스 안내</a></li>
                     <li id="studyService"><a>학습 서비스</a></li><!-- <a href="" ></a> -->
                     <li id="subscribeService"><a>구독서비스</a></li><!-- <a href="" ></a> -->
                     <li id="teacherService"><a>강사마당</a></li><!-- <a href=""></a> -->
-                    <li id="adminService"><a>관리마당</a></li><!-- <a href=""></a> -->
+                    <li id="adminService"><a href="/geomin/manager">관리마당</a></li><!-- <a href=""></a> -->
                 </ul>
             </div>
         </div>
