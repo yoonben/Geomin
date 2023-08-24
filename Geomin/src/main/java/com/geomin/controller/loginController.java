@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +33,7 @@ public class loginController extends CommonRestController{
 	loginService loginService;
 	
 	//비밀번호 암호화
-	@Inject
+	@Autowired
 	BCryptPasswordEncoder pwdEncoder;
 	
 	// 회원가입 시 아이디 중복체크
@@ -93,25 +94,40 @@ public class loginController extends CommonRestController{
 		}
 		return "main";
 	}
-
+*/
+	// 로그인 처리 
 	@PostMapping("/geomin/main")
 	public @ResponseBody Map<String, Object> loginAction(@RequestBody memberVO member, Model model,
 			HttpSession session) {
 
-		member = loginService.login(member);
-		if (member != null) {
-			session.setAttribute("member", member);
-			
-			Map<String, Object> map = responseMap(REST_SUCCESS, "로그인 되엇습니다.");
-
+		memberVO membervo = loginService.login(member);
+		if (membervo.getMemberid() != member.getMemberid() || !pwdEncoder.matches(member.getMpassword(), membervo.getMpassword())) {
+        	
+			Map<String, Object> map = responseMap(REST_FAIL, "아이디와 비밀번호를 확인해주세요");
 			return map;
 		} else {
-
-			return responseMap(REST_FAIL, "아이디와 비밀번호를 확인해주세요");
+			session.setAttribute("member", member);
+			return responseMap(REST_SUCCESS, "로그인 되엇습니다.");
 		}
 
 	}
+
+	/*
+	@PostMapping("/geomin/main")
+    @ResponseBody
+    public Map<String, Object> loginAction(@RequestBody memberVO member, HttpSession session) {
+        memberVO membervo = loginService.login(member);
+        if (membervo == null || !pwdEncoder.matches(member.getMpassword(), membervo.getMpassword())) {
+            Map<String, Object> map = responseMap(REST_FAIL, "아이디와 비밀번호를 확인해주세요");
+            return map;
+        } else {
+            session.setAttribute("member", membervo);
+            return responseMap(REST_SUCCESS, "로그인 되었습니다.");
+        }
+    }
 */
+	
+	
 	 
 	
 	@GetMapping("/joinMember")
