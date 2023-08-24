@@ -35,7 +35,7 @@
 				<div id="subscribeServiceNavi" style="display: none;">
 					<h3>구독 서비스</h3>
 					<ul>
-            			<li><a href="/Geomin/subscribe/searchContent">학습 콘텐츠 검색 및 구독 신청</a></li>
+            			<li><a href="/geomin/subscribe/searchContent">학습 콘텐츠 검색 및 구독 신청</a></li>
             		</ul>
 				</div>
 				<br>
@@ -81,5 +81,6 @@
             <div class='banner'>
             </div>
           </div>
+</div>
 </body>
 </html>

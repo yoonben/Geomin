@@ -1,0 +1,23 @@
+package com.geomin.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.geomin.mapper.HelloMapper;
+import com.geomin.vo.HelloVO;
+
+@Service
+public class HelloServiceImpl implements HelloService{
+
+	@Autowired
+	private HelloMapper helloMapper;
+	
+	@Override
+	public List<HelloVO> getList() {
+		// TODO Auto-generated method stub
+		return helloMapper.getList();
+	}
+
+}
