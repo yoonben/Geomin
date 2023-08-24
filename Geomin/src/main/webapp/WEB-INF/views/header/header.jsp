@@ -138,11 +138,8 @@
         <div id='header'>
             <div class="gnb_box">
 				<h1>
-<<<<<<< HEAD
-                    <!-- <img src="./main.png" alt=""> -->
-=======
-                    <img src="/resources/img/main.png" alt="">
->>>>>>> refs/remotes/origin/master
+
+              	  <img src="/resources/img/main.png" alt="">
                 </h1>
 
                 <div class='cnt_gnb'>
