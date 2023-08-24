@@ -5,10 +5,12 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -80,9 +82,36 @@ public class loginController extends CommonRestController{
 		return "/login";
 	}
 	
+/*
+	@PostMapping("/main")
+	public memberVO login(HttpSession session, memberVO vo) {
+		
+		memberVO loginMember = loginService.login(vo);
+		
+		if(loginMember != null && ("").equals(loginMember)) {
+			
+		}
+		return "main";
+	}
 
+	@PostMapping("/geomin/main")
+	public @ResponseBody Map<String, Object> loginAction(@RequestBody memberVO member, Model model,
+			HttpSession session) {
 
+		member = loginService.login(member);
+		if (member != null) {
+			session.setAttribute("member", member);
+			
+			Map<String, Object> map = responseMap(REST_SUCCESS, "로그인 되엇습니다.");
 
+			return map;
+		} else {
+
+			return responseMap(REST_FAIL, "아이디와 비밀번호를 확인해주세요");
+		}
+
+	}
+*/
 	 
 	
 	@GetMapping("/joinMember")
@@ -93,5 +122,7 @@ public class loginController extends CommonRestController{
 	public String login() {
 		return "login";
 	}
+	
+	
 	
 }
