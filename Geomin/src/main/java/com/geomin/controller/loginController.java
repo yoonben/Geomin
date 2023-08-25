@@ -98,7 +98,7 @@ public class loginController extends CommonRestController{
 		
 		memberVO membervo = loginService.login(member);
 		
-		if(membervo != null || pwdEncoder.matches(member.getMpassword(), membervo.getMpassword())) {
+		if(membervo != null && pwdEncoder.matches(member.getMpassword(), membervo.getMpassword())) {
 			session.setAttribute("member", membervo);
 			session.setAttribute("memberid", membervo.getMemberid());
 			

@@ -40,11 +40,12 @@ window.addEventListener('load', function(){
 
 				
 		     	function loginCheck(map){
-		    		//로그인성공 > list로 이동
+		    		//로그인성공 > 메인페이지로 이동
 		    		//로그인 실패 > 메세지 처리
 		    		if(map.result == 'success'){
 		    			location.href=map.url;
 		    		} else {
+			    		alert(map.msg);
 		    			msg.innerHTML=map.msg;
 		    		}		
 		    		console.log(map);
@@ -89,9 +90,11 @@ input[type=text] {
 				<th>비밀번호</th>
 				<td><input type='password' name='mpassword' id='loginPw' style="height:70%; width:90%"></td>
 			</tr>
+			<!-- 로그인 : 아이디 비밀번호 오류시  msg처리를 위해 hidden으로 input태그 생성 -->
+			<tr><input type='hidden' name='msg' id='msg'></tr>
 			<tr>
 				<th colspan='2'>
-					<input type='submit' name='loginSubmit' id='loginSubmit' value='로그인' style="height:20%; width:87%; margin-bottom: 30px"><br>
+					<input type='submit' name='loginSubmit' id='loginSubmit' class='msg' value='로그인' style="height:20%; width:87%; margin-bottom: 30px"><br>
 					<input type='checkbox' name='rememberId' id='rememberId' value='rememberId' style="height:20px; width:20px;"> 아이디 저장
 				</th>
 			</tr>
