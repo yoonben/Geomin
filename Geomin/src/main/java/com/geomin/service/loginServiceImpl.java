@@ -33,4 +33,19 @@ public class loginServiceImpl implements loginService {
 		return loginMapper.getOne(memberid);
 	}
 
+	@Override
+	public int nameCheck(memberVO member) {
+		return loginMapper.nameCheck(member);
+	}
+
+	@Override
+	public int phoneCheck(memberVO member) {
+		return loginMapper.phoneCheck(member);
+	}
+
+	@Override
+	public memberVO findId(memberVO member) {
+		return loginMapper.findId(member);
+	}
+
 }

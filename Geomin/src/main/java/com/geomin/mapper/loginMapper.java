@@ -10,4 +10,8 @@ public interface loginMapper {
 	public memberVO login(memberVO memberVo);
 	
 	public memberVO getOne(String memberid);
+	
+	public int nameCheck(memberVO member);
+	public int phoneCheck(memberVO member);
+	public memberVO findId(memberVO member);
 }

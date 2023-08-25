@@ -97,6 +97,33 @@ window.addEventListener('load', function(){
 	    element.textContent = "";
 	}
 	
+	
+	
+	// 이름 유효성 검사
+    const mName = document.getElementById("mName");
+    const regMname = /^[가-힣a-zA-Z]+$/;
+	const nameErrorElement = document.getElementById("nameError");
+
+	mName.addEventListener('input', function () {
+	    hideErrorMessage(nameErrorElement);
+	});
+	// 비밀번호 입력창 벗어났을 때 오류 보여줌
+	mName.addEventListener('focusout', function () {
+	    const mnameValue = mName.value.trim();
+	    
+	    //빈칸일 경우 아무것도 출력X
+	    if (mnameValue.length === 0) {
+	        return;
+	    }
+	    
+	    if (!regMname.test(mName.value)) {
+	        displayErrorMessage(nameErrorElement, "이름은 한글과 영문 대소문자만 입력 가능합니다.");
+	        return;
+	    }
+	});
+	
+	
+	
 	// 이메일 형식 유효성 검사 
 	const email = document.getElementById("email");
 	function mailFormCheck(email){
@@ -106,6 +133,7 @@ window.addEventListener('load', function(){
 	   return form.test(email);
 	}
 
+	
 	
 	// 생년월일 옵션값 처리
 	$(document).ready(function () {
@@ -302,6 +330,11 @@ select:active{
 		<tr>
 			<th>이름 <span style='color:#FF0000;'>*</span></th>
 			<td><input type='text' name='mname' id='mName' placeholder='아이디를 입력해주세요' required='required'></td>
+			<td></td>
+		</tr>
+			<tr>
+			<th></th>
+			<td><div id='nameError'></div></td>
 			<td></td>
 		</tr>
 		<tr>

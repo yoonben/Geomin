@@ -30,4 +30,17 @@
 				from member 
                 where memberid = #{memberid}
   	</select>
+  	
+  	<select id='nameCheck' resultType='int'>
+  		select count(*) from member where mname = #{mname}
+  	</select>
+  	
+  	<select id='phoneCheck' resultType='int'>
+  		select count(*) from member where mphone = #{mphone}
+  	</select>
+  	
+  	<select id='findId' resultType='com.geomin.VO.memberVO'>
+  		select memberid from member where mname= #{mname} and mphone = #{mname}
+  	</select>
+  	
   </mapper>

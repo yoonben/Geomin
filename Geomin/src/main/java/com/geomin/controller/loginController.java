@@ -105,7 +105,7 @@ public class loginController extends CommonRestController{
 			Map<String, Object> map = responseMap(REST_SUCCESS, "로그인 되었습니다.");
 			
 			//if(membervo.getRole() != null && member.getRole().contains("ADMIN ROLE")) {
-				//그룹 등록되어있으면 메인페이지로 이동 / 그룹등록 안되어 있으면 그룹등록 페이지 이동 
+			//TODO : 그룹 등록되어있으면 숙제페이지로 이동 / 그룹등록 안되어 있으면 그룹등록 페이지 이동 처리하기! 
 				map.put("url", "/geomin/main");   //★login.jsp이동후 로그인시 이동하는 페이지 수정  (function loginCheck)
 			//} else {
 			//	map.put("url", "/board/list");				
@@ -118,6 +118,22 @@ public class loginController extends CommonRestController{
 		}
 	}
 
+	
+	
+	// 아이디 찾기
+	@PostMapping("/findId")
+	public @ResponseBody Map<String, Object> findId(@RequestBody memberVO member){
+		
+		int nameRes = loginService.nameCheck(member);
+		int phoneRes = loginService.phoneCheck(member);
+		
+		if(nameRes > 0 && phoneRes > 0) {
+			memberVO findId = loginService.findId(member);
+			return responseMap(REST_SUCCESS, "아이디를 찾았습니다.");
+		}
+		
+		return responseMap(REST_FAIL, "이름과 휴대폰 번호를 다시 확인해주세요.");
+	}
 	
 	
 	 
