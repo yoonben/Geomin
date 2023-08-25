@@ -19,7 +19,7 @@ public class loginServiceImpl implements loginService {
 	    }
 
 	@Override
-	public String register(memberVO memberVo) {
+	public int register(memberVO memberVo) {
 		return loginMapper.register(memberVo);
 	}
 

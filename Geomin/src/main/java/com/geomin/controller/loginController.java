@@ -70,11 +70,14 @@ public class loginController extends CommonRestController{
 			String inputPw = memberVo.getMpassword();
 			String pwd = pwdEncoder.encode(inputPw);
 			memberVo.setMpassword(pwd);
-			loginService.register(memberVo);
+			int res = loginService.register(memberVo);
 			System.out.println("memberVo===================(2)" + memberVo);
-
+				if(res == 0) {
+					return "/joinMember";
+				} else {
+					return "/login";
+				}
 			//TODO : 데이터 저장이 성공한 경우에만 페이지 이동을 하도록 조건을 추가
-			return "/login";
 			
 		} catch (Exception e) {
 			System.err.println("회원가입 중 예외발생하였습니다.");
@@ -130,6 +133,12 @@ public class loginController extends CommonRestController{
 	@GetMapping("/joinMemberInfo")
 	public String joinMemberInfo() {
 		return "joinMemberInfo";
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "main";
 	}
 	
 	

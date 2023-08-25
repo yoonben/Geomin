@@ -7,6 +7,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>바둑 교육 사이트 개발</title>
+    <script>
+    window.addEventListener('load', function(){
+    	
+	    logout.addEventListener('click', function(){
+	    	let logout = document.getElementById("logout");
+	    	
+	    	
+	    });
+    });
+    
+    </script>
     <style>
         *{
             box-sizing: border-box;  /* 박스 사이즈 */
@@ -152,7 +163,7 @@
 					          <a href="/geomin/login">로그인</a>
 				        </c:if>
 				        <c:if test="${not res}">       
-					          <a href="/geomin/main">로그아웃</a>
+					          <a href="/geomin/logout">로그아웃</a>
 				        </c:if>
                     <a> / </a>
                         <c:if test="${empty memberid}" var="res">       

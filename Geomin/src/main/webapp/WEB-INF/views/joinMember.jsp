@@ -152,6 +152,12 @@ window.addEventListener('load', function(){
 		let loginId = document.getElementById('loginId').value;
 	    let loginPw = document.getElementById('loginPw').value;
 	    let loginPwCheck = document.getElementById('loginPwCheck').value;
+	    let mPhone = document.getElementById('mPhone').value;
+	    let mName = document.getElementById('mName').value;
+	    let year = document.getElementById('year').value;
+	    let month = document.getElementById('month').value;
+	    let day = document.getElementById('day').value;
+	    let mType = document.getElementById('mType').value;
 	    
 	    // 필요한 정보를 확인하고 alert 메시지를 생성합니다.
 	    let message = "회원가입 정보를 확인해주세요.\n\n";
@@ -165,7 +171,25 @@ window.addEventListener('load', function(){
 	    if (loginPwCheck.trim() === "") {
 	        message += "비밀번호 확인을 입력하세요.\n";
 	    }
-	    
+	    if (mPhone.trim() === "") {
+	        message += "휴대폰 번호를 입력하세요.\n";
+	    }
+	    if (mName.trim() === "") {
+	        message += "이름을 입력하세요.\n";
+	    }
+	    if (year.trim() === "") {
+	        message += "생년월일을 입력하세요.\n";
+	    }
+	    if (month.trim() === "") {
+	        message += "생년월일을 입력하세요.\n";
+	    }
+	    if (day.trim() === "") {
+	        message += "생년월일을 입력하세요.\n";
+	    }
+	    if (mType.trim() === "") {
+	        message += "생년월일을 입력하세요.\n";
+	    }
+
 	    // 만약 확인할 정보가 없다면 바로 회원가입을 진행합니다.
 	    if (message === "회원가입 정보를 확인해주세요.\n\n") {
 		    alert("회원가입이 성공적으로 완료되었습니다.");
@@ -338,7 +362,7 @@ select:active{
 			<th></th>
 			<td>
 				<label><input type='checkbox' name='marketingagree' id='marketingAgree' value='notAgree' 
-																onclick="handleCheckboxClick(this)"> 없음</label>
+																onclick="handleCheckboxClick(this)"> 미동의</label>
 				<label><input type='checkbox' name='marketingagree' id='marketingAgree' value='emailAgree'
 																onclick="handleCheckboxClick(this)" > 이메일</label>		
 				<label><input type='checkbox' name='marketingagree' id='marketingAgree' value='smsAgree' 
