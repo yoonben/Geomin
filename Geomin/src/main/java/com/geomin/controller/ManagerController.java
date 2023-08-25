@@ -30,6 +30,16 @@ public class ManagerController extends CommonRestController{
 		return "/manager/garden";
 	}
 	
+	@GetMapping("/board")
+	public String board() {
+		return "/manager/board";
+	}
+	
+	@GetMapping("/qanda")
+	public String qanda() {
+		return "/manager/qanda";
+	}
+	
 	@PostMapping("/packageInsert")
 	public @ResponseBody Map<String, Object> packageInsert(@RequestBody packageVO vo, Model model) {
 		
@@ -47,14 +57,14 @@ public class ManagerController extends CommonRestController{
 	}
 	
 	@PostMapping("/packgeList")
-	public @ResponseBody Map<String, Object> packgeList(@RequestBody Criteria cri ,Model model) {
+	public @ResponseBody Map<String, Object> packgeList(@RequestBody Criteria cri) {
 		
 		try {
 			
 			Map<String, Object> map = responseMap(REST_SUCCESS, "리스트 조회");
 			
 			// 리스트 조회
-			List<packageVO> packagelist = manager.packageList(cri, model);
+			List<packageVO> packagelist = manager.packageList(cri);
 			int total = manager.totalCnt(cri);
 			PageDto  pageDto = new PageDto(cri, total);
 			

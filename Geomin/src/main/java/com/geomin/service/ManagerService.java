@@ -23,7 +23,7 @@ public class ManagerService implements ManagerServiceImpl{
 	}
 
 	@Override
-	public List<packageVO> packageList(Criteria cri, Model model) {
+	public List<packageVO> packageList(Criteria cri) {
 		
 		List<packageVO> list = manager.packageList(cri);
 		

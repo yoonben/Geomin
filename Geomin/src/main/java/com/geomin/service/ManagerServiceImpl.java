@@ -13,7 +13,7 @@ public interface ManagerServiceImpl {
 	
 	public int packageInsert(packageVO vo);
 	
-	public List<packageVO> packageList(Criteria cri, Model model);
+	public List<packageVO> packageList(Criteria cri);
 	
 	public int totalCnt(Criteria cri);
 }
