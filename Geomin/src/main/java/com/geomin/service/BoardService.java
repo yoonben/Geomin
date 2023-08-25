@@ -36,4 +36,17 @@ public class BoardService implements BoardServiceImpl{
 		return total;
 	}
 
+	@Override
+	public BoardVO getOne(BoardVO vo) {
+		
+		BoardVO boardvo = board.getOne(vo);
+		
+		return boardvo;
+	}
+	
+	@Override
+	public int boardWrite(BoardVO vo) {
+		int res = board.boardWrite(vo);
+		return res;
+	}
 }

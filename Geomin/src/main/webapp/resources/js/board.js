@@ -14,7 +14,7 @@ window.addEventListener('load', function(){
 		if(map.boardList.length > 0){
 
 		    map.noticeList.forEach(function(item, index) {
-		        content += "<tr>"
+		        content += "<tr onclick='goView(" +item.bno+ ")'>"
 		            + "  <th scope='row'>공지 사항</th>"
 		            + "  <td>" + item.boardtitle + "</td>"
 		            + "  <td>" + item.writer + "</td>"
@@ -23,7 +23,7 @@ window.addEventListener('load', function(){
 		    })
 
 		    map.boardList.forEach(function(item, index) {
-		        content += "<tr>"
+		        content += "<tr onclick='goView(" +item.bno+ ")'>"
 		            + "  <th scope='row'>" + item.bno + "</th>"
 		            + "  <td>" + item.boardtitle + "</td>"
 		            + "  <td>" + item.writer + "</td>"
@@ -82,7 +82,7 @@ Search.addEventListener('click', function(e){
 		if(map.boardList.length > 0){
 
 		    map.noticeList.forEach(function(item, index) {
-		        content += "<tr>"
+		        content += "<tr onclick='goView(" +item.bno+ ")'>"
 		            + "  <th scope='row'>공지 사항</th>"
 		            + "  <td>" + item.boardtitle + "</td>"
 		            + "  <td>" + item.writer + "</td>"
@@ -91,7 +91,7 @@ Search.addEventListener('click', function(e){
 		    })
 
 		    map.boardList.forEach(function(item, index) {
-		        content += "<tr>"
+		        content += "<tr onclick='goView(" +item.bno+ ")'>"
 		            + "  <th scope='row'>" + item.bno + "</th>"
 		            + "  <td>" + item.boardtitle + "</td>"
 		            + "  <td>" + item.writer + "</td>"
@@ -133,14 +133,49 @@ Search.addEventListener('click', function(e){
 		
 		listTable.innerHTML = content;
 		pageNavi.innerHTML = content2;
+	})
+	})
+
 })
-})
-})
+
+function goView(bno){
+	content = ""; 
+	content2 = "";
+	
+	let obj={
+			bno : bno
+		}
+	
+	console.log(obj);
+	
+	fetchPost('/geomin/boardView', obj, (map)=>{
+		if(map.result == 'success'){
+			content += "<h4 class='subject'>"+map.boardVO.boardtitle+"</h4>"
+         	+"<ul class='date'>"
+         	+"<li class='left'>"+map.boardVO.writer+"</li>"
+         	+"<li class='right'>"+map.boardVO.regdate+"</li>"
+         	+"</ul>"
+         	+"<div class='dv'>"
+         	+map.boardVO.boardcontent
+         	+"</div>"
+         	+"<button type='button' class='btn btn-outline-primary' onclick='go(1)'>목록</button>"
+         	+"</div>";
+			
+			boardview.style.display = '';
+			boardList.style.display = 'none';
+			boardview.innerHTML = content;
+			
+		}else{
+			alert('페이지를 찾을 수 없습니다.');
+		}
+	})
+}	
 
 function go(pageNo) {	
 		content = ""; 
 		content2 = "";
-		
+		boardview.style.display = 'none';
+		boardList.style.display = '';
 		let obj={
 			searchField : document.querySelector('#searchField').value
 			, searchWord : document.querySelector('#searchWord').value
@@ -150,9 +185,9 @@ function go(pageNo) {
 		fetchPost('/geomin/boardList', obj, (map)=>{
 		    
 			if(map.boardList.length > 0){
-
+				
 				 map.noticeList.forEach(function(item, index) {
-				        content += "<tr>"
+				        content += "<tr onclick='goView(" +item.bno+ ")'>"
 				            + "  <th scope='row'>공지 사항</th>"
 				            + "  <td>" + item.boardtitle + "</td>"
 				            + "  <td>" + item.writer + "</td>"
@@ -161,7 +196,7 @@ function go(pageNo) {
 				    })
 
 				    map.boardList.forEach(function(item, index) {
-				        content += "<tr>"
+				        content += "<tr onclick='goView(" +item.bno+ ")'>"
 				            + "  <th scope='row'>" + item.bno + "</th>"
 				            + "  <td>" + item.boardtitle + "</td>"
 				            + "  <td>" + item.writer + "</td>"
@@ -206,3 +241,9 @@ function go(pageNo) {
 			pageNavi.innerHTML = content2;
 	})
 	}
+
+$(document).ready(function() {
+    $('#writeButton').click(function() {
+        window.location.href = '/geomin/write';
+    });
+});

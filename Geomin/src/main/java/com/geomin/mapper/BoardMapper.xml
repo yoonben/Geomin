@@ -7,6 +7,11 @@
 		select * from board where boardnotice = 'Y' order by regdate
 	</select>
   	
+  	<insert id="boardWrite">
+  		insert into board (memberid, bno, boardtitle, boardcontent , boardnotice, regdate, writer)
+		values (#{memberid}, BOARD_SEQ.nextval, #{boardtitle}, #{boardcontent}, #{boardnotice}, sysdate, #{writer})
+  	</insert>
+  	
   	<select id="boardList" resultType="com.geomin.VO.BoardVO">
 	select * 
 	from (	select board.*,rownum rn 
@@ -21,6 +26,10 @@
  	<select id="totalCnt" resultType="int">
  		select count(*) from board where boardnotice = 'N' <include refid="criteria"/>
  	</select>
+ 	 
+ 	 <select id="getOne" resultType="com.geomin.VO.BoardVO">
+		select * from board where bno = #{bno}
+	</select>
  	 
  	 <sql id="criteria">
  	 	<choose>

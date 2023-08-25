@@ -1,5 +1,8 @@
 package com.geomin.VO;
 
+import lombok.Data;
+
+@Data
 public class BoardVO {
 	public String  memberid;
 	public String  bno;

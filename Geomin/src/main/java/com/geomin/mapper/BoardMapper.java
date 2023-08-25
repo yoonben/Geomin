@@ -11,4 +11,8 @@ public interface BoardMapper {
 	public  List<BoardVO> boardList(Criteria cri);
 	
 	public int totalCnt(Criteria cri);
+
+	public BoardVO getOne(BoardVO vo);
+	
+	public int boardWrite(BoardVO vo);
 }

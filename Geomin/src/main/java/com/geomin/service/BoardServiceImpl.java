@@ -13,5 +13,9 @@ public interface BoardServiceImpl {
 	
 	public List<BoardVO> boardList(Criteria cri);
 	
+	public BoardVO getOne(BoardVO vo);
+	
 	public int totalCnt(Criteria cri);
+	
+	public int boardWrite(BoardVO vo);
 }
