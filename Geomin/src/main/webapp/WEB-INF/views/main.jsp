@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>        
 <!DOCTYPE html>
 <html lang="en">
  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -110,7 +111,15 @@
                 	<h5>"게임으로 배우는 어린이 바둑 교실"은 바둑을 처음 접하는 사람들을 위한 온라인 서비스입니다. <br/>
                          	간편한 규칙 설명과 튜토리얼을 통해 누구나 쉽게 바둑을 배울 수 있습니다. <br/>
                         	 언제 어디서나 접속하여 바둑의 재미를 느껴보세요.</h5>
-                        	<button type="button" class="btn btn-primary" onclick='location.href="/geomin/login"'>로그인</button>
+                        	 
+   	                        <c:if test="${empty memberid}" var="res">       
+						          <button type="button" class="btn btn-primary" onclick='location.href="/geomin/login"'>로그인</button>
+					        </c:if>
+					        <c:if test="${not res}">       
+					        		<!-- 로그인시 바둑공부로 이동하는 주소 작성하기 또는 대국 안내 버튼 (클릭시 대국정보 사이트 이동) -->
+						          <button type="button" class="btn btn-primary" onclick='location.href="/geomin/main"'>바둑공부</button>
+					        </c:if> 
+                        	
 							<button type="button" class="btn btn-secondary" id="introductionbtn">이용 가이드</button>
              	</div>
              	

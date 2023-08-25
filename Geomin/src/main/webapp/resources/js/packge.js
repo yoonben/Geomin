@@ -195,7 +195,11 @@ window.addEventListener('load', function(){
 				    + "    </li>"
 				    + "    <!-- 페이지목록 -->";
 				for (var i = map.pageDto.startNo; i <= map.pageDto.endNo; i++) {
-				    content2 += "<li><a class='page-link' onclick='go(" + i + ")'>" + i + "</a></li>";
+				    if (i === map.pageDto.cri.pageNo) {
+				        content2 += "<li class='page-item active'><span class='page-link' style='color: black; background-color: white;'>" + i + "</span></li>";
+				    } else {
+				        content2 += "<li class='page-item'><a class='page-link' onclick='go(" + i + ")'>" + i + "</a></li>";
+				    }
 				}
 				content2 += "    <!-- 다음페이지 -->"
 					+ "    <li class='page-item " + (map.pageDto.next ? '' : 'disabled') + "'>"
@@ -255,7 +259,11 @@ window.addEventListener('load', function(){
 				    + "    </li>"
 				    + "    <!-- 페이지목록 -->";
 				for (var i = map.pageDto.startNo; i <= map.pageDto.endNo; i++) {
-				    content2 += "<li><a class='page-link' onclick='go(" + i + ")'>" + i + "</a></li>";
+				    if (i === map.pageDto.cri.pageNo) {
+				        content2 += "<li class='page-item active'><span class='page-link' style='color: black; background-color: white;'>" + i + "</span></li>";
+				    } else {
+				        content2 += "<li class='page-item'><a class='page-link' onclick='go(" + i + ")'>" + i + "</a></li>";
+				    }
 				}
 				content2 += "    <!-- 다음페이지 -->"
 					+ "    <li class='page-item " + (map.pageDto.next ? '' : 'disabled') + "'>"
@@ -316,7 +324,11 @@ window.addEventListener('load', function(){
 				    + "    </li>"
 				    + "    <!-- 페이지목록 -->";
 				for (var i = map.pageDto.startNo; i <= map.pageDto.endNo; i++) {
-				    content2 += "<li><a class='page-link' onclick='go(" + i + ")'>" + i + "</a></li>";
+				    if (i === map.pageDto.cri.pageNo) {
+				        content2 += "<li class='page-item active'><span class='page-link' style='color: black; background-color: white;'>" + i + "</span></li>";
+				    } else {
+				        content2 += "<li class='page-item'><a class='page-link' onclick='go(" + i + ")'>" + i + "</a></li>";
+				    }
 				}
 				content2 += "    <!-- 다음페이지 -->"
 					+ "    <li class='page-item " + (map.pageDto.next ? '' : 'disabled') + "'>"

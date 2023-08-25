@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geomin.mapper.BoardMapper">
+	<select id="noticeList" resultType="com.geomin.VO.BoardVO">
+		select * from board where boardnotice = 'Y' order by regdate
+	</select>
+  	
+  	<select id="boardList" resultType="com.geomin.VO.BoardVO">
+	select * 
+	from (	select board.*,rownum rn 
+        from (
+				select *
+				from board
+				order by regdate desc
+			) board where boardnotice = 'N' <include refid="criteria"/>
+		) where rn between #{startNo} and #{endNo}
+	</select>
+ 	 
+ 	<select id="totalCnt" resultType="int">
+ 		select count(*) from board where boardnotice = 'N' <include refid="criteria"/>
+ 	</select>
+ 	 
+ 	 <sql id="criteria">
+ 	 	<choose>
+ 	 		<when test="searchField == 'bno'">
+ 	 			and bno like '%'||#{searchWord}||'%'
+ 	 		</when>
+ 	 		<when test="searchField == 'boardtitle'">
+ 	 			and boardtitle like '%'||#{searchWord}||'%'
+ 	 		</when>
+ 	 		<when test="searchField  == 'writer'">
+ 	 			and writer like '%'||#{searchWord}||'%'
+ 	 		</when>
+ 	 	</choose>
+ 	 </sql>
+</mapper>

@@ -8,6 +8,50 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
 
+<script>
+
+window.addEventListener('load', function(){
+
+	  //로그인
+			loginSubmit.addEventListener('click', function(e){
+				//기본이벤트 제거 (서브밋되는거 막아줄 수 있다)
+				e.preventDefault();
+				
+			// 파라메터 수집
+			let obj = {
+					memberid : document.querySelector('#loginId').value
+					, mpassword : document.querySelector('#loginPw').value
+			}
+			
+			console.log(obj);
+			
+			// 요청
+			fetch('/geomin/main', {
+				    method: 'POST',
+				    headers: {
+				      'Content-Type': 'application/json'
+				    },
+				    body: JSON.stringify(obj)
+				  })
+				  .then(response => response.json())
+				  .then(loginCheck)
+				});
+			});
+
+				
+		     	function loginCheck(map){
+		    		//로그인성공 > list로 이동
+		    		//로그인 실패 > 메세지 처리
+		    		if(map.result == 'success'){
+		    			location.href=map.url;
+		    		} else {
+		    			msg.innerHTML=map.msg;
+		    		}		
+		    		console.log(map);
+		          }
+
+</script>
+
 <style>
 
 input[type=text] {
