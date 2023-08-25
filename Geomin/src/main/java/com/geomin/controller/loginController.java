@@ -1,6 +1,7 @@
 package com.geomin.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -83,49 +84,37 @@ public class loginController extends CommonRestController{
 		return "/login";
 	}
 	
-/*
-	@PostMapping("/main")
-	public memberVO login(HttpSession session, memberVO vo) {
-		
-		memberVO loginMember = loginService.login(vo);
-		
-		if(loginMember != null && ("").equals(loginMember)) {
-			
-		}
-		return "main";
-	}
-*/
+	
 	// 로그인 처리 
-	@PostMapping("/geomin/main")
-	public @ResponseBody Map<String, Object> loginAction(@RequestBody memberVO member, Model model,
-			HttpSession session) {
-
+	@PostMapping(value = "/main", produces = "application/json")
+	public @ResponseBody Map<String, Object> loginAction(@RequestBody memberVO member
+														, Model model
+														, HttpSession session) {
+		System.out.println("id" + member.getMemberid());
+		System.out.println("pw" + member.getMpassword());
+		
 		memberVO membervo = loginService.login(member);
-		if (membervo.getMemberid() != member.getMemberid() || !pwdEncoder.matches(member.getMpassword(), membervo.getMpassword())) {
-        	
-			Map<String, Object> map = responseMap(REST_FAIL, "아이디와 비밀번호를 확인해주세요");
+		
+		if(membervo != null || pwdEncoder.matches(member.getMpassword(), membervo.getMpassword())) {
+			session.setAttribute("member", membervo);
+			session.setAttribute("memberid", membervo.getMemberid());
+			
+			Map<String, Object> map = responseMap(REST_SUCCESS, "로그인 되었습니다.");
+			
+			//if(membervo.getRole() != null && member.getRole().contains("ADMIN ROLE")) {
+				//그룹 등록되어있으면 메인페이지로 이동 / 그룹등록 안되어 있으면 그룹등록 페이지 이동 
+				map.put("url", "/geomin/main");   //★login.jsp이동후 로그인시 이동하는 페이지 수정  (function loginCheck)
+			//} else {
+			//	map.put("url", "/board/list");				
+			//}
+			
 			return map;
 		} else {
-			session.setAttribute("member", member);
-			return responseMap(REST_SUCCESS, "로그인 되엇습니다.");
+			
+			return responseMap(REST_FAIL, "아이디와 비밀번호를 확인해주세요.");
 		}
-
 	}
 
-	/*
-	@PostMapping("/geomin/main")
-    @ResponseBody
-    public Map<String, Object> loginAction(@RequestBody memberVO member, HttpSession session) {
-        memberVO membervo = loginService.login(member);
-        if (membervo == null || !pwdEncoder.matches(member.getMpassword(), membervo.getMpassword())) {
-            Map<String, Object> map = responseMap(REST_FAIL, "아이디와 비밀번호를 확인해주세요");
-            return map;
-        } else {
-            session.setAttribute("member", membervo);
-            return responseMap(REST_SUCCESS, "로그인 되었습니다.");
-        }
-    }
-*/
 	
 	
 	 
@@ -138,7 +127,31 @@ public class loginController extends CommonRestController{
 	public String login() {
 		return "login";
 	}
+	@GetMapping("/joinMemberInfo")
+	public String joinMemberInfo() {
+		return "joinMemberInfo";
+	}
 	
+	
+	/*
+	//회원정보  조회
+	@RequestMapping(value = "/geomin/joinMemberInfo", method = {RequestMethod.GET, RequestMethod.POST})
+	public String getOne(HttpSession session, memberVO vo, Model model) {
+		try {
+			memberVO member = (memberVO) session.getAttribute("memberid");
+			//하나의 회원 조회
+			memberVO membervo = loginService.getOne(member.getMemberid());
+
+			session.setAttribute("member", membervo);
+		    
+			return "/joinMemberInfo";
+			
+		} catch (Exception e) {
+			return "";
+		}
+	}
+
+*/
 	
 	
 }

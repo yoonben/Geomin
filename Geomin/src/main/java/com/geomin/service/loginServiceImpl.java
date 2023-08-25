@@ -28,4 +28,9 @@ public class loginServiceImpl implements loginService {
 		return loginMapper.login(memberVo);
 	}
 
+	@Override
+	public memberVO getOne(String memberid) {
+		return loginMapper.getOne(memberid);
+	}
+
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -147,9 +148,20 @@
                 </div>
 
                 <div class="gnb">
-                    <a href="/geomin/login">로그인</a>
+                        <c:if test="${empty memberid}" var="res">       
+					          <a href="/geomin/login">로그인</a>
+				        </c:if>
+				        <c:if test="${not res}">       
+					          <a href="/geomin/main">로그아웃</a>
+				        </c:if>
                     <a> / </a>
-                    <a href="/geomin/joinMember">회원 가입</a>
+                        <c:if test="${empty memberid}" var="res">       
+					          <a href="/geomin/joinMember">회원 가입</a>
+				        </c:if>
+				        <c:if test="${not res}">       
+					          <a href="/geomin/joinMemberInfo">회원 정보</a>
+				        </c:if>
+                    
                 </div>
 	        </div>
 

@@ -12,4 +12,6 @@ public interface loginService {
 	public String register(memberVO memberVo);
 	
 	public memberVO login(memberVO memberVo);
+	
+	public memberVO getOne(String memberid);
 }
