@@ -40,7 +40,7 @@
   	</select>
   	
   	<select id='findId' resultType='com.geomin.VO.memberVO'>
-  		select memberid from member where mname= #{mname} and mphone = #{mname}
+  		select memberid from member where mname= #{mname} and mphone = #{mphone}
   	</select>
   	
   </mapper>

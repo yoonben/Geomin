@@ -12,109 +12,179 @@
 
 window.addEventListener('load', function(){
 
-	  //로그인
-			loginSubmit.addEventListener('click', function(e){
-				//기본이벤트 제거 (서브밋되는거 막아줄 수 있다)
-				e.preventDefault();
-				
-			// 파라메터 수집
-			let obj = {
-					memberid : document.querySelector('#loginId').value
-					, mpassword : document.querySelector('#loginPw').value
+	//로그인
+	loginSubmit.addEventListener('click', function(e){
+		//기본이벤트 제거 (서브밋되는거 막아줄 수 있다)
+		e.preventDefault();
+		
+		// 파라메터 수집
+		let obj = {
+				memberid : document.querySelector('#loginId').value
+				, mpassword : document.querySelector('#loginPw').value
+		}
+	
+	console.log(obj);
+	
+	// 요청
+	fetch('/geomin/main', {
+		    method: 'POST',
+		    headers: {
+		      'Content-Type': 'application/json'
+		    },
+		    body: JSON.stringify(obj)
+		  })
+		  .then(response => response.json())
+		  .then(loginCheck)
+		});
+ 
+	
+		//아이디 찾기 
+		findId.addEventListener('click', function(e){
+			// 기본 이벤트 제거
+			e.preventDefault();
+			
+			let findname = document.querySelector('#findname');
+			let findphone = document.querySelector('#findphone');
+			
+			if(!findname.value){
+				findIdText.innerHTML = '이름을 입력해주세요';
+				return
+			}
+			if(!findphone.value){
+				findIdText.innerHTML = '휴대폰 번호를 입력해주세요';
+				return
 			}
 			
-			console.log(obj);
+			let obj={mname : findname.value,
+					 mphone : findphone.value};
 			
-			// 요청
-			fetch('/geomin/main', {
-				    method: 'POST',
-				    headers: {
-				      'Content-Type': 'application/json'
-				    },
-				    body: JSON.stringify(obj)
-				  })
-				  .then(response => response.json())
-				  .then(loginCheck)
-				});
-	  
+			console.log("아이디 찾기 체크", obj);
+			
+			fetch('/geomin/findId', {
+			    method: 'POST',
+			    headers: {
+			      'Content-Type': 'application/json'
+			    },
+			    body: JSON.stringify(obj)
+			  })
+			  .then(response => response.json())
+			  .then(findIdCheck)
 			});
-				
-				
-				
-	     	function loginCheck(map){
-	    		//로그인성공 > 메인페이지로 이동
-	    		//로그인 실패 > 메세지 처리
-	    		if(map.result == 'success'){
-	    			location.href=map.url;
-	    		} else {
-		    		alert(map.msg);
-	    			msg.innerHTML=map.msg;
-	    		}		
-	    		console.log(map);
-	          }
+		
+		});
+		
+	
+	function findIdCheck(map){
+		if(map.result == 'success'){
+   			location.href=map.url;
+   		} else {
+    		alert(map.msg);
+    		findIdText.innerHTML=map.msg;
+   		}		
+   		console.log(map);
+         }
+		
+		
+    	function loginCheck(map){
+   		//로그인성공 > 메인페이지로 이동
+   		//로그인 실패 > 메세지 처리
+   		if(map.result == 'success'){
+   			location.href=map.url;
+   		} else {
+    		alert(map.msg);
+   			msg.innerHTML=map.msg;
+   		}		
+   		console.log(map);
+         }
 
-	     	
-	     	//아이디 저장 체크박스
-	     	$(document).ready(function(){
-	    		// 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
-	    	    var key = getCookie("key");
-	    	    $("#loginId").val(key); 
-	    	     
-	    	    // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
-	    	    if($("#loginId").val() != ""){ 
-	    	        $("#rememberId").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
-	    	    }
-	    	     
-	    	    $("#rememberId").change(function(){ // 체크박스에 변화가 있다면,
-	    	        if($("#rememberId").is(":checked")){ // ID 저장하기 체크했을 때,
-	    	            setCookie("key", $("#loginId").val(), 7); // 7일 동안 쿠키 보관
-	    	        }else{ // ID 저장하기 체크 해제 시,
-	    	            deleteCookie("key");
-	    	        }
-	    	    });
-	    	     
-	    	    // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
-	    	    $("#loginId").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
-	    	        if($("#rememberId").is(":checked")){ // ID 저장하기를 체크한 상태라면,
-	    	            setCookie("key", $("#loginId").val(), 7); // 7일 동안 쿠키 보관
-	    	        }
-	    	    });
-	     	});
+    	
+    	//아이디 저장 체크박스
+    	$(document).ready(function(){
+   		// 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
+   	    var key = getCookie("key");
+   	    $("#loginId").val(key); 
+   	     
+   	    // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
+   	    if($("#loginId").val() != ""){ 
+   	        $("#rememberId").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
+   	    }
+   	     
+   	    $("#rememberId").change(function(){ // 체크박스에 변화가 있다면,
+   	        if($("#rememberId").is(":checked")){ // ID 저장하기 체크했을 때,
+   	            setCookie("key", $("#loginId").val(), 7); // 7일 동안 쿠키 보관
+   	        }else{ // ID 저장하기 체크 해제 시,
+   	            deleteCookie("key");
+   	        }
+   	    });
+   	     
+   	    // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
+   	    $("#loginId").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
+   	        if($("#rememberId").is(":checked")){ // ID 저장하기를 체크한 상태라면,
+   	            setCookie("key", $("#loginId").val(), 7); // 7일 동안 쿠키 보관
+   	        }
+   	    });
+    	});
 
-	    	// 쿠키 저장하기 
-	    	// setCookie => saveid함수에서 넘겨준 시간이 현재시간과 비교해서 쿠키를 생성하고 지워주는 역할
-	    	function setCookie(cookieName, value, exdays) {
-	    		var exdate = new Date();
-	    		exdate.setDate(exdate.getDate() + exdays);
-	    		var cookieValue = escape(value)
-	    				+ ((exdays == null) ? "" : "; expires=" + exdate.toGMTString());
-	    		document.cookie = cookieName + "=" + cookieValue;
-	    	}
+   	// 쿠키 저장하기 
+   	// setCookie => saveid함수에서 넘겨준 시간이 현재시간과 비교해서 쿠키를 생성하고 지워주는 역할
+   	function setCookie(cookieName, value, exdays) {
+   		var exdate = new Date();
+   		exdate.setDate(exdate.getDate() + exdays);
+   		var cookieValue = escape(value)
+   				+ ((exdays == null) ? "" : "; expires=" + exdate.toGMTString());
+   		document.cookie = cookieName + "=" + cookieValue;
+   	}
 
-	    	// 쿠키 삭제
-	    	function deleteCookie(cookieName) {
-	    		var expireDate = new Date();
-	    		expireDate.setDate(expireDate.getDate() - 1);
-	    		document.cookie = cookieName + "= " + "; expires="
-	    				+ expireDate.toGMTString();
-	    	}
-	         
-	    	// 쿠키 가져오기
-	    	function getCookie(cookieName) {
-	    		cookieName = cookieName + '=';
-	    		var cookieData = document.cookie;
-	    		var start = cookieData.indexOf(cookieName);
-	    		var cookieValue = '';
-	    		if (start != -1) { // 쿠키가 존재하면
-	    			start += cookieName.length;
-	    			var end = cookieData.indexOf(';', start);
-	    			if (end == -1) // 쿠키 값의 마지막 위치 인덱스 번호 설정 
-	    				end = cookieData.length;
-	                    console.log("end위치  : " + end);
-	    			cookieValue = cookieData.substring(start, end);
-	    		}
-	    		return unescape(cookieValue);
-	    	}
+   	// 쿠키 삭제
+   	function deleteCookie(cookieName) {
+   		var expireDate = new Date();
+   		expireDate.setDate(expireDate.getDate() - 1);
+   		document.cookie = cookieName + "= " + "; expires="
+   				+ expireDate.toGMTString();
+   	}
+        
+   	// 쿠키 가져오기
+   	function getCookie(cookieName) {
+   		cookieName = cookieName + '=';
+   		var cookieData = document.cookie;
+   		var start = cookieData.indexOf(cookieName);
+   		var cookieValue = '';
+   		if (start != -1) { // 쿠키가 존재하면
+   			start += cookieName.length;
+   			var end = cookieData.indexOf(';', start);
+   			if (end == -1) // 쿠키 값의 마지막 위치 인덱스 번호 설정 
+   				end = cookieData.length;
+                   console.log("end위치  : " + end);
+   			cookieValue = cookieData.substring(start, end);
+   		}
+   		return unescape(cookieValue);
+   	}
+	
+   	
+   	//아이디 찾기 버튼 모달 처리
+	$(document).ready(function() {
+	    $("#findId").click(function() {
+	        $("#myModal").css("display", "block");
+	    });
+
+	    // 모달 내부의 닫기 버튼 (×)을 클릭하면 모달이 숨겨집니다.
+	    $(".close").click(function() {
+	        $("#myModal").css("display", "none");
+	    });
+
+	    // 모달 내부 클릭 이벤트 전파 중지
+	    $("#myModal").click(function(event) {
+	        event.stopPropagation(); // 이벤트 전파 중지
+	    });
+
+	    // 또한, 사용자가 모달 영역 밖을 클릭하면 모달이 숨겨지지 않도록 합니다.
+	    $(window).click(function(event) {
+	        if (event.target == $("#myModal")[0]) {
+	            $("#myModal").css("display", "none");
+	        }
+	    });
+	});
+   	
 	
 </script>
 
@@ -169,12 +239,32 @@ input[type=text] {
 	<div>
 		<table style='border:1px solid;width:500px;height:50px;margin: 20px auto 100px auto ;' >
 			<tr>
-				<th><input type='button' id='findId' name='findId'  class='btn_find' value='아이디 찾기' onclick='location.href=""'></th>
-				<th><input type='button' id='findPw' name='findPw' class='btn_find' value='비밀번호 찾기' onclick='location.href=""'></th>
+				<th><input type='button' id='findId' name='findId'  class='btn_find' value='아이디 찾기' onclick='location.href="/geomin/login"'></th>
+				<th><input type='button' id='findPw' name='findPw' class='btn_find' value='비밀번호 찾기' onclick='location.href="/geomin/login"'></th>
 				<th><input type='button' id='joinMember' name='joinMember' class='btn_find' value='회원가입' onclick='location.href="/geomin/joinMember"'></th>
 			</tr>
 		</table>
 	</div>
 
+
+	<!-- 아이디 찾기 모달 시작 -->
+	<div id="myModal" class="modal" style='border:1px solid;width:500px;height:250px;margin: 100px auto 20px auto ;' >
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<h1 class="h3 mb-3 fw-normal text-dark">아이디 찾기</h1>
+
+			<form>
+				<input type="text" name="findname" id="findname" placeholder="이름을 입력하세요.">
+				<input type="text" name="findphone" id="findphone" placeholder="휴대폰 번호를 입력하세요.">
+				<input type="submit" value="아이디 찾기" id="findIdbtn">
+				
+				<!-- 아이디 찾기 시  msg처리를 위해 hidden으로 input태그 생성 -->
+				<input type='text' name='findIdText' id='findIdText'>
+			</form>
+		</div>
+	</div>
+	<!-- 아이디 찾기 모달 끝 -->
+	
+				
 </body>
 </html>

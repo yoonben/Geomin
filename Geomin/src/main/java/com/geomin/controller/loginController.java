@@ -129,7 +129,11 @@ public class loginController extends CommonRestController{
 		
 		if(nameRes > 0 && phoneRes > 0) {
 			memberVO findId = loginService.findId(member);
-			return responseMap(REST_SUCCESS, "아이디를 찾았습니다.");
+			
+			Map<String, Object> map
+					= responseMap(REST_SUCCESS, "아이디는 [" + findId.getMemberid() + "] 입니다.");
+			map.put("url", "/geomin/login");
+			return map;
 		}
 		
 		return responseMap(REST_FAIL, "이름과 휴대폰 번호를 다시 확인해주세요.");
