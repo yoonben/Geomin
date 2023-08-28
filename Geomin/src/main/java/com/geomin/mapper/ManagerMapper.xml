@@ -23,6 +23,16 @@
  		select count(*) from package where 1 = 1 <include refid="criteria"/>
  	</select>
 	
+	<update id="packDeleteUpdate">
+ 	 	UPDATE Package
+		SET elimination = CASE
+		    WHEN elimination = 'Y' THEN 'N'
+		    WHEN elimination = 'N' THEN 'Y'
+		    ELSE elimination
+		END
+		WHERE TRIM(LEADING '0' FROM pkgid) = #{pkgid}
+ 	 </update>
+	
 	<sql id="criteria">
  	 	<choose>
  	 		<when test="searchField == 'pkgname'">

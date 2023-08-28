@@ -18,7 +18,7 @@
         from (
 				select *
 				from board
-				order by regdate desc
+				order by CAST(bno AS number) desc
 			) board where boardnotice = 'N' <include refid="criteria"/>
 		) where rn between #{startNo} and #{endNo}
 	</select>
@@ -30,6 +30,16 @@
  	 <select id="getOne" resultType="com.geomin.VO.BoardVO">
 		select * from board where bno = #{bno}
 	</select>
+ 	 
+ 	 <update id="boardUpdate">
+ 	 	update board set boardtitle = #{boardtitle}, boardcontent = #{boardcontent}
+                , regdate = sysdate where bno = #{bno}
+ 	 </update>
+ 	 
+ 	 <delete id="boardDelete">
+ 	 	DELETE FROM board
+		WHERE bno = #{bno}
+ 	 </delete>
  	 
  	 <sql id="criteria">
  	 	<choose>

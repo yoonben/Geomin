@@ -142,6 +142,8 @@ function goView(bno){
 	content = ""; 
 	content2 = "";
 	
+	let loginId = document.querySelector('#loginId').value
+	
 	let obj={
 			bno : bno
 		}
@@ -149,28 +151,38 @@ function goView(bno){
 	console.log(obj);
 	
 	fetchPost('/geomin/boardView', obj, (map)=>{
-		if(map.result == 'success'){
-			content += "<h4 class='subject'>"+map.boardVO.boardtitle+"</h4>"
-         	+"<ul class='date'>"
-         	+"<li class='left'>"+map.boardVO.writer+"</li>"
-         	+"<li class='right'>"+map.boardVO.regdate+"</li>"
-         	+"</ul>"
-         	+"<div class='dv'>"
-         	+map.boardVO.boardcontent
-         	+"</div>"
-         	+"<button type='button' class='btn btn-outline-primary' onclick='go(1)'>목록</button>"
-         	+"</div>";
-			
-			boardview.style.display = '';
-			boardList.style.display = 'none';
-			boardview.innerHTML = content;
-			
-		}else{
-			alert('페이지를 찾을 수 없습니다.');
-		}
-	})
-}	
+	    if(map.result == 'success'){
+	        content += "<h4 class='subject'>"+map.boardVO.boardtitle+"</h4>"
+	         	+"<ul class='date'>"
+	         	+"<li class='left'>"+map.boardVO.writer+"</li>"
+	         	+"<li class='right'>"+map.boardVO.regdate+"</li>"
+	         	+"</ul>"
+	         	+"<div class='dv'>"
+	         	+map.boardVO.boardcontent
+	         	+"</div>"
+	         	+"<button type='button' class='btn btn-outline-primary' onclick='go(1)'>목록</button>";
+	        	
+	         	if(map.boardVO.memberid == loginId){
+	         		content += "<a class='btn btn-outline-primary' href='/geomin/edit?bno=" + map.boardVO.bno + "'>수정</a>"
+	                     + "<a class='btn btn-outline-primary' onclick='boardDelete("+map.boardVO.bno+")'>삭제</a>";
+	            }
 
+	        content += "</div>";
+	        
+	        boardview.style.display = '';
+	        boardList.style.display = 'none';
+	        boardview.innerHTML = content;
+	    } else {
+	        alert('페이지를 찾을 수 없습니다.');
+	    }
+	})
+	
+	$(function() {
+	    $('#writeButton').click(function() {
+	        window.location.href = '/geomin/write';
+	    });
+	});
+}
 function go(pageNo) {	
 		content = ""; 
 		content2 = "";
@@ -242,6 +254,24 @@ function go(pageNo) {
 	})
 	}
 
+function boardDelete(pageNo) {
+	
+	let obj={
+			bno : pageNo
+		}
+	
+	console.log(obj);
+	
+	fetchPost('/geomin/boardDelete', obj, (map)=>{
+		if(map.result == 'success'){
+			alert(map.msg);
+			location.href = '/geomin/board';
+		}else{
+			alert(map.msg);
+		}
+	})
+	
+}
 $(document).ready(function() {
     $('#writeButton').click(function() {
         window.location.href = '/geomin/write';

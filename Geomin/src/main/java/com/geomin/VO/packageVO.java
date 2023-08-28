@@ -13,4 +13,5 @@ public class packageVO {
 	public String discountrate;
 	public String finalprice;
 	public String pkgcontent;
+	public String elimination;
 }

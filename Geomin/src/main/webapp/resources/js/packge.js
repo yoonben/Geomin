@@ -173,15 +173,18 @@ window.addEventListener('load', function(){
 			if(map.packagelist.length > 0){
 
 				map.packagelist.forEach(function(item, index) {
-				    content += "<tr>"
-				        + "  <th scope='row'>" + item.pkgname + "</th>"
-				        + "  <td>" + item.difficulty + "</td>"
-				        + "  <td>" + item.personnel + "</td>"
-				        + "  <td>" + item.fixedprice + "</td>"
-				        + "  <td>" + item.discountrate + "</td>"
-				        + "  <td>" + item.finalprice + "</td>"
-				        + "  <td>" + item.pkgcontent + "</td>"
-				        + "</tr>";
+					 content += "<tr>"
+					    	+ "  <td scope='row'><input type='checkbox' value = '"+item.pkgid+"' class='pkgid' name='pkgid'></td>"
+					        + "  <td>" + item.pkgname + "</td>"
+					        + "  <td>" + item.difficulty + "</td>"
+					        + "  <td>" + item.personnel + "</td>"
+					        + "  <td>" + item.fixedprice + "</td>"
+					        + "  <td>" + item.discountrate + "(%)</td>"
+					        + "  <td>" + item.finalprice + "</td>"
+					        + "  <td>" + item.pkgcontent + "</td>"
+					        + "  <td>" + item.elimination + "</td>"
+					        + "</tr>";
+
 				})
 				
 				content2 += "  <ul class='pagination justify-content-center'>"
@@ -237,15 +240,18 @@ window.addEventListener('load', function(){
 			if(map.packagelist.length > 0){
 
 				map.packagelist.forEach(function(item, index) {
-				    content += "<tr>"
-				        + "  <th scope='row'>" + item.pkgname + "</th>"
-				        + "  <td>" + item.difficulty + "</td>"
-				        + "  <td>" + item.personnel + "</td>"
-				        + "  <td>" + item.fixedprice + "</td>"
-				        + "  <td>" + item.discountrate + "</td>"
-				        + "  <td>" + item.finalprice + "</td>"
-				        + "  <td>" + item.pkgcontent + "</td>"
-				        + "</tr>";
+					 content += "<tr>"
+					    	+ "  <td scope='row'><input type='checkbox' value = '"+item.pkgid+"' class='pkgid' name='pkgid'></td>"
+					        + "  <td>" + item.pkgname + "</td>"
+					        + "  <td>" + item.difficulty + "</td>"
+					        + "  <td>" + item.personnel + "</td>"
+					        + "  <td>" + item.fixedprice + "</td>"
+					        + "  <td>" + item.discountrate + "(%)</td>"
+					        + "  <td>" + item.finalprice + "</td>"
+					        + "  <td>" + item.pkgcontent + "</td>"
+					        + "  <td>" + item.elimination + "</td>"
+					        + "</tr>";
+
 				})
 				
 				content2 += "  <ul class='pagination justify-content-center'>"
@@ -303,13 +309,15 @@ window.addEventListener('load', function(){
 				
 				map.packagelist.forEach(function(item, index) {
 				    content += "<tr>"
-				        + "  <th scope='row'>" + item.pkgname + "</th>"
+				    	+ "  <td scope='row'><input type='checkbox' value = '"+item.pkgid+"' class='pkgid' name='pkgid'></td>"
+				        + "  <td>" + item.pkgname + "</td>"
 				        + "  <td>" + item.difficulty + "</td>"
 				        + "  <td>" + item.personnel + "</td>"
 				        + "  <td>" + item.fixedprice + "</td>"
-				        + "  <td>" + item.discountrate + "</td>"
+				        + "  <td>" + item.discountrate + "(%)</td>"
 				        + "  <td>" + item.finalprice + "</td>"
 				        + "  <td>" + item.pkgcontent + "</td>"
+				        + "  <td>" + item.elimination + "</td>"
 				        + "</tr>";
 				})
 				
@@ -348,4 +356,50 @@ window.addEventListener('load', function(){
 			listTable.innerHTML = content;
 			pageNavi.innerHTML = content2;
 	})
+	}
+	
+	let deletingInProgress = false; // 삭제 작업 진행 중 여부를 나타내는 변수
+
+	function packDelete() {
+	    if (deletingInProgress) {
+	        console.log('Deletion is already in progress.');
+	        return;
+	    }
+
+	    const selectedCheckboxes = document.querySelectorAll('.pkgid:checked');
+
+	    if (selectedCheckboxes.length > 0) {
+	        // 삭제 작업을 시작함을 표시
+	        deletingInProgress = true;
+
+	        // 선택된 패키지 ID들에 대한 처리 수행
+	        console.log('selectedCheckboxes.length:', selectedCheckboxes.length);
+
+	        let deleteCount = 0; // 실제 삭제된 패키지 수 추적
+
+	        selectedCheckboxes.forEach(checkbox => {
+	            console.log(checkbox.value);
+
+	            let obj = {
+	                pkgid: checkbox.value
+	            }
+
+	            console.log("obj : " + obj);
+
+	            fetchPost('/geomin/packDeleteUpdate', obj, (map) => {
+	                deleteCount++; // 삭제가 완료되었을 때만 증가시킴
+	                if (deleteCount === selectedCheckboxes.length) {
+	                    // 모든 삭제 작업이 완료되면 알람창을 띄우고 페이지 갱신
+	                    alert(map.msg);
+	                    go(map.pageNo);
+
+	                    // 작업 완료로 표시
+	                    deletingInProgress = false;
+	                }
+	            })
+	        });
+
+	    } else {
+	        console.log('No packages selected for deletion.');
+	    }
 	}

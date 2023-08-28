@@ -68,11 +68,11 @@
 	        <li><a href="subnavi3_1()">- 매출 집계</a></li>
 	        <li><a href="subnavi3_2()">- 매출 조회</a></li>
 	    </ul>
-		<input type="text" value="${member.adminyn}">
 	</div>
              <div class='content'>
              	<!-- Q&A 게시판 시작 -->
              	<div id="boardList">
+					<input type="hidden" value="${sessionScope.member.memberid }" id="loginId" name="loginId">
              		<form class="d-flex" role="search">
 	             		<select id="searchField" name="searchField" class="form-select" size="3" aria-label="Size 3 select example">
 						  <option selected value="bno">게시글번호</option>
@@ -114,6 +114,7 @@
              		
              	<!-- Q&A View 시작 -->
           	<div id="boardview" style="display: none;">
+          	
             </div>
             <div class='banner'>
             </div>

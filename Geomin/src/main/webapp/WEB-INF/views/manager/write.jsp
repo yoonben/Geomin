@@ -21,6 +21,7 @@
 <script type="text/javascript" src="/resources/js/common.js"></script>
 <script type="text/javascript">
 	window.addEventListener('load', function(){
+		
 		wirtbtn.addEventListener('click', function(e){
 			e.preventDefault();
 			
@@ -35,6 +36,30 @@
 			console.log(obj);
 			
 			fetchPost('/geomin/boardWrite', obj, (map)=>{
+				if(map.result == 'success'){
+					alert(map.msg);
+					location.href = '/geomin/board';
+				}else{
+					alert(map.msg);
+				}
+			})
+		})
+		
+		editbtn.addEventListener('click', function(e){
+			e.preventDefault();
+			
+			let obj={
+					memberid : document.querySelector('#memberid').value
+					, bno : document.querySelector('#bno').value
+					, boardtitle : document.querySelector('#boardtitle').value
+					, writer : document.querySelector('#writer').value
+					, boardcontent : document.querySelector('#boardcontent').value
+					, boardnotice : document.querySelector('#boardnotice').value
+				}
+			
+			console.log(obj);
+			
+			fetchPost('/geomin/boardEdit', obj, (map)=>{
 				if(map.result == 'success'){
 					alert(map.msg);
 					location.href = '/geomin/board';
@@ -74,9 +99,10 @@
 			<form method="post">
 				<div id="boardRiter">
 						<input type="text" value="${member.memberid}" id="memberid" name="memberid">
-						<div><p>제목</p><input id="boardtitle" name="boardtitle" class="form-control" type="text" aria-label="default input example"></div>
+						<input type="text" value="${board.bno }" id="bno" name="bno">
+						<div><p>제목</p><input id="boardtitle" name="boardtitle" value="${board.boardtitle }" class="form-control" type="text" aria-label="default input example"></div>
 	             		<div><p>글쓴이</p><input id="writer" name="writer" value="${member.mname}" class="form-control" type="text" aria-label="default input example" disabled></div>
-	             		<div><p>문의 내용</p> <textarea id="boardcontent" name="boardcontent" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea></div>
+	             		<div><p>문의 내용</p> <textarea id="boardcontent" name="boardcontent" class="form-control" id="exampleFormControlTextarea1" rows="3">${board.boardcontent }</textarea></div>
 						<c:choose>
 						    <c:when test="${member.adminyn eq 'Y'}">
 						    	<div class="form-check">
@@ -90,7 +116,18 @@
 						    	<input type="hidden" id="boardnotice" name="boardnotice" value="N">
 						    </c:otherwise>
 					</c:choose>
-		         	<button type='button' class='btn btn-outline-primary' id='wirtbtn'>등록</button>
+					
+					<c:choose>
+					    <c:when test="${not empty board.bno}">
+					            <button type='button' class='btn btn-outline-primary' id='editbtn'>수정</button>
+					            <input type="hidden" class='btn btn-outline-primary' id='wirtbtn'>
+					    </c:when>
+					    <c:otherwise>
+					    	<button type='button' class='btn btn-outline-primary' id='wirtbtn'>등록</button>
+					    	<input type="hidden" class='btn btn-outline-primary' id='editbtn'>
+					    </c:otherwise>
+					</c:choose>
+
 		         	<input type="reset" class='btn btn-outline-primary' value="리셋">
 	         	</div>
 			</form>

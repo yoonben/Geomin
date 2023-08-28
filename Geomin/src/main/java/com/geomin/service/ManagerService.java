@@ -38,4 +38,12 @@ public class ManagerService implements ManagerServiceImpl{
 		return totalCnt;
 	}
 
+	@Override
+	public int packDeleteUpdate(packageVO vo) {
+		
+		int res = manager.packDeleteUpdate(vo);
+		
+		return res;
+	}
+
 }

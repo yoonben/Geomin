@@ -58,13 +58,15 @@
              		<table class="table">
 					  <thead>
 					    <tr>
+					      <th scope="col"></th>
 					      <th scope="col">콘텐츠명</th>
 					      <th scope="col">학습 난이도</th>
-					      <th scope="col">학습 가능 인원</th>
+					      <th scope="col">학습 인원</th>
 					      <th scope="col">정가</th>
-					      <th scope="col">할인율</th>
+					      <th scope="col">할인</th>
 					      <th scope="col">판매가</th>
 					      <th scope="col">콘텐츠 내용</th>
+					      <th scope="col">삭제 처리</th>
 					    </tr>
 					  </thead>
 					  <tbody class="table-group-divider" id="listTable">
@@ -74,6 +76,7 @@
 					<nav aria-label="Page navigation example" id="pageNavi">
 				
 				  	</nav>
+				  	<button onclick='packDelete()'>패키지 삭제</button>
              	</div>
              	
              	<div id="packgeInsert">

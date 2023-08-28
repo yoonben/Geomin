@@ -79,4 +79,24 @@ public class ManagerController extends CommonRestController{
 			return responseMap(REST_FAIL, "패키지 등록중 예외사항이 발생 하였습니다.");
 		}
 	}
+	
+	@PostMapping("/packDeleteUpdate")
+	public @ResponseBody Map<String, Object> packDeleteUpdate(@RequestBody packageVO vo) {
+		
+		try {
+			
+			int res = manager.packDeleteUpdate(vo);
+			
+			Map<String, Object> map = responseMap(REST_SUCCESS, "정상적으로 처리 되었습니다.");
+			
+			map.put("pageNo", "1");
+			
+			return map;
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return responseMap(REST_FAIL, "패키지 삭제중 예외사항이 발생 하였습니다.");
+		}
+	}
 }

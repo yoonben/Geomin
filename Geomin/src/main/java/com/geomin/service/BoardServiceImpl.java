@@ -18,4 +18,8 @@ public interface BoardServiceImpl {
 	public int totalCnt(Criteria cri);
 	
 	public int boardWrite(BoardVO vo);
+	
+	public int boardUpdate(BoardVO vo);
+	
+	public int boardDelete(BoardVO vo);
 }
