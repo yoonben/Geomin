@@ -48,4 +48,24 @@ public class loginServiceImpl implements loginService {
 		return loginMapper.findId(member);
 	}
 
+	@Override
+	public memberVO findPw(memberVO member) {
+		return loginMapper.findPw(member);
+	}
+
+	@Override
+	public int idCheckPw(memberVO member) {
+		return loginMapper.idCheckPw(member);
+	}
+
+	@Override
+	public int nameCheckPw(memberVO member) {
+		return loginMapper.nameCheckPw(member);
+	}
+
+	@Override
+	public int phoneCheckPw(memberVO member) {
+		return loginMapper.phoneCheckPw(member);
+	}
+
 }

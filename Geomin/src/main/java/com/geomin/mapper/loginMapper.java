@@ -14,4 +14,9 @@ public interface loginMapper {
 	public int nameCheck(memberVO member);
 	public int phoneCheck(memberVO member);
 	public memberVO findId(memberVO member);
+	
+	public int nameCheckPw(memberVO member);
+	public int phoneCheckPw(memberVO member);
+	public int idCheckPw(memberVO member);
+	public memberVO findPw(memberVO member);
 }

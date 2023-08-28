@@ -131,14 +131,56 @@ public class loginController extends CommonRestController{
 			memberVO findId = loginService.findId(member);
 			
 			Map<String, Object> map
-					= responseMap(REST_SUCCESS, "아이디는 [" + findId.getMemberid() + "] 입니다.");
+					= responseMap(REST_SUCCESS, "아이디는 [ " + findId.getMemberid() + " ] 입니다.");
 			map.put("url", "/geomin/login");
 			return map;
+		} else {
+			return responseMap(REST_FAIL, "이름과 휴대폰 번호를 다시 확인해주세요.");			
 		}
-		
-		return responseMap(REST_FAIL, "이름과 휴대폰 번호를 다시 확인해주세요.");
 	}
 	
+	// 비밀번호 찾기
+	@PostMapping("/findPw")
+	public @ResponseBody Map<String, Object> findPw(@RequestBody memberVO member){
+		
+		System.out.println("member======================" +  loginService.nameCheckPw(member));
+		int nameResPw = loginService.nameCheckPw(member);
+		int phoneResPw = loginService.phoneCheckPw(member);
+		int memberid = loginService.idCheckPw(member);
+
+	    
+	    
+		System.out.println("nameResPw===================" + nameResPw);
+		System.out.println("phoneRes===================" + phoneResPw);
+		System.out.println("memberid===================" + memberid);
+		
+		if (nameResPw > 0 && phoneResPw > 0 && memberid > 0) {
+	        memberVO findPw = loginService.findPw(member);
+	        Map<String, Object> map = responseMap(REST_SUCCESS, "비밀번호는 [ " + findPw.getMpassword() + " ] 입니다.");
+	        map.put("url", "/geomin/login");
+	        return map;
+	    } else {    
+	        Map<String, Object> map = responseMap(REST_FAIL, "아이디와 이름, 휴대폰 번호를 다시 확인해주세요.");
+	        map.put("url", "/geomin/login");
+	        return map;
+	    }
+	}
+	/*
+	// 비밀번호 찾기 - 임시 비밀번호
+	@PostMapping("/issueTemporaryPassword")
+	public @ResponseBody Map<String, Object> issueTemporaryPassword(@RequestParam("username") String username) {
+	    // 임시 비밀번호 생성 로직
+	    String temporaryPassword = generateTemporaryPassword();
+	    
+	    // 임시 비밀번호를 DB에 저장하거나 필요한 처리 수행
+	    
+	    Map<String, Object> responseMap = new HashMap<>();
+	    responseMap.put("success", true);
+	    responseMap.put("temporaryPassword", temporaryPassword);
+	    
+	    return responseMap;
+	}
+	*/
 	
 	 
 	
