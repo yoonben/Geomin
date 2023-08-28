@@ -25,6 +25,13 @@
     box-sizing: border-box;
     margin-right: 5px;
 }
+
+table{
+	border: 1px solid;
+}
+th, tr, td{
+	border: 1px solid;
+}
 </style>
 </head>
 <body>
@@ -34,15 +41,15 @@
 			<div class="subNavi">
 				<h3>구독 서비스</h3>
 				<ul>
-					<li><a href="/Geomin/subscribe/searchContent">학습 콘텐츠 검색 및
+					<li><a href="/geomin/subscribe/searchContent">학습 콘텐츠 검색 및
 							구독 신청</a></li>
 				</ul>
 			</div>
 			<div class="content">
 				<div class="today">
-					<h2>230825</h2>
+					<h2>230828</h2>
 					<h2>오늘의 기분은 어떤가요?</h2>
-					<img src="/resources/img/pingwing-bee_happy.png">
+					<img src="/resources/img/pingwing-bee_angry.png">
 				</div>
 
 				난이도 : 
@@ -61,29 +68,29 @@
 				<button id="searchButton">조회</button>
 				<br>
 				<table>
+					<thead>
 					<tr>
-						<th></th>
+						<th> </th>
 						<th>패키지명</th>
 						<th>학습 가능 인원</th>
 						<th>정가</th>
-						<!-- <th>구독료</th> -->
 						<th>최종가</th>
 						<th>학습 수준</th>
 						<th>학습 내용</th>
 					</tr>
-					<!-- <td><input type="checkbox" name="check" value="check" id="check"></td> -->
+					</thead>
 					<tbody>
-						<c:forEach var="list" items="${list}">
-							<tr class="data-row" data-difficulty="${list.difficulty}">
-								<td>${list.pkgName}</td>
-								<td>${list.personnel}</td>
-								<td>${list.fixedPrice}</td>
-								<td>${list.finalPrice}</td>
-								<%-- <td>${list.subsPrice}</td> --%>
-								<td>${list.difficulty}</td>
-								<td>${list.pkgContent}</td>
-							</tr>
-						</c:forEach>
+					<c:forEach var="list" items="${list}">
+						<tr id="data-raw" class="data-raw" data-value="${list.difficulty }">
+							<td><input type="checkbox" name="check" value="check" id="check"></td>
+							<td>${list.pkgName }</td>
+							<td>${list.personnel }</td>
+							<td>${list.fixedPrice }</td>
+							<td class="list_finalPrice">${list.finalPrice }</td>
+							<td>${list.difficulty }</td>
+							<td>${list.pkgContent }</td>
+						</tr>
+					</c:forEach>
 					</tbody>
 				</table>
 				<button id="reqSubscribe">구독 신청</button>
@@ -93,45 +100,65 @@
 	</div>
 </body>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		
+		const dataRows = document.querySelectorAll("tr.data-raw");
+		//$('tr.data-raw').show();
+		$('tr.data-raw').show();
 		$('#searchButton').click(function() {
-			const difficulty = document.getElementById('choiceDifficulty').value;
-			const price = document.getElementById('choicePrice').value; // 모든 데이터 행을 가져옴
-			const dataRows = $('tr.data-row').toArray(); // 가격에 따라 정렬
-			//dataRows.sort(compareByPrice);
-			// 모든 데이터 행을 숨김
-			$(dataRows).hide();
+			$('tr.data-raw').hide();
 			
-			const currentDifficulty = $(dataRows).data('difficulty');
-			console.log('currentDifficulty : ', currentDifficulty);
-			if(difficulty === "전체" || currentDifficulty === difficulty){
-				$(dataRows).show();
+			//1. 학습 수준
+			const choiceDifficulty = document.getElementById('choiceDifficulty').value; // 선택한 값을 저장
+			
+			if(choiceDifficulty == "전체"){
+				$('tr.data-raw').show();
+			}else {
+				$('tr.data-raw[data-value="' + choiceDifficulty + '"]').show();
 			}
 			
-			// 선택한 조건에 따라 데이터 행을 보이게 함
-			/* dataRows.forEach(function(row) {
-				const currentDifficulty = $(row).data('difficulty');
-				const currentPrice = parseInt($(row).find('td:eq(4)').text(),10); // 4번째 열의 가격 값 가져오기
-				if ((difficulty === "전체" || currentDifficulty === difficulty) && ((price === "없음") 
-						|| (price === "높음" && currentPrice >= getNextRowPrice(row)) 
-						|| (price === "낮음" && currentPrice <= getNextRowPrice(row)))) {
-							$(row).show();
-				}
-			}); */
-			
-			/* const rows = $('.data-row');
-	        rows.sort(function(a, b) {
-	            const aValue = parseFloat($(a).find('td:eq(3)').text()); // finalPrice 열 값
-	            const bValue = parseFloat($(b).find('td:eq(3)').text());
-	            
-	            if (price === '높음') {
-	                return aValue - bValue;
-	                $(row).show();
-	            } else if (price === '낮음') {
-	                return bValue - aValue;
-	                $(row).show();
-	            }
+			//2. 최종 가격
+			const selectedPrice = choicePrice.value;
+		    //const sortedData = Array.from(dataRows);
+		    
+		    const list_finalPrice = $(".list_finalPrice").text();
+		    console.log('list_finalPrice : ' , list_finalPrice);
+		    
+		   if (selectedPrice === "높음") {
+		    	sortedData.sort((priceA, priceB) => {
+		    	 //const list_finalPrice = $(".list_finalPrice").text();
+		    	 const priceA = $(".list_finalPrice").text();
+				 console.log('priceA : ' , priceA);
+		    	 //const priceA = parseInt(rowA.querySelector("td:nth-child(5)").textContent);
+		          //console.log('priceA : ' , priceA);
+		          //const priceA = $('.list_finalPrice').text();
+		          //const priceB = parseInt(rowB.querySelector("td:nth-child(5)").textContent);
+		          const priceB = $(".list_finalPrice").text();
+		          conosle.log('priceB : ' , priceB);
+		          return priceA - priceB;
+		    });
+	   	
+		     } else if (selectedPrice === "낮음") {
+		        sortedData.sort((rowA, rowB) => {
+		          const priceA = parseInt(rowA.querySelector("td:nth-child(5)").textContent);
+		          const priceB = parseInt(rowB.querySelector("td:nth-child(5)").textContent);
+		          return priceB - priceA;
+		        });
+		        $('#data-raw').html('');
+		     } 
+		    
+		    
+		    
+		   /*  sortedData.forEach(row => {
+	            $(row).show(); // 각 정렬된 데이터를 보이도록 설정
+	        }); */
+		    
+		   // $('tr.data-raw[' + sortedData + ']').show();
+		    
+		    /* $(sortedData).each(function() {
+	            $(this).show(); // 각 정렬된 데이터를 보이도록 설정
 	        }); */
 			
 		});

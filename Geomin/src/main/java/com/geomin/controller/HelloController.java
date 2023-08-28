@@ -21,13 +21,10 @@ public class HelloController {
 	private HelloService helloService;
 	
 	@GetMapping("searchContent")
-	public String searchContent( Model model){ //@RequestParam(name = "difficulty", required = false) String difficulty,
+	public String searchContent(Model model){
 		List<HelloVO> list = helloService.getList();
-//		if(difficulty != null) {
-//			System.out.println("difficulty : " + difficulty);
-//			model.addAttribute("difficulty", difficulty);
-//		}
 		model.addAttribute("list", list);
+		
 		return "subscribe/searchContent";
 	}
 	//★★★★★★★★ 지금 jsp에서 difficulty.difficulty 가 확인되지 않아요!!!

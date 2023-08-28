@@ -5,21 +5,10 @@
 <mapper namespace="com.geomin.mapper.HelloMapper">
 	<select id="getList" resultType="com.geomin.VO.HelloVO">
 		select 
-			pkgID, pkgName, difficulty, Personnel, fixedPrice, discountRate, finalPrice, pkgContent  
+			pkgName, Personnel, fixedPrice, finalPrice, difficulty, pkgContent  
 		from 
 			package
-				
-		<!-- select 
-			p.pkgID, p.pkgName, p.difficulty, p.Personnel, p.fixedPrice, p.discountRate, p.finalPrice, p.pkgContent, d.subsPrice  
-		from 
-			package p
-		join
-			pkgSubsDetail d
-		on		
-			p.pkgID = d.pkgID -->
-		
-		<!-- select * from package -->		
 		
 	</select>
-  
+
 </mapper>
