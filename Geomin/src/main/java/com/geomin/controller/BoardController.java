@@ -52,6 +52,26 @@ public class BoardController extends CommonRestController{
 	    return "/manager/write";
 	}
 	
+	@GetMapping("/view")
+	public String view(@RequestParam("bno") String bno, Model model) {
+	    
+		if(bno != null && !"".equals(bno)) {
+			BoardVO vo = new BoardVO();
+			
+			vo.setBno(bno);
+			
+			vo = board.getOne(vo); 
+			
+			System.out.println(vo);
+			
+			model.addAttribute("board", vo);
+			
+			return "/manager/view";
+		}else {
+			return "/manager/board";
+		}
+	}
+	
 	@PostMapping("/boardList")
 	public @ResponseBody Map<String, Object> boardList(@RequestBody Criteria cri, HttpSession session) {
 		

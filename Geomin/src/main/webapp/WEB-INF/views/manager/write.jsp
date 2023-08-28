@@ -62,7 +62,7 @@
 			fetchPost('/geomin/boardEdit', obj, (map)=>{
 				if(map.result == 'success'){
 					alert(map.msg);
-					location.href = '/geomin/board';
+					location.href = '/geomin/view?bno='+document.querySelector('#bno').value;
 				}else{
 					alert(map.msg);
 				}

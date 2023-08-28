@@ -14,7 +14,7 @@ window.addEventListener('load', function(){
 		if(map.boardList.length > 0){
 
 		    map.noticeList.forEach(function(item, index) {
-		        content += "<tr onclick='goView(" +item.bno+ ")'>"
+		        content += "<tr onclick='goView("+item.bno+")'>"
 		            + "  <th scope='row'>공지 사항</th>"
 		            + "  <td>" + item.boardtitle + "</td>"
 		            + "  <td>" + item.writer + "</td>"
@@ -23,7 +23,7 @@ window.addEventListener('load', function(){
 		    })
 
 		    map.boardList.forEach(function(item, index) {
-		        content += "<tr onclick='goView(" +item.bno+ ")'>"
+		        content += "<tr onclick='goView("+item.bno+")'>"
 		            + "  <th scope='row'>" + item.bno + "</th>"
 		            + "  <td>" + item.boardtitle + "</td>"
 		            + "  <td>" + item.writer + "</td>"
@@ -82,7 +82,7 @@ Search.addEventListener('click', function(e){
 		if(map.boardList.length > 0){
 
 		    map.noticeList.forEach(function(item, index) {
-		        content += "<tr onclick='goView(" +item.bno+ ")'>"
+		        content += "<tr onclick='goView("+item.bno+")'>"
 		            + "  <th scope='row'>공지 사항</th>"
 		            + "  <td>" + item.boardtitle + "</td>"
 		            + "  <td>" + item.writer + "</td>"
@@ -91,7 +91,7 @@ Search.addEventListener('click', function(e){
 		    })
 
 		    map.boardList.forEach(function(item, index) {
-		        content += "<tr onclick='goView(" +item.bno+ ")'>"
+		        content += "<tr onclick='goView("+item.bno+")'>"
 		            + "  <th scope='row'>" + item.bno + "</th>"
 		            + "  <td>" + item.boardtitle + "</td>"
 		            + "  <td>" + item.writer + "</td>"
@@ -138,56 +138,10 @@ Search.addEventListener('click', function(e){
 
 })
 
-function goView(bno){
-	content = ""; 
-	content2 = "";
-	
-	let loginId = document.querySelector('#loginId').value
-	
-	let obj={
-			bno : bno
-		}
-	
-	console.log(obj);
-	
-	fetchPost('/geomin/boardView', obj, (map)=>{
-	    if(map.result == 'success'){
-	        content += "<h4 class='subject'>"+map.boardVO.boardtitle+"</h4>"
-	         	+"<ul class='date'>"
-	         	+"<li class='left'>"+map.boardVO.writer+"</li>"
-	         	+"<li class='right'>"+map.boardVO.regdate+"</li>"
-	         	+"</ul>"
-	         	+"<div class='dv'>"
-	         	+map.boardVO.boardcontent
-	         	+"</div>"
-	         	+"<button type='button' class='btn btn-outline-primary' onclick='go(1)'>목록</button>";
-	        	
-	         	if(map.boardVO.memberid == loginId){
-	         		content += "<a class='btn btn-outline-primary' href='/geomin/edit?bno=" + map.boardVO.bno + "'>수정</a>"
-	                     + "<a class='btn btn-outline-primary' onclick='boardDelete("+map.boardVO.bno+")'>삭제</a>";
-	            }
 
-	        content += "</div>";
-	        
-	        boardview.style.display = '';
-	        boardList.style.display = 'none';
-	        boardview.innerHTML = content;
-	    } else {
-	        alert('페이지를 찾을 수 없습니다.');
-	    }
-	})
-	
-	$(function() {
-	    $('#writeButton').click(function() {
-	        window.location.href = '/geomin/write';
-	    });
-	});
-}
 function go(pageNo) {	
 		content = ""; 
 		content2 = "";
-		boardview.style.display = 'none';
-		boardList.style.display = '';
 		let obj={
 			searchField : document.querySelector('#searchField').value
 			, searchWord : document.querySelector('#searchWord').value
@@ -199,7 +153,7 @@ function go(pageNo) {
 			if(map.boardList.length > 0){
 				
 				 map.noticeList.forEach(function(item, index) {
-				        content += "<tr onclick='goView(" +item.bno+ ")'>"
+				        content += "<tr onclick='goView("+item.bno+")'>"
 				            + "  <th scope='row'>공지 사항</th>"
 				            + "  <td>" + item.boardtitle + "</td>"
 				            + "  <td>" + item.writer + "</td>"
@@ -208,7 +162,7 @@ function go(pageNo) {
 				    })
 
 				    map.boardList.forEach(function(item, index) {
-				        content += "<tr onclick='goView(" +item.bno+ ")'>"
+				        content += "<tr onclick='goView("+item.bno+")'>"
 				            + "  <th scope='row'>" + item.bno + "</th>"
 				            + "  <td>" + item.boardtitle + "</td>"
 				            + "  <td>" + item.writer + "</td>"
@@ -253,6 +207,10 @@ function go(pageNo) {
 			pageNavi.innerHTML = content2;
 	})
 	}
+
+function goView(bno){
+	location.href = '/geomin/view?bno='+bno;
+}
 
 function boardDelete(pageNo) {
 	

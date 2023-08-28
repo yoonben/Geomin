@@ -54,7 +54,57 @@
 			}
 	</style>
 <script type="text/javascript" src="/resources/js/common.js"></script>
-<script type="text/javascript" src="/resources/js/board.js"></script>
+<script type="text/javascript" >
+window.addEventListener('load', function(){
+	let Boardbno = document.querySelector('#bno').value;
+	
+	goView(Boardbno);
+})
+
+function goView(bno){
+	content = ""; 
+	content2 = "";
+	
+	let loginId = document.querySelector('#loginId').value
+	
+	let obj={
+			bno : bno
+		}
+	
+	console.log(obj);
+	
+	fetchPost('/geomin/boardView', obj, (map)=>{
+	    if(map.result == 'success'){
+	        content += "<h4 class='subject'>"+map.boardVO.boardtitle+"</h4>"
+	         	+"<ul class='date'>"
+	         	+"<li class='left'>"+map.boardVO.writer+"</li>"
+	         	+"<li class='right'>"+map.boardVO.regdate+"</li>"
+	         	+"</ul>"
+	         	+"<div class='dv'>"
+	         	+map.boardVO.boardcontent
+	         	+"</div>"
+	         	+"<button type='button' class='btn btn-outline-primary' onclick='go(1)'>목록</button>";
+	        	
+	         	if(map.boardVO.memberid == loginId){
+	         		content += "<a class='btn btn-outline-primary' href='/geomin/edit?bno=" + map.boardVO.bno + "'>수정</a>"
+	                     + "<a class='btn btn-outline-primary' onclick='boardDelete("+map.boardVO.bno+")'>삭제</a>";
+	            }
+
+	        content += "</div>";
+	
+	        boardview.innerHTML = content;
+	    } else {
+	        alert('페이지를 찾을 수 없습니다.');
+	    }
+	})
+	
+	$(function() {
+	    $('#writeButton').click(function() {
+	        window.location.href = '/geomin/write';
+	    });
+	});
+}
+</script>
 </head>
 <body>
 <div id='container'>
@@ -70,52 +120,14 @@
 	    </ul>
 	</div>
              <div class='content'>
-             	<!-- Q&A 게시판 시작 -->
-             	<div id="boardList">
-             		<form class="d-flex" role="search">
-	             		<select id="searchField" name="searchField" class="form-select" size="3" aria-label="Size 3 select example">
-						  <option selected value="bno">게시글번호</option>
-						  <option value="boardtitle">내용</option>
-						  <option value="writer">글쓴이</option>
-						</select>
-      				</form>
-       				 <input class="form-control me-2" id="searchWord" name="searchWord" type="search" placeholder="Search" aria-label="Search">
-        			 <button class="btn btn-outline-success" id="Search" type="submit">Search</button>
-             		<table class="table">
-					  <thead>
-					    <tr>
-					      <th scope="col">번호</th>
-					      <th scope="col">제목</th>
-					      <th scope="col">글쓴이</th>
-					      <th scope="col">게시물등록일</th>
-					    </tr>
-					  </thead>
-					  <tbody class="table-group-divider" id="listTable">
-					    
-					  </tbody>
-					</table>
-					<nav aria-label="Page navigation example" id="pageNavi">
-					
-				  	</nav>
-				  	<c:choose>
-						    <c:when test="${empty member}">
-						        <div class="boardWrite">
-              					</div>
-						    </c:when>
-						    <c:otherwise>
-						    	<div class="boardWrite">
-						        	<button type='button' class='btn btn-outline-primary' id="writeButton">글쓰기</button>
-              					</div>
-						    </c:otherwise>
-					</c:choose>
-             	</div>
-             	<!-- Q&A 게시판 끝 -->
+          	<input type="text" value="${board.bno}" id="bno" name="bno">
+          	<input type="hidden" value="${sessionScope.member.memberid }" id="loginId" name="loginId">
              		
              	<!-- Q&A View 시작 -->
-          	<div id="boardview" style="display: none;">
-          	
+          	<div id="boardview">
             </div>
             <div class='banner'>
+            
             </div>
           </div>
       </div>
