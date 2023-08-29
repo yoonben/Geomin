@@ -41,15 +41,15 @@ th, tr, td{
 			<div class="subNavi">
 				<h3>구독 서비스</h3>
 				<ul>
-					<li><a href="/geomin/subscribe/searchContent">학습 콘텐츠 검색 및
-							구독 신청</a></li>
+					<li><a href="/geomin/subscribe/searchContent">학습 콘텐츠 검색 및 구독 신청</a></li>
+					<li><a href="/geomin/subscribe/subscribeSearchContent">구매한 학습 콘텐츠 검색</a></li>
 				</ul>
 			</div>
 			<div class="content">
 				<div class="today">
-					<h2>230828</h2>
+					<h2>230829</h2>
 					<h2>오늘의 기분은 어떤가요?</h2>
-					<img src="/resources/img/pingwing-bee_angry.png">
+					<img src="/resources/img/pingwing-bee_sad.png">
 				</div>
 
 				난이도 : 
@@ -61,16 +61,18 @@ th, tr, td{
 				</select> 
 				가격 : 
 				<select id="choicePrice">
-					<option value="없음" selected="selected">선택 안함</option>
+					<option value="" selected="selected">선택하기</option>
 					<option value="높음">가격 높은 순</option>
 					<option value="낮음">가격 낮은 순</option>
 				</select>
+				내용 검색 :
+				<input id="searchContent" type="text" width="150px" placeholder="내용을 검색해 주세요">
 				<button id="searchButton">조회</button>
 				<br>
-				<table>
+				<table id="result-table">
 					<thead>
 					<tr>
-						<th> </th>
+						<th>ㅁ</th>
 						<th>패키지명</th>
 						<th>학습 가능 인원</th>
 						<th>정가</th>
@@ -103,64 +105,95 @@ th, tr, td{
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		
 		const dataRows = document.querySelectorAll("tr.data-raw");
-		//$('tr.data-raw').show();
-		$('tr.data-raw').show();
 		$('#searchButton').click(function() {
 			$('tr.data-raw').hide();
 			
-			//1. 학습 수준
-			const choiceDifficulty = document.getElementById('choiceDifficulty').value; // 선택한 값을 저장
+			//1. 첫 번째 조건문
+			/* const choiceDifficulty = document.getElementById('choiceDifficulty').value; // 선택한 값을 저장
 			
 			if(choiceDifficulty == "전체"){
 				$('tr.data-raw').show();
 			}else {
 				$('tr.data-raw[data-value="' + choiceDifficulty + '"]').show();
-			}
+			} */
 			
 			//2. 최종 가격
-			const selectedPrice = choicePrice.value;
-		    //const sortedData = Array.from(dataRows);
+			/* const selectedPrice = choicePrice.value;
+		    const sortedData = Array.from(dataRows);
 		    
 		    const list_finalPrice = $(".list_finalPrice").text();
 		    console.log('list_finalPrice : ' , list_finalPrice);
 		    
-		   if (selectedPrice === "높음") {
-		    	sortedData.sort((priceA, priceB) => {
-		    	 //const list_finalPrice = $(".list_finalPrice").text();
-		    	 const priceA = $(".list_finalPrice").text();
-				 console.log('priceA : ' , priceA);
-		    	 //const priceA = parseInt(rowA.querySelector("td:nth-child(5)").textContent);
-		          //console.log('priceA : ' , priceA);
-		          //const priceA = $('.list_finalPrice').text();
-		          //const priceB = parseInt(rowB.querySelector("td:nth-child(5)").textContent);
-		          const priceB = $(".list_finalPrice").text();
-		          conosle.log('priceB : ' , priceB);
-		          return priceA - priceB;
-		    });
-	   	
-		     } else if (selectedPrice === "낮음") {
+		    if (selectedPrice === "높음") {
+		    	sortedData.sort((rowA, rowB) => {
+		        	const priceA = rowA.querySelector(".list_finalPrice").textContent;
+            		const priceB = rowB.querySelector(".list_finalPrice").textContent;
+		        	return priceB - priceA;
+		    	});
+	   	    } else if (selectedPrice === "낮음") {
 		        sortedData.sort((rowA, rowB) => {
-		          const priceA = parseInt(rowA.querySelector("td:nth-child(5)").textContent);
-		          const priceB = parseInt(rowB.querySelector("td:nth-child(5)").textContent);
-		          return priceB - priceA;
+		        	const priceA = rowA.querySelector(".list_finalPrice").textContent;
+            		const priceB = rowB.querySelector(".list_finalPrice").textContent;
+		        	return priceA - priceB;
 		        });
-		        $('#data-raw').html('');
-		     } 
-		    
-		    
-		    
-		   /*  sortedData.forEach(row => {
-	            $(row).show(); // 각 정렬된 데이터를 보이도록 설정
-	        }); */
-		    
-		   // $('tr.data-raw[' + sortedData + ']').show();
-		    
-		    /* $(sortedData).each(function() {
-	            $(this).show(); // 각 정렬된 데이터를 보이도록 설정
-	        }); */
-			
+		    } */ 
+		  	
+		  //3. 세 번째 조건문
+		 /* const searchContent = document.getElementById('searchContent').value;
+			   console.log("searchContent : " , searchContent);
+		        sortedData.forEach(row => {
+		            const contentCell = row.querySelector("td:last-child"); // 마지막 td 셀 (pkgContent)
+		            const content = contentCell.textContent; // 대소문자 구분 없이 비교하기 위해 소문자로 변환
+
+		            // 검색어가 포함되어 있으면 해당 데이터를 보여줌
+		            if (content.includes(searchContent)) {
+		                row.style.display = 'table-row';
+		            }
+		        }); */
+		    const choiceDifficulty = document.getElementById('choiceDifficulty').value;
+	        const searchContent = document.getElementById('searchContent').value.toLowerCase();
+	        const sortedData = Array.from(dataRows);
+	        const tableBody = document.querySelector('#result-table tbody');
+	        //const trBody = document.querySelector('tr.data-raw');
+	        sortedData.forEach(row => {
+	            const difficultyValue = row.getAttribute("data-value");
+	            const contentCell = row.querySelector("td:last-child");
+	            const content = contentCell.textContent.toLowerCase();
+
+	            // 첫 번째와 세 번째 조건을 순차적으로 적용
+	            if (
+	                (choiceDifficulty === "전체" || difficultyValue === choiceDifficulty) &&
+	                (searchContent === "" || content.includes(searchContent))
+	            ) {
+	                // 데이터 보여주기
+	                row.style.display = 'table-row';
+	            }else {
+	            	dataRows.innerHTML = '검색결과가 없어요..'; 
+	            }
+	        });
+	        
+	        // 두 번째 조건 적용
+	        const selectedPrice = choicePrice.value;
+
+	        if (selectedPrice === "높음") {
+	            sortedData.sort((rowA, rowB) => {
+	                const priceA = parseFloat(rowA.querySelector(".list_finalPrice").textContent);
+	                const priceB = parseFloat(rowB.querySelector(".list_finalPrice").textContent);
+	                return priceB - priceA;
+	            });
+	        } else if (selectedPrice === "낮음") {
+	            sortedData.sort((rowA, rowB) => {
+	                const priceA = parseFloat(rowA.querySelector(".list_finalPrice").textContent);
+	                const priceB = parseFloat(rowB.querySelector(".list_finalPrice").textContent);
+	                return priceA - priceB;
+	            });
+	        }
+	        
+        	sortedData.forEach(row => {
+ 	        	console.log('sortedData : ' , sortedData);
+ 	        	tableBody.appendChild(row);
+ 	        });
 		});
 	}); //$(document).ready EndPoint
 </script>

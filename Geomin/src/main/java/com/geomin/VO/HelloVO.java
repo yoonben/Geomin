@@ -11,4 +11,8 @@ public class HelloVO {
 	private String difficulty;
 	private String pkgContent;
 	
+	private String MEMBERID;
+	private String SUBSDATE;
+	
+	
 }

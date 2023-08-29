@@ -10,5 +10,9 @@ import com.geomin.VO.HelloVO;
 public interface HelloService {
 
 	List<HelloVO> getList();
+
+	List<HelloVO> getSubList();
+
+	void subContent();
 	
 }

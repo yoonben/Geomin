@@ -8,4 +8,7 @@ public interface HelloMapper {
 
 	List<HelloVO> getList();
 	
+	List<HelloVO> getSubList();
+	
+	void subContent();
 }

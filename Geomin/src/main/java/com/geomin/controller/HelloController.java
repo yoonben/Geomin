@@ -25,7 +25,16 @@ public class HelloController {
 		List<HelloVO> list = helloService.getList();
 		model.addAttribute("list", list);
 		
+		helloService.subContent();
 		return "subscribe/searchContent";
+	}
+	
+	@GetMapping("subscribeSearchContent")
+	public String subscribeSearchContent(Model model) {
+		List<HelloVO> list = helloService.getSubList();
+		model.addAttribute("list", list);
+		
+		return "subscribe/subscribeSearchContent";
 	}
 	//★★★★★★★★ 지금 jsp에서 difficulty.difficulty 가 확인되지 않아요!!!
 	

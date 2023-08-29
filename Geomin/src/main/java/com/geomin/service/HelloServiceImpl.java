@@ -20,4 +20,16 @@ public class HelloServiceImpl implements HelloService{
 		return helloMapper.getList();
 	}
 
+	@Override
+	public List<HelloVO> getSubList() {
+		// TODO Auto-generated method stub
+		return helloMapper.getSubList();
+	}
+
+	@Override
+	public void subContent() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

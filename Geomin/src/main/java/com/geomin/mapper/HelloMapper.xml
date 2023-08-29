@@ -8,7 +8,28 @@
 			pkgName, Personnel, fixedPrice, finalPrice, difficulty, pkgContent  
 		from 
 			package
+	</select>
+	
+	<select id="getSubList" resultType="com.geomin.VO.HelloVO">
+		select 
+			s.MEMBERID, s.PKGNAME, s.SUBSDATE, p.finalPrice, p.difficulty
+		from 
+			 package p
+		join
+			PKGSUBSDETAIL s
+		on
+			s.pkgid = p.pkgid
 		
 	</select>
+	
+	<update id="subContent">
+		<!-- update 
+			PKGSUBSDETAIL 
+		set 
+			BUYCHECK = 'Y'
+		where  -->
+			
+	</update>
+	
 
 </mapper>
