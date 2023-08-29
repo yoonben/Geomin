@@ -56,4 +56,9 @@
   		select mpassword from member where mname= #{mname} and mphone = #{mphone} and memberid = #{memberid}
   	</select>
   	
+  	<!-- 비밀번호 변경 -->
+	<update id="updatePw" >
+		update member set mpassword = #{mpassword} where memberid = #{memberid}
+	</update>
+  	
   </mapper>

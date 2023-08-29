@@ -91,7 +91,25 @@ window.addEventListener('load', function(){
 
 		});
 		
-
+		$(function(){
+			$("#findPwbtn").click(function(){
+				$.ajax({
+					url : "/geomin/findPw",
+					type : "POST",
+					data : {
+						id : $("#findid").val(),
+						email : $("#findemailPw").val()
+					},
+					success : function(result) {
+						alert(result);
+					},
+				})
+			});
+		})
+		
+		
+		
+		
 		});
 		
 	// post방식 요청

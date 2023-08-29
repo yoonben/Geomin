@@ -132,6 +132,19 @@ public class loginController extends CommonRestController {
 		}
 	}
 	
+	
+	/* 비밀번호 찾기 */
+	@RequestMapping(value = "/findPw", method = RequestMethod.GET)
+	public void findPwGET() throws Exception{
+	}
+
+	@RequestMapping(value = "/findPw", method = RequestMethod.POST)
+	public void findPwPOST(@ModelAttribute memberVO member, HttpServletResponse response) throws Exception{
+		loginService.findPwEmail(response, member);
+	}
+	
+	
+	/*
 	// 비밀번호 찾기
 	@PostMapping("/findPw")
 	public @ResponseBody Map<String, Object> findPw(@RequestBody memberVO member) {
@@ -154,7 +167,6 @@ public class loginController extends CommonRestController {
 
 	}
 	
-	/*
 	 * // 비밀번호 찾기
 	 * 
 	 * @PostMapping("/findPw") public @ResponseBody Map<String, Object>

@@ -18,4 +18,8 @@ public interface loginMapper {
 	public int emailCheckPw(memberVO member);
 	public int idCheckPw(memberVO member);
 	public memberVO findPw(memberVO member);
+	
+	// 비밀번호 변경
+	public int updatePw(memberVO vo) throws Exception;
+	
 }

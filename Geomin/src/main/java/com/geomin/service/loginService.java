@@ -1,5 +1,7 @@
 package com.geomin.service;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Service;
 
 import com.geomin.VO.memberVO;
@@ -22,5 +24,15 @@ public interface loginService {
 	public int idCheckPw(memberVO member);
 	public int emailCheckPw(memberVO member);
 	public memberVO findPw(memberVO member);
+	
+	//이메일발송
+	public void sendEmail(memberVO vo, String div) throws Exception;
+
+	//비밀번호찾기
+	public void findPwEmail(HttpServletResponse resp, memberVO vo) throws Exception;
+	
+	// 비밀번호 변경
+	public int updatePw(memberVO vo) throws Exception;
+	
 	
 }
