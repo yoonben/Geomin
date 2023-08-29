@@ -20,8 +20,7 @@ public interface loginService {
 	public memberVO findId(memberVO member);
 	
 	public int idCheckPw(memberVO member);
-	public int nameCheckPw(memberVO member);
-	public int phoneCheckPw(memberVO member);
+	public int emailCheckPw(memberVO member);
 	public memberVO findPw(memberVO member);
 	
 }

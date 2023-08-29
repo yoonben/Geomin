@@ -44,13 +44,10 @@
   	</select>
   	
   	
-  	<select id='nameCheckPw' resultType='int'>
-  		select count(*) from member where mname = #{mname}
+  	<select id='emailCheckPw' resultType='int'>
+  		select count(*) from member where memail = #{memail}
   	</select>
   	
-  	<select id='phoneCheckPw' resultType='int'>
-  		select count(*) from member where mphone = #{mphone}
-  	</select>
   	<select id='idCheckPw' resultType="int">
   		select count(*) from member where memberid = #{memberid}
   	</select>

@@ -17,5 +17,6 @@ public class memberVO {
 	private String adminyn;
 	private String marketingagree;
 	
+	
 }
 

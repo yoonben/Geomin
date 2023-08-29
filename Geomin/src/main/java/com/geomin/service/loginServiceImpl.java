@@ -59,13 +59,9 @@ public class loginServiceImpl implements loginService {
 	}
 
 	@Override
-	public int nameCheckPw(memberVO member) {
-		return loginMapper.nameCheckPw(member);
+	public int emailCheckPw(memberVO member) {
+		return loginMapper.emailCheckPw(member);
 	}
 
-	@Override
-	public int phoneCheckPw(memberVO member) {
-		return loginMapper.phoneCheckPw(member);
-	}
 
 }
