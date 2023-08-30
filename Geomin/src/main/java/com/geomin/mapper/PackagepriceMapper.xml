@@ -4,9 +4,54 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.geomin.mapper.PackagepriceMapper">
 
-	<select id="dayPrice" resultType="com.geomin.VO.PackagepriceVO">
-		SELECT sum(TRANSACTIONCNT) TRANSACTIONCNT, sum(DATETOTALSALES) DATETOTALSALES FROM PACKAGEPRICE
-		WHERE EXTRACT(Year FROM SALESDATE) = #{year} AND EXTRACT(MONTH FROM SALESDATE) = #{month} AND EXTRACT(DAY FROM SALESDATE) = #{day};
+	<select id="yearPrice" resultType="com.geomin.VO.PackagepriceVO">
+		<![CDATA[
+		SELECT years.year, COALESCE(p.count_transaction, 0) transactioncnt, COALESCE(p.sum_sales, 0) DATETOTALSALES
+		FROM (
+		    SELECT EXTRACT(YEAR FROM CURRENT_DATE) - LEVEL + 1 year
+		    FROM dual
+		    CONNECT BY LEVEL <= 10
+		) years
+		LEFT JOIN (
+		    SELECT EXTRACT(YEAR FROM SALESDATE) year, SUM(TRANSACTIONCNT) count_transaction, SUM(DATETOTALSALES) sum_sales
+		    FROM PACKAGEPRICE
+		    GROUP BY EXTRACT(YEAR FROM SALESDATE)
+		) p ON years.year = p.year
+		ORDER BY years.year 	
+		]]>
+		
 	</select>
-
+	
+	<select id="monthPrice" resultType="com.geomin.VO.PackagepriceVO">
+	
+		SELECT 
+		    months.month,
+		    COALESCE(p.count_transaction, 0) AS transactioncnt,
+		    COALESCE(p.sum_sales, 0) AS DATETOTALSALES
+		FROM (
+		    SELECT 1 AS month from dual UNION ALL
+		    SELECT 2 from dual UNION ALL
+		    SELECT 3 from dual UNION ALL
+		    SELECT 4 from dual UNION ALL
+		    SELECT 5 from dual UNION ALL
+		    SELECT 6 from dual UNION ALL
+		    SELECT 7 from dual UNION ALL
+		    SELECT 8 from dual UNION ALL
+		    SELECT 9 from dual UNION ALL
+		    SELECT 10 from dual UNION ALL
+		    SELECT 11 from dual UNION ALL
+		    SELECT 12 from dual
+		) months
+		LEFT JOIN (
+		    SELECT 
+		        EXTRACT(month FROM SALESDATE) AS month, 
+		        SUM(TO_NUMBER(TRANSACTIONCNT)) AS count_transaction, 
+		        SUM(TO_NUMBER(DATETOTALSALES)) AS sum_sales  
+		    FROM PACKAGEPRICE
+		    WHERE EXTRACT(YEAR FROM SALESDATE) = #{year}
+		    GROUP BY EXTRACT(month FROM SALESDATE) 
+		) p ON months.month = p.month
+		ORDER BY months.month
+		
+	</select>
 </mapper>

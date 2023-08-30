@@ -383,7 +383,7 @@ window.addEventListener('load', function(){
 	            let obj = {
 	                pkgid: checkbox.value
 	            }
-
+	            
 	            console.log("obj : " + obj);
 
 	            fetchPost('/geomin/packDeleteUpdate', obj, (map) => {

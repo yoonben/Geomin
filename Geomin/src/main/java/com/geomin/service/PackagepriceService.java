@@ -1,5 +1,7 @@
 package com.geomin.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +13,19 @@ public class PackagepriceService implements PackagepriceServiceImpl{
 
 	@Autowired
 	PackagepriceMapper mapper;
-	
+
 	@Override
-	public PackagepriceVO dayPrice(PackagepriceVO vo) {
-		
-		PackagepriceVO packageprice = mapper.dayPrice(vo);
-		
-		return packageprice;
+	public List<PackagepriceVO> yearPrice(PackagepriceVO vo) {
+		List<PackagepriceVO> list = mapper.yearPrice(vo);
+		return list;
 	}
+
+	@Override
+	public List<PackagepriceVO> monthPrice(PackagepriceVO vo) {
+		List<PackagepriceVO> list = mapper.monthPrice(vo);
+		return list;
+	}
+	
+
 
 }
