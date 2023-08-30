@@ -2,6 +2,11 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.geomin.mapper.PackagepriceMapper">	
+<mapper namespace="com.geomin.mapper.PackagepriceMapper">
+
+	<select id="dayPrice" resultType="com.geomin.VO.PackagepriceVO">
+		SELECT sum(TRANSACTIONCNT) TRANSACTIONCNT, sum(DATETOTALSALES) DATETOTALSALES FROM PACKAGEPRICE
+		WHERE EXTRACT(Year FROM SALESDATE) = #{year} AND EXTRACT(MONTH FROM SALESDATE) = #{month} AND EXTRACT(DAY FROM SALESDATE) = #{day};
+	</select>
 
 </mapper>
