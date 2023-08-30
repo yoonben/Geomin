@@ -35,6 +35,16 @@ public class ManagerController extends CommonRestController{
 		return "/manager/board";
 	}
 	
+	@GetMapping("/salesTally")
+	public String salesTally() {
+		return "/manager/salesTally";
+	}
+	
+	@GetMapping("/salesInquiry")
+	public String salesInquiry() {
+		return "/manager/salesInquiry";
+	}
+	
 	@GetMapping("/qanda")
 	public String qanda() {
 		return "/manager/qanda";

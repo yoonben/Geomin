@@ -166,4 +166,17 @@ public class BoardController extends CommonRestController{
 		}
 	}
 	
+	@PostMapping("/answer")
+	public @ResponseBody Map<String, Object> answer(@RequestBody BoardVO vo) {
+		
+		try {
+			board.answerUpdate(vo);
+			
+			return responseMap(REST_SUCCESS, "답변이 등록되었습니다.");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return responseMap(REST_FAIL, "답변 등록중 예외사항이 발생 하였습니다.");
+		}
+	}
 }

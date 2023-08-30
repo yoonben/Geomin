@@ -28,10 +28,10 @@
             <div class='subnavi'>
 	    <ul>
 	        <li><a href="/geomin/manager">학습콘텐츠 등록</a></li>
-	        <li><a href="/geomin/board">Q&A</a></li>
-	        <li><a href="subnavi3()">매출 관리</a></li>
-	        <li><a href="subnavi3_1()">- 매출 집계</a></li>
-	        <li><a href="subnavi3_2()">- 매출 조회</a></li>
+		    <li><a href="/geomin/board">Q&A</a></li>
+		    <li><a href="/geomin/salesTally">매출 관리</a></li>
+		    <li><a href="/geomin/salesTally">- 매출 집계</a></li>
+		    <li><a href="/geomin/salesInquiry">- 매출 조회</a></li>
 	    </ul>
 	</div>
              <div class='content'>

@@ -61,4 +61,10 @@ public class BoardService implements BoardServiceImpl{
 		int res = board.boardDelete(vo);
 		return res;
 	}
+
+	@Override
+	public int answerUpdate(BoardVO vo) {
+		int res = board.answerUpdate(vo);
+		return res;
+	}
 }

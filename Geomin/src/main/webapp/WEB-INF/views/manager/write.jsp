@@ -25,11 +25,16 @@
 		wirtbtn.addEventListener('click', function(e){
 			e.preventDefault();
 			
+			let boardcontent = document.querySelector('#boardcontent').value;
+
+		    // 사용자 입력 내용에서 엔터키를 줄바꿈 문자 \n로 치환
+		    boardcontent = boardcontent.replace(/\n/g, '<br>');
+			
 			let obj={
 					memberid : document.querySelector('#memberid').value
 					, boardtitle : document.querySelector('#boardtitle').value
 					, writer : document.querySelector('#writer').value
-					, boardcontent : document.querySelector('#boardcontent').value
+					, boardcontent : boardcontent
 					, boardnotice : document.querySelector('#boardnotice').value
 				}
 			
@@ -47,13 +52,17 @@
 		
 		editbtn.addEventListener('click', function(e){
 			e.preventDefault();
+			let boardcontent = document.querySelector('#boardcontent').value;
+
+		    // 사용자 입력 내용에서 엔터키를 줄바꿈 문자 \n로 치환
+		    boardcontent = boardcontent.replace(/\n/g, '<br>');
 			
 			let obj={
 					memberid : document.querySelector('#memberid').value
 					, bno : document.querySelector('#bno').value
 					, boardtitle : document.querySelector('#boardtitle').value
 					, writer : document.querySelector('#writer').value
-					, boardcontent : document.querySelector('#boardcontent').value
+					, boardcontent : boardcontent
 					, boardnotice : document.querySelector('#boardnotice').value
 				}
 			
@@ -69,6 +78,14 @@
 			})
 		})
 	})
+
+function goBoard(){
+	location.href = '/geomin/board';
+}
+
+function goView(){
+	location.href = '/geomin/view?bno='+document.querySelector('#bno').value;
+}
 	
 		function updateCheckboxValue() {
             var checkbox = document.getElementById("adminCheckbox");
@@ -90,16 +107,16 @@
 		    <ul>
 		        <li><a href="/geomin/manager">학습콘텐츠 등록</a></li>
 		        <li><a href="/geomin/board">Q&A</a></li>
-		        <li><a href="subnavi3()">매출 관리</a></li>
-		        <li><a href="subnavi3_1()">- 매출 집계</a></li>
-		        <li><a href="subnavi3_2()">- 매출 조회</a></li>
+		        <li><a href="/geomin/salesTally">매출 관리</a></li>
+		        <li><a href="/geomin/salesTally">- 매출 집계</a></li>
+		        <li><a href="/geomin/salesInquiry">- 매출 조회</a></li>
 		    </ul>
 		</div>
 		<div class='content'>
 			<form method="post">
 				<div id="boardRiter">
-						<input type="text" value="${member.memberid}" id="memberid" name="memberid">
-						<input type="text" value="${board.bno }" id="bno" name="bno">
+						<input type="hidden" value="${member.memberid}" id="memberid" name="memberid">
+						<input type="hidden" value="${board.bno }" id="bno" name="bno">
 						<div><p>제목</p><input id="boardtitle" name="boardtitle" value="${board.boardtitle }" class="form-control" type="text" aria-label="default input example"></div>
 	             		<div><p>글쓴이</p><input id="writer" name="writer" value="${member.mname}" class="form-control" type="text" aria-label="default input example" disabled></div>
 	             		<div><p>문의 내용</p> <textarea id="boardcontent" name="boardcontent" class="form-control" id="exampleFormControlTextarea1" rows="3">${board.boardcontent }</textarea></div>
@@ -119,16 +136,19 @@
 					
 					<c:choose>
 					    <c:when test="${not empty board.bno}">
-					            <button type='button' class='btn btn-outline-primary' id='editbtn'>수정</button>
+					            <button type='button' class='btn btn-outline-primary' id='editbtn'>수정 완료</button>
+					            <button type='button' class='btn btn-outline-primary' onclick='goView()'>목록</button>
 					            <input type="hidden" class='btn btn-outline-primary' id='wirtbtn'>
 					    </c:when>
 					    <c:otherwise>
 					    	<button type='button' class='btn btn-outline-primary' id='wirtbtn'>등록</button>
+					    	<button type='button' class='btn btn-outline-primary' onclick='goBoard()'>목록</button>
+					    	<input type="reset" class='btn btn-outline-primary' value="리셋">
 					    	<input type="hidden" class='btn btn-outline-primary' id='editbtn'>
 					    </c:otherwise>
 					</c:choose>
 
-		         	<input type="reset" class='btn btn-outline-primary' value="리셋">
+		         	
 	         	</div>
 			</form>
 		</div>

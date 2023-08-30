@@ -41,6 +41,10 @@
 		WHERE bno = #{bno}
  	 </delete>
  	 
+ 	 <update id="answerUpdate">
+ 	 	update board set answer = #{answer} where bno = #{bno}
+ 	 </update>
+ 	 
  	 <sql id="criteria">
  	 	<choose>
  	 		<when test="searchField == 'bno'">

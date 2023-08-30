@@ -22,4 +22,6 @@ public interface BoardServiceImpl {
 	public int boardUpdate(BoardVO vo);
 	
 	public int boardDelete(BoardVO vo);
+	
+	public int answerUpdate(BoardVO vo);
 }

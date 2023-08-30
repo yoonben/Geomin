@@ -62,11 +62,11 @@
 	<div id='section'>
             <div class='subnavi'>
 	    <ul>
-	        <li><a href="/geomin/manager">학습콘텐츠 등록</a></li>
-	        <li><a href="/geomin/board">Q&A</a></li>
-	        <li><a href="subnavi3()">매출 관리</a></li>
-	        <li><a href="subnavi3_1()">- 매출 집계</a></li>
-	        <li><a href="subnavi3_2()">- 매출 조회</a></li>
+				<li><a href="/geomin/manager">학습콘텐츠 등록</a></li>
+		        <li><a href="/geomin/board">Q&A</a></li>
+		        <li><a href="/geomin/salesTally">매출 관리</a></li>
+		        <li><a href="/geomin/salesTally">- 매출 집계</a></li>
+		        <li><a href="/geomin/salesInquiry">- 매출 조회</a></li>
 	    </ul>
 	</div>
              <div class='content'>
@@ -115,9 +115,9 @@
           	<div id="boardview" style="display: none;">
           	
             </div>
+          </div>
             <div class='banner'>
             </div>
-          </div>
       </div>
       </div>
          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
