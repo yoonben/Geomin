@@ -27,7 +27,7 @@
 				 </exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
@@ -266,6 +266,11 @@
 			<version>1.2</version>
 		</dependency>
 		
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		    <version>${org.springframework-version}</version> <!-- 적절한 버전 사용 -->
+		</dependency>
 				
 	</dependencies>
     <build>

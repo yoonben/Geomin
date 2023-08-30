@@ -97,11 +97,30 @@ input[type=text] {
 				<input type="button" value="비밀번호 변경" id="updatePwbtn"style="width:90%;height:50px;">
 				
 				<!-- 비밀번호 찾기 시  msg처리를 위해 hidden으로 input태그 생성 -->
-				<input type='text' name='findPwText' id='findPwText' value='' style="width:90%;height:50px;">
+				<input type='text' name='findPwText' id='findPwText' value='' style='width:90%;height:50px;'>
 			</form>
 		</div>
 	</div>
 	<!-- 비밀번호 찾기 모달 끝 -->
+	
+	<!-- 임시 비밀번호 변경 모달 시작 -->		
+	<div id="UpdatePw" class="modal" style="border:1px solid;width:500px;height:400px;margin: 20px auto 20px auto" >
+		<div class="modal_contentUptPw">
+			<span class="closeUptPw">&times;</span>
+			<h1>비밀번호 변경</h1>
+
+			<form action='/geomin/UpdatePw'>
+				<input type="password" name="tempPw" id="tempPw" placeholder="발급받은 임시 비밀번호를 작성해주세요." style="width:90%;height:50px;">
+				<input type="password" name="newpw" id="newpw" placeholder="새로운비밀번호 (영대소문자,숫자,특수문자 포함 8-15자)" style="width:90%;height:50px;">
+				<input type="password" name="newpwRe" id="newpwRe" placeholder="비밀번호를 한 번 더 입력해주세요" style="width:90%;height:50px;">
+				<input type="submit" value="비밀번호 변경" id="newpwbtn"style="width:90%;height:50px;">
+				
+				<!-- 비밀번호 찾기 시  msg처리를 위해 hidden으로 input태그 생성 -->
+				<input type='text' name='UpdatePwText' id='UpdatePwText' value='' style='width:90%;height:50px;'>
+			</form>
+		</div>
+	</div>
+	<!-- 임시 비밀번호 변경 모달 끝 -->
 				
 	
 </div>	

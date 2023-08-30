@@ -26,10 +26,10 @@ public interface loginService {
 	public memberVO findPw(memberVO member);
 	
 	//이메일발송
-	public void sendEmail(memberVO vo, String div) throws Exception;
+	//public void sendEmail(memberVO vo, String div) throws Exception;
 
 	//비밀번호찾기
-	public void findPwEmail(HttpServletResponse resp, memberVO vo) throws Exception;
+	//public void findPwEmail(HttpServletResponse resp, memberVO vo) throws Exception;
 	
 	// 비밀번호 변경
 	public int updatePw(memberVO vo) throws Exception;

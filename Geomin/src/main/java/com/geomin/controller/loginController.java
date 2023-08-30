@@ -134,13 +134,36 @@ public class loginController extends CommonRestController {
 	
 	
 	/* 비밀번호 찾기 */
-	@RequestMapping(value = "/findPw", method = RequestMethod.GET)
-	public void findPwGET() throws Exception{
-	}
 
-	@RequestMapping(value = "/findPw", method = RequestMethod.POST)
-	public void findPwPOST(@ModelAttribute memberVO member, HttpServletResponse response) throws Exception{
-		loginService.findPwEmail(response, member);
+	@PostMapping("/findPw")
+	public @ResponseBody Map<String, Object> findPw(@RequestBody memberVO member, HttpServletResponse response, String div1, String pw) throws Exception{
+		
+		int idRes = loginService.idCheckPw(member);
+		int memailRes = loginService.emailCheckPw(member);
+		
+		if(idRes > 0 && memailRes > 0) {
+			
+			// 임시 비밀번호 생성
+			pw = "";
+			for (int i = 0; i < 10; i++) {
+				pw += (char) ((Math.random() * 26) + 97);
+			}
+			pw += "1!";
+			member.setMpassword(pw);
+			System.out.println("pw========================= " + pw);
+			// 비밀번호 변경
+			//String resPw = Integer.toString(loginService.updatePw(member));
+
+//			loginService.findPwEmail(response, member);
+//			loginService.sendEmail(member, div1);
+			
+			Map<String, Object> map = responseMap(REST_SUCCESS, "임시 비밀번호는 [" + member.getMpassword() + "] 입니다. 즉시 변경바랍니다.");
+		
+			map.put("url", "/geomin/login");
+			return map;
+		} else {
+			return responseMap(REST_FAIL, "이름과 이메일 주소를 다시 확인해주세요.");			
+		}
 	}
 	
 	

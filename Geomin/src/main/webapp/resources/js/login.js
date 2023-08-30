@@ -58,7 +58,7 @@ window.addEventListener('load', function(){
 			});
 
 		});
-		
+		/*
 		//비밀번호 찾기 
 		let findPwbtn = document.querySelector('#findPwbtn');
 		
@@ -97,8 +97,8 @@ window.addEventListener('load', function(){
 					url : "/geomin/findPw",
 					type : "POST",
 					data : {
-						id : $("#findid").val(),
-						email : $("#findemailPw").val()
+						memberid : $("#findid").val(),
+						memail : $("#findemailPw").val()
 					},
 					success : function(result) {
 						alert(result);
@@ -106,8 +106,45 @@ window.addEventListener('load', function(){
 				})
 			});
 		})
+		*/
+		// 임시 비밀번호 발급!
+		let findPwbtn = document.querySelector('#findPwbtn');
 		
+		findPwbtn.addEventListener('click', function(event){
+			// 기본 이벤트 제거
+			event.preventDefault();
+			
+			let findid = document.querySelector('#findid');
+			let findemailPw = document.querySelector('#findemailPw');
+			let findPwText = document.querySelector('#findPwText');
+			
+			
+			if(!findid.value){
+				findPwText.value = '아이디를 입력해주세요';
+				return
+			}
+			if(!findemailPw.value){
+				findPwText.value = '이메일 주소를 입력해주세요';
+				return
+			}
+			
+			let obj={memberid : findid.value,
+					 memail : findemailPw.value};
+			
+			console.log("비밀번호 찾기 체크", obj);
+			
+			fetchPost('/geomin/findPw', obj, (map)=>{
+				findPwText.value = map.msg;
+			});
+
+		});
 		
+		//임시비밀번호 변경 및 암호화 처리
+		let updatePwbtn = document.querySelector("#updatePwbtn");
+		
+		updatePwbtn.addEventListener('click', function(event){
+			event.preventDefault();
+		})
 		
 		
 		});
@@ -131,19 +168,6 @@ window.addEventListener('load', function(){
 		}
 	}
 
-	
-
-	/* 
-	function findIdCheck(map){
-		if(map.result == 'success'){
-   			location.href=map.url;
-   		} else {
-    		alert(map.msg);
-    		findIdText.innerHTML=map.msg;
-   		}		
-   		console.log(map);
-       } 
-     */
 	
 		
     	function loginCheck(map){

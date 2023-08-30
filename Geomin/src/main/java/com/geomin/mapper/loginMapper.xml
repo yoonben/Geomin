@@ -53,7 +53,7 @@
   	</select>
   	
   	<select id='findPw' resultType='com.geomin.VO.memberVO'>
-  		select mpassword from member where mname= #{mname} and mphone = #{mphone} and memberid = #{memberid}
+  		select mpassword from member where memail= #{memail} and memberid = #{memberid}
   	</select>
   	
   	<!-- 비밀번호 변경 -->
