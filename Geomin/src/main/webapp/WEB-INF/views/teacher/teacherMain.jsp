@@ -63,18 +63,38 @@
     window.addEventListener('load', function(){
    	 	const subnavi1 = document.getElementById('#subnavi1');
     	const subnavi2 = document.getElementById('#subnavi2');
+    	const subnavi3 = document.getElementById('#subnavi3');
+    	const subnavi4 = document.getElementById('#subnavi4');
     	const introductionbtn = document.getElementById('#introductionbtn');
     	
     	$('#subnavi1').click(function (){
     		console.log('#subnavi1 작동 개시');
     		$('#introduction1').show ();
     		$('#introduction2').hide();
+    		$('#introduction3').hide();
+    		$('#introduction4').hide();
     	});
     	
     	$('#subnavi2').click(function (){
     		console.log('#subnavi2 작동 개시');
     		$('#introduction2').show();
     		$('#introduction1').hide();
+    		$('#introduction3').hide();
+    		$('#introduction4').hide();
+    	});
+    	$('#subnavi3').click(function (){
+    		console.log('#subnavi3 작동 개시');
+    		$('#introduction3').show();
+    		$('#introduction1').hide();
+    		$('#introduction2').hide();
+    		$('#introduction4').hide();
+    	});
+    	$('#subnavi4').click(function (){
+    		console.log('#subnavi4 작동 개시');
+    		$('#introduction4').show();
+    		$('#introduction1').hide();
+    		$('#introduction2').hide();
+    		$('#introduction4').hide();
     	});
     	
     	$('#introductionbtn').click(function (){
@@ -83,27 +103,6 @@
     		$('#introduction1').hide();
     	});
 
-    
-    	//숙제 목록 전체선택 /부분선택
-		$(function(){
-			var chkObj = document.getElementsByName('rowCheck');
-			var rowCnt = chkObj.length;
-			
-			$("input[name='allCheck']").click(function(){
-				var chk_listArr = $("input[name='rowCheck']");
-				for(var i=0; i<chk_listArr.length; i++){
-					chk_listArr[i].checked = this.checked;
-				}
-			});
-			
-			$("input[name='rowCheck']").click(function(){
-				if($("input[name='rowCheck']:checked").length == rowCnt){
-					$("input[name='allCheck']")[0].checked = true;
-				} else {
-					$("input[name='allCheck']")[0].checked = false;
-				}
-			});
-		});
     	
     })
 	</script>
@@ -118,93 +117,57 @@
 	<div id='section'>
             <div class='subnavi'>
             	<ul>
-            		<li><b>학습서비스</b></li>
-                    <li><label style="cursor:pointer;"><a id="subnavi1">학습 그룹 가입 신청</a></label></li>
-                   	<li><label style="cursor:pointer;"><a id="subnavi2">나의 숙제 제출</a></label></li>
+            		<li><b>강사마당</b></li>
+                    <li><label style="cursor:pointer;"><a id="subnavi1">학습 그룹 등록</a></label></li>
+                   	<li><label style="cursor:pointer;"><a id="subnavi2">그룹 가입 승인</a></label></li>
+                   	<li><label style="cursor:pointer;"><a id="subnavi3">숙제 전송</a></label></li>
+                   	<li><label style="cursor:pointer;"><a id="subnavi4">숙제 평가</a></label></li>
                	</ul>
 				
             </div>
              <div class='content'>
-             	<!-- 학습그룹 신청 페이지 -->
+             
+             	<!-- 학습 그룹 등록 페이지 -->
              	<div id="introduction1">
-                	<img src="/resources/img/game1.jpg" alt="" id='introduction1img'>
-             		<h1><b>학습 그룹 신청<b></b></h1><br><br> 
-             		<h3>"바둑의 첫 걸음, 그룹신청!"</h3><br> 
-           		
-           		<form>
-                	 <table class="table" border="1px solid" style="height:50%;weight:100%">
-							  <thead>
-							    <tr class="table-success">
-			               			<th>그룹목록</th>
-			               			<td>
-			                			<select class="form-select" aria-label="Default select example">
-										  <option selected>그룹 선택</option>
-										  <option value="1">One</option>
-										</select>
-			               			</td>
-			               		</tr>
-							  </thead>
-							  
-							  <tbody>
-								<!-- 그룹목록 선택에 따른 정보 출력 -->
-		                		<tr>
-		                			<th>학습컨텐츠 </th>
-		                			<td></td>
-		                		</tr>
-		                		<tr>
-		                			<th>학습내용 </th>
-		                			<td></td>
-		                		</tr>
-		                		<tr>
-		                			<th>학습선생님 </th>
-		                			<td></td>
-		                		</tr>
-		                		<tr>
-		                			<th>학습기간 </th>
-		                			<td></td>
-		                		</tr>
-		                		<tr>
-		                			<th>학습난이도 </th>
-		                			<td></td>
-		                		</tr>
-             				    <tr>
-		                			<th>가입현황</th>  <!-- 시간될때 현재 가입가능 여부  표시 -->
-		                			<td></td>
-		                		</tr>
-						    </tbody>
-					    </table>
-	               	<button type="submit" class="btn btn-success" id="introductionbtn">그룹 신청하기</button>
-               	</form>
-           	</div>
+          	 	</div>
              	
              	
-             	
-             	
-             	
-             	<!-- 숙제 제출 페이지 -->
+
+             	<!-- 그룹 가입 승인 페이지 -->
              	<div id="introduction2">
-             	
              		<div>
-             			<h1><b>나의 숙제 제출</b></h1><br>
+             			<h1><b>그룹 가입 승인</b></h1><br>
+             		</div>
+             		<div>
+		      				<select class="form-select" aria-label="Default select example">
+							  <option selected>학습패키지 선택</option>
+							  <option value="1">One</option>
+							</select>             		
+             		</div>
+							
+					<div>
+             			그룹명 : 
              		</div>
              		
              		<div>
-             			학습자 : 
+             			가입입원 : 
              		</div>
              		
              		<form>
 	             		<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-	             			<button type="button" class="btn btn-success" id="introductionbtn">숙제 조회</button>
+	             			<button type="button" class="btn btn-success" id="introductionbtn">조회</button>
 	             		</div>
              		
 		                <table class="table" border="1px solid" style="height:50%;weight:100%">
 							  <thead>
 							    <tr class="table-success">
 							      <th scope="col"><input type='checkbox' id='allCheck' name='allCheck'></th>
-							      <th scope="col">학습컨텐츠</th>
-							      <th scope="col">학습선생님</th>
-							      <th scope="col">숙제 내용</th>
-							      <th scope="col">제출기한</th>
+							      <th scope="col">학습자명</th>
+							      <th scope="col">나이</th>
+							      <th scope="col">연락처</th>
+							      <th scope="col">이메일</th>
+							      <th scope="col">가입신청 일자</th>
+							      <th scope="col">승인 여부</th>
 							    </tr>
 							  </thead>
 							  
@@ -215,22 +178,26 @@
 							      <td>Otto</td>
 							      <td>@mdo</td>
 							      <td>@mdo</td>
-							    </tr>
-							    <tr>
-							      <th scope="col">학습내용</th>
-							      <td colspan='5'>@mdo</td>
-							    </tr>
-							    <tr>
-							      <th scope="col">느낀점</th>
-							      <td colspan='5'>@mdo</td>
+							      <td>@mdo</td>
+							      <td>@mdo</td>
 							    </tr>
 							  </tbody>
 						</table>
              			
-             			<button type="submit" class="btn btn-success" id="introductionbtn">숙제 제출하기</button>
+             			<button type="submit" class="btn btn-success" id="introductionbtn">그룹가입 승인</button>
              		</form>
              	</div>
 
+
+             	<!-- 숙제 전송 페이지 -->
+             	<div id="introduction3">
+          	 	</div>
+
+
+             	<!-- 숙제 평가 페이지 -->
+             	<div id="introduction4">
+          	 	</div>
+          	 	
             </div>
             
             <div class='banner'>

@@ -173,8 +173,8 @@
                 <ul>
                     <li id="helloService"><a href="/geomin/main">서비스 안내</a></li>
                     <li id="studyService"><a href="/geomin/studentStudy/groupjoin">학습 서비스</a></li>
-                    <li id="subscribeService"><a href="/geomin/subscribe/searchContent">구독서비스</a></li><!-- <a href="" ></a> -->
-                    <li id="teacherService"><a>강사마당</a></li><!-- <a href=""></a> -->
+                    <li id="subscribeService"><a href="/geomin/subscribe/searchContent">구독서비스</a></li>
+                    <li id="teacherService"><a href="/geomin/teacher/teacherMain">강사마당</a></li>
                     <li id="adminService"><a href="/geomin/manager">관리마당</a></li><!-- <a href=""></a> -->
                 </ul>
             </div>

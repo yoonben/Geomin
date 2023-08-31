@@ -107,7 +107,8 @@ window.addEventListener('load', function(){
 			});
 		})
 		*/
-		// 임시 비밀번호 발급!
+		
+		// 임시 비밀번호 발급! (비밀번호 찾기 모달)
 		let findPwbtn = document.querySelector('#findPwbtn');
 		
 		findPwbtn.addEventListener('click', function(event){
@@ -173,8 +174,115 @@ window.addEventListener('load', function(){
 		})
 		
 		
+		
+	   	//아이디 찾기 버튼 모달 처리
+		let openfindId = document.querySelector('#openfindId');
+		let myModal = document.querySelector('#myModal');
+		let close = document.querySelector('.close');
+		let modal_content = document.querySelector('.modal_content');
+		
+	   	//비밀번호 찾기 버튼 모달 처리
+		let openfindPw = document.querySelector('#openfindPw');
+		let myModalPw = document.querySelector('#myModalPw');
+		let closePw = document.querySelector('.closePw');
+		let modal_contentPw = document.querySelector('.modal_contentPw');
+		
+	   	//비밀번호 변경 버튼 모달 처리
+		let updatePwbtn = document.querySelector('#updatePwbtn');
+		let updatePw = document.querySelector('#updatePw');
+		let closeUptPw = document.querySelector('.closeUptPw');
+		let modal_contentUptPw = document.querySelector('.modal_contentUptPw');
+		
+		$("#myModal").css("display", "none");
+        $("#myModalPw").css("display", "none");
+        $("#updatePw").css("display", "none");
+		
+		$(document).ready(function() {
+		    // 아이디 찾기 버튼 클릭 시 모달 창 보이도록
+		    $("#openfindId").click(function(e) {
+		        e.preventDefault(); // 기본 동작 막음
+		        $("#myModal").css("display", "block");
+		        $("#myModalPw").css("display", "none");
+		    });
+		
+		    // 모달 닫기 버튼 클릭 시 모달이 숨겨지도록 처리
+		    $(".close").click(function() {
+		        $("#myModal").css("display", "none");
+		    });
+		
+		    // 모달 바깥 클릭 시 모달이 숨겨지도록 처리
+		    $(document).click(function(event) {
+		        if (event.target == $("#myModal")[0]) {
+		            $("#myModal").css("display", "none");
+		        }
+		    });
+		
+		    // 모달 내부 클릭 이벤트 전파 중지
+		    $("#myModal .modal_content").click(function(event) {
+		        event.stopPropagation(); // 이벤트 전파 중지
+		    });
 		});
 		
+		$(document).ready(function() {
+		    // 비밀번호 찾기 버튼 클릭 시 모달 창 보이도록
+		    $("#openfindPw").click(function(e) {
+		        e.preventDefault(); // 기본 동작 막음
+		        $("#myModalPw").css("display", "block");
+		        $("#myModal").css("display", "none");
+		    });
+		
+		    // 모달 닫기 버튼 클릭 시 모달이 숨겨지도록 처리
+		    $(".closePw").click(function() {
+		        $("#myModalPw").css("display", "none");
+		    });
+		
+		    // 모달 바깥 클릭 시 모달이 숨겨지도록 처리
+		    $(document).click(function(event) {
+		        if (event.target == $("#myModalPw")[0]) {
+		            $("#myModalPw").css("display", "none");
+		        }
+		    });
+		
+		    // 모달 내부 클릭 이벤트 전파 중지
+		    $("#myModalPw .modal_contentPw").click(function(event) {
+		        event.stopPropagation(); // 이벤트 전파 중지
+		    });
+		});
+		
+		$(document).ready(function() {
+		    // 비밀번호 변경 버튼 클릭 시 모달 창 보이도록
+		    $("#updatePwbtn").click(function(e) {
+		        e.preventDefault(); // 기본 동작 막음
+		        $("#updatePw").css("display", "block");
+		        $("#myModalPw").css("display", "none");
+		        $("#myModal").css("display", "none");
+		    });
+		
+		    // 모달 닫기 버튼 클릭 시 모달이 숨겨지도록 처리
+		    $(".closeUptPw").click(function() {
+		        $("#updatePw").css("display", "none");
+		    });
+		
+		    // 모달 바깥 클릭 시 모달이 숨겨지도록 처리
+		    $(document).click(function(event) {
+		        if (event.target == $("#updatePw")[0]) {
+		            $("#updatePw").css("display", "none");
+		        }
+		    });
+		
+		    // 모달 내부 클릭 이벤트 전파 중지
+		    $("#updatePw .modal_contentUptPw").click(function(event) {
+		        event.stopPropagation(); // 이벤트 전파 중지
+		    });
+		});
+		
+		
+		
+		
+		});
+		
+
+
 	// post방식 요청
 	function fetchPost(url, obj, callback){
 		try{
@@ -208,7 +316,7 @@ window.addEventListener('load', function(){
    		console.log(map);
          }
 
-    	
+
     	//아이디 저장 체크박스
     	$(document).ready(function(){
    		// 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
@@ -271,69 +379,7 @@ window.addEventListener('load', function(){
    		return unescape(cookieValue);
    	}
 
-   	//아이디 찾기 버튼 모달 처리
-	let openfindId = document.querySelector('#openfindId');
-	let myModal = document.querySelector('#myModal');
-	let close = document.querySelector('.close');
-	let modal_content = document.querySelector('.modal_content');
-   	//비밀번호 찾기 버튼 모달 처리
-	let openfindPw = document.querySelector('#openfindPw');
-	let myModalPw = document.querySelector('#myModalPw');
-	let closePw = document.querySelector('.closePw');
-	let modal_contentPw = document.querySelector('.modal_contentPw');
-	
-	
-	$(document).ready(function() {
-	    // 아이디 찾기 버튼 클릭 시 모달 창 보이도록
-	    $("#openfindId").click(function(e) {
-	        e.preventDefault(); // 기본 동작 막음
-	        $("#myModal").css("display", "block");
-	        $("#myModalPw").css("display", "none");
-	    });
-	
-	    // 모달 닫기 버튼 클릭 시 모달이 숨겨지도록 처리
-	    $(".close").click(function() {
-	        $("#myModal").css("display", "none");
-	    });
-	
-	    // 모달 바깥 클릭 시 모달이 숨겨지도록 처리
-	    $(document).click(function(event) {
-	        if (event.target == $("#myModal")[0]) {
-	            $("#myModal").css("display", "none");
-	        }
-	    });
-	
-	    // 모달 내부 클릭 이벤트 전파 중지
-	    $("#myModal .modal_content").click(function(event) {
-	        event.stopPropagation(); // 이벤트 전파 중지
-	    });
-	});
-	
-	$(document).ready(function() {
-	    // 비밀번호 찾기 버튼 클릭 시 모달 창 보이도록
-	    $("#openfindPw").click(function(e) {
-	        e.preventDefault(); // 기본 동작 막음
-	        $("#myModalPw").css("display", "block");
-	        $("#myModal").css("display", "none");
-	    });
-	
-	    // 모달 닫기 버튼 클릭 시 모달이 숨겨지도록 처리
-	    $(".closePw").click(function() {
-	        $("#myModalPw").css("display", "none");
-	    });
-	
-	    // 모달 바깥 클릭 시 모달이 숨겨지도록 처리
-	    $(document).click(function(event) {
-	        if (event.target == $("#myModalPw")[0]) {
-	            $("#myModalPw").css("display", "none");
-	        }
-	    });
-	
-	    // 모달 내부 클릭 이벤트 전파 중지
-	    $("#myModalPw .modal_contentPw").click(function(event) {
-	        event.stopPropagation(); // 이벤트 전파 중지
-	    });
-	});
+
 
    	
 	

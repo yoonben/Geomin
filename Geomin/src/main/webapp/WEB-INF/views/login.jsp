@@ -5,8 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/resources/js/login.js"></script>
+
+
 <style>
 
 input[type=text] {
@@ -20,7 +23,6 @@ input[type=text] {
 }	
 	
 </style>
-
 
 
 </head>
@@ -58,8 +60,8 @@ input[type=text] {
 	<div>
 		<table style='border:1px solid;width:500px;height:50px;margin: 20px auto 50px auto ;' >
 			<tr>
-				<th><input type='button' id='openfindId' name='findId'  class='btn_find' value='아이디 찾기' onclick='location.href="/geomin/login"'></th>
-				<th><input type='button' id='openfindPw' name='findPw' class='btn_find' value='비밀번호 찾기' onclick='location.href="/geomin/login"'></th>
+				<th><input type='button' id='openfindId' name='findId'  class='btn_find' value='아이디 찾기' ></th>
+				<th><input type='button' id='openfindPw' name='findPw' class='btn_find' value='비밀번호 찾기' ></th>
 				<th><input type='button' id='joinMember' name='joinMember' class='btn_find' value='회원가입' onclick='location.href="/geomin/joinMember"'></th>
 			</tr>
 		</table>
@@ -110,7 +112,7 @@ input[type=text] {
 			<h1>비밀번호 변경</h1>
 
 			<form action='/geomin/updatePw'>
-				<input type="text" name="helpid" id="helpid" placeholder="" style="width:90%;height:50px;">
+				<input type="text" name="helpid" id="helpid" placeholder="아이디를 입력해주세요" style="width:90%;height:50px;">
 				<input type="password" name="newpw" id="newpw" placeholder="새로운비밀번호 (영대소문자,숫자,특수문자 포함 8-15자)" style="width:90%;height:50px;">
 				<input type="password" name="newpwCheck" id="newpwCheck" placeholder="비밀번호를 한 번 더 입력해주세요" style="width:90%;height:50px;">
 				<input type="submit" value="비밀번호 변경" id="newpwbtn"style="width:90%;height:50px;">
