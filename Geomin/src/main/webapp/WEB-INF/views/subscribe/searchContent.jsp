@@ -45,12 +45,6 @@ th, tr, td{
 					<li><a href="/geomin/subscribe/subscribeSearchContent">구매한 학습 콘텐츠 검색</a></li>
 				</ul>
 			</div>
-			<!-- <div class="today">
-					<h2>230830</h2>
-					<h2>오늘의 기분은 어떤가요?</h2>
-					<img src="/resources/img/pingwing-bee_angry.png">
-				</div> -->
-
 				난이도 : 
 				<select id="choiceDifficulty">
 					<option value="전체" selected="selected">전체</option>
@@ -86,21 +80,13 @@ th, tr, td{
 					<c:forEach var="list" items="${list}">
 						<tr id="data-raw" class="data-raw" data-value="${list.difficulty }">
 							<td><input type="checkbox" name="check" value="check" id="check"></td>
+							<td style="display: none;">${list.pkgID }</td>
 							<td>${list.pkgName }</td>
 							<td>${list.personnel }</td>
 							<td>${list.fixedPrice }</td>
 							<td class="list_finalPrice">${list.finalPrice }</td>
 							<td>${list.difficulty }</td>
 							<td>${list.pkgContent }</td>
-							<%-- <td style="display: none">${list.memberID }</td> --%>
-							<%-- <c:choose>
-        						<c:when test="${list.buyCheck eq 'Y'}">
-           							 구독 완료
-        						</c:when>
-        						<c:when test="${list.buyCheck eq 'N'}">
-            						<button id="subContent">구독하기</button>
-        						</c:when>
-        					</c:choose> --%>
 						</tr>
 					</c:forEach>
 					</tbody>
@@ -213,12 +199,13 @@ th, tr, td{
 		    $('input[name="check"]:checked').each(function() {
 		        var $row = $(this).closest('tr');
 		        var rowData = {
-		            pkgName: $row.find('td:eq(1)').text(),
-		            personnel: $row.find('td:eq(2)').text(),
-		            fixedPrice: $row.find('td:eq(3)').text(),
-		            finalPrice: $row.find('.list_finalPrice').text(),
-		            difficulty: $row.find('td:eq(5)').text(),
-		            pkgContent: $row.find('td:eq(6)').text(),
+		        	pkgID: $row.find('td:eq(1)').text(),
+		            pkgName: $row.find('td:eq(2)').text(),
+		            Personnel: $row.find('td:eq(3)').text(),
+		            fixedPrice: $row.find('td:eq(4)').text(),
+		            finalPrice: $row.find('td:eq(5)').text(),
+		            difficulty: $row.find('td:eq(6)').text(),
+		            pkgContent: $row.find('td:eq(7)').text()
 		        };
 		        checked_Data.push(rowData);
 		    });
@@ -229,6 +216,7 @@ th, tr, td{
 		        url: '/geomin/subscribe/searchContent',
 		        type: 'POST',
 		        data: JSON.stringify(checked_Data),
+		        //data: checked_Data,
 		        contentType: 'application/json',
 		        success: function(response) {
 		            // 서버 응답을 처리하는 코드

@@ -34,7 +34,7 @@
 			
 		<!-- 모든 리스트 다 불러오기  -->	
 		select
-			p.pkgName, p.Personnel, p.fixedPrice, p.finalPrice, p.difficulty, p.pkgContent
+			p.pkgID, p.pkgName, p.Personnel, p.fixedPrice, p.finalPrice, p.difficulty, p.pkgContent
 		from 
 			package p
 		where 
@@ -97,15 +97,31 @@
 		ON 
 			D.memberID = m.memberID
 		where 
-			p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID2'
+			p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID22'
 			
 	</select>
 	
-	<insert id="addSubContent" parameterType="com.geomin.VO.HelloVO">
-		INSERT INTO PKGSUBSDETAIL(PKGID, MEMBERID, PKGNAME, SUBSDATE, SUBSPRICE, PERSONNEL, CURPERSONNEL)
-		VALUES ()
-	
+	<insert id="addSubContent" parameterType="java.util.List"> <!-- parameterType="java.util.List" -->
+		<!-- INSERT INTO PKGSUBSDETAIL(pkgID, memberID, PKGNAME, SUBSDATE, PERSONNEL, SUBSPRICE)
+		VALUES (#{pkgID}, 'memberID22', #{pkgName}, sysdate, #{Personnel}, #{finalPrice}) -->
+		<foreach collection="list" item="item" separator=";">
+        	INSERT INTO PKGSUBSDETAIL(pkgID, memberID, PKGNAME, SUBSDATE, PERSONNEL, SUBSPRICE)
+        	VALUES (#{item.pkgID}, 'memberID22', #{item.pkgName}, sysdate, #{item.personnel}, #{item.finalPrice})
+    	</foreach>
 	</insert>
+	
+	<!-- <insert id="addSubContent" parameterType="java.util.List"> parameterType="java.util.List"
+		INSERT INTO PKGSUBSDETAIL(pkgID, memberID, PKGNAME, SUBSDATE, PERSONNEL, SUBSPRICE)
+		VALUES (#{pkgID}, 'memberID22', #{pkgName}, sysdate, #{Personnel}, #{finalPrice})
+		<foreach collection="list" item="item" separator=";">
+        INSERT INTO PKGSUBSDETAIL(pkgID, memberID, PKGNAME, SUBSDATE, PERSONNEL, SUBSPRICE)
+        VALUES (#{item.pkgID}, 'memberID22', #{item.pkgName}, sysdate, #{item.personnel}, #{item.finalPrice})
+    	</foreach>
+	</insert> -->
+	<!-- <insert id="addSubContent" parameterType="List"> parameterType="com.geomin.VO.HelloVO"
+    	INSERT INTO PKGSUBSDETAIL(pkgID, memberID, PKGNAME, SUBSDATE, PERSONNEL, SUBSPRICE)
+    	VALUES (#{pkgID}, 'memberID22', #{pkgName}, sysdate, #{Personnel}, #{finalPrice})
+	</insert> -->
 	
 	<!-- <update id="subContent">
 		update 

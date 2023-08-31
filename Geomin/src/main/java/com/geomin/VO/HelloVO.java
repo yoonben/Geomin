@@ -1,47 +1,50 @@
 package com.geomin.VO;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Data;
 
 @Data
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class HelloVO {
+	private String pkgID;
 	private String pkgName;
-	private int personnel;
+	private int Personnel;
 	private String fixedPrice;
 	private String finalPrice;
 	private String difficulty;
 	private String pkgContent;
-	
+
 	private String memberID;
 	private String subsDate;
-	
+
 	private String mType;
 	private String buyCheck;
+
+	public HelloVO() {
+		super();
+	}
 	
-//	@JsonIgnore
-//	private String memberID;
-//	
-//	@JsonIgnore
-//	private String subsDate;
-//	
-//	@JsonIgnore
-//    public String getMemberID() {
-//        return memberID;
-//    }
-//	
-//	@JsonIgnore
-//    public String setMemberID() {
-//        return memberID;
-//    }
-//	
-//	@JsonIgnore
-//    public String setSubsDate() {
-//        return subsDate;
-//    }
-//	
-//    @JsonIgnore
-//    public String getSubsDate() {
-//        return subsDate;
-//    }
+	public HelloVO(String pkgID, String pkgName, int Personnel, String fixedPrice, String finalPrice, String difficulty,
+			String pkgContent) {
+		super();
+		this.pkgID = pkgID;
+		this.pkgName = pkgName;
+		this.Personnel = Personnel;
+		this.fixedPrice = fixedPrice;
+		this.finalPrice = finalPrice;
+		this.difficulty = difficulty;
+		this.pkgContent = pkgContent;
+	}
+
+	public HelloVO(String pkgID, String memberID, String pkgName, String subsDate, int Personnel, String finalPrice) {
+		super();
+		this.pkgID = pkgID;
+		this.memberID = memberID;
+		this.pkgName = pkgName;
+		this.subsDate = subsDate;
+		this.Personnel = Personnel;
+		this.finalPrice = finalPrice;
+	}
+
+
 }

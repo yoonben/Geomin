@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.geomin.VO.Hello2VO;
 import com.geomin.VO.HelloVO;
 import com.geomin.mapper.HelloMapper;
 
@@ -27,9 +28,9 @@ public class HelloServiceImpl implements HelloService{
 	}
 
 	@Override
-	public void addSubContent(HelloVO checked_Data) {
+	public List<Hello2VO> addSubContent(List<Hello2VO> checked_Data) {
 		// TODO Auto-generated method stub
-		helloMapper.addSubContent(checked_Data);
+		return helloMapper.addSubContent(checked_Data);
 		
 	}
 

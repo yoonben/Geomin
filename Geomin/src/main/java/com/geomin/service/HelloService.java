@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.geomin.VO.Hello2VO;
 import com.geomin.VO.HelloVO;
 
 @Service
@@ -13,6 +14,6 @@ public interface HelloService {
 
 	List<HelloVO> getSubList();
 
-	void addSubContent(HelloVO checked_Data);
+	List<Hello2VO> addSubContent(List<Hello2VO> checked_Data);
 	
 }
