@@ -60,5 +60,7 @@
 	<update id="updatePw" >
 		update member set mpassword = #{mpassword} where memberid = #{memberid}
 	</update>
+	
+
   	
   </mapper>

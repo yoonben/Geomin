@@ -1,17 +1,10 @@
 package com.geomin.service;
 
-import java.io.PrintWriter;
-
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.mail.HtmlEmail;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.geomin.VO.memberVO;
 import com.geomin.mapper.loginMapper;
-import com.sun.mail.imap.protocol.Namespaces.Namespace;
 
 @Service
 public class loginServiceImpl implements loginService {
@@ -164,6 +157,10 @@ public class loginServiceImpl implements loginService {
 	public int updatePw(memberVO member) throws Exception {
 		return loginMapper.updatePw(member);
 	}
+
+
+
+
 	
 	
 

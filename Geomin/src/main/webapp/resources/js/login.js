@@ -139,11 +139,37 @@ window.addEventListener('load', function(){
 
 		});
 		
-		//임시비밀번호 변경 및 암호화 처리
-		let updatePwbtn = document.querySelector("#updatePwbtn");
 		
-		updatePwbtn.addEventListener('click', function(event){
+		
+		//임시비밀번호 변경 처리
+		let newpwbtn = document.querySelector("#newpwbtn");
+		
+		newpwbtn.addEventListener('click', function(event){
 			event.preventDefault();
+			
+			let helpid = document.querySelector('#helpid');
+			let newpw = document.querySelector('#newpw');
+			let newpwCheck = document.querySelector('#newpwCheck');
+			let UpdatePwText = document.querySelector('#UpdatePwText');
+			
+//			//비밀번호칸이 비었거나 임시비밀번호와 동일하면 ( || memberPw.value !== tempPw.value)
+//			if(!tempPw.value) {
+//				UpdatePwText.value = '발급받은 임시비밀번호를 입력해주세요';
+//				return
+			
+			if(newpw.value !== newpwCheck.value){
+				UpdatePwText.value = '비밀번호를 동일하게 입력해주세요';
+				return
+			}
+			
+			let obj={mpassword : newpw.value,
+					memberid : helpid.value};
+			
+			console.log("임시 비밀번호 변경 체크", obj);
+			
+			fetchPost('/geomin/updatePw', obj, (map)=>{
+				UpdatePwText.value = map.msg;
+			});
 		})
 		
 		

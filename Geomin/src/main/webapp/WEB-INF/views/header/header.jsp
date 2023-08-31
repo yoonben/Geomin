@@ -31,7 +31,7 @@
             z-index: 9999;
         }
 
-        #header>.gnb_box>h1 {
+        #header>.gnb_box> .cnt_gnb_h {
         	
             max-width: 400px;
             position: absolute;
@@ -142,11 +142,11 @@
 <body>
         <div id='header'>
             <div class="gnb_box">
-				<h1>
-
-              	  <img src="/resources/img/main.png" alt="">
-                </h1>
-
+				<div class='cnt_gnb_h'>
+					<h1>
+	              	  <a href="/geomin/main"><img src="/resources/img/main.png" alt=""></a>
+	                </h1>
+				</div>
                 <div class='cnt_gnb'>
                     <h1>게임으로 배우는 바둑교실</h1>
                 </div>
@@ -172,7 +172,7 @@
 			<div class='navi'>
                 <ul>
                     <li id="helloService"><a href="/geomin/main">서비스 안내</a></li>
-                    <li id="studyService"><a>학습 서비스</a></li><!-- <a href="" ></a> -->
+                    <li id="studyService"><a href="/geomin/studentStudy/groupjoin">학습 서비스</a></li>
                     <li id="subscribeService"><a href="/geomin/subscribe/searchContent">구독서비스</a></li><!-- <a href="" ></a> -->
                     <li id="teacherService"><a>강사마당</a></li><!-- <a href=""></a> -->
                     <li id="adminService"><a href="/geomin/manager">관리마당</a></li><!-- <a href=""></a> -->

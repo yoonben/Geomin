@@ -134,9 +134,9 @@ public class loginController extends CommonRestController {
 	
 	
 	/* 비밀번호 찾기 */
-
 	@PostMapping("/findPw")
-	public @ResponseBody Map<String, Object> findPw(@RequestBody memberVO member, HttpServletResponse response, String div1, String pw) throws Exception{
+	public @ResponseBody Map<String, Object> findPw(@RequestBody memberVO member, HttpServletResponse response, String div1, String pw
+														, HttpSession session) throws Exception{
 		
 		int idRes = loginService.idCheckPw(member);
 		int memailRes = loginService.emailCheckPw(member);
@@ -151,19 +151,50 @@ public class loginController extends CommonRestController {
 			pw += "1!";
 			member.setMpassword(pw);
 			System.out.println("pw========================= " + pw);
-			// 비밀번호 변경
-			//String resPw = Integer.toString(loginService.updatePw(member));
-
-//			loginService.findPwEmail(response, member);
-//			loginService.sendEmail(member, div1);
 			
-			Map<String, Object> map = responseMap(REST_SUCCESS, "임시 비밀번호는 [" + member.getMpassword() + "] 입니다. 즉시 변경바랍니다.");
+			// DB에 변경된 비밀번호 저장
+	        loginService.updatePw(member);
+			
+			Map<String, Object> map = responseMap(REST_SUCCESS, "임시 비밀번호는 [ " + member.getMpassword() + " ] 입니다. 즉시 변경바랍니다.");
 		
+			session.setAttribute("memberPw", member.getMpassword());
 			map.put("url", "/geomin/login");
 			return map;
 		} else {
 			return responseMap(REST_FAIL, "이름과 이메일 주소를 다시 확인해주세요.");			
 		}
+	}
+	
+
+	 // 비밀번호 변경 
+	@PostMapping("/updatePw")
+	public @ResponseBody Map<String, Object> updatePw(@RequestBody memberVO member, HttpSession session) throws Exception{
+		//int memberpw = (int)session.getAttribute("memberPw");
+		
+		//System.out.println("memberpw=================="  + memberpw);
+		// int inputPw = loginService.updatePw2(member);		
+		// System.out.println("inputPw=================="  + inputPw);
+		
+		//if(inputPw > 0) {
+			
+//			memberVO getone = loginService.getOne(member.getMpassword());
+//			System.out.println("getone=================" + getone);
+//			int memberPw = loginService.updatePw(getone);
+//			
+//			if(memberPw > 0) {
+			String pwd = pwdEncoder.encode(member.getMpassword());
+			member.setMpassword(pwd);
+			
+			// DB에 변경된 비밀번호 저장
+	        loginService.updatePw(member);
+			
+			Map<String, Object> map = responseMap(REST_SUCCESS, "임시 비밀번호가 변경되었습니다.");
+			map.put("url", "/geomin/login");
+			return map;	
+		//} else {
+		//	return responseMap(REST_FAIL, "다시 확인해주세요.");		
+		//}
+		
 	}
 	
 	

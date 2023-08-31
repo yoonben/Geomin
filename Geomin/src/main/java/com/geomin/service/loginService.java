@@ -1,7 +1,5 @@
 package com.geomin.service;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.stereotype.Service;
 
 import com.geomin.VO.memberVO;
@@ -33,6 +31,8 @@ public interface loginService {
 	
 	// 비밀번호 변경
 	public int updatePw(memberVO vo) throws Exception;
+
+
 	
 	
 }
