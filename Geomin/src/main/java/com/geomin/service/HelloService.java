@@ -13,6 +13,6 @@ public interface HelloService {
 
 	List<HelloVO> getSubList();
 
-	void subContent();
+	void addSubContent(HelloVO checked_Data);
 	
 }

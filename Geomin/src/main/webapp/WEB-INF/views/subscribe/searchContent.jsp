@@ -45,12 +45,11 @@ th, tr, td{
 					<li><a href="/geomin/subscribe/subscribeSearchContent">구매한 학습 콘텐츠 검색</a></li>
 				</ul>
 			</div>
-			<div class="content">
-				<div class="today">
-					<h2>230829</h2>
+			<!-- <div class="today">
+					<h2>230830</h2>
 					<h2>오늘의 기분은 어떤가요?</h2>
-					<img src="/resources/img/pingwing-bee_sad.png">
-				</div>
+					<img src="/resources/img/pingwing-bee_angry.png">
+				</div> -->
 
 				난이도 : 
 				<select id="choiceDifficulty">
@@ -69,16 +68,18 @@ th, tr, td{
 				<input id="searchContent" type="text" width="150px" placeholder="내용을 검색해 주세요">
 				<button id="searchButton">조회</button>
 				<br>
+			<div class="content">
 				<table id="result-table">
 					<thead>
 					<tr>
 						<th>ㅁ</th>
 						<th>패키지명</th>
-						<th>학습 가능 인원</th>
+						<th>학습 인원</th>
 						<th>정가</th>
 						<th>최종가</th>
 						<th>학습 수준</th>
 						<th>학습 내용</th>
+						<!-- <th>구독</th> -->
 					</tr>
 					</thead>
 					<tbody>
@@ -91,13 +92,22 @@ th, tr, td{
 							<td class="list_finalPrice">${list.finalPrice }</td>
 							<td>${list.difficulty }</td>
 							<td>${list.pkgContent }</td>
+							<%-- <td style="display: none">${list.memberID }</td> --%>
+							<%-- <c:choose>
+        						<c:when test="${list.buyCheck eq 'Y'}">
+           							 구독 완료
+        						</c:when>
+        						<c:when test="${list.buyCheck eq 'N'}">
+            						<button id="subContent">구독하기</button>
+        						</c:when>
+        					</c:choose> --%>
 						</tr>
 					</c:forEach>
 					</tbody>
 				</table>
 				<button id="reqSubscribe">구독 신청</button>
 			</div>
-			<div class='banner'></div>
+			<!-- <div class='banner'></div> -->
 		</div>
 	</div>
 </body>
@@ -108,7 +118,6 @@ th, tr, td{
 		const dataRows = document.querySelectorAll("tr.data-raw");
 		$('#searchButton').click(function() {
 			$('tr.data-raw').hide();
-			
 			//1. 첫 번째 조건문
 			/* const choiceDifficulty = document.getElementById('choiceDifficulty').value; // 선택한 값을 저장
 			
@@ -153,12 +162,13 @@ th, tr, td{
 		        }); */
 		    const choiceDifficulty = document.getElementById('choiceDifficulty').value;
 	        const searchContent = document.getElementById('searchContent').value.toLowerCase();
+	        console.log('searchContent : ' , searchContent);
 	        const sortedData = Array.from(dataRows);
 	        const tableBody = document.querySelector('#result-table tbody');
 	        //const trBody = document.querySelector('tr.data-raw');
 	        sortedData.forEach(row => {
 	            const difficultyValue = row.getAttribute("data-value");
-	            const contentCell = row.querySelector("td:last-child");
+	            const contentCell = row.querySelector("td:nth-child(7)");
 	            const content = contentCell.textContent.toLowerCase();
 
 	            // 첫 번째와 세 번째 조건을 순차적으로 적용
@@ -168,9 +178,9 @@ th, tr, td{
 	            ) {
 	                // 데이터 보여주기
 	                row.style.display = 'table-row';
-	            }else {
+	            }/* else {
 	            	dataRows.innerHTML = '검색결과가 없어요..'; 
-	            }
+	            } */
 	        });
 	        
 	        // 두 번째 조건 적용
@@ -195,6 +205,44 @@ th, tr, td{
  	        	tableBody.appendChild(row);
  	        });
 		});
+		
+		
+		$('#reqSubscribe').click(function() {
+			var checked_Data = [];
+
+		    $('input[name="check"]:checked').each(function() {
+		        var $row = $(this).closest('tr');
+		        var rowData = {
+		            pkgName: $row.find('td:eq(1)').text(),
+		            personnel: $row.find('td:eq(2)').text(),
+		            fixedPrice: $row.find('td:eq(3)').text(),
+		            finalPrice: $row.find('.list_finalPrice').text(),
+		            difficulty: $row.find('td:eq(5)').text(),
+		            pkgContent: $row.find('td:eq(6)').text(),
+		        };
+		        checked_Data.push(rowData);
+		    });
+
+		    console.log(checked_Data);
+		    
+		   $.ajax({
+		        url: '/geomin/subscribe/searchContent',
+		        type: 'POST',
+		        data: JSON.stringify(checked_Data),
+		        contentType: 'application/json',
+		        success: function(response) {
+		            // 서버 응답을 처리하는 코드
+		            alert('성공');
+		            console.log(response);
+		        },
+		        error: function(error) {
+		            // 오류 처리 코드
+		            alert('실패');
+		            console.error(error);
+		        }
+		    });
+		});
+		
 	}); //$(document).ready EndPoint
 </script>
 </html>

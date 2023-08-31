@@ -10,5 +10,5 @@ public interface HelloMapper {
 	
 	List<HelloVO> getSubList();
 	
-	void subContent();
+	void addSubContent(HelloVO checked_Data);
 }

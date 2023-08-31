@@ -27,8 +27,9 @@ public class HelloServiceImpl implements HelloService{
 	}
 
 	@Override
-	public void subContent() {
+	public void addSubContent(HelloVO checked_Data) {
 		// TODO Auto-generated method stub
+		helloMapper.addSubContent(checked_Data);
 		
 	}
 
