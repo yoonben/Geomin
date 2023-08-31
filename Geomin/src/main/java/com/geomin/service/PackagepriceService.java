@@ -25,6 +25,12 @@ public class PackagepriceService implements PackagepriceServiceImpl{
 		List<PackagepriceVO> list = mapper.monthPrice(vo);
 		return list;
 	}
+
+	@Override
+	public List<PackagepriceVO> dayPrice(PackagepriceVO vo) {
+		List<PackagepriceVO> list = mapper.dayPrice(vo);
+		return list;
+	}
 	
 
 

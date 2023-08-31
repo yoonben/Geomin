@@ -76,13 +76,15 @@ window.addEventListener('load', function(){
 	yearChart();
 	
 	yearRadio.addEventListener('click', function () {
-		document.querySelector('#searchButen').style.display ='none';
+		
+		document.querySelector('#searchElement').style.display ='none';
 		yearChart();
+		
 	});
 
 	monthRadio.addEventListener('click', function () {
 		let content = '';
-		document.querySelector('#searchButen').style.display ='';
+		document.querySelector('#searchElement').style.display ='';
 	    const searchElement = document.querySelector('#searchElement');
 	    const yearInput = document.querySelector('#year'); 
 		
@@ -100,9 +102,9 @@ window.addEventListener('load', function(){
 	    
 	    content = ''
 	        + '<select class="form-select" aria-label="Default select example" id="yearSelect">'
-	        + '<option selected>년도 선택</option>';
+	        + '<option selected value="'+currentYear+'">년도 선택</option>';
 	    yearDataFromDatabase.forEach(year => {
-	        content += '<option value="' + year + '">' + year + '</option>';
+	        content += '<option value="' + year + '">' + year + '년</option>';
 	    })
 	    content += '</select>';
 
@@ -111,19 +113,86 @@ window.addEventListener('load', function(){
 	    yearSelect.addEventListener('change', function () {
 	    	const yearSelect = document.querySelector('#yearSelect');
 	    	
-	        yearInput.value = yearSelect.value; // Set the selected value to the input
+	        yearInput.value = yearSelect.value;
+	        
+	        monthChart(yearInput.value);
 	    });
 	});
 
 	dayRadio.addEventListener('click', function () {
+		let content = '';
+		document.querySelector('#searchElement').style.display ='';
+	    const searchElement = document.querySelector('#searchElement');
+	    const yearInput = document.querySelector('#year'); 
+	    const monthInput = document.querySelector('#month');
+	    const yearCheck = document.querySelector('#yearCheck');
+	    const monthCheck = document.querySelector('#monthCheck');
 		
+	    const currentYear = new Date().getFullYear();
+	    const currentMonth = new Date().getMonth() + 1;
+	    const yearDataFromDatabase = Array.from({ length: 10 }, (_, index) => currentYear - index);
+		
+	    if (numberChart) {
+	        numberChart.destroy();
+	    }
+	    if (salesChart) {
+	        salesChart.destroy();
+	    }
+	    
+	    dayChart(currentYear,currentMonth);
+	    yearCheck.value = '0';
+	    monthCheck.value = '0';
+	    content = ''
+	        + '<select class="form-select" aria-label="Default select example" id="yearSelect2">'
+	        + '<option selected value="'+currentYear+'">년도 선택</option>';
+	    yearDataFromDatabase.forEach(year => {
+	        content += '<option value="' + year + '">' + year + '년</option>';
+	    })
+	    content += '</select>'
+			    + '<select class="form-select" aria-label="Default select example" id="monthSelect">' // 변경된 아이디
+			    + '<option selected value="' + currentMonth + '">월 선택</option>'
+			    + '<option value="1">1월</option>'
+			    + '<option value="2">2월</option>'
+			    + '<option value="3">3월</option>'
+			    + '<option value="4">4월</option>'
+			    + '<option value="5">5월</option>'
+			    + '<option value="6">6월</option>'
+			    + '<option value="7">7월</option>'
+			    + '<option value="8">8월</option>'
+			    + '<option value="9">9월</option>'
+			    + '<option value="10">10월</option>'
+			    + '<option value="11">11월</option>'
+			    + '<option value="12">12월</option>'
+			    + '</select>';
+
+	    searchElement.innerHTML = content;
+	    
+	    yearSelect2.addEventListener('change', function () {
+	    	const yearSelect = document.querySelector('#yearSelect2');
+	    	
+	    	yearCheck.value = '1';
+	        yearInput.value = yearSelect.value;
+	        
+	        if(yearCheck.value == 1 && monthCheck.value == 1){
+	        	console.log("monthInput.valu : "+monthInput.value);
+	        	dayChart(yearInput.value,monthInput.value);
+	        }
+	    })
+	    
+	    monthSelect.addEventListener('change', function () {
+	    	const monthSelect = document.querySelector('#monthSelect');
+	    	
+	    	monthCheck.value = '1';
+	    	monthInput.value = monthSelect.value;
+	    	
+	    	if(yearCheck.value == 1 && monthCheck.value == 1){
+	    		console.log("monthInput.valu : "+monthInput.value);
+	    		dayChart(yearInput.value,monthInput.value);
+	        }
+	    })
 	});
 	
-	const yearButton = document.querySelector('#yearButton'); // Assuming your button has the ID "yearButton"
 
-	yearButton.addEventListener('click', function () {
-	    monthChart(document.querySelector('#year').value); // Convert the input value to an integer
-	});
 })
 
 function yearChart() {
@@ -223,7 +292,7 @@ function monthChart(year) {
 	        	    type: 'line', // bar : 막대 그래프, line : 선그래프
 	        	    data: {
 	        	    // 하단 레이블
-	        	    labels: map.yearList,
+	        	    labels: map.monthList,
 	        	    datasets: [{
 	        	        // 상단 레이블
 	        	        label: '거래 건수',
@@ -234,7 +303,7 @@ function monthChart(year) {
 	        	    options: {
 	        	    scales: {
 	        	        y: {
-	        	        beginAtZero: true
+	        	        	max : 30
 	        	        }
 	        	    }
 	        	    }
@@ -246,7 +315,7 @@ function monthChart(year) {
 	        	    type: 'bar', // bar : 막대 그래프, line : 선그래프
 	        	    data: {
 	        	    // 하단 레이블
-	        	    labels: map.yearList,
+	        	    labels: map.monthList,
 	        	    datasets: [{
 	        	        // 상단 레이블
 	        	        label: '판매 매출',
@@ -257,7 +326,82 @@ function monthChart(year) {
 	        	    options: {
 	        	    scales: {
 	        	        y: {
-	        	        beginAtZero: true
+	        	        max: 200000
+	        	        }
+	        	    }
+	        	    }
+	        	});
+            } else {               
+                alert(map.msg);
+            }
+            
+        });
+}
+
+function dayChart(year,month) {
+    let ctx1 = document.getElementById('numberChart');
+    let ctx2 = document.getElementById('salesChart');
+    
+    console.log(year);
+    
+    if (numberChart) {
+        numberChart.destroy();
+    }
+    if (salesChart) {
+        salesChart.destroy();
+    }
+    
+    let transactioncntList = [];
+    let datetotalsalesList = [];
+    
+    let obj = {
+    		year: year,
+    		month: month
+    }
+	console.log(obj);
+        fetchPost('/geomin/dayChart',obj, (map) => {
+            if (map.result == 'success') {
+            	
+            	 numberChart = new Chart(ctx1, {
+	        	    // 그래프의 종류
+	        	    type: 'line', // bar : 막대 그래프, line : 선그래프
+	        	    data: {
+	        	    // 하단 레이블
+	        	    labels: map.dayList,
+	        	    datasets: [{
+	        	        // 상단 레이블
+	        	        label: '거래 건수',
+	        	        data: map.transactioncntList,
+	        	        borderWidth: 1
+	        	    }]
+	        	    },
+	        	    options: {
+	        	    scales: {
+	        	        y: {
+	        	        	max : 20
+	        	        }
+	        	    }
+	        	    }
+	        	});
+	        	
+	        	// 차트 선택
+	        	salesChart = new Chart(ctx2, {
+	        	    // 그래프의 종류
+	        	    type: 'bar', // bar : 막대 그래프, line : 선그래프
+	        	    data: {
+	        	    // 하단 레이블
+	        	    labels: map.dayList,
+	        	    datasets: [{
+	        	        // 상단 레이블
+	        	        label: '판매 매출',
+	        	        data: map.datetotalsalesList,
+	        	        borderWidth: 1
+	        	    }]
+	        	    },
+	        	    options: {
+	        	    scales: {
+	        	        y: {
+	        	        max: 100000
 	        	        }
 	        	    }
 	        	    }
@@ -300,12 +444,12 @@ function monthChart(year) {
 		    	일 매출
 		  	</label>
           	</div>
-          	<input type="text" id="year" name="year">
+          	<input type="hidden" id="year" name="year">
+          	<input type="hidden" id="month" name="month">
+          	<input type="hidden" id="yearCheck" name="yearCheck" value='0'>
+          	<input type="hidden" id="monthCheck" name="monthCheck" value='0'>
           	<div id="searchElement">
           	
-          	</div>
-          	<div id="searchButen" style="display: none;">
-          		<button type="button" class="btn btn-primary" id="yearButton">Primary</button>
           	</div>
           	<div>          		
 		        <canvas id="numberChart"></canvas>

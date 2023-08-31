@@ -54,4 +54,28 @@
 		ORDER BY months.month
 		
 	</select>
+	
+	<select id="dayPrice" resultType="com.geomin.VO.PackagepriceVO">
+	<![CDATA[
+		SELECT EXTRACT(day FROM b.dt)    AS day, 
+       NVL(sum(a.TRANSACTIONCNT), 0) AS TRANSACTIONCNT, 
+       NVL(sum(a.DATETOTALSALES), 0) AS DATETOTALSALES
+		FROM (
+		    SELECT SALESDATE as hiredate,
+		       sum(TRANSACTIONCNT) as TRANSACTIONCNT, sum(DATETOTALSALES) as DATETOTALSALES
+		FROM PACKAGEPRICE
+		WHERE SALESDATE BETWEEN TO_DATE(#{day2}, 'YYYY-MM-DD')
+		                   AND TO_DATE(#{day1}, 'YYYY-MM-DD')
+		GROUP BY SALESDATE
+		
+		) a
+		RIGHT JOIN (
+		    SELECT TO_DATE(#{day2}, 'YYYY-MM-DD') + LEVEL - 1 AS dt
+		    FROM dual 
+		    CONNECT BY LEVEL <= (TO_DATE(#{day1}, 'YYYY-MM-DD') - TO_DATE(#{day2}, 'YYYY-MM-DD') + 1)
+		) b ON b.dt = a.hiredate
+		GROUP BY b.dt
+		ORDER BY b.dt
+		]]>
+	</select>
 </mapper>

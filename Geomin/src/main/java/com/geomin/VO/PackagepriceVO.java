@@ -12,4 +12,6 @@ public class PackagepriceVO {
 	public String year;
 	public String month;
 	public String day;
+	public String day1;
+	public String day2;
 }
