@@ -205,24 +205,22 @@
 							      <th scope="col">학습선생님</th>
 							      <th scope="col">숙제 내용</th>
 							      <th scope="col">제출기한</th>
+							      <th scope="col">제출일자</th>
 							    </tr>
 							  </thead>
 							  
 							  <tbody>
 							    <tr>
-							      <th rowspan='3' scope="row"><input type='checkbox' name='rowCheck' value='${boardVO.bno }'></th>
+							      <th rowspan='2' scope="row"><input type='checkbox' name='rowCheck' value='${boardVO.bno }'></th>
 							      <td>Mark</td>
 							      <td>Otto</td>
+							      <td>@mdo</td>
 							      <td>@mdo</td>
 							      <td>@mdo</td>
 							    </tr>
 							    <tr>
 							      <th scope="col">학습내용</th>
-							      <td colspan='5'>@mdo</td>
-							    </tr>
-							    <tr>
-							      <th scope="col">느낀점</th>
-							      <td colspan='5'>@mdo</td>
+							      <td colspan='6'>@mdo</td>
 							    </tr>
 							  </tbody>
 						</table>
