@@ -105,6 +105,28 @@
 			});
 		});
     	
+    	
+    	
+		//선택자를 통해 원하는 select 를 가져온다
+		let groupSelect = document.getElementById('groupSelect');
+
+		//select.selectedOptions --> selected된 옵션 리스트 
+		//select 가 multiple 일 경우 선택된 여러개의 옵션 값을 가져올 수 있음
+		// value 또는 label 을 통해 가져올 수 있다
+
+		let selectedVal = groupSelect.selectedOptions[0].value;
+		let selectedTxt = groupSelect.selectedOptions[0].label;
+
+		selectedOptions = groupSelect.selectedOptions;
+
+		for(let i=0; i<selectedOptions.length; i++){
+			console.log(selectedOptions[i].value);
+			console.log(selectedOptions[i].label);
+		}	
+    	
+		
+    	
+    	
     })
 	</script>
 	
@@ -131,47 +153,54 @@
              		<h1><b>학습 그룹 신청<b></b></h1><br><br> 
              		<h3>"바둑의 첫 걸음, 그룹신청!"</h3><br> 
            		
-           		<form>
+           		<form id='groupjoinForm' name='groupjoin' action='/studentStudy/groupjoin?groupid=${groupSelect.groupid}' method='GET'>
+           		
+           			 <!-- input type="hidden" name="groupid" value="${groupSelect.groupid}"> -->
                 	 <table class="table" border="1px solid" style="height:50%;weight:100%">
 							  <thead>
 							    <tr class="table-success">
 			               			<th>그룹목록</th>
 			               			<td>
-			                			<select class="form-select" aria-label="Default select example">
+			                			<select id='groupSelect' class="form-select" aria-label="Default select example">
 										  <option selected>그룹 선택</option>
-										  <option value="1">One</option>
+										 <c:forEach var="groupList" items="${groupList }">
+										 	 <option value="${groupList.groupid}">${groupList.groupid}</option>
+										 </c:forEach>	 
 										</select>
 			               			</td>
 			               		</tr>
 							  </thead>
 							  
+           			 <!-- c:forEach var="groupSelect" items="${groupSelect }" varStatus="status" -->
+                	 		<c:set var="groupPick" value="${groupPick}"/>
 							  <tbody>
-								<!-- 그룹목록 선택에 따른 정보 출력 -->
+								<!-- 그룹목록 선택에 따른 정보 출력-->
 		                		<tr>
 		                			<th>학습컨텐츠 </th>
-		                			<td></td>
+		                			<td value='${groupPick.pkgname }'>${groupPick.pkgname }</td>
 		                		</tr>
 		                		<tr>
 		                			<th>학습내용 </th>
-		                			<td></td>
+		                			<td value='${groupPick.pkgcontent }'>${groupPick.pkgcontent }</td>
 		                		</tr>
 		                		<tr>
 		                			<th>학습선생님 </th>
-		                			<td></td>
+		                			<td value='${groupPick.mname }'>${groupPick.mname }</td>
 		                		</tr>
 		                		<tr>
 		                			<th>학습기간 </th>
-		                			<td></td>
+		                			<td value='${groupPick.pkgcontent }'>${groupPick.pkgcontent }</td>
 		                		</tr>
 		                		<tr>
 		                			<th>학습난이도 </th>
-		                			<td></td>
+		                			<td value='${groupPick.difficulty }'>${groupPick.difficulty }</td>
 		                		</tr>
              				    <tr>
 		                			<th>가입현황</th>  <!-- 시간될때 현재 가입가능 여부  표시 -->
-		                			<td></td>
+		                			<td value='${groupPick.person }'>${groupPick.person }</td>
 		                		</tr>
-						    </tbody>
+						    </tbody> 
+					    <!-- /c:forEach -->
 					    </table>
 	               	<button type="submit" class="btn btn-success" id="introductionbtn">그룹 신청하기</button>
                	</form>

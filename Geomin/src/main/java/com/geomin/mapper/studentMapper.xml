@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.geomin.mapper.studentMapper">
+  
+  	<select id='groupSearch' resultType='com.geomin.VO.packageVO'>
+  		select groupid from study_group
+  	</select>
+  
+  	<select id='getGroup' resultType='com.geomin.VO.packageVO'>
+  		select p.pkgName, p.difficulty, p.pkgcontent, m.mname
+		        , s.curpersonnel||'명'||'/'||s.personnel||'명' person,
+		        g.groupid
+		        , TO_CHAR(TO_DATE('20' || g.studyStartDate), 'YYYY-MM-DD') || ' ~ ' ||
+		          TO_CHAR(TO_DATE('20' || g.studyEndDate), 'YYYY-MM-DD') period
+		from package p, pkgsubsDetail s, study_group g, member m
+		where m.memberid = s.memberid
+		and p.pkgid = s.pkgid
+		and s.pkgid = g.pkgid
+		and g.groupid=#{g.groupid}
+  	</select>
+  
+  </mapper>

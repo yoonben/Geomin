@@ -14,4 +14,12 @@ public class packageVO {
 	public String finalprice;
 	public String pkgcontent;
 	public String elimination;
+	
+	//추가
+	public String period;
+	public String mname;
+	public String person;
+	public String groupid; 
+	
+	
 }
