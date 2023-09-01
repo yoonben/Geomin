@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.geomin.VO.BoardVO;
+import com.geomin.VO.Criteria;
 import com.geomin.VO.PackagepriceVO;
+import com.geomin.VO.PageDto;
 import com.geomin.service.PackagepriceService;
 
 @Controller
@@ -28,6 +31,8 @@ public class PackagepriceController extends CommonRestController{
 		
 		try {
 			Map<String, Object> map = responseMap(REST_SUCCESS, "매출 조회가 되었습니다.");
+			
+			PackagepriceVO totalChart = packageprice.totalChart(vo);
 			
 			List<PackagepriceVO> list = packageprice.yearPrice(vo);
 
@@ -46,6 +51,7 @@ public class PackagepriceController extends CommonRestController{
 	        System.out.println("transactioncntList : "+transactioncntList);
 	        System.out.println("datetotalsalesList : "+datetotalsalesList);
 	        
+	        map.put("totalChart", totalChart);
 	        map.put("yearList", yearList);
 	        map.put("transactioncntList", transactioncntList);
 	        map.put("datetotalsalesList", datetotalsalesList);
@@ -64,6 +70,8 @@ public class PackagepriceController extends CommonRestController{
 		try {
 			Map<String, Object> map = responseMap(REST_SUCCESS, "매출 조회가 되었습니다.");
 			
+			PackagepriceVO totalChart = packageprice.yearChart(vo);
+			
 			List<PackagepriceVO> list = packageprice.monthPrice(vo);
 
 	        List<String> monthList = new ArrayList<String>();
@@ -80,6 +88,7 @@ public class PackagepriceController extends CommonRestController{
 	        System.out.println("transactioncntList : "+transactioncntList);
 	        System.out.println("datetotalsalesList : "+datetotalsalesList);
 	        
+	        map.put("totalChart", totalChart);
 	        map.put("monthList", monthList);
 	        map.put("transactioncntList", transactioncntList);
 	        map.put("datetotalsalesList", datetotalsalesList);
@@ -97,6 +106,8 @@ public class PackagepriceController extends CommonRestController{
 		try {
 			
 			Map<String, Object> map = responseMap(REST_SUCCESS, "매출 조회가 되었습니다.");
+			
+			PackagepriceVO totalChart = packageprice.dayChart(vo);
 			
 			List<String> dayList = new ArrayList<String>();
 	        List<String> transactioncntList = new ArrayList<String>();
@@ -172,6 +183,9 @@ public class PackagepriceController extends CommonRestController{
 	             datetotalsalesList.add(packagePrice.getDatetotalsales() != null && !packagePrice.getDatetotalsales().isEmpty() ? packagePrice.getDatetotalsales() : "0");
 	        }
 			
+			System.out.println("totalChart =========== "+totalChart);
+			
+			map.put("totalChart", totalChart);
 			map.put("dayList", dayList);
 	        map.put("transactioncntList", transactioncntList);
 	        map.put("datetotalsalesList", datetotalsalesList);
@@ -195,5 +209,28 @@ public class PackagepriceController extends CommonRestController{
 	        // 나머지가 0이면 true, 아니면 false 반환
 	        return remainder == 0;
 	    }
+	 
+	 
+	 @PostMapping("/priceList")
+		public @ResponseBody Map<String, Object> boardList(@RequestBody Criteria cri) {
+		 try {
+			 Map<String, Object> map = responseMap(REST_SUCCESS, "리스트 조회");
+			 
+			 List<PackagepriceVO> priceList = packageprice.priceList(cri);
+			 int total = packageprice.totalCnt(cri);
+			 
+			 PageDto  pageDto = new PageDto(cri, total);
+			 
+			 
+			 map.put("priceList", priceList);
+			 map.put("total", total);
+			 map.put("pageDto", pageDto);
+			 
+			 return map;
+		 } catch (Exception e) {
+				e.printStackTrace();
+				return responseMap(REST_FAIL, "리스트 조회중 예외사항이 발생 하였습니다.");
+			}
+	 }
 	
 }

@@ -47,7 +47,7 @@
              	
              	<div id="packgeList" style="display: none;">
              		<form class="d-flex" role="search">
-	             		<select id="searchField" name="searchField" class="form-select" size="3" aria-label="Size 3 select example">
+						<select id="searchField" name="searchField" class="form-select" aria-label="Default select example">
 						  <option selected value="pkgname">콘텐츠명</option>
 						  <option value="pkgcontent">콘텐츠 내용</option>
 						  <option value="difficulty">학습 난이도</option>

@@ -73,7 +73,7 @@ public class BoardController extends CommonRestController{
 	}
 	
 	@PostMapping("/boardList")
-	public @ResponseBody Map<String, Object> boardList(@RequestBody Criteria cri, HttpSession session) {
+	public @ResponseBody Map<String, Object> boardList(@RequestBody Criteria cri) {
 		
 		try {
 			

@@ -78,4 +78,76 @@
 		ORDER BY b.dt
 		]]>
 	</select>
+	
+		
+	<select id="priceList" resultType="com.geomin.VO.PackagepriceVO">
+		SELECT *
+FROM (
+    SELECT
+        pkgid AS pkgid,
+        pkgname,
+        salesdate,
+        transactioncnt,
+        datetotalsales,
+        ROWNUM AS rn
+    FROM (
+        SELECT
+            PACKAGE.PKGID AS pkgid,
+            pkgname,
+            TO_char(salesdate, 'YYYY-MM-DD') AS salesdate,
+            SUM(transactioncnt) AS transactioncnt,
+            SUM(datetotalsales) AS datetotalsales
+        FROM
+            PACKAGEPRICE
+        JOIN PACKAGE ON (PACKAGEPRICE.PKGID = PACKAGE.PKGID)
+        GROUP BY
+            PACKAGE.PKGID,
+            pkgname,
+            TO_char(salesdate, 'YYYY-MM-DD')
+        ORDER BY
+            salesdate DESC
+    ) package <include refid="criteria"/>
+) where rn between #{startNo} and #{endNo}
+	</select>
+	
+	<select id="totalCnt" resultType="int">
+ 		select count(*) from (
+					SELECT  PACKAGEPRICE.pkgid as pkgid,pkgname,salesdate,transactioncnt,datetotalsales
+	                FROM    PACKAGEPRICE
+	                JOIN PACKAGE ON (PACKAGEPRICE.PKGID = PACKAGE.PKGID)
+	                order by salesdate desc
+				) <include refid="criteria"/>
+ 	</select>
+ 	
+ 	<select id="totalChart" resultType="com.geomin.VO.PackagepriceVO">
+ 		SELECT sum(TRANSACTIONCNT) as TRANSACTIONCNT, sum(DATETOTALSALES) as DATETOTALSALES
+		    FROM PACKAGEPRICE
+ 	</select>
+ 	
+ 	<select id="yearChart" resultType="com.geomin.VO.PackagepriceVO">
+ 			SELECT EXTRACT(YEAR FROM SALESDATE) year, sum(TRANSACTIONCNT) TRANSACTIONCNT, SUM(DATETOTALSALES) DATETOTALSALES
+		    FROM PACKAGEPRICE
+            where EXTRACT(YEAR FROM SALESDATE) = #{year}
+		    GROUP BY EXTRACT(YEAR FROM SALESDATE) ORDER BY year
+ 	</select>
+ 	
+ 	<select id="dayChart" resultType="com.geomin.VO.PackagepriceVO">
+ 		SELECT EXTRACT(month FROM SALESDATE) month, sum(TRANSACTIONCNT) TRANSACTIONCNT, SUM(DATETOTALSALES) DATETOTALSALES
+		    FROM PACKAGEPRICE
+            where EXTRACT(YEAR FROM SALESDATE) = #{year} and EXTRACT(month FROM SALESDATE) = #{month}
+		    GROUP BY EXTRACT(YEAR FROM SALESDATE) ,
+            EXTRACT(month FROM SALESDATE)
+            ORDER BY month
+ 	</select>
+	
+	<sql id="criteria">
+ 	 	<choose>
+ 	 		<when test="searchField == 'pkgid'">
+ 	 			where pkgid like '%'||#{searchWord}||'%'
+ 	 		</when>
+ 	 		<when test="searchField == 'pkgname'">
+ 	 			where pkgname like '%'||#{searchWord}||'%'
+ 	 		</when>
+ 	 	</choose>
+ 	 </sql>
 </mapper>

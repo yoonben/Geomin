@@ -196,7 +196,6 @@ window.addEventListener('load', function(){
 })
 
 function yearChart() {
-	let content = '';
     let ctx1 = document.getElementById('numberChart');
     let ctx2 = document.getElementById('salesChart');
     
@@ -262,8 +261,6 @@ function yearChart() {
                 alert(map.msg);
             }
             
-            document.getElementById('totalTran').innerHTML = '최근 10년 총 판매 건수 : '+ map.totalChart.transactioncnt+"건";
-            document.getElementById('totalSales').innerHTML = '최근 10년 총 판매 액 : '+ map.totalChart.datetotalsales+"원";
         });
 }
 
@@ -338,8 +335,6 @@ function monthChart(year) {
                 alert(map.msg);
             }
             
-            document.getElementById('totalTran').innerHTML = map.totalChart.year+'년 총 판매 건수 : '+ map.totalChart.transactioncnt+"건";
-            document.getElementById('totalSales').innerHTML = map.totalChart.year+'년  총 판매 액 : '+ map.totalChart.datetotalsales+"원";
         });
 }
 
@@ -414,8 +409,7 @@ function dayChart(year,month) {
             } else {               
                 alert(map.msg);
             }
-            document.getElementById('totalTran').innerHTML = map.totalChart.month+'월 총 판매 건수 : '+ map.totalChart.transactioncnt+"건";
-            document.getElementById('totalSales').innerHTML = map.totalChart.month+'월  총 판매 액 : '+ map.totalChart.datetotalsales+"원";
+            
         });
 }
 </script>
@@ -456,10 +450,6 @@ function dayChart(year,month) {
           	<input type="hidden" id="monthCheck" name="monthCheck" value='0'>
           	<div id="searchElement">
           	
-          	</div>
-          	<div id="salesNumber">
-          		<div id="totalTran"></div>
-          		<div id="totalSales"></div>
           	</div>
           	<div>          		
 		        <canvas id="numberChart"></canvas>

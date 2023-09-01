@@ -73,8 +73,8 @@
              	<!-- Q&A 게시판 시작 -->
              	<div id="boardList">
              		<form class="d-flex" role="search">
-	             		<select id="searchField" name="searchField" class="form-select" size="3" aria-label="Size 3 select example">
-						  <option selected value="bno">게시글번호</option>
+						<select id="searchField" name="searchField" class="form-select" aria-label="Default select example">
+						   <option selected value="bno">게시글번호</option>
 						  <option value="boardtitle">내용</option>
 						  <option value="writer">글쓴이</option>
 						</select>
