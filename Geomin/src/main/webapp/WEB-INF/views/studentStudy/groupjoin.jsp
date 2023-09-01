@@ -123,11 +123,9 @@
 			console.log(selectedOptions[i].value);
 			console.log(selectedOptions[i].label);
 		}	
-    	
-		
-    	
-    	
-    })
+	
+    });	
+
 	</script>
 	
 	
@@ -153,7 +151,7 @@
              		<h1><b>학습 그룹 신청<b></b></h1><br><br> 
              		<h3>"바둑의 첫 걸음, 그룹신청!"</h3><br> 
            		
-           		<form id='groupjoinForm' name='groupjoin' action='/studentStudy/groupjoin?groupid=${groupSelect.groupid}' method='GET'>
+           		<form id='groupjoinForm' name='groupjoin' action='/studentStudy/groupjoin?groupid=${groupSelect.groupid}' method='POST'>
            		
            			 <!-- input type="hidden" name="groupid" value="${groupSelect.groupid}"> -->
                 	 <table class="table" border="1px solid" style="height:50%;weight:100%">
@@ -162,15 +160,15 @@
 			               			<th>그룹목록</th>
 			               			<td>
 			                			<select id='groupSelect' class="form-select" aria-label="Default select example">
-										  <option selected>그룹 선택</option>
-										 <c:forEach var="groupList" items="${groupList }">
-										 	 <option value="${groupList.groupid}">${groupList.groupid}</option>
+										 	<option selected>그룹 선택</option>
+										 <c:forEach var="groupRes" items="${groupRes }">
+										  	<option value="${groupRes.groupid}">${groupRes.groupid}</option>
 										 </c:forEach>	 
 										</select>
 			               			</td>
 			               		</tr>
 							  </thead>
-							  
+						
            			 <!-- c:forEach var="groupSelect" items="${groupSelect }" varStatus="status" -->
                 	 		<c:set var="groupPick" value="${groupPick}"/>
 							  <tbody>
@@ -199,7 +197,8 @@
 		                			<th>가입현황</th>  <!-- 시간될때 현재 가입가능 여부  표시 -->
 		                			<td value='${groupPick.person }'>${groupPick.person }</td>
 		                		</tr>
-						    </tbody> 
+						    </tbody>
+						   
 					    <!-- /c:forEach -->
 					    </table>
 	               	<button type="submit" class="btn btn-success" id="introductionbtn">그룹 신청하기</button>

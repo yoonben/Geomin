@@ -1,6 +1,7 @@
 package com.geomin.controller;
 
 import java.awt.List;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -25,9 +26,14 @@ public class studentController extends CommonRestController{
 
 	@Autowired
 	studentService studentService;
-	
-
+	// 그룹 신청 페이지 이동
 	@GetMapping("/studentStudy/groupjoin")
+		public String groupjoin() {
+			return "/studentStudy/groupjoin";
+	}
+
+	// 그룹 신청에서 그룹 조회 후 가입신청
+	@PostMapping("/studentStudy/groupjoin")
 	public String getGroup(Model model, packageVO pkg) {
 		
 		List groupRes = studentService.groupSearch(pkg.getGroupid());
@@ -38,12 +44,12 @@ public class studentController extends CommonRestController{
 			System.out.println("groupSelect=======================" + groupSelect);
 			
 			model.addAttribute("groupSelect", groupSelect);			
+			model.addAttribute("groupRes", groupRes);			
 			
 		
 		return "/studentStudy/groupjoin";
 	}
 
-	
 	
 	
 	
