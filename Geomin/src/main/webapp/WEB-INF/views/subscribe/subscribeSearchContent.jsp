@@ -17,6 +17,7 @@
 	margin-top: 25px;
 	font-size: 14px;
 }
+
 #section>.subNavi {
     width: 205px;
     height: 600px;
@@ -48,9 +49,9 @@ th, tr, td{
 			</div>
 			<div class="content">
 				<div class="today">
-					<h2>230830</h2>
+					<h2>230901</h2>
 					<h2>오늘의 기분은 어떤가요?</h2>
-					<img src="/resources/img/pingwing-bee_sad.png">
+					<img src="/resources/img/pingwing-bee_happy.png">
 				</div>
 				
 				<button id="1day">1일 전</button>
@@ -69,10 +70,11 @@ th, tr, td{
 				<table id="result-table">
 					<thead>
 					<tr>
-						<th> </th>
+						<th style="font-weight: 900;">ㅁ</th>
 						<th>학습 관리자</th>
 						<th>콘텐츠 이름</th>
 						<th>콘텐츠 구독 날짜</th>
+						<th>학습 가능 인원</th>
 						<th>콘텐츠 최종 가격</th>
 						<th>콘텐츠 수준</th>
 					</tr>
@@ -82,9 +84,10 @@ th, tr, td{
 						<tr id="data-raw" class="data-raw" data-value="${list.subsDate}">
 							<td><input type="checkbox" name="check" value="check" id="check"></td>
 							<td>${list.memberID }</td>
-							<td>${list.pkgName }</td>
-							<td>${list.subsDate }</td>
-							<td class="list_finalPrice">${list.finalPrice }</td>
+							<td><a href="geomin/teacher/groupRegist">${list.pkgName }</a></td><!-- ?memberID='memberID22' -->
+							<td class="list_subsDate">${list.subsDate }</td>
+							<td>${list.personnel}</td>
+							<td>${list.finalPrice }</td>
 							<td>${list.difficulty }</td>
 						</tr>
 					</c:forEach>
@@ -102,8 +105,6 @@ th, tr, td{
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
-	const tableBody = document.querySelector('#result-table tbody');
-    //$('tr.data-raw').show(); // Initially show all rows
 
     $('#1day').click(function () {
     	console.log('1일전 버튼 클릭');
@@ -157,35 +158,107 @@ $(document).ready(function () {
         });
     }
     
+    const tableBody = document.querySelector('#result-table tbody');
+	const dataRows = document.querySelectorAll("tr.data-raw");
+	const sortedData = Array.from(dataRows);
+	//var dataResult = null;
     $('#recent').click(function () {
     	$('tr.data-raw').hide();
-        sortDataByDate('desc');
+    	sortedData.sort((rowA, rowB) => {
+    		//const dataA = rowA.querySelector(".list_subsDate").textContent;
+    		//const dataA = $(rowA).data('value');
+    		const dataA = new Date($(rowA).data('value'));
+    		//const dataA = new Date($(rowA).data('value')).getTime();
+    		console.log('dataA : ' , dataA);
+    		//const dataB = rowB.querySelector(".list_subsDate").textContent;
+    		//const dataB = $(rowB).data('value');
+    		const dataB = new Date($(rowB).data('value'));
+    		//const dataB = new Date($(rowB).data('value')).getTime();
+    		console.log('dataB : ' , dataB);
+    		//CONSOLE.LOG('dataA - dataB : ' , dataA - dataB);
+    		
+    		var dataResult = dataA - dataB;
+    		console.log('dataResult : ' , dataResult);
+        	//return dataA - dataB; 
+        	return dataA - dataB; 
+    	});
     });
-    $('#oldest').click(function () {
-    	$('tr.data-raw').hide();
-        sortDataByDate('asc');
-    });
-	
     
-    function sortDataByDate(order) {
-        const rows = $('tr.data-row').get();
-        rows.sort(function (a, b) {
-            const aDate = new Date($(a).data('value'));
-            const bDate = new Date($(b).data('value'));
-            if (order === 'desc') {
-                return bDate - aDate;
-            } else {
-                return aDate - bDate;
-            }
-        });
-
-        //$('#table-body').empty();
-        $.each(rows, function (index, row) {
-        	tableBody.appendChild(row);
-            //$('tr.data-raw').append(row);
-        });
-    }
+    /* $('#oldest').click(function () {
+    	$('tr.data-raw').hide();
+    	sortedData.sort((rowA, rowB) => {
+    		const dataA = new Date(rowA.querySelector(".list_subsDate"));
+    		const dataB = new Date(rowB.querySelector(".list_subsDate"));
+    		console.log('여기에요! ASC');
+        	return dataB - dataA;
+    	});
+    }); */
+	
+    sortedData.forEach(row => {
+    	//console.log('여기로 왔나요?');
+    	tableBody.appendChild(row);
+    	//tableBody.innerHTML = '여기는 TABLEBODY';
+    	//tableBody.innerHTML = dataResult;
+ 	});
+    
 });
 
+/* $('#recent').click(function () {
+$('tr.data-raw').hide();
+sortDataByDate('desc');
+});
+$('#oldest').click(function () {
+$('tr.data-raw').hide();
+sortDataByDate('asc');
+});
+
+function sortDataByDate(order) {
+	const tableBody = document.querySelector('#result-table tbody');
+const dataRows = document.querySelectorAll("tr.data-raw");
+const sortedData = Array.from(dataRows);
+console.log('sortedData : ', sortedData);
+//const rows = $('tr.data-row').get();
+if (order === 'desc') {
+	sortedData.sort((rowA, rowB) => {
+		const dataA = rowA.querySelector(".list_subsDate").textContent;
+		const dataB = rowB.querySelector(".list_subsDate").textContent;
+		console.log('여기에요! DESC');
+    	return dataA - dataB;
+	});
+}else if (order === 'asc') {
+	sortedData.sort((rowA, rowB) => {
+		const dataA = rowA.querySelector(".list_subsDate").textContent;
+		const dataB = rowB.querySelector(".list_subsDate").textContent;
+		console.log('여기에요! ASC');
+    	return dataB - dataA;
+	});
+}
+
+sortedData.forEach(row => {
+	console.log('여기로 왔나요?');
+	tableBody.appendChild(row);
+});
+
+} */
+/* sortedData.sort(function (a, b) {
+console.log('여기에요!');
+const aDate = new Date($(a).data('value'));
+console.log('aDate : ' , aDate);
+const bDate = new Date($(b).data('value'));
+console.log('bDate : ' , bDate);
+if (order === 'desc') {
+	console.log('여기에요! DESC');
+    return bDate - aDate;
+} else if(order === 'asc'){
+	console.log('여기에요! ASC');
+    return aDate - bDate;
+}
+}); */
+
+//$('#table-body').empty();
+/* $.each(rows, function (index, row) {
+	tableBody.appendChild(row);
+    //$('tr.data-raw').append(row);
+}); */
 </script>
 </html>

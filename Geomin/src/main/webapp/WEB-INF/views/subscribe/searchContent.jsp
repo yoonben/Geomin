@@ -66,7 +66,7 @@ th, tr, td{
 				<table id="result-table">
 					<thead>
 					<tr>
-						<th>ㅁ</th>
+						<th style="font-weight: 900;">ㅁ</th>
 						<th>패키지명</th>
 						<th>학습 인원</th>
 						<th>정가</th>
@@ -147,15 +147,16 @@ th, tr, td{
 		            }
 		        }); */
 		    const choiceDifficulty = document.getElementById('choiceDifficulty').value;
-	        const searchContent = document.getElementById('searchContent').value.toLowerCase();
-	        console.log('searchContent : ' , searchContent);
+	        const searchContent = document.getElementById('searchContent').value;
+	        console.log('입력한 searchContent : ' , searchContent);
 	        const sortedData = Array.from(dataRows);
 	        const tableBody = document.querySelector('#result-table tbody');
 	        //const trBody = document.querySelector('tr.data-raw');
 	        sortedData.forEach(row => {
 	            const difficultyValue = row.getAttribute("data-value");
-	            const contentCell = row.querySelector("td:nth-child(7)");
-	            const content = contentCell.textContent.toLowerCase();
+	            const content = row.querySelector("td:nth-child(8)").textContent;
+	            console.log('불러온 content : ' , content);
+	            //const content = contentCell.textContent.toLowerCase();
 
 	            // 첫 번째와 세 번째 조건을 순차적으로 적용
 	            if (
@@ -163,7 +164,8 @@ th, tr, td{
 	                (searchContent === "" || content.includes(searchContent))
 	            ) {
 	                // 데이터 보여주기
-	                row.style.display = 'table-row';
+	                //row.style.display = 'table-row';
+	                row.style.display = 'tr.data-raw';
 	            }/* else {
 	            	dataRows.innerHTML = '검색결과가 없어요..'; 
 	            } */
@@ -182,12 +184,13 @@ th, tr, td{
 	            sortedData.sort((rowA, rowB) => {
 	                const priceA = parseFloat(rowA.querySelector(".list_finalPrice").textContent);
 	                const priceB = parseFloat(rowB.querySelector(".list_finalPrice").textContent);
+	                var priceResult = priceA - priceB;
+	                console.log('priceResult : ' , priceResult);
 	                return priceA - priceB;
 	            });
 	        }
 	        
         	sortedData.forEach(row => {
- 	        	console.log('sortedData : ' , sortedData);
  	        	tableBody.appendChild(row);
  	        });
 		});
@@ -219,14 +222,12 @@ th, tr, td{
 		        //data: checked_Data,
 		        contentType: 'application/json',
 		        success: function(response) {
-		            // 서버 응답을 처리하는 코드
-		            alert('성공');
-		            console.log(response);
+		            //alert('성공');
+		            //console.log(response);
 		        },
 		        error: function(error) {
-		            // 오류 처리 코드
-		            alert('실패');
-		            console.error(error);
+		            //alert('실패');
+		            //console.error(error);
 		        }
 		    });
 		});

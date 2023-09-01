@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.geomin.mapper.HelloMapper">
-	<select id="getList" resultType="com.geomin.VO.HelloVO">
+<mapper namespace="com.geomin.mapper.contentMapper">
+	<select id="getList" resultType="com.geomin.VO.contentVO">
 		<!-- select 
 			p.pkgName, p.Personnel, p.fixedPrice, p.finalPrice, p.difficulty, p.pkgContent, s.memberID
 		from 
@@ -57,35 +57,9 @@
 			elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID2' -->
 	</select>
 	
-	<select id="getSubList" resultType="com.geomin.VO.HelloVO">
-		<!-- select 
-			s.memberID, s.pkgName, s.subsDate, p.finalPrice, p.difficulty
-		from 
-			 package p
-		join
-			PKGSUBSDETAIL s
-		on
-			s.pkgid = p.pkgid
-		where 
-			s.memberID = 'memberID22' --><!-- #{memberid} -->
-		<!-- select 
-			p.pkgName, p.Personnel, p.fixedPrice, p.finalPrice, p.difficulty, p.pkgContent, s.memberID
-			s.memberID, s.pkgName, s.subsDate, p.finalPrice, p.difficulty
-		from 
-			package p
-		JOIN
-			PKGSUBSDETAIL s
-		ON 
-			s.pkgid = p.pkgid
-		JOIN
-			member m
-		on
-			s.memberID = m.memberID
-		where 
-			elimination = 'N' and mType = 'A' -->
-			
+	<select id="getSubList" resultType="com.geomin.VO.contentVO">
 		select
-			p.pkgName, m.memberID, d.subsDate, p.finalPrice, p.difficulty
+			p.pkgName, m.memberID, d.subsDate, p.finalPrice, p.difficulty, d.PERSONNEL<!-- , d.CURPERSONNEL -->
 		from 
 			package p
 		JOIN
@@ -131,6 +105,31 @@
 		where 
 			
 	</update> -->
+			<!-- select 
+			s.memberID, s.pkgName, s.subsDate, p.finalPrice, p.difficulty
+		from 
+			 package p
+		join
+			PKGSUBSDETAIL s
+		on
+			s.pkgid = p.pkgid
+		where 
+			s.memberID = 'memberID22' --><!-- #{memberid} -->
+		<!-- select 
+			p.pkgName, p.Personnel, p.fixedPrice, p.finalPrice, p.difficulty, p.pkgContent, s.memberID
+			s.memberID, s.pkgName, s.subsDate, p.finalPrice, p.difficulty
+		from 
+			package p
+		JOIN
+			PKGSUBSDETAIL s
+		ON 
+			s.pkgid = p.pkgid
+		JOIN
+			member m
+		on
+			s.memberID = m.memberID
+		where 
+			elimination = 'N' and mType = 'A' -->
 	<select id="">
 	<![CDATA[ 
 	SELECT
