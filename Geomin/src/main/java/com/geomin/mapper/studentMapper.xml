@@ -4,21 +4,44 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.geomin.mapper.studentMapper">
   
-  	<select id='groupSearch' resultType='com.geomin.VO.packageVO'>
-  		select groupid from study_group
+  	<select id='groupList' resultType='com.geomin.VO.packageVO'>
+  		SELECT p.pkgName, p.difficulty, p.pkgcontent, m.mname,
+			       s.curpersonnel || '명' || '/' || s.personnel || '명' AS person,
+			       g.groupid,
+			       TO_CHAR(TO_DATE('20' || g.studyStartDate), 'YYYY-MM-DD') || ' ~ ' ||
+			       TO_CHAR(TO_DATE('20' || g.studyEndDate), 'YYYY-MM-DD') AS period
+			FROM package p
+			JOIN pkgsubsDetail s ON p.pkgid = s.pkgid
+			JOIN study_group g ON s.pkgid = g.pkgid
+			JOIN member m ON m.memberid = s.memberid
   	</select>
   
   	<select id='getGroup' resultType='com.geomin.VO.packageVO'>
-  		select p.pkgName, p.difficulty, p.pkgcontent, m.mname
-		        , s.curpersonnel||'명'||'/'||s.personnel||'명' person,
-		        g.groupid
-		        , TO_CHAR(TO_DATE('20' || g.studyStartDate), 'YYYY-MM-DD') || ' ~ ' ||
-		          TO_CHAR(TO_DATE('20' || g.studyEndDate), 'YYYY-MM-DD') period
-		from package p, pkgsubsDetail s, study_group g, member m
-		where m.memberid = s.memberid
-		and p.pkgid = s.pkgid
-		and s.pkgid = g.pkgid
-		and g.groupid=#{g.groupid}
+  	<![CDATA[ 
+			SELECT p.pkgName, p.difficulty, p.pkgcontent, m.mname,
+			       s.curpersonnel || '명' || '/' || s.personnel || '명' AS person,
+			       g.groupid,
+			       TO_CHAR(TO_DATE('20' || g.studyStartDate), 'YYYY-MM-DD') || ' ~ ' ||
+			       TO_CHAR(TO_DATE('20' || g.studyEndDate), 'YYYY-MM-DD') AS period
+			FROM package p
+			JOIN pkgsubsDetail s ON p.pkgid = s.pkgid
+			JOIN study_group g ON s.pkgid = g.pkgid
+			JOIN member m ON m.memberid = s.memberid
+			WHERE g.groupid = 'group1'
+	 ]]>
+  	</select>
+  	
+  	  	<select id='groupOne' resultType='com.geomin.VO.packageVO'>
+  		SELECT p.pkgName, p.difficulty, p.pkgcontent, m.mname,
+			       s.curpersonnel || '명' || '/' || s.personnel || '명' AS person,
+			       g.groupid,
+			       TO_CHAR(TO_DATE('20' || g.studyStartDate), 'YYYY-MM-DD') || ' ~ ' ||
+			       TO_CHAR(TO_DATE('20' || g.studyEndDate), 'YYYY-MM-DD') AS period
+			FROM package p
+			JOIN pkgsubsDetail s ON p.pkgid = s.pkgid
+			JOIN study_group g ON s.pkgid = g.pkgid
+			JOIN member m ON m.memberid = s.memberid
+			where g.groupid = #{groupid} 
   	</select>
   
   </mapper>

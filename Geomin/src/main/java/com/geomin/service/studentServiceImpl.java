@@ -1,6 +1,8 @@
 package com.geomin.service;
 
-import java.awt.List;
+
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,14 +17,20 @@ public class studentServiceImpl implements studentService {
 	studentMapper studentmapper;
 	
 	@Override
-	public List groupSearch(String groupid) {
-		return studentmapper.groupSearch(groupid);
+	public List<packageVO> groupList() {
+		return studentmapper.groupList();
 	}
 	
 	
 	@Override
-	public packageVO getGroup(packageVO pkg) {
+	public List<packageVO> getGroup(packageVO pkg) {
 		return studentmapper.getGroup(pkg);
+	}
+
+
+	@Override
+	public packageVO groupOne(packageVO pkg) {
+		return studentmapper.groupOne(pkg);
 	}
 
 

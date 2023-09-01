@@ -104,28 +104,64 @@
 				}
 			});
 		});
-    	
-    	
-    	
-		//선택자를 통해 원하는 select 를 가져온다
+    	/*
+	    yearSelect.addEventListener('change', function () {
+	    	const yearSelect = document.querySelector('#yearSelect');
+	    	
+	        yearInput.value = yearSelect.value;
+	        
+	        monthChart(yearInput.value);
+    	*/
+		
 		let groupSelect = document.getElementById('groupSelect');
+		let groupCont = document.getElementById('groupCont');
+		groupCont.style.display = 'none';
+		
+		groupSelect.addEventListener('change', function(){
+			groupCont.style.display = '';
+			
+			console.log(groupSelect.value);
+			
+			let obj = {
+			        groupid : groupSelect.value
+			    };
+			    
+			fetchPost('/geomin/gropuId', obj, (map) => {
+				
+				document.getElementById('pkgname').innerHTML= map.packagevo.pkgname;
 
-		//select.selectedOptions --> selected된 옵션 리스트 
-		//select 가 multiple 일 경우 선택된 여러개의 옵션 값을 가져올 수 있음
-		// value 또는 label 을 통해 가져올 수 있다
-
-		let selectedVal = groupSelect.selectedOptions[0].value;
-		let selectedTxt = groupSelect.selectedOptions[0].label;
-
-		selectedOptions = groupSelect.selectedOptions;
-
-		for(let i=0; i<selectedOptions.length; i++){
-			console.log(selectedOptions[i].value);
-			console.log(selectedOptions[i].label);
-		}	
-	
+				document.getElementById('pkgcont').innerHTML= map.packagevo.pkgcontent;
+				
+				document.getElementById('mname').innerHTML= map.packagevo.mname;
+				
+				document.getElementById('period').innerHTML= map.packagevo.period;
+				
+				document.getElementById('difficulty').innerHTML= map.packagevo.difficulty;
+				
+				document.getElementById('person').innerHTML= map.packagevo.person;
+		})
+			
     });	
 
+    function fetchPost(url, obj, callback){
+    	try{
+    		// url 요청
+    		fetch(url
+    				, {
+    					method : 'post'
+    					, headers : {'Content-Type' : 'application/json'}
+    					, body : JSON.stringify(obj)
+    				})
+    			// 요청결과 json문자열을 javascript 객체로 반환
+    			.then(response => response.json())
+    			// 콜백함수 실행
+    			.then(map => callback(map));			
+    	}catch(e){
+    		console.log('fetchPost', e);
+    	}
+    	
+    }
+	    })
 	</script>
 	
 	
@@ -151,7 +187,7 @@
              		<h1><b>학습 그룹 신청<b></b></h1><br><br> 
              		<h3>"바둑의 첫 걸음, 그룹신청!"</h3><br> 
            		
-           		<form id='groupjoinForm' name='groupjoin' action='/studentStudy/groupjoin?groupid=${groupSelect.groupid}' method='POST'>
+           		<form id='groupjoinForm' name='groupjoin' action='/studentStudy/groupjoin?groupid="group1"' method='POST'>
            		
            			 <!-- input type="hidden" name="groupid" value="${groupSelect.groupid}"> -->
                 	 <table class="table" border="1px solid" style="height:50%;weight:100%">
@@ -159,50 +195,48 @@
 							    <tr class="table-success">
 			               			<th>그룹목록</th>
 			               			<td>
-			                			<select id='groupSelect' class="form-select" aria-label="Default select example">
+			               			<select id='groupSelect' class="form-select" aria-label="Default select example">
 										 	<option selected>그룹 선택</option>
 										 <c:forEach var="groupRes" items="${groupRes }">
 										  	<option value="${groupRes.groupid}">${groupRes.groupid}</option>
-										 </c:forEach>	 
+										 </c:forEach>
 										</select>
 			               			</td>
 			               		</tr>
 							  </thead>
 						
-           			 <!-- c:forEach var="groupSelect" items="${groupSelect }" varStatus="status" -->
-                	 		<c:set var="groupPick" value="${groupPick}"/>
-							  <tbody>
+                	 		<%-- <c:set var="groupPick" value="${groupSelect}"/> --%>
+							  <tbody id='groupCont'>
 								<!-- 그룹목록 선택에 따른 정보 출력-->
 		                		<tr>
 		                			<th>학습컨텐츠 </th>
-		                			<td value='${groupPick.pkgname }'>${groupPick.pkgname }</td>
+		                			<td><div id='pkgname'></div></td>
 		                		</tr>
 		                		<tr>
 		                			<th>학습내용 </th>
-		                			<td value='${groupPick.pkgcontent }'>${groupPick.pkgcontent }</td>
+		                			<td><div id='pkgcont'></div></td>
 		                		</tr>
 		                		<tr>
 		                			<th>학습선생님 </th>
-		                			<td value='${groupPick.mname }'>${groupPick.mname }</td>
+		                			<td><div id='mname'></div></td>
 		                		</tr>
 		                		<tr>
 		                			<th>학습기간 </th>
-		                			<td value='${groupPick.pkgcontent }'>${groupPick.pkgcontent }</td>
+		                			<td><div id='period'></div></td>
 		                		</tr>
 		                		<tr>
 		                			<th>학습난이도 </th>
-		                			<td value='${groupPick.difficulty }'>${groupPick.difficulty }</td>
+		                			<td><div id='difficulty'></div></td>
 		                		</tr>
              				    <tr>
 		                			<th>가입현황</th>  <!-- 시간될때 현재 가입가능 여부  표시 -->
-		                			<td value='${groupPick.person }'>${groupPick.person }</td>
+		                			<td><div id='person'></div></td>
 		                		</tr>
 						    </tbody>
 						   
-					    <!-- /c:forEach -->
 					    </table>
 	               	<button type="submit" class="btn btn-success" id="introductionbtn">그룹 신청하기</button>
-               	</form>
+               	</form> 
            	</div>
              	
              	
