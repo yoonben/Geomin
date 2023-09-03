@@ -78,9 +78,19 @@
     	});
     	
     	$('#introductionbtn').click(function (){
-    		console.log('#subnavi2 작동 개시');
+    		console.log('#introductionbtn 작동 개시');
+    		alert("그룹을 신청하였습니다. 승인처리까지 1~3일 소요됩니다.");
     		$('#introduction2').show();
     		$('#introduction1').hide();
+    		
+    		let obj = {
+			        groupid : groupSelect.value
+			    };
+			    
+			fetchPost('/geomin/groupjoin', obj, (map) => {
+				
+		})
+    		
     	});
 
     
@@ -126,7 +136,7 @@
 			        groupid : groupSelect.value
 			    };
 			    
-			fetchPost('/geomin/gropuId', obj, (map) => {
+			fetchPost('/geomin/groupId', obj, (map) => {
 				
 				document.getElementById('pkgname').innerHTML= map.packagevo.pkgname;
 
@@ -187,7 +197,7 @@
              		<h1><b>학습 그룹 신청<b></b></h1><br><br> 
              		<h3>"바둑의 첫 걸음, 그룹신청!"</h3><br> 
            		
-           		<form id='groupjoinForm' name='groupjoin' action='/studentStudy/groupjoin?groupid="group1"' method='POST'>
+           		<form id='groupjoinForm' name='groupjoin'>
            		
            			 <!-- input type="hidden" name="groupid" value="${groupSelect.groupid}"> -->
                 	 <table class="table" border="1px solid" style="height:50%;weight:100%">
@@ -200,7 +210,7 @@
 										 <c:forEach var="groupRes" items="${groupRes }">
 										  	<option value="${groupRes.groupid}">${groupRes.groupid}</option>
 										 </c:forEach>
-										</select>
+									</select>
 			               			</td>
 			               		</tr>
 							  </thead>
@@ -235,7 +245,7 @@
 						    </tbody>
 						   
 					    </table>
-	               	<button type="submit" class="btn btn-success" id="introductionbtn">그룹 신청하기</button>
+	               	<button type="button" class="btn btn-success" id="introductionbtn">그룹 신청하기</button>
                	</form> 
            	</div>
              	
@@ -282,12 +292,13 @@
 							    </tr>
 							    <tr>
 							      <th scope="col">학습내용</th>
-							      <td colspan='6'>@mdo</td>
+							      <td colspan='6'><textarea id='myhomework' name='myhomework' style="width:100%; height:200px;"></textarea></td>
 							    </tr>
 							  </tbody>
 						</table>
-             			
-             			<button type="submit" class="btn btn-success" id="introductionbtn">숙제 제출하기</button>
+             			<div class="d-grid gap-2 col-6 mx-auto">
+             				<button type="submit" class="btn btn-success" id="introductionbtn">숙제 제출하기</button>
+           				</div>
              		</form>
              	</div>
 

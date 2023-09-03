@@ -5,7 +5,7 @@
   <mapper namespace="com.geomin.mapper.studentMapper">
   
   	<select id='groupList' resultType='com.geomin.VO.packageVO'>
-  		SELECT p.pkgName, p.difficulty, p.pkgcontent, m.mname,
+			SELECT p.pkgName, p.difficulty, p.pkgcontent, m.mname,
 			       s.curpersonnel || '명' || '/' || s.personnel || '명' AS person,
 			       g.groupid,
 			       TO_CHAR(TO_DATE('20' || g.studyStartDate), 'YYYY-MM-DD') || ' ~ ' ||
@@ -43,5 +43,12 @@
 			JOIN member m ON m.memberid = s.memberid
 			where g.groupid = #{groupid} 
   	</select>
+  	
+  	
+  	<insert id='groupjoin'>
+  		insert into groupstudent values(studentid= #{studentid}, groupid = #{groupid}
+  									, pkgid = #{pkgid} , memberid = #{memberid}
+  									, sname = #{sname}, sysdate);
+  	</insert>
   
   </mapper>

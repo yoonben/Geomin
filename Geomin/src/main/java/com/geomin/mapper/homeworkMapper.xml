@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.geomin.mapper.homeworkMapper">
+  
+  	<select id='groupList' resultType='com.geomin.VO.homeworkVO'>
+   		select  g.sname  , m.memail, m.mphone, m.mbirthdate, h.groupid, h.studentid       
+			from   homework h, member m, groupStudent g 
+			where  h.memberid = m.memberid
+			and h.groupid = g.groupid
+    </select>
+    
+    
+   	<select id='studentSelect' resultType='com.geomin.VO.homeworkVO'>
+			select  g.sname  , m.memail, m.mphone, m.mbirthdate, h.groupid, h.studentid       
+			from   homework h, member m, groupStudent g 
+			where  h.memberid = m.memberid
+			and h.groupid = g.groupid
+			and g.groupid = #{groupid}
+  	</select>
+  </mapper>
+  

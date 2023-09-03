@@ -18,5 +18,14 @@ public class memberVO {
 	private String marketingagree;
 	
 	
+	//추가 (teacherMapper)에서 사용
+	private String sname;
+	private String pkgname;
+	private String groupid;
+	private String person;
+	private String joinStatus;
+	private String groupResDate;
+	
+	
 }
 

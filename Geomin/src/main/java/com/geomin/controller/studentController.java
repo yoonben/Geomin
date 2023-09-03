@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.geomin.VO.groupstudentVO;
 import com.geomin.VO.packageVO;
 import com.geomin.service.studentService;
 
@@ -37,14 +38,12 @@ public class studentController extends CommonRestController{
 		List<packageVO> list = studentService.groupList();		
 		model.addAttribute("groupRes", list);		
 		
-			
-		
 		return "/studentStudy/groupjoin";
 	}
 
 	
-	@PostMapping("/gropuId")
-	public @ResponseBody Map<String, Object> packageInsert(@RequestBody packageVO vo, Model model) {
+	@PostMapping("/groupId")
+	public @ResponseBody Map<String, Object> groupPick(@RequestBody packageVO vo, Model model) {
 		
 		try {
 			Map<String, Object> map = responseMap(REST_SUCCESS, "리스트 조회");
@@ -60,5 +59,29 @@ public class studentController extends CommonRestController{
 			return responseMap(REST_FAIL, "패키지 등록중 예외사항이 발생 하였습니다.");
 		}
 	}
+	
+	
+	//그룹가입 신청
+	@PostMapping("/groupjoin")
+	public @ResponseBody Map<String, Object> groupjoinInsert(@RequestBody groupstudentVO vo, Model model) {
+		
+		try {
+			Map<String, Object> map = responseMap(REST_SUCCESS, "그룹 신청 완료!");
+			
+			int groupstudent = studentService.groupjoin(vo);
+			
+			if(groupstudent > 0) {
+				
+				map.put("groupstudent", groupstudent);
+			}
+			
+			return map;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return responseMap(REST_FAIL, "패키지 등록중 예외사항이 발생 하였습니다.");
+		}
+	}
+	
 	
 }
