@@ -95,12 +95,20 @@ th, tr, td{
 			</div>
 			<!-- <div class='banner'></div> -->
 		</div>
+		<p style="display: none">${member.id }
+		<p style="display: none">${member.password }
+		
+		
 	</div>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$('#reqSubscribe').click(function(){
+			
+		})
+		
 		const dataRows = document.querySelectorAll("tr.data-raw");
 		$('#searchButton').click(function() {
 			$('tr.data-raw').hide();

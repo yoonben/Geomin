@@ -48,11 +48,11 @@ th, tr, td{
 				</ul>
 			</div>
 			<div class="content">
-				<div class="today">
+				<!-- <div class="today">
 					<h2>230901</h2>
 					<h2>오늘의 기분은 어떤가요?</h2>
-					<img src="/resources/img/pingwing-bee_happy.png">
-				</div>
+					<img src="/resources/img/pingwing-bee_angry.png">
+				</div> -->
 				
 				<button id="1day">1일 전</button>
 				<button id="3day">3일 전</button>

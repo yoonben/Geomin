@@ -18,6 +18,7 @@ public class packageVO {
 	public String finalprice;
 	public String pkgcontent;
 	public String elimination;
+	public int curpersonnel; 
 	
 	//추가
 	public String period;
