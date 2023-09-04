@@ -63,7 +63,7 @@
 					      <th scope="col">학습 난이도</th>
 					      <th scope="col">학습 인원</th>
 					      <th scope="col">정가</th>
-					      <th scope="col">할인</th>
+					      <th scope="col">할인(%)</th>
 					      <th scope="col">판매가</th>
 					      <th scope="col">콘텐츠 내용</th>
 					      <th scope="col">삭제 처리</th>
@@ -77,6 +77,7 @@
 				
 				  	</nav>
 				  	<button onclick='packDelete()'>패키지 삭제</button>
+				  	<button onclick='packUdate()'>패키지 수정</button>
              	</div>
              	
              	<div id="packgeInsert">

@@ -46,4 +46,16 @@ public class ManagerService implements ManagerServiceImpl{
 		return res;
 	}
 
+	@Override
+	public int packUpdate(packageVO vo) {
+		int res = manager.packUpdate(vo);
+		return res;
+	}
+
+	@Override
+	public packageVO getOnePack(packageVO vo) {
+		packageVO pack = manager.getOnePack(vo);
+		return pack;
+	}
+
 }

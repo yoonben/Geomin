@@ -54,10 +54,138 @@
 			}
 	</style>
 <script type="text/javascript" src="/resources/js/common.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="text/javascript">
+
+let numberChart = null;
+let salesChart = null;
 
 window.addEventListener('load', function(){
 	PriceList();
+	
+	const currentYear = new Date().getFullYear();
+	
+	const yearRadio = document.querySelector('#yearRadio');
+	const monthRadio = document.querySelector('#monthRadio');
+	const dayRadio = document.querySelector('#dayRadio');
+	
+	yearRadio.addEventListener('click', function () {
+		
+		document.querySelector('#searchElement').style.display ='none';
+		yearChart(document.getElementById('pkgid').value);
+		
+	});
+
+	monthRadio.addEventListener('click', function () {
+		let content = '';
+		document.querySelector('#searchElement').style.display ='';
+	    const searchElement = document.querySelector('#searchElement');
+	    const yearInput = document.querySelector('#year'); 
+		
+	    const currentYear = new Date().getFullYear();
+	    const yearDataFromDatabase = Array.from({ length: 10 }, (_, index) => currentYear - index);
+
+	    if (numberChart) {
+	        numberChart.destroy();
+	    }
+	    if (salesChart) {
+	        salesChart.destroy();
+	    }
+
+	    monthChart(currentYear.toString());
+	    
+	    content = ''
+	        + '<select class="form-select" aria-label="Default select example" id="yearSelect">'
+	        + '<option selected value="'+currentYear+'">년도 선택</option>';
+	    yearDataFromDatabase.forEach(year => {
+	        content += '<option value="' + year + '">' + year + '년</option>';
+	    })
+	    content += '</select>';
+
+	    searchElement.innerHTML = content;
+	    
+	    yearSelect.addEventListener('change', function () {
+	    	const yearSelect = document.querySelector('#yearSelect');
+	    	
+	        yearInput.value = yearSelect.value;
+	        
+	        monthChart(yearInput.value);
+	    });
+	});
+
+	dayRadio.addEventListener('click', function () {
+		let content = '';
+		document.querySelector('#searchElement').style.display ='';
+	    const searchElement = document.querySelector('#searchElement');
+	    const yearInput = document.querySelector('#year'); 
+	    const monthInput = document.querySelector('#month');
+	    const yearCheck = document.querySelector('#yearCheck');
+	    const monthCheck = document.querySelector('#monthCheck');
+		
+	    const currentYear = new Date().getFullYear();
+	    const currentMonth = new Date().getMonth() + 1;
+	    const yearDataFromDatabase = Array.from({ length: 10 }, (_, index) => currentYear - index);
+		
+	    if (numberChart) {
+	        numberChart.destroy();
+	    }
+	    if (salesChart) {
+	        salesChart.destroy();
+	    }
+	    
+	    dayChart(currentYear,currentMonth);
+	    yearCheck.value = '0';
+	    monthCheck.value = '0';
+	    content = ''
+	        + '<select class="form-select" aria-label="Default select example" id="yearSelect2">'
+	        + '<option selected value="'+currentYear+'">년도 선택</option>';
+	    yearDataFromDatabase.forEach(year => {
+	        content += '<option value="' + year + '">' + year + '년</option>';
+	    })
+	    content += '</select>'
+			    + '<select class="form-select" aria-label="Default select example" id="monthSelect">' // 변경된 아이디
+			    + '<option selected value="' + currentMonth + '">월 선택</option>'
+			    + '<option value="1">1월</option>'
+			    + '<option value="2">2월</option>'
+			    + '<option value="3">3월</option>'
+			    + '<option value="4">4월</option>'
+			    + '<option value="5">5월</option>'
+			    + '<option value="6">6월</option>'
+			    + '<option value="7">7월</option>'
+			    + '<option value="8">8월</option>'
+			    + '<option value="9">9월</option>'
+			    + '<option value="10">10월</option>'
+			    + '<option value="11">11월</option>'
+			    + '<option value="12">12월</option>'
+			    + '</select>';
+
+	    searchElement.innerHTML = content;
+	    
+	    yearSelect2.addEventListener('change', function () {
+	    	const yearSelect = document.querySelector('#yearSelect2');
+	    	
+	    	yearCheck.value = '1';
+	        yearInput.value = yearSelect.value;
+	        
+	        if(yearCheck.value == 1 && monthCheck.value == 1){
+	        	console.log("monthInput.valu : "+monthInput.value);
+	        	dayChart(yearInput.value,monthInput.value);
+	        }
+	    })
+	    
+	    monthSelect.addEventListener('change', function () {
+	    	const monthSelect = document.querySelector('#monthSelect');
+	    	
+	    	monthCheck.value = '1';
+	    	monthInput.value = monthSelect.value;
+	    	
+	    	if(yearCheck.value == 1 && monthCheck.value == 1){
+	    		console.log("monthInput.valu : "+monthInput.value);
+	    		dayChart(yearInput.value,monthInput.value);
+	        }
+	    })
+	});
+	
 })
 
 function PriceList() {
@@ -185,9 +313,248 @@ fetchPost('/geomin/priceList', obj, (map) => {
 	    pageNavi.innerHTML = content2;
 })
 }
+function boardList(){
+	document.getElementById('boardList').style.display = '';
+	document.getElementById('boardGraph').style.display = 'none';
+}
 
-function goView(pkid){
-	console.log(pkid);
+function goView(pkgid){
+	document.getElementById('boardList').style.display = 'none';
+	document.getElementById('boardGraph').style.display = '';
+	document.getElementById('pkgid').value = pkgid;
+	document.querySelector('#searchElement').style.display ='none';
+	document.querySelector('#yearRadio').checked = 'checked';
+	
+	yearChart(pkgid);
+}
+
+function yearChart(pkgid) {
+	let content = '';
+    let ctx1 = document.getElementById('numberChart');
+    let ctx2 = document.getElementById('salesChart');
+    
+    if (numberChart) {
+        numberChart.destroy();
+    }
+    if (salesChart) {
+        salesChart.destroy();
+    }
+    
+    let transactioncntList = [];
+    let datetotalsalesList = [];
+    
+    let obj = {
+    		pkgid : pkgid
+    }
+
+        fetchPost('/geomin/yearChart',obj, (map) => {
+            if (map.result == 'success') {
+            	
+            	 numberChart = new Chart(ctx1, {
+	        	    // 그래프의 종류
+	        	    type: 'line', // bar : 막대 그래프, line : 선그래프
+	        	    data: {
+	        	    // 하단 레이블
+	        	    labels: map.yearList,
+	        	    datasets: [{
+	        	        // 상단 레이블
+	        	        label: '거래 건수',
+	        	        data: map.transactioncntList,
+	        	        borderWidth: 1
+	        	    }]
+	        	    },
+	        	    options: {
+	        	    scales: {
+	        	        y: {
+	        	        beginAtZero: true
+	        	        }
+	        	    }
+	        	    }
+	        	});
+	        	
+	        	// 차트 선택
+	        	salesChart = new Chart(ctx2, {
+	        	    // 그래프의 종류
+	        	    type: 'bar', // bar : 막대 그래프, line : 선그래프
+	        	    data: {
+	        	    // 하단 레이블
+	        	    labels: map.yearList,
+	        	    datasets: [{
+	        	        // 상단 레이블
+	        	        label: '판매 매출',
+	        	        data: map.datetotalsalesList,
+	        	        borderWidth: 1
+	        	    }]
+	        	    },
+	        	    options: {
+	        	    scales: {
+	        	        y: {
+	        	        beginAtZero: true
+	        	        }
+	        	    }
+	        	    }
+	        	});
+            } else {               
+                alert(map.msg);
+            }
+            
+            document.getElementById('totalTran').innerHTML = '최근 10년 총 판매 건수 : '+ map.totalChart.transactioncnt+"건";
+            document.getElementById('totalSales').innerHTML = '최근 10년 총 판매 액 : '+ map.totalChart.datetotalsales+"원";
+        });
+}
+
+function monthChart(year) {
+    let ctx1 = document.getElementById('numberChart');
+    let ctx2 = document.getElementById('salesChart');
+    
+    console.log(year);
+    
+    if (numberChart) {
+        numberChart.destroy();
+    }
+    if (salesChart) {
+        salesChart.destroy();
+    }
+    
+    let transactioncntList = [];
+    let datetotalsalesList = [];
+    
+    let obj = {
+    		year: year,
+    		pkgid : document.getElementById('pkgid').value
+    }
+
+        fetchPost('/geomin/monthChart',obj, (map) => {
+            if (map.result == 'success') {
+            	
+            	 numberChart = new Chart(ctx1, {
+	        	    // 그래프의 종류
+	        	    type: 'line', // bar : 막대 그래프, line : 선그래프
+	        	    data: {
+	        	    // 하단 레이블
+	        	    labels: map.monthList,
+	        	    datasets: [{
+	        	        // 상단 레이블
+	        	        label: '거래 건수',
+	        	        data: map.transactioncntList,
+	        	        borderWidth: 1
+	        	    }]
+	        	    },
+	        	    options: {
+	        	    scales: {
+	        	        y: {
+	        	        	max : 30
+	        	        }
+	        	    }
+	        	    }
+	        	});
+	        	
+	        	// 차트 선택
+	        	salesChart = new Chart(ctx2, {
+	        	    // 그래프의 종류
+	        	    type: 'bar', // bar : 막대 그래프, line : 선그래프
+	        	    data: {
+	        	    // 하단 레이블
+	        	    labels: map.monthList,
+	        	    datasets: [{
+	        	        // 상단 레이블
+	        	        label: '판매 매출',
+	        	        data: map.datetotalsalesList,
+	        	        borderWidth: 1
+	        	    }]
+	        	    },
+	        	    options: {
+	        	    scales: {
+	        	        y: {
+	        	        max: 200000
+	        	        }
+	        	    }
+	        	    }
+	        	});
+            } else {               
+                alert(map.msg);
+            }
+            
+            document.getElementById('totalTran').innerHTML = map.totalChart.year+'년 총 판매 건수 : '+ map.totalChart.transactioncnt+"건";
+            document.getElementById('totalSales').innerHTML = map.totalChart.year+'년  총 판매 액 : '+ map.totalChart.datetotalsales+"원";
+        });
+}
+
+function dayChart(year,month) {
+    let ctx1 = document.getElementById('numberChart');
+    let ctx2 = document.getElementById('salesChart');
+    
+    console.log(year);
+    
+    if (numberChart) {
+        numberChart.destroy();
+    }
+    if (salesChart) {
+        salesChart.destroy();
+    }
+    
+    let transactioncntList = [];
+    let datetotalsalesList = [];
+    
+    let obj = {
+    		year: year,
+    		month: month,
+    		pkgid : document.getElementById('pkgid').value
+    }
+	console.log(obj);
+        fetchPost('/geomin/dayChart',obj, (map) => {
+            if (map.result == 'success') {
+            	
+            	 numberChart = new Chart(ctx1, {
+	        	    // 그래프의 종류
+	        	    type: 'line', // bar : 막대 그래프, line : 선그래프
+	        	    data: {
+	        	    // 하단 레이블
+	        	    labels: map.dayList,
+	        	    datasets: [{
+	        	        // 상단 레이블
+	        	        label: '거래 건수',
+	        	        data: map.transactioncntList,
+	        	        borderWidth: 1
+	        	    }]
+	        	    },
+	        	    options: {
+	        	    scales: {
+	        	        y: {
+	        	        	max : 20
+	        	        }
+	        	    }
+	        	    }
+	        	});
+	        	
+	        	// 차트 선택
+	        	salesChart = new Chart(ctx2, {
+	        	    // 그래프의 종류
+	        	    type: 'bar', // bar : 막대 그래프, line : 선그래프
+	        	    data: {
+	        	    // 하단 레이블
+	        	    labels: map.dayList,
+	        	    datasets: [{
+	        	        // 상단 레이블
+	        	        label: '판매 매출',
+	        	        data: map.datetotalsalesList,
+	        	        borderWidth: 1
+	        	    }]
+	        	    },
+	        	    options: {
+	        	    scales: {
+	        	        y: {
+	        	        max: 100000
+	        	        }
+	        	    }
+	        	    }
+	        	});
+            } else {               
+                alert(map.msg);
+            }
+            document.getElementById('totalTran').innerHTML = map.totalChart.month+'월 총 판매 건수 : '+ map.totalChart.transactioncnt+"건";
+            document.getElementById('totalSales').innerHTML = map.totalChart.month+'월  총 판매 액 : '+ map.totalChart.datetotalsales+"원";
+        });
 }
 </script>
 </head>
@@ -234,8 +601,45 @@ function goView(pkid){
 				  	</nav>
              	</div>
              	<!-- Q&A 게시판 끝 -->
-             		
-          </div>
+     <div id="boardGraph" style="display: none;">
+     <input type="hidden" id="pkgid" name="pkgid">
+             <div>
+          	<input class="form-check-input" type="radio" name="flexRadioDefault" id="yearRadio" checked="checked">
+		  	<label class="form-check-label" for="yearRadio">
+		    	년 매출
+		  	</label>
+		  	
+		  	<input class="form-check-input" type="radio" name="flexRadioDefault" id="monthRadio">
+		  	<label class="form-check-label" for="monthRadio">
+		    	월 매출
+		  	</label>
+		  	
+		  	<input class="form-check-input" type="radio" name="flexRadioDefault" id="dayRadio">
+		  	<label class="form-check-label" for="dayRadio">
+		    	일 매출
+		  	</label>
+          	</div>
+          	<input type="hidden" id="year" name="year">
+          	<input type="hidden" id="month" name="month">
+          	<input type="hidden" id="yearCheck" name="yearCheck" value='0'>
+          	<input type="hidden" id="monthCheck" name="monthCheck" value='0'>
+          	<div id="searchElement">
+          	
+          	</div>
+          	<div id="salesNumber">
+          		<div id="totalTran"></div>
+          		<div id="totalSales"></div>
+          	</div>
+          	<div>          		
+		        <canvas id="numberChart"></canvas>
+		    </div>
+		    <div>          		
+		        <canvas id="salesChart"></canvas>
+		    </div>
+		    <button type="button" class="btn btn-outline-primary" onclick="boardList()">목록</button>
+     </div>
+             	</div>
+          
             <div class='banner'>
             </div>
       </div>

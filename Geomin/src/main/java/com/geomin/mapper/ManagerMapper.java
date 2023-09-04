@@ -16,4 +16,8 @@ public interface ManagerMapper {
 	public int totalCnt(Criteria cri);
 	
 	public int packDeleteUpdate(packageVO vo);
+	
+	public int packUpdate(packageVO vo);
+	
+	public packageVO getOnePack(packageVO vo);
 }
