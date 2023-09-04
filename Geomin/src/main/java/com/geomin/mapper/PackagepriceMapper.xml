@@ -15,6 +15,8 @@
 		LEFT JOIN (
 		    SELECT EXTRACT(YEAR FROM SALESDATE) year, SUM(TRANSACTIONCNT) count_transaction, SUM(DATETOTALSALES) sum_sales
 		    FROM PACKAGEPRICE
+		    where 1 = 1
+		    ]]><include refid="reference"/><![CDATA[
 		    GROUP BY EXTRACT(YEAR FROM SALESDATE)
 		) p ON years.year = p.year
 		ORDER BY years.year 	
@@ -49,6 +51,7 @@
 		        SUM(TO_NUMBER(DATETOTALSALES)) AS sum_sales  
 		    FROM PACKAGEPRICE
 		    WHERE EXTRACT(YEAR FROM SALESDATE) = #{year}
+		    <include refid="reference"/>
 		    GROUP BY EXTRACT(month FROM SALESDATE) 
 		) p ON months.month = p.month
 		ORDER BY months.month
@@ -66,6 +69,7 @@
 		FROM PACKAGEPRICE
 		WHERE SALESDATE BETWEEN TO_DATE(#{day2}, 'YYYY-MM-DD')
 		                   AND TO_DATE(#{day1}, 'YYYY-MM-DD')
+		                   ]]><include refid="reference"/><![CDATA[
 		GROUP BY SALESDATE
 		
 		) a
@@ -122,12 +126,15 @@ FROM (
  	<select id="totalChart" resultType="com.geomin.VO.PackagepriceVO">
  		SELECT sum(TRANSACTIONCNT) as TRANSACTIONCNT, sum(DATETOTALSALES) as DATETOTALSALES
 		    FROM PACKAGEPRICE
+		    where 1 = 1
+		    <include refid="reference"/>
  	</select>
  	
  	<select id="yearChart" resultType="com.geomin.VO.PackagepriceVO">
  			SELECT EXTRACT(YEAR FROM SALESDATE) year, sum(TRANSACTIONCNT) TRANSACTIONCNT, SUM(DATETOTALSALES) DATETOTALSALES
 		    FROM PACKAGEPRICE
             where EXTRACT(YEAR FROM SALESDATE) = #{year}
+            <include refid="reference"/>
 		    GROUP BY EXTRACT(YEAR FROM SALESDATE) ORDER BY year
  	</select>
  	
@@ -135,6 +142,7 @@ FROM (
  		SELECT EXTRACT(month FROM SALESDATE) month, sum(TRANSACTIONCNT) TRANSACTIONCNT, SUM(DATETOTALSALES) DATETOTALSALES
 		    FROM PACKAGEPRICE
             where EXTRACT(YEAR FROM SALESDATE) = #{year} and EXTRACT(month FROM SALESDATE) = #{month}
+            <include refid="reference"/>
 		    GROUP BY EXTRACT(YEAR FROM SALESDATE) ,
             EXTRACT(month FROM SALESDATE)
             ORDER BY month
@@ -150,4 +158,14 @@ FROM (
  	 		</when>
  	 	</choose>
  	 </sql>
+ 	 
+ 	 
+
+	<sql id="reference">
+    	<choose>
+        <when test="pkgid != null and pkgid != ''">
+            AND TRIM(LEADING '0' FROM pkgid) = #{pkgid}
+        </when>
+    	</choose>
+	</sql>
 </mapper>

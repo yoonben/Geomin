@@ -32,6 +32,8 @@ public class PackagepriceController extends CommonRestController{
 		try {
 			Map<String, Object> map = responseMap(REST_SUCCESS, "매출 조회가 되었습니다.");
 			
+			System.out.println("vo ===== "+vo);
+			
 			PackagepriceVO totalChart = packageprice.totalChart(vo);
 			
 			List<PackagepriceVO> list = packageprice.yearPrice(vo);
@@ -184,6 +186,14 @@ public class PackagepriceController extends CommonRestController{
 	        }
 			
 			System.out.println("totalChart =========== "+totalChart);
+			
+			if (totalChart == null) {
+			    totalChart = new PackagepriceVO();
+			    totalChart.setMonth(vo.getMonth());
+			    totalChart.setYear(vo.getYear());
+			    totalChart.setTransactioncnt("0");
+			    totalChart.setDatetotalsales("0");
+			}
 			
 			map.put("totalChart", totalChart);
 			map.put("dayList", dayList);

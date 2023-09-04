@@ -44,6 +44,9 @@ public class teacherController extends CommonRestController{
 	public String groupRegist(Model model) {
 		List<contentVO> list = helloService.getSubList();
 		model.addAttribute("list", list);
+		
+		//List<contentVO> list2 = helloService.regSubinfo();
+		//model.addAttribute("list2", list2);
 		return "/teacher/groupRegist";
 	}
 	

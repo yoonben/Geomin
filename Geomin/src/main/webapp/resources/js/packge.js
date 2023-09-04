@@ -173,13 +173,13 @@ window.addEventListener('load', function(){
 			if(map.packagelist.length > 0){
 
 				map.packagelist.forEach(function(item, index) {
-					 content += "<tr>"
+					 content += "<tr id='tr"+item.pkgid+"'>"
 					    	+ "  <td scope='row'><input type='checkbox' value = '"+item.pkgid+"' class='pkgid' name='pkgid'></td>"
 					        + "  <td>" + item.pkgname + "</td>"
 					        + "  <td>" + item.difficulty + "</td>"
 					        + "  <td>" + item.personnel + "</td>"
 					        + "  <td>" + item.fixedprice + "</td>"
-					        + "  <td>" + item.discountrate + "(%)</td>"
+					        + "  <td>" + item.discountrate + "</td>"
 					        + "  <td>" + item.finalprice + "</td>"
 					        + "  <td>" + item.pkgcontent + "</td>"
 					        + "  <td>" + item.elimination + "</td>"
@@ -240,13 +240,13 @@ window.addEventListener('load', function(){
 			if(map.packagelist.length > 0){
 
 				map.packagelist.forEach(function(item, index) {
-					 content += "<tr>"
+					 content += "<tr id='tr"+item.pkgid+"'>"
 					    	+ "  <td scope='row'><input type='checkbox' value = '"+item.pkgid+"' class='pkgid' name='pkgid'></td>"
 					        + "  <td>" + item.pkgname + "</td>"
 					        + "  <td>" + item.difficulty + "</td>"
 					        + "  <td>" + item.personnel + "</td>"
 					        + "  <td>" + item.fixedprice + "</td>"
-					        + "  <td>" + item.discountrate + "(%)</td>"
+					        + "  <td>" + item.discountrate + "</td>"
 					        + "  <td>" + item.finalprice + "</td>"
 					        + "  <td>" + item.pkgcontent + "</td>"
 					        + "  <td>" + item.elimination + "</td>"
@@ -308,13 +308,13 @@ window.addEventListener('load', function(){
 			if(map.packagelist.length > 0){
 				
 				map.packagelist.forEach(function(item, index) {
-				    content += "<tr>"
+				    content += "<tr id='tr"+item.pkgid+"'>"
 				    	+ "  <td scope='row'><input type='checkbox' value = '"+item.pkgid+"' class='pkgid' name='pkgid'></td>"
 				        + "  <td>" + item.pkgname + "</td>"
 				        + "  <td>" + item.difficulty + "</td>"
 				        + "  <td>" + item.personnel + "</td>"
 				        + "  <td>" + item.fixedprice + "</td>"
-				        + "  <td>" + item.discountrate + "(%)</td>"
+				        + "  <td>" + item.discountrate + "</td>"
 				        + "  <td>" + item.finalprice + "</td>"
 				        + "  <td>" + item.pkgcontent + "</td>"
 				        + "  <td>" + item.elimination + "</td>"
@@ -402,4 +402,81 @@ window.addEventListener('load', function(){
 	    } else {
 	        console.log('No packages selected for deletion.');
 	    }
+	}
+	
+	function packUdate() {
+			let content = ""; 
+		
+		    const selectedCheckboxes = document.querySelectorAll('.pkgid:checked');
+		    
+		    if (selectedCheckboxes.length > 0) {
+
+		        console.log('selectedCheckboxes.length:', selectedCheckboxes.length);
+
+		        let deleteCount = 0; // 실제 삭제된 패키지 수 추적
+
+		        selectedCheckboxes.forEach(checkbox => {
+		            console.log(checkbox.value);
+
+		            let obj = {
+		                pkgid: checkbox.value
+		            }
+		            
+		            fetchPost('/geomin/packUdate', obj, (map) => {
+		            	content = ""
+				    	+ "  <td scope='row'><input type='checkbox' value = '"+map.packageVO.pkgid+"' class='pkgid' name='pkgid' checked='checked'></td>"
+				        + "  <td><input class='form-control me-2' type='text' value = '"+map.packageVO.pkgname+"' id='pkgname"+map.packageVO.pkgid+"' name='pkgname'></td>"
+				        + '  <td><select id="difficulty'+map.packageVO.pkgid+'" name="difficulty" aria-label="Default select example">'
+				        + '    <option value="초급"' + (map.packageVO.difficulty === '초급' ? ' selected' : '') + '>초급</option>'
+				        + '    <option value="중급"' + (map.packageVO.difficulty === '중급' ? ' selected' : '') + '>중급</option>'
+				        + '    <option value="고급"' + (map.packageVO.difficulty === '고급' ? ' selected' : '') + '>고급</option>'
+				        + '  </select></td>'
+				        + "  <td><input class='form-control me-2' type='text' value = '"+map.packageVO.personnel+"' id='personnel"+map.packageVO.pkgid+"' name='personnel'></td>"
+				        + "  <td><input class='form-control me-2' type='text' value = '"+map.packageVO.fixedprice+"' id='fixedprice"+map.packageVO.pkgid+"' name='fixedprice'></td>"
+				        + "  <td><input class='form-control me-2' type='text' value = '"+map.packageVO.discountrate+"' id='discountrate"+map.packageVO.pkgid+"' name='discountrate'></td>"
+				        + "  <td><input class='form-control me-2' type='text' value = '"+map.packageVO.finalprice+"' id='finalprice"+map.packageVO.pkgid+"' name='finalprice'></td>"
+				        + "  <textarea name='pkgcontent' class='form-control' id='pkgcontent"+map.packageVO.pkgid+"' rows = '2'>"+map.packageVO.pkgcontent+"</textarea>"
+				        + "	 <td><button onclick='packUdatebtn("+map.packageVO.pkgid+")'>수정</button></td>";
+		            	
+		            	document.querySelector('#tr'+map.packageVO.pkgid).innerHTML = content;
+		            })
+		           
+		            
+		        })
+		    } else {
+		        console.log('No packages selected for deletion.');
+		    }
+		
+	}
+	
+	function packUdatebtn(pkgid) {
+		
+		let obj={
+			pkgid : pkgid
+			, pkgname : document.querySelector('#pkgname'+pkgid).value
+			, difficulty : document.querySelector('#difficulty'+pkgid).value
+			, personnel: document.querySelector('#personnel'+pkgid).value
+			, fixedprice : document.querySelector('#fixedprice'+pkgid).value
+			, discountrate : document.querySelector('#discountrate'+pkgid).value
+			, finalprice : document.querySelector('#finalprice'+pkgid).value
+			, pkgcontent : document.querySelector('#pkgcontent'+pkgid).value
+		}
+		
+		console.log(obj);
+		
+		fetchPost('/geomin/packUdatelist', obj, (map) => {
+			
+        	content = ""
+	    	+ "  <td scope='row'><input type='checkbox' value = '"+map.packageVO.pkgid+"' class='pkgid' name='pkgid'></td>"
+	        + "  <td>" + map.packageVO.pkgname + "</td>"
+	        + "  <td>" + map.packageVO.difficulty + "</td>"
+	        + "  <td>" + map.packageVO.personnel + "</td>"
+	        + "  <td>" + map.packageVO.fixedprice + "</td>"
+	        + "  <td>" + map.packageVO.discountrate + "</td>"
+	        + "  <td>" + map.packageVO.finalprice + "</td>"
+	        + "  <td>" + map.packageVO.pkgcontent + "</td>"
+	        + "  <td>" + map.packageVO.elimination + "</td>";
+        	
+        	document.querySelector('#tr'+map.packageVO.pkgid).innerHTML = content;
+        })
 	}

@@ -14,9 +14,13 @@
         from (
 				select *
 				from package
-				order by pkgid
+				order by pkgid DESC 
 			) package where 1 = 1 <include refid="criteria"/>
 		) where rn between #{startNo} and #{endNo}
+	</select>
+	
+	<select id="getOnePack" resultType="com.geomin.VO.packageVO">
+		select * from package WHERE TRIM(LEADING '0' FROM pkgid) = #{pkgid}
 	</select>
 	
 	<select id="totalCnt" resultType="int">
@@ -31,6 +35,13 @@
 		    ELSE elimination
 		END
 		WHERE TRIM(LEADING '0' FROM pkgid) = #{pkgid}
+ 	 </update>
+	
+	<update id="packUpdate">
+ 	 	UPDATE PACKAGE
+		SET pkgname = #{pkgname}, difficulty = #{difficulty}, personnel = #{personnel}, fixedprice = #{fixedprice},
+		discountrate = #{discountrate},finalprice = #{finalprice},pkgcontent = #{pkgcontent}
+		WHERE LTRIM(pkgid, '0') = #{pkgid}
  	 </update>
 	
 	<sql id="criteria">

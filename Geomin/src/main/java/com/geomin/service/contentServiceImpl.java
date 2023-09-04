@@ -33,4 +33,10 @@ public class contentServiceImpl implements contentService{
 		
 	}
 
+	@Override
+	public List<contentVO> regSubinfo() {
+		// TODO Auto-generated method stub
+		return helloMapper.regSubinfo();
+	}
+
 }

@@ -84,6 +84,25 @@
     	</foreach>
 	</insert>
 	
+	<select id="regSubinfo" resultType="com.geomin.VO.contentVO">
+		<!-- select
+			p.pkgName, m.memberID, d.subsDate, p.finalPrice, p.difficulty, d.PERSONNEL, d.CURPERSONNEL
+		from 
+			package p
+		JOIN
+			PKGSUBSDETAIL D
+		ON  
+			P.PKGID = D.PKGID
+		JOIN
+			member m
+		ON 
+			D.memberID = m.memberID
+		where 
+			p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID22' AND p.pkgName = #{pkgName} -->
+	
+	</select>
+	
+	
 	<!-- <insert id="addSubContent" parameterType="java.util.List"> parameterType="java.util.List"
 		INSERT INTO PKGSUBSDETAIL(pkgID, memberID, PKGNAME, SUBSDATE, PERSONNEL, SUBSPRICE)
 		VALUES (#{pkgID}, 'memberID22', #{pkgName}, sysdate, #{Personnel}, #{finalPrice})
