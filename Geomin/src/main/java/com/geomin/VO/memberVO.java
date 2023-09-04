@@ -25,6 +25,7 @@ public class memberVO {
 	private String person;
 	private String joinStatus;
 	private String groupResDate;
+	private String studentid;
 	
 	
 }

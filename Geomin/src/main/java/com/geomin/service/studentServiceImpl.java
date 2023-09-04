@@ -22,11 +22,7 @@ public class studentServiceImpl implements studentService {
 		return studentmapper.groupList();
 	}
 	
-	
-	@Override
-	public List<packageVO> getGroup(packageVO pkg) {
-		return studentmapper.getGroup(pkg);
-	}
+
 
 
 	@Override

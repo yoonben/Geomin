@@ -79,18 +79,22 @@
     	
     	$('#introductionbtn').click(function (){
     		console.log('#introductionbtn 작동 개시');
-    		alert("그룹을 신청하였습니다. 승인처리까지 1~3일 소요됩니다.");
-    		$('#introduction2').show();
-    		$('#introduction1').hide();
+    		     
+    		        let obj = {
+    		        	   studentid: document.getElementById('studentid').value,
+    		        	   groupid: document.getElementById('groupid').value,
+    		        	   pkgid: document.getElementById('pkgid').value,
+    		        	   memberid: document.getElementById('memberid').value,
+    		        	   sname: document.getElementById('sname').value
+    		        };
+    		        
     		
-    		let obj = {
-			        groupid : groupSelect.value
-			    };
-			    
-			fetchPost('/geomin/groupjoin', obj, (map) => {
+    		fetchPost('/geomin/groupjoin', obj, (map) => {
 				
 		})
-    		
+		alert("그룹을 신청하였습니다. 승인처리까지 1~3일 소요됩니다.");
+    		$('#introduction2').show();
+    		$('#introduction1').hide();
     	});
 
     
@@ -135,8 +139,15 @@
 			let obj = {
 			        groupid : groupSelect.value
 			    };
-			    
+			 
 			fetchPost('/geomin/groupId', obj, (map) => {
+				console.log(map);
+				
+				document.getElementById('pkgid').value = map.packagevo.pkgid;
+				
+				document.getElementById('groupid').value = map.packagevo.groupid;
+				
+				document.getElementById('memberid').value = map.packagevo.memberid;
 				
 				document.getElementById('pkgname').innerHTML= map.packagevo.pkgname;
 
@@ -190,7 +201,9 @@
                	</ul>
 				
             </div>
+            
              <div class='content'>
+             
              	<!-- 학습그룹 신청 페이지 -->
              	<div id="introduction1">
                 	<img src="/resources/img/game1.jpg" alt="" id='introduction1img'>
@@ -199,7 +212,12 @@
            		
            		<form id='groupjoinForm' name='groupjoin'>
            		
-           			 <!-- input type="hidden" name="groupid" value="${groupSelect.groupid}"> -->
+           			 <input type="text" name="groupid" id='groupid' value="">
+           			 <input type="text" name="studentid" id='studentid' value="${member.memberid}">
+           			 <input type="text" name="sname"  id='sname' value="${member.mname}">
+           			 <input type="text" name="pkgid"  id='pkgid' value="">
+           			 <input type="text" name="memberid"  id='memberid' value="">
+           			 
                 	 <table class="table" border="1px solid" style="height:50%;weight:100%">
 							  <thead>
 							    <tr class="table-success">

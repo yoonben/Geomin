@@ -121,6 +121,10 @@
 			    
 			fetchPost('/geomin/contentId', obj, (map) => {
 				
+				console.log(map);
+				
+				document.getElementById('pkgname').value= map.membervo.pkgname;
+				
 				document.getElementById('groupid').innerHTML= map.membervo.groupid;
 
 				document.getElementById('person').innerHTML= map.membervo.person;
@@ -136,11 +140,16 @@
 				document.getElementById('groupResDate').innerHTML= map.membervo.groupResDate;
 				
 				document.getElementById('joinStatus').innerHTML= map.membervo.joinStatus;
+				
 		})
     });	
+		
+		
+		
 
 		
-		// 숙제전송 페이지 
+		
+		// 숙제전송 페이지 =========================================================================
     	let groupSelect = document.getElementById('groupSelect');
 		let studentSelect = document.getElementById('studentSelect');
 		//contentList.style.display = 'none';
@@ -236,6 +245,7 @@
              
              	<!-- 학습 그룹 등록 페이지 -->
              	<div id="introduction1">
+             	
           	 	</div>
              	
              	
@@ -245,6 +255,9 @@
              		<div>
              			<h1><b>그룹 가입 승인</b></h1><br>
              		</div>
+             		
+           			 <input type="text" name="pkgname" id='pkgname' value="${member.pkgname}">
+             		
              		<div>
 		      				<select id='contentSelect' class="form-select" aria-label="Default select example">
 							 	<option selected>학습컨텐츠 선택</option>
@@ -256,9 +269,8 @@
 					
 	             			그룹명 : <div id='groupid'></div>
 	             			가입입원 : <div id='person'></div>
-	             		
+           			 
 	             		<form>
-	             		
 			                <table class="table" border="1px solid" style="height:50%;weight:100%">
 								  <thead>
 								    <tr class="table-success">
@@ -272,6 +284,7 @@
 								    </tr>
 								  </thead>
 								  
+	             		 
 							    <tbody id=contentList'>
 								    <tr>
 								      <th rowspan='3' scope="row"><input type='checkbox' name='rowCheck' value='${boardVO.bno }'></th>
@@ -284,6 +297,7 @@
 								    </tr>
 							  </tbody>
 							</table>
+							
 	             			<div class="d-grid gap-2 col-6 mx-auto">
 	             				<button type="submit" class="btn btn-success" id="introductionbtn">그룹가입 승인</button>
              				</div>

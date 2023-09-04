@@ -10,6 +10,9 @@ public interface teacherMapper {
 	// 그룹조회
 	public List<memberVO> contentList();
 	
+	
+	// public String contentList1(String memberID);
+	
 	//그룹 선택
-	public memberVO contentOne(memberVO vo);
+	public List<memberVO> contentOne();
 }

@@ -16,23 +16,9 @@
 			JOIN member m ON m.memberid = s.memberid
   	</select>
   
-  	<select id='getGroup' resultType='com.geomin.VO.packageVO'>
-  	<![CDATA[ 
-			SELECT p.pkgName, p.difficulty, p.pkgcontent, m.mname,
-			       s.curpersonnel || '명' || '/' || s.personnel || '명' AS person,
-			       g.groupid,
-			       TO_CHAR(TO_DATE('20' || g.studyStartDate), 'YYYY-MM-DD') || ' ~ ' ||
-			       TO_CHAR(TO_DATE('20' || g.studyEndDate), 'YYYY-MM-DD') AS period
-			FROM package p
-			JOIN pkgsubsDetail s ON p.pkgid = s.pkgid
-			JOIN study_group g ON s.pkgid = g.pkgid
-			JOIN member m ON m.memberid = s.memberid
-			WHERE g.groupid = 'group1'
-	 ]]>
-  	</select>
-  	
+
   	  	<select id='groupOne' resultType='com.geomin.VO.packageVO'>
-  		SELECT p.pkgName, p.difficulty, p.pkgcontent, m.mname,
+  		SELECT p.pkgid,p.pkgName, p.difficulty, p.pkgcontent, m.mname, g.memberid,
 			       s.curpersonnel || '명' || '/' || s.personnel || '명' AS person,
 			       g.groupid,
 			       TO_CHAR(TO_DATE('20' || g.studyStartDate), 'YYYY-MM-DD') || ' ~ ' ||
@@ -46,9 +32,8 @@
   	
   	
   	<insert id='groupjoin'>
-  		insert into groupstudent values(studentid= #{studentid}, groupid = #{groupid}
-  									, pkgid = #{pkgid} , memberid = #{memberid}
-  									, sname = #{sname}, sysdate);
+  		insert into groupstudent (studentid,groupid,pkgid,memberid,sname,groupresdate,groupjoinstatus) 
+  							values(#{studentid}, #{groupid}, #{pkgid} , #{memberid}, #{sname}, sysdate, 'N')
   	</insert>
   
   </mapper>

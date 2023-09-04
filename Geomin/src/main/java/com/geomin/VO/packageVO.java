@@ -24,16 +24,8 @@ public class packageVO {
 	public String mname;
 	public String person;
 	public String groupid;
+	public String memberid;
 	
-	public packageVO(String pkgname, String difficulty, String pkgcontent, String mname, String person,
-			String groupid, String period) {
-		this.pkgname = pkgname;
-		this.difficulty = difficulty;
-		this.pkgcontent = pkgcontent;
-		this.mname = mname;
-		this.person = person;
-		this.groupid = groupid;
-		this.period = period;
 	} 
 	
 	
@@ -41,4 +33,4 @@ public class packageVO {
 	
 	
 	
-}
+

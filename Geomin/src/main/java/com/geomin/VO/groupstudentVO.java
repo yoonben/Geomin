@@ -5,11 +5,11 @@ import lombok.Data;
 @Data
 public class groupstudentVO {
 
-	public String studentid;
-	public String groupid;
-	public String pkgid;
-	public String memberid;
-	public String sname;
-	public String groupresdate;
-	public String groupjoinstatus;
+    private String studentid;
+    private String groupid;
+    private String pkgid;
+    private String memberid;
+    private String sname;
+    private String groupresdate;
+    private String groupjoinstatus;
 }

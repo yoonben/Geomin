@@ -49,7 +49,7 @@ public class teacherController extends CommonRestController{
 	
 	
 	
-	// 그룹 신청한 학습자 조회 후 승인 처리
+	// 그룹 신청한 학습자 리스트
 	@GetMapping("/teacher/teacherMain")
 	public String getGroup(Model model, memberVO vo) {
 		
@@ -66,7 +66,7 @@ public class teacherController extends CommonRestController{
 		try {
 			Map<String, Object> map = responseMap(REST_SUCCESS, "리스트 조회");
 			
-			memberVO membervo = teacherService.contentOne(vo);
+			List<memberVO> membervo = teacherService.contentOne();
 			
 			map.put("membervo", membervo);
 			

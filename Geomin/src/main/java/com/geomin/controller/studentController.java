@@ -29,6 +29,8 @@ public class studentController extends CommonRestController{
 	@Autowired
 	studentService studentService;
 	
+	
+	
 
 
 	// 그룹 신청에서 그룹 조회 후 가입신청
@@ -50,6 +52,8 @@ public class studentController extends CommonRestController{
 			
 			packageVO packagevo = studentService.groupOne(vo);
 			
+			System.out.println("packagevo : "+packagevo);
+			
 			map.put("packagevo", packagevo);
 			
 			return map;
@@ -66,6 +70,9 @@ public class studentController extends CommonRestController{
 	public @ResponseBody Map<String, Object> groupjoinInsert(@RequestBody groupstudentVO vo, Model model) {
 		
 		try {
+			
+			System.out.println("groupjoin (vo) : "+vo);
+			
 			Map<String, Object> map = responseMap(REST_SUCCESS, "그룹 신청 완료!");
 			
 			int groupstudent = studentService.groupjoin(vo);

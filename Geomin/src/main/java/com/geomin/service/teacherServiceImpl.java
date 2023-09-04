@@ -20,8 +20,13 @@ public class teacherServiceImpl implements teacherService{
 	}
 
 	@Override
-	public memberVO contentOne(memberVO vo) {
-		return teachermapper.contentOne(vo);
+	public List<memberVO> contentOne() {
+		return teachermapper.contentOne();
 	}
-
+/*
+	@Override
+	public String contentList1(String memberID) {
+		return teachermapper.contentList1(memberID);
+	}
+*/
 }

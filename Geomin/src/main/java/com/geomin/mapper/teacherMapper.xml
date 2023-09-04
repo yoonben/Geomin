@@ -5,30 +5,48 @@
 <mapper namespace="com.geomin.mapper.teacherMapper">
   	
   	<select id='contentList' resultType='com.geomin.VO.memberVO'>
-			select distinct g.sName, TO_CHAR(TO_DATE('20'||g.groupResDate), 'YYYY-MM-DD HH:MM:SS') groupResDate
-			        , decode(g.groupjoinStatus, 'Y', '승인', 'N', '미승인','') joinStatus
-			        , p.pkgname
-			        , m.memail, m.mphone, m.mbirthdate, 
-			        g.groupid
-			        , s.curpersonnel||'명'||'/'||s.personnel||'명' person
-			from package p, pkgsubsDetail s, groupStudent g, member m
-			where p.pkgid = g.pkgid
-			and m.memberid = g.memberid
-			and p.pkgid = s.pkgid
+			    SELECT distinct
+				    g.sName, p.pkgname,
+				    TO_CHAR(TO_DATE('20' || g.groupResDate), 'YYYY-MM-DD HH:MM:SS') AS groupResDate,
+				    DECODE(g.groupjoinStatus, 'Y', '승인', 'N', '미승인', '') AS joinStatus,
+				    m.memail,
+				    m.mphone,
+				    m.mbirthdate,
+				    g.groupid,
+				    s.curpersonnel || '명' || '/' || s.personnel || '명' AS person
+				FROM
+				    package p
+				    JOIN pkgsubsDetail s ON p.pkgid = s.pkgid
+				    JOIN groupStudent g ON p.pkgid = g.pkgid
+				    JOIN member m ON m.memberid = g.studentid
+				WHERE
+				    m.mtype = 'S'
   	</select>
+  	
+  	<!-- select id='contentList1' resultType='com.geomin.VO.contentVO'>
+			     select distinct pkgName from pkgsubsdetail where memberID=#{memberID}
+  	</select> -->
+  	
 
   	<select id='contentOne' resultType='com.geomin.VO.memberVO'>
-  		select distinct g.sName, TO_CHAR(TO_DATE('20'||g.groupResDate), 'YYYY-MM-DD HH:MM:SS') groupResDate
-			        , decode(g.groupjoinStatus, 'Y', '승인', 'N', '미승인','') joinStatus
-			        , p.pkgname
-			        , m.memail, m.mphone, m.mbirthdate, 
-			        g.groupid
-			        , s.curpersonnel||'명'||'/'||s.personnel||'명' person
-			from package p, pkgsubsDetail s, groupStudent g, member m
-			where p.pkgid = g.pkgid
-			and m.memberid = g.memberid
-			and p.pkgid = s.pkgid
-			and p.pkgname = #{pkgname} 
+  		     SELECT distinct
+			        g.sName, p.pkgname,
+			        TO_CHAR(TO_DATE('20' || g.groupResDate), 'YYYY-MM-DD HH:MM:SS') AS groupResDate,
+			        DECODE(g.groupjoinStatus, 'Y', '승인', 'N', '미승인', '') AS joinStatus,
+			        m.memail,
+			        m.mphone,
+			        m.mbirthdate,
+			        g.groupid, 
+			        s.curpersonnel || '명' || '/' || s.personnel || '명' AS person
+			    FROM
+			        package p
+			        JOIN pkgsubsDetail s ON p.pkgid = s.pkgid
+			        JOIN groupStudent g ON p.pkgid = g.pkgid
+			        JOIN member m ON m.memberid = g.studentid
+			    WHERE
+			        m.mtype = 'S'
+			    and 
+			        p.pkgname = #{pkgname} 
   	</select>
 
 </mapper>
