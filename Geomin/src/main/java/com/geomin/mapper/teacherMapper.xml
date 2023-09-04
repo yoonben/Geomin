@@ -30,7 +30,7 @@
 
   	<select id='contentOne' resultType='com.geomin.VO.memberVO'>
   		     SELECT distinct
-			        g.sName, p.pkgname,
+			        g.sName,
 			        TO_CHAR(TO_DATE('20' || g.groupResDate), 'YYYY-MM-DD HH:MM:SS') AS groupResDate,
 			        DECODE(g.groupjoinStatus, 'Y', '승인', 'N', '미승인', '') AS joinStatus,
 			        m.memail,

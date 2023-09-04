@@ -256,8 +256,6 @@
              			<h1><b>그룹 가입 승인</b></h1><br>
              		</div>
              		
-           			 <input type="text" name="pkgname" id='pkgname' value="${member.pkgname}">
-             		
              		<div>
 		      				<select id='contentSelect' class="form-select" aria-label="Default select example">
 							 	<option selected>학습컨텐츠 선택</option>
@@ -266,11 +264,14 @@
 							 </c:forEach>
 							</select>           		
              		</div>
-					
+					<div  id='contentList'>
 	             			그룹명 : <div id='groupid'></div>
 	             			가입입원 : <div id='person'></div>
            			 
 	             		<form>
+	             		
+	             		<input type="text" name="pkgname" id='pkgname' value="${membervo.pkgname}">
+           			 	
 			                <table class="table" border="1px solid" style="height:50%;weight:100%">
 								  <thead>
 								    <tr class="table-success">
@@ -284,8 +285,7 @@
 								    </tr>
 								  </thead>
 								  
-	             		 
-							    <tbody id=contentList'>
+							    <tbody>
 								    <tr>
 								      <th rowspan='3' scope="row"><input type='checkbox' name='rowCheck' value='${boardVO.bno }'></th>
 								      <td><div id='sname'></div></td>
@@ -296,13 +296,15 @@
 								      <td><div id='joinStatus'></div></td>
 								    </tr>
 							  </tbody>
+							  
 							</table>
+							
 							
 	             			<div class="d-grid gap-2 col-6 mx-auto">
 	             				<button type="submit" class="btn btn-success" id="introductionbtn">그룹가입 승인</button>
              				</div>
 	             		</form>
-             			
+             		</div>	
              	</div>
 
 
@@ -334,7 +336,7 @@
 								    </tr>
 								  </thead>
 								  
-							    <tbody id=studentSelect'>
+							    <tbody id='studentSelect'>
 								    <tr>
 								      <th scope="row"><input type='checkbox' name='rowCheck' value='${boardVO.bno }'></th>
 								      <td><div id='sname'></div></td>

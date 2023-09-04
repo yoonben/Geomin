@@ -69,8 +69,8 @@ public class teacherController extends CommonRestController{
 		try {
 			Map<String, Object> map = responseMap(REST_SUCCESS, "리스트 조회");
 			
-			List<memberVO> membervo = teacherService.contentOne();
-			
+			List<memberVO> membervo = teacherService.contentOne(vo);
+			System.out.println("membervo : "+ membervo);
 			map.put("membervo", membervo);
 			
 			return map;

@@ -14,5 +14,5 @@ public interface teacherService {
 	//public String contentList1(String memberID);
 	
 	//그룹 선택
-	public List<memberVO> contentOne();
+	public List<memberVO> contentOne(memberVO vo);
 }
