@@ -34,78 +34,46 @@
                	</ul>
 				
             </div>
+            <%-- <label>Title</label> <input name='title' value='<c:out value = "${board.title}" />' readonly="readonly"> --%>
             <div class='content'>
-            	<%-- <c:forEach items="${list}" var="list">
-            		<p>학습 콘텐츠 명 : ${list.pkgName}</p>
-            		<p>학습 가능 인원 : ${list.personnel}</p>
-            		<p>그룹 등록 인원 : ${list.pkgName}</p>
-        		</c:forEach> --%>
-            <table>
-				<thead>
-					<tr>
-						<th>그룹명</th>
-						<th>패키지명</th>	<!-- 수정못하게 -->
-						<th>학습 가능 인원</th>
-						<th>학습 수준</th> <!-- 수정못하게 -->
-						<th>학습 기간</th>
-						<th>학습 내용</th> <!-- 수정못하게 -->
-					</tr>
-				</thead>
-				<tbody>
-				<!-- 여기 코드를 수정해야 해요!!!!!!!!!!!!!!!! -->
-						<input type="text" placeholder="그룹 명을 입력해 주세요"/>														
-					<c:forEach var="list" items="${list}">
-						<tr id="data-raw" class="data-raw" data-value="${list.difficulty }">
-							<td readonly>${list.pkgName }</td>
-						</tr>
-					</c:forEach>	
-						<input type="text" placeholder="학습 가능한 인원을 입력해 주세요"/>
-					<c:forEach var="list" items="${list}">		
-						<td readonly>${list.difficulty }</td>
-					</c:forEach>
-					<c:forEach var="list" items="${list}">	
-						<td readonly>${list.pkgContent }</td>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
-            	<%-- <c:set var="pkgName" value="${list.pkgName}"/>
-				<c:set var="personnel" value="${list.personnel}"/>
+            <%-- ${list } --%>
+            <c:forEach items="${list2}" var="list2">
+            	<div style="display: none;">
+            		<label>그룹명 : </label>
+            		<input name='pkgID' value='<c:out value = "${list2.pkgId}" />' readonly="readonly" disabled="disabled">
+            	</div>
             	<div>
-            		<p>학습 콘텐츠 명 : <c:out value="${pkgName}"/></p> 
-            		<p>학습 가능 인원 : <c:out value="${personnel}"/></p> 
-    			</div> --%>
-            	
-            	
-            	<%-- <p>${list }</p> --%>
-            	<%-- <div>
-            		학습 콘텐츠 명 : 
-            		<select id="optionSelect">
-        				<option selected>그룹 선택</option>
-        				<c:forEach items="${list}" var="list">
-            				<option value="${list.memberID}">${list.pkgName}</option>
-        				</c:forEach>
-    				</select>
-    				    				
-    				<p id="personnelInfo">학습 가능 인원 : 명</p>
-    			</div> --%>
-    				<%-- <p id="curPersonnelInfo">그룹 등록 인원 : <c:out value="${list[5]}"/>명</p> --%>
-    			
-            	<%-- 학습 콘텐츠명 : ${list.pkgName} 학습 가능 인원 : ${list.Personnel} 그룹 등록 인원 : ${list.curPersonnel} --%>
-            	
-            	<!-- <table>
-            		<thead>
-            			<tr>
-            			
-            			</tr>
-          	 		</thead>
-          	 		<tbody>
-          	 			<td></td>
-          	 		
-          	 		</tbody>
-          	 	</table> -->
-            
-            
+            		<label>그룹명 : </label>
+            		<input type="text" placeholder="그룹명을 입력해 주세요">
+            	</div>
+            	<div>
+            		<label>패키지명 : </label>
+            		<input name='pkgName' value='<c:out value = "${list2.pkgName}" />' readonly="readonly" disabled="disabled">
+            	</div>
+            	<div>
+            		<label>학습 가능 인원 : </label>
+            		<input type="text" placeholder="인원 수 적기"> 명
+            	</div>
+            	<div>
+            		<label>학습 수준 : </label>
+            		<input name='difficulty' value='<c:out value = "${list2.difficulty}" />' readonly="readonly" disabled="disabled">
+            	</div>
+            	<div>
+            		<label>구독 날짜 : </label>
+            		<input name='subsDate' value='<c:out value = "${list2.subsDate}" />' readonly="readonly" disabled="disabled">
+            	</div>
+            	<div>
+            		<label>학습 기간 : </label>
+            		<input type="text" placeholder="From - To">
+            	</div>
+            	<div>
+            		<label>학습 내용 : </label>
+            		<input name='content' value='<c:out value = "${list2.pkgContent}" />' readonly="readonly" disabled="disabled">
+            	</div>
+            </c:forEach>
+            <br>
+            <button id="regStudy">학습그룹 등록</button>
+		</div>
             <div class='banner'>
             </div>
     </div>

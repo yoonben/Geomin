@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.geomin.VO.contentVO;
 import com.geomin.VO.memberVO;
 import com.geomin.mapper.teacherMapper;
 
@@ -29,4 +30,10 @@ public class teacherServiceImpl implements teacherService{
 		return teachermapper.contentList1(memberID);
 	}
 */
+
+	@Override
+	public List<contentVO> regSubinfo() {
+		// TODO Auto-generated method stub
+		return teachermapper.regSubinfo();
+	}
 }

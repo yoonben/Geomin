@@ -80,7 +80,7 @@ th, tr, td{
 					<c:forEach var="list" items="${list}">
 						<tr id="data-raw" class="data-raw" data-value="${list.difficulty }">
 							<td><input type="checkbox" name="check" value="check" id="check"></td>
-							<td style="display: none;">${list.pkgID }</td>
+							<td style="display: none;">${list.pkgId }</td>
 							<td>${list.pkgName }</td>
 							<td>${list.personnel }</td>
 							<td>${list.fixedPrice }</td>
@@ -95,20 +95,12 @@ th, tr, td{
 			</div>
 			<!-- <div class='banner'></div> -->
 		</div>
-		<p style="display: none">${member.id }
-		<p style="display: none">${member.password }
-		
-		
 	</div>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#reqSubscribe').click(function(){
-			
-		})
-		
 		const dataRows = document.querySelectorAll("tr.data-raw");
 		$('#searchButton').click(function() {
 			$('tr.data-raw').hide();
@@ -123,6 +115,7 @@ th, tr, td{
 			
 			//2. 최종 가격
 			/* const selectedPrice = choicePrice.value;
+			console.log('selectedPrice : ' , selectedPrice);
 		    const sortedData = Array.from(dataRows);
 		    
 		    const list_finalPrice = $(".list_finalPrice").text();
@@ -143,7 +136,7 @@ th, tr, td{
 		    } */ 
 		  	
 		  //3. 세 번째 조건문
-		 /* const searchContent = document.getElementById('searchContent').value;
+		 	/*const searchContent = document.getElementById('searchContent').value;
 			   console.log("searchContent : " , searchContent);
 		        sortedData.forEach(row => {
 		            const contentCell = row.querySelector("td:last-child"); // 마지막 td 셀 (pkgContent)
@@ -153,31 +146,25 @@ th, tr, td{
 		            if (content.includes(searchContent)) {
 		                row.style.display = 'table-row';
 		            }
-		        }); */
-		    const choiceDifficulty = document.getElementById('choiceDifficulty').value;
-	        const searchContent = document.getElementById('searchContent').value;
-	        console.log('입력한 searchContent : ' , searchContent);
+		      }); */
+		        
+			const choiceDifficulty = document.getElementById('choiceDifficulty').value;
+	        console.log('choiceDifficulty : ' , choiceDifficulty);
+		    const searchContent = document.getElementById('searchContent').value;
 	        const sortedData = Array.from(dataRows);
 	        const tableBody = document.querySelector('#result-table tbody');
-	        //const trBody = document.querySelector('tr.data-raw');
 	        sortedData.forEach(row => {
 	            const difficultyValue = row.getAttribute("data-value");
+	            console.log('difficultyValue : ' , difficultyValue);
 	            const content = row.querySelector("td:nth-child(8)").textContent;
-	            console.log('불러온 content : ' , content);
-	            //const content = contentCell.textContent.toLowerCase();
-
+ 
 	            // 첫 번째와 세 번째 조건을 순차적으로 적용
-	            if (
-	                (choiceDifficulty === "전체" || difficultyValue === choiceDifficulty) &&
+	            if ((choiceDifficulty === "전체" || difficultyValue === choiceDifficulty) &&
 	                (searchContent === "" || content.includes(searchContent))
-	            ) {
-	                // 데이터 보여주기
-	                //row.style.display = 'table-row';
+	            ){
 	                row.style.display = 'tr.data-raw';
-	            }/* else {
-	            	dataRows.innerHTML = '검색결과가 없어요..'; 
-	            } */
-	        });
+	            }
+	        }); 
 	        
 	        // 두 번째 조건 적용
 	        const selectedPrice = choicePrice.value;
@@ -185,6 +172,7 @@ th, tr, td{
 	        if (selectedPrice === "높음") {
 	            sortedData.sort((rowA, rowB) => {
 	                const priceA = parseFloat(rowA.querySelector(".list_finalPrice").textContent);
+	                console.log('priceA : ' , priceA);
 	                const priceB = parseFloat(rowB.querySelector(".list_finalPrice").textContent);
 	                return priceB - priceA;
 	            });
@@ -192,15 +180,13 @@ th, tr, td{
 	            sortedData.sort((rowA, rowB) => {
 	                const priceA = parseFloat(rowA.querySelector(".list_finalPrice").textContent);
 	                const priceB = parseFloat(rowB.querySelector(".list_finalPrice").textContent);
-	                var priceResult = priceA - priceB;
-	                console.log('priceResult : ' , priceResult);
 	                return priceA - priceB;
 	            });
 	        }
 	        
         	sortedData.forEach(row => {
  	        	tableBody.appendChild(row);
- 	        });
+ 	        });      
 		});
 		
 		
@@ -227,8 +213,8 @@ th, tr, td{
 		        url: '/geomin/subscribe/searchContent',
 		        type: 'POST',
 		        data: JSON.stringify(checked_Data),
-		        //data: checked_Data,
-		        contentType: 'application/json',
+                contentType: "application/json",
+                dataType: "json",
 		        success: function(response) {
 		            //alert('성공');
 		            //console.log(response);
@@ -239,7 +225,6 @@ th, tr, td{
 		        }
 		    });
 		});
-		
 	}); //$(document).ready EndPoint
 </script>
 </html>

@@ -2,13 +2,15 @@ package com.geomin.VO;
 
 import java.sql.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-//@AllArgsConstructor
-//@NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class contentVO {
-	private String pkgID;
+	private String pkgId;
 	private String pkgName;
 	private int Personnel;
 	private String fixedPrice;
@@ -24,14 +26,12 @@ public class contentVO {
 
 	private int curPersonnel;
 	
-	public contentVO() {
-		super();
-	}
+	private String groupid;
 	
-	public contentVO(String pkgID, String pkgName, int Personnel, String fixedPrice, String finalPrice, String difficulty,
-			String pkgContent) {
-		super();
-		this.pkgID = pkgID;
+	//모든 학습 컨텐츠 출력
+	public contentVO(String pkgId, String pkgName, int Personnel, String fixedPrice, String finalPrice, String difficulty,String pkgContent
+			) {
+		this.pkgId = pkgId;
 		this.pkgName = pkgName;
 		this.Personnel = Personnel;
 		this.fixedPrice = fixedPrice;
@@ -39,10 +39,10 @@ public class contentVO {
 		this.difficulty = difficulty;
 		this.pkgContent = pkgContent;
 	}
-
-	public contentVO(String pkgID, String memberID, String pkgName, Date subsDate, int Personnel, String finalPrice) {
-		super();
-		this.pkgID = pkgID;
+	
+	//선택된 학습 컨텐츠 처리
+	public contentVO(String pkgId, String memberID, String pkgName, Date subsDate, int Personnel, String finalPrice) {
+		this.pkgId = pkgId;
 		this.memberID = memberID;
 		this.pkgName = pkgName;
 		this.subsDate = subsDate;
@@ -50,5 +50,19 @@ public class contentVO {
 		this.finalPrice = finalPrice;
 	}
 
+	//구독한 학습 컨텐츠 출력
+	public contentVO(String pkgName, int personnel, String difficulty, String pkgContent, Date subsDate, String groupid) {
+		this.pkgName = pkgName;
+		this.Personnel = personnel;
+		this.difficulty = difficulty;
+		this.pkgContent = pkgContent;
+		this.subsDate = subsDate;
+		this.groupid = groupid;
+	}
+	
+	//
+//	public contentVO() {
+//		
+//	}
 
 }

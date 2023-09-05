@@ -3,153 +3,53 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.geomin.mapper.contentMapper">
+	<!-- //모든 학습 컨텐츠 출력  -->
 	<select id="getList" resultType="com.geomin.VO.contentVO">
-		<!-- select 
-			p.pkgName, p.Personnel, p.fixedPrice, p.finalPrice, p.difficulty, p.pkgContent, s.memberID
-		from 
-			package p
-		JOIN
-			PKGSUBSDETAIL s
-		ON 
-			s.pkgid = p.pkgid
-		where 
-			elimination = 'N' -->
-			
-		<!-- select 
-			p.pkgName, p.Personnel, p.fixedPrice, p.finalPrice, p.difficulty, p.pkgContent, s.memberID
-		from 
-			package p, PKGSUBSDETAIL s
-		where s.pkgid(+) = p.pkgid and elimination = 'N' -->
-		
-		<!-- select
-			p.pkgName, p.Personnel, p.fixedPrice, p.finalPrice, p.difficulty, p.pkgContent, d.buyCheck
-		from 
-			package p
-		JOIN
-			PKGSUBSDETAIL D
-		ON  
-			P.PKGID(+) = D.PKGID
-		where 
-			elimination = 'N' -->
-			
-		<!-- 모든 리스트 다 불러오기  -->	
 		select
-			p.pkgID, p.pkgName, p.Personnel, p.fixedPrice, p.finalPrice, p.difficulty, p.pkgContent
+			p.pkgId, p.pkgName, p.Personnel, p.fixedPrice, p.finalPrice, p.difficulty, p.pkgContent
 		from 
 			package p
 		where 
-			elimination = 'N'	
-			
-		<!-- 구매한 리스트 다 불러오기 -->	
-		<!-- select
-			p.pkgName, m.memberID, m.mType, p.memberID
-		from 
-			package p
-		JOIN
-			PKGSUBSDETAIL D
-		ON  
-			P.PKGID = D.PKGID
-		JOIN
-			member m
-		ON 
-			D.memberID = m.memberID,
-		where 
-			elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID2' -->
+			elimination = 'N'
 	</select>
 	
-	<select id="getSubList" resultType="com.geomin.VO.contentVO">
-		select
-			p.pkgName, m.memberID, d.subsDate, p.finalPrice, p.difficulty, d.PERSONNEL<!-- , d.CURPERSONNEL -->
-		from 
-			package p
-		JOIN
-			PKGSUBSDETAIL D
-		ON  
-			P.PKGID = D.PKGID
-		JOIN
-			member m
-		ON 
-			D.memberID = m.memberID
-		where 
-			p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID22'
-			
-	</select>
-	
-	<insert id="addSubContent" parameterType="java.util.List"> <!-- parameterType="java.util.List" -->
-		<!-- INSERT INTO PKGSUBSDETAIL(pkgID, memberID, PKGNAME, SUBSDATE, PERSONNEL, SUBSPRICE)
-		VALUES (#{pkgID}, 'memberID22', #{pkgName}, sysdate, #{Personnel}, #{finalPrice}) -->
-		<foreach collection="list" item="item" separator=";">
-        	INSERT INTO PKGSUBSDETAIL(pkgID, memberID, PKGNAME, SUBSDATE, PERSONNEL, SUBSPRICE)
-        	VALUES (#{item.pkgID}, 'memberID22', #{item.pkgName}, sysdate, #{item.personnel}, #{item.finalPrice})
+	<!-- //체크박스가 선택된 라인의 데이터 처리 -->
+	<insert id="addSubContent" parameterType="java.util.List"> 
+		<foreach collection="list" item="list"><!--  separator=";" -->
+    		INSERT INTO PKGSUBSDETAIL(pkgId, memberID, PKGNAME, SUBSDATE, PERSONNEL, SUBSPRICE)
+    		VALUES (#{list.pkgId}, 'memberID22', #{list.pkgName}, sysdate, #{list.personnel}, #{list.finalPrice})
     	</foreach>
 	</insert>
 	
-	<select id="regSubinfo" resultType="com.geomin.VO.contentVO">
-		<!-- select
-			p.pkgName, m.memberID, d.subsDate, p.finalPrice, p.difficulty, d.PERSONNEL, d.CURPERSONNEL
-		from 
-			package p
+	<select id="getSubList" resultType="com.geomin.VO.contentVO">
+		SELECT
+    		P.pkgId,
+    		p.pkgName,
+    		m.memberID,
+    		d.subsDate,
+    		p.finalPrice,
+    		p.difficulty,
+    		d.PERSONNEL,
+    		NVL2(g.groupID, g.groupID, 'NOT GROUP') AS groupID
+		FROM 
+    		package p
 		JOIN
-			PKGSUBSDETAIL D
+    		PKGSUBSDETAIL D
 		ON  
-			P.PKGID = D.PKGID
+    		P.pkgId = D.pkgId
 		JOIN
-			member m
+    		member m
 		ON 
-			D.memberID = m.memberID
-		where 
-			p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID22' AND p.pkgName = #{pkgName} -->
-	
+    		D.memberID = m.memberID
+		LEFT JOIN
+    		study_group g
+		ON
+    		D.pkgId = g.pkgId
+		WHERE 
+    		p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID22'
 	</select>
 	
-	
-	<!-- <insert id="addSubContent" parameterType="java.util.List"> parameterType="java.util.List"
-		INSERT INTO PKGSUBSDETAIL(pkgID, memberID, PKGNAME, SUBSDATE, PERSONNEL, SUBSPRICE)
-		VALUES (#{pkgID}, 'memberID22', #{pkgName}, sysdate, #{Personnel}, #{finalPrice})
-		<foreach collection="list" item="item" separator=";">
-        INSERT INTO PKGSUBSDETAIL(pkgID, memberID, PKGNAME, SUBSDATE, PERSONNEL, SUBSPRICE)
-        VALUES (#{item.pkgID}, 'memberID22', #{item.pkgName}, sysdate, #{item.personnel}, #{item.finalPrice})
-    	</foreach>
-	</insert> -->
-	<!-- <insert id="addSubContent" parameterType="List"> parameterType="com.geomin.VO.HelloVO"
-    	INSERT INTO PKGSUBSDETAIL(pkgID, memberID, PKGNAME, SUBSDATE, PERSONNEL, SUBSPRICE)
-    	VALUES (#{pkgID}, 'memberID22', #{pkgName}, sysdate, #{Personnel}, #{finalPrice})
-	</insert> -->
-	
-	<!-- <update id="subContent">
-		update 
-			PKGSUBSDETAIL 
-		set 
-			BUYCHECK = 'Y'
-		where 
-			
-	</update> -->
-			<!-- select 
-			s.memberID, s.pkgName, s.subsDate, p.finalPrice, p.difficulty
-		from 
-			 package p
-		join
-			PKGSUBSDETAIL s
-		on
-			s.pkgid = p.pkgid
-		where 
-			s.memberID = 'memberID22' --><!-- #{memberid} -->
-		<!-- select 
-			p.pkgName, p.Personnel, p.fixedPrice, p.finalPrice, p.difficulty, p.pkgContent, s.memberID
-			s.memberID, s.pkgName, s.subsDate, p.finalPrice, p.difficulty
-		from 
-			package p
-		JOIN
-			PKGSUBSDETAIL s
-		ON 
-			s.pkgid = p.pkgid
-		JOIN
-			member m
-		on
-			s.memberID = m.memberID
-		where 
-			elimination = 'N' and mType = 'A' -->
-	<select id="">
+	<!-- <select id="">
 	<![CDATA[ 
 	SELECT
   TO_CHAR(calendar_day, 'YYYY-MM-DD') AS calendar_day,
@@ -161,6 +61,6 @@ FROM (
   CONNECT BY LEVEL <= LAST_DAY(TO_DATE('2023' || LPAD('8', 2, '0') || '01', 'YYYYMMDD')) - TO_DATE('2023' || LPAD('8', 2, '0') || '01', 'YYYYMMDD') + 1
 ) WHERE calendar_day >= SYSDATE;
  ]]>
-</select>	
+</select>	 -->
 
 </mapper>

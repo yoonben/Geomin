@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.geomin.VO.contentVO;
 import com.geomin.VO.memberVO;
 
 @Service
@@ -15,4 +16,8 @@ public interface teacherService {
 	
 	//그룹 선택
 	public List<memberVO> contentOne(memberVO vo);
+
+	public List<contentVO> regSubinfo();
+	
+	
 }

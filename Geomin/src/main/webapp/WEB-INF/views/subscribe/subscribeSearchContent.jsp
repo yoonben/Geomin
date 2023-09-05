@@ -77,6 +77,7 @@ th, tr, td{
 						<th>학습 가능 인원</th>
 						<th>콘텐츠 최종 가격</th>
 						<th>콘텐츠 수준</th>
+						<th>학습 그룹 등록</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -89,6 +90,15 @@ th, tr, td{
 							<td>${list.personnel}</td>
 							<td>${list.finalPrice }</td>
 							<td>${list.difficulty }</td>
+							<c:choose>
+								<c:when test="${list.groupid == 'NOT GROUP'}"> <!-- NULL을 N으로 변경-->
+									<td><button type='button' id="regButton" name='regButton' 
+												onclick='location.href="../teacher/groupRegist"'>그룹 등록</button></td>
+								</c:when>
+								<c:otherwise>
+									<td>등록 완료</td>
+								</c:otherwise>
+							</c:choose>
 						</tr>
 					</c:forEach>
 					</tbody>
@@ -184,15 +194,6 @@ $(document).ready(function () {
     	});
     });
     
-    /* $('#oldest').click(function () {
-    	$('tr.data-raw').hide();
-    	sortedData.sort((rowA, rowB) => {
-    		const dataA = new Date(rowA.querySelector(".list_subsDate"));
-    		const dataB = new Date(rowB.querySelector(".list_subsDate"));
-    		console.log('여기에요! ASC');
-        	return dataB - dataA;
-    	});
-    }); */
 	
     sortedData.forEach(row => {
     	//console.log('여기로 왔나요?');
@@ -200,6 +201,13 @@ $(document).ready(function () {
     	//tableBody.innerHTML = '여기는 TABLEBODY';
     	//tableBody.innerHTML = dataResult;
  	});
+    
+   /*  let regButton = document.getElementById('regButton');
+    $('#regButton').click(function (){
+    	console.log('클릭완료!');
+    	//window.location.href = 'teacher/groupRegist.jsp?memberid='memberID22'';
+    	window.location.href = '../teacher/groupRegist';
+    }); */
     
 });
 
