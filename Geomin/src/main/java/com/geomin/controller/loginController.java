@@ -370,11 +370,6 @@ public class loginController extends CommonRestController {
 		return "login";
 	}
 
-	@GetMapping("/joinMemberInfo")
-	public String joinMemberInfo() {
-		return "joinMemberInfo";
-	}
-
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
