@@ -4,8 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.geomin.mapper.homeworkMapper">
   
-  	<select id='groupList' resultType='com.geomin.VO.homeworkVO'>
-   		select  g.sname  , m.memail, m.mphone, m.mbirthdate, h.groupid, h.studentid       
+  	<select id='homeworkGroupList' resultType='com.geomin.VO.homeworkVO'>
+   		select  g.sname  , m.memail, m.mphone, m.mbirthdate, h.groupid
 			from   homework h, member m, groupStudent g 
 			where  h.memberid = m.memberid
 			and h.groupid = g.groupid
@@ -13,7 +13,7 @@
     
     
    	<select id='studentSelect' resultType='com.geomin.VO.homeworkVO'>
-			select  g.sname  , m.memail, m.mphone, m.mbirthdate, h.groupid, h.studentid       
+			select  g.sname  , m.memail, m.mphone, m.mbirthdate, h.groupid     
 			from   homework h, member m, groupStudent g 
 			where  h.memberid = m.memberid
 			and h.groupid = g.groupid
