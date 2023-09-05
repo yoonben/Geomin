@@ -28,9 +28,9 @@
   	</select> -->
   	
 
-  	<select id='contentOne' resultType='com.geomin.VO.memberVO'>
+<!--   	<select id='contentOne' resultType='com.geomin.VO.memberVO'>
   		     SELECT distinct
-			        g.sName,
+			        g.sname,
 			        TO_CHAR(TO_DATE('20' || g.groupResDate), 'YYYY-MM-DD HH:MM:SS') AS groupResDate,
 			        DECODE(g.groupjoinStatus, 'Y', '승인', 'N', '미승인', '') AS joinStatus,
 			        m.memail,
@@ -47,6 +47,32 @@
 			        m.mtype = 'S'
 			    and 
 			        p.pkgname = #{pkgname} 
+  	</select> -->
+  	
+  	  	<select id='contentOne' resultType='com.geomin.VO.memberVO'>
+  		     SELECT 
+				    g.sName, p.pkgname,
+				    TO_CHAR(TO_DATE('20' || g.groupResDate), 'YYYY-MM-DD HH:MM:SS') AS groupResDate,
+				    DECODE(g.groupjoinStatus, 'Y', '승인', 'N', '미승인', '') AS joinStatus,
+				    m.memail,
+				    m.mphone,
+				    m.mbirthdate,
+				    g.groupid,
+				    s.curpersonnel || '명' || '/' || s.personnel || '명' AS person
+				FROM
+				    package p
+				    JOIN pkgsubsDetail s ON p.pkgid = s.pkgid
+				    JOIN groupStudent g ON p.pkgid = g.pkgid
+				    JOIN member m ON m.memberid = g.studentid
+				WHERE
+				    m.mtype = 'S'
+                    
+                    group by g.sName, p.pkgname, g.groupResDate, g.groupjoinStatus, m.memail,
+				    m.mphone,
+				    m.mbirthdate,
+				    g.groupid,s.curpersonnel, s.personnel
+                    
+                    having p.pkgname = #{pkgname} 
   	</select>
 
 </mapper>
