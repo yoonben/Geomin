@@ -17,7 +17,6 @@ public class memberVO {
 	private String adminyn;
 	private String marketingagree;
 	
-	
 	//추가 (teacherMapper)에서 사용
 	private String sname;
 	private String pkgname;

@@ -3,6 +3,8 @@ package com.geomin.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.geomin.VO.Criteria;
 import com.geomin.VO.PageDto;
+import com.geomin.VO.memberVO;
 import com.geomin.VO.packageVO;
 import com.geomin.service.ManagerService;
+import com.geomin.service.loginService;
 
 
 @Controller
@@ -151,4 +155,108 @@ public class ManagerController extends CommonRestController{
 			return responseMap(REST_FAIL, "패키지 삭제중 예외사항이 발생 하였습니다.");
 		}
 	}
+	
+	@Autowired
+	loginService login;
+	
+	@GetMapping("/joinMemberInfo")
+	public String joinMemberInfo() {
+		return "joinMemberInfo";
+	}
+	
+	@PostMapping("/joinMemberInfo")
+	public @ResponseBody Map<String, Object> joinMemberInfo(@RequestBody memberVO memberVo, HttpSession session) {
+		
+		try {
+			
+			Map<String, Object> map = responseMap(REST_SUCCESS, "정상적으로 처리 되었습니다.");
+			
+			memberVO member = login.login(memberVo);
+			
+			if (member != null) {
+				session.removeAttribute("member");
+				
+				session.setAttribute("member", member);
+			}else {
+				return responseMap(REST_FAIL, "회원 정보를 불러오는 중  예외사항이 발생 하였습니다.");
+			}
+			
+			if(member.getMaddr() == null) {
+				member.setMaddr("주소 정보가 없습니다.");
+			}
+			
+			if ("A".equals(member.getMtype())) {
+			    member.setMtype("운영관리자");
+			} else if ("T".equals(member.getMtype())) {
+			    member.setMtype("학습관리자");
+			} else if ("S".equals(member.getMtype())) {
+			    member.setMtype("학습자");
+			}
+
+			if ("M".equals(member.getMgender())) {
+			    member.setMgender("남자");
+			} else if ("W".equals(member.getMgender())) {
+			    member.setMgender("여자");
+			}
+			
+			if ("notAgree".equals(member.getMarketingagree())) {
+			    member.setMarketingagree("비동의");
+			} else if ("smsAgree".equals(member.getMarketingagree())) {
+			    member.setMarketingagree("문자");
+			} else if ("emailAgree".equals(member.getMarketingagree())) {
+			    member.setMarketingagree("이메일");
+			}
+			
+			System.out.println(member);
+			
+			map.put("member", member);
+			
+			return map;
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return responseMap(REST_FAIL, "회원 정보를 불러오는 중 예외사항이 발생 하였습니다.");
+		}
+		
+	}
+	
+	@PostMapping("/joinMembers")
+	public @ResponseBody Map<String, Object> joinMembers(@RequestBody memberVO memberVo) {
+		
+		try {
+			
+			Map<String, Object> map = responseMap(REST_SUCCESS, "정상적으로 처리 되었습니다.");
+			
+			memberVO member = login.login(memberVo);
+			
+			System.out.println(member);
+			
+			// mbirthdate를 파싱하여 년, 월, 일로 분리
+	        String mbirthdate = member.getMbirthdate();
+	        String[] dateParts = mbirthdate.split("-");
+	        String year = dateParts[0];
+	        String month = dateParts[1];
+	        String day = dateParts[2];
+	        
+	        String memail = member.getMemail();
+	        String[] emailParts = memail.split("@");
+	        String mail = emailParts[0];
+
+			map.put("mail", mail);
+	        map.put("year", year);
+	        map.put("month", month);
+	        map.put("day", day);
+	        
+			map.put("member", member);
+			
+			return map;
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return responseMap(REST_FAIL, "회원 정보를 불러오는 중 예외사항이 발생 하였습니다.");
+		}
+	}
+	
 }
