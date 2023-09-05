@@ -7,7 +7,7 @@ import com.geomin.VO.homeworkVO;
 public interface homeworkMapper {
 	
 		// 그룹조회
-		public List<homeworkVO> groupList();
+		public List<homeworkVO> homeworkGroupList();
 		
-		public homeworkVO studentSelect(homeworkVO homework);
+		public List<homeworkVO> studentSelect(homeworkVO homework);
 }

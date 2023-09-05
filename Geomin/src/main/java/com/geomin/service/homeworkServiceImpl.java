@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.geomin.VO.homeworkVO;
+import com.geomin.VO.memberVO;
 import com.geomin.mapper.homeworkMapper;
 
 @Service
@@ -15,13 +16,14 @@ public class homeworkServiceImpl implements homeworkService {
 	homeworkMapper homeworkmapper;
 	
 	@Override
-	public List<homeworkVO> groupList() {
-		return homeworkmapper.groupList();
+	public List<homeworkVO> homeworkGroupList() {
+		return homeworkmapper.homeworkGroupList();
 	}
 
 	@Override
-	public homeworkVO studentSelect(homeworkVO homework) {
+	public List<homeworkVO> studentSelect(homeworkVO homework) {
 		return homeworkmapper.studentSelect(homework);
 	}
+
 
 }

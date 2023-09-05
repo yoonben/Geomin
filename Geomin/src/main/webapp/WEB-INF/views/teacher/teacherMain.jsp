@@ -112,8 +112,8 @@
 		
 		contentSelect.addEventListener('change', function(){
 			//contentList.style.display = '';
-			
-			console.log(contentSelect.value);
+			console.log('클릭되었어요');
+			//console.log(contentSelect.value);
 			
 			let obj = {
 					pkgname : contentSelect.value
@@ -121,63 +121,31 @@
 			    
 			fetchPost('/geomin/contentId', obj, (map) => {
 				
-				console.log(map);
+				console.log('map : ', map);
 				
-				document.getElementById('pkgname').value= map.membervo.pkgname;
+				//var sname1 =  map.membervo[3].sname;
+				//console.log('sname1 : ' , sname1);
 				
-				document.getElementById('groupid').innerHTML= map.membervo.groupid;
-
-				document.getElementById('person').innerHTML= map.membervo.person;
+				//var sname2 = document.getElementById('sname').textcontent;
+				//console.log('sname2 : ' , sname2);
 				
-				document.getElementById('sname').innerHTML= map.membervo.sname;
 				
-				document.getElementById('mbirthdate').innerHTML= map.membervo.mbirthdate;
-				
-				document.getElementById('mphone').innerHTML= map.membervo.mphone;
-				
-				document.getElementById('memail').innerHTML= map.membervo.memail;
-				
-				document.getElementById('groupResDate').innerHTML= map.membervo.groupResDate;
-				
-				document.getElementById('joinStatus').innerHTML= map.membervo.joinStatus;
-				
-		})
-    });	
-		
-		
-		
-
-		
-		
-		// 숙제전송 페이지 =========================================================================
-    	let groupSelect = document.getElementById('groupSelect');
-		let studentSelect = document.getElementById('studentSelect');
-		//contentList.style.display = 'none';
-		//console.log(contentList.value);
-		
-		groupSelect.addEventListener('change', function(){
-			//contentList.style.display = '';
-			
-			console.log(groupSelect.value);
-			
-			let obj = {
-					groupid : groupSelect.value
-			    };
-			    
-			fetchPost('/geomin/homework', obj, (map) => {
-				
-				document.getElementById('sname').innerHTML= map.homeworkvo.sname;
-				
-				document.getElementById('mbirthdate').innerHTML= map.homeworkvo.mbirthdate;
-				
-				document.getElementById('mphone').innerHTML= map.homeworkvo.mphone;
-				
-				document.getElementById('memail').innerHTML= map.homeworkvo.memail;
-
-				document.getElementById('studentid').innerHTML= map.homeworkvo.studentid;
+				for(let i = 0; i <= map.membervo.length; i++){
+					let membervo = map.membervo[i];
+					document.getElementById('pkgname').innerHTML= membervo.pkgname;
+					document.getElementById('groupidOutput').innerHTML= membervo.groupid;
+					document.getElementById('personOutput').innerHTML= membervo.person;
+					document.getElementById('snameOutput').innerHTML= membervo.sname;
+					document.getElementById('mbirthdateOutput').innerHTML= membervo.mbirthdate;
+					document.getElementById('mphoneOutput').innerHTML= membervo.mphone;
+					document.getElementById('memailOutput').innerHTML= membervo.memail;
+					document.getElementById('groupResDateOutput').innerHTML= membervo.groupResDate;
+					document.getElementById('joinStatusOutput').innerHTML= membervo.joinStatus;
+					}
 			
 		})
     });	
+		
 
 		
     function fetchPost(url, obj, callback){
@@ -265,11 +233,11 @@
 							</select>           		
              		</div>
 					<div  id='contentList'>
-	             			그룹명 : <div id='groupid'></div>
-	             			가입입원 : <div id='person'></div>
+	             			그룹명 : <div id='groupidOutput'></div>
+	             			가입입원 : <div id='personOutput'></div>
            			 
 	             		<form>
-	             		
+	             		membervo : ${membervo }
 	             		<input type="text" name="pkgname" id='pkgname' value="${membervo.pkgname}">
            			 	
 			                <table class="table" border="1px solid" style="height:50%;weight:100%">
@@ -288,13 +256,21 @@
 							    <tbody>
 								    <tr>
 								      <th rowspan='3' scope="row"><input type='checkbox' name='rowCheck' value='${boardVO.bno }'></th>
-								      <td><div id='sname'></div></td>
-								      <td><div id='mbirthdate'></div></td>
-								      <td><div id='mphone'></div></td>
-								      <td><div id='memail'></div></td>
-								      <td><div id='groupResDate'></div></td>
-								      <td><div id='joinStatus'></div></td>
-								    </tr>
+								      <!-- 
+									      <td><div id='sname'></div></td>
+									      <td><div id='mbirthdate'></div></td>
+									      <td><div id='mphone'></div></td>
+									      <td><div id='memail'></div></td>
+									      <td><div id='groupResDate'></div></td>
+									      <td><div id='joinStatus'></div></td>
+								       -->
+								        <td><div id='snameOutput'></div></td>
+				                        <td><div id='mbirthdateOutput'></div></td>
+				                        <td><div id='mphoneOutput'></div></td>
+				                        <td><div id='memailOutput'></div></td>
+				                        <td><div id='groupResDateOutput'></div></td>
+				                        <td><div id='joinStatusOutput'></div></td>
+								    </tr> 
 							  </tbody>
 							  
 							</table>
@@ -308,62 +284,11 @@
              	</div>
 
 
-             	<!-- 숙제 전송 페이지 -->
+             	<!-- 숙제 전송 페이지-->
              	<div id="introduction3">
-             	<div>
-             			<h1><b>숙제 전송</b></h1><br>
-             		</div>
-             		<div>
-		      				<select id='groupSelect' class="form-select" aria-label="Default select example">
-								 	<option selected>숙제 부여할 그룹 선택</option>
-								 <c:forEach var="groupList" items="${groupList }">
-								  	<option value="${groupList.groupid}">${groupList.groupid}</option>
-								 </c:forEach>
-							</select>           		
-             		</div>
-             		
-	             		
-	             		
-			                <table class="table" border="1px solid" style="height:50%;weight:100%">
-								  <thead>
-								    <tr class="table-success">
-								      <th><input type='checkbox' id='allCheck' name='allCheck'></th>
-								      <th>학습자명</th>
-								      <th>나이</th>
-								      <th>연락처</th>
-								      <th>이메일</th>
-								      <th>이메일</th>
-								    </tr>
-								  </thead>
-								  
-							    <tbody id='studentSelect'>
-								    <tr>
-								      <th scope="row"><input type='checkbox' name='rowCheck' value='${boardVO.bno }'></th>
-								      <td><div id='sname'></div></td>
-								      <td><div id='mbirthdate'></div></td>
-								      <td><div id='mphone'></div></td>
-								      <td><div id='memail'></div></td>
-								      <td><div id='studentid'></div></td>
-								    </tr>
-							  </tbody>
-							</table>
-	             		<form>
-	             			<table class="table" border="1px solid" style="height:50%;weight:100%">
-								    <tr class="table-success">
-								      <th>숙제내용</th>
-								      <td><textarea id='homeworkCont' name='homeworkCont' style="width:100%; height:200px;"></textarea></td>
-								    </tr>
-								    <tr> 
-								      <th>제출기한</th>
-								      <td><input type='text' id='deadline' name='deadline'></td>
-								    </tr>
-	             			</table>
-	             			<div class="d-grid gap-2 col-6 mx-auto">
-	             				<button class="btn btn-success" id='submitbtn' name='submitbtn'> 숙제 전송 </button>
-             				</div>
-	             		</form>
-             	
+             		<%@include file="../teacher/homeworkMain.jsp" %>
           	 	</div>
+
 
 
              	<!-- 숙제 평가 페이지 -->
