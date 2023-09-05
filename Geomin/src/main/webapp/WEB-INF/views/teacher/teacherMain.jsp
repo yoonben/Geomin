@@ -84,10 +84,11 @@
     	});
     	$('#subnavi3').click(function (){
     		console.log('#subnavi3 작동 개시');
-    		$('#introduction3').show();
+    		/* $('#introduction3').show();
     		$('#introduction1').hide();
     		$('#introduction2').hide();
-    		$('#introduction4').hide();
+    		$('#introduction4').hide(); */
+    		location.href="../teacher/homeworkMain";
     	});
     	$('#subnavi4').click(function (){
     		console.log('#subnavi4 작동 개시');
@@ -286,7 +287,7 @@
 
              	<!-- 숙제 전송 페이지-->
              	<div id="introduction3">
-             		<%@include file="../teacher/homeworkMain.jsp" %>
+             		
           	 	</div>
 
 
