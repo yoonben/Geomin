@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.geomin.VO.contentVO;
@@ -50,6 +51,7 @@ public class teacherController extends CommonRestController{
 	public void groupRegist2(@RequestBody List<contentVO> groupData, Model model) {
 		System.out.println("groupData : " + groupData);
 		teacherService.regStudyGroup(groupData);
+	}
 	
 	// 그룹 신청한 학습자 리스트
 	@GetMapping("/teacher/teacherMain")
