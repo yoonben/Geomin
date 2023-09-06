@@ -80,7 +80,8 @@ th, tr, td{
 					<c:forEach var="list" items="${list}">
 						<tr id="data-raw" class="data-raw" data-value="${list.difficulty }">
 							<td><input type="checkbox" name="check" value="check" id="check"></td>
-							<td style="display: none;">${list.pkgId }</td>
+							<%-- <td style="display: none;">${list.pkgId }</td> --%>
+							<%-- <td>${list.pkgId }</td> --%>
 							<td>${list.pkgName }</td>
 							<td>${list.personnel }</td>
 							<td>${list.fixedPrice }</td>
@@ -104,10 +105,46 @@ th, tr, td{
 		const dataRows = document.querySelectorAll("tr.data-raw");
 		$('#searchButton').click(function() {
 			$('tr.data-raw').hide();
-			//1. 첫 번째 조건문
-			/* const choiceDifficulty = document.getElementById('choiceDifficulty').value; // 선택한 값을 저장
 			
-			if(choiceDifficulty == "전체"){
+			//난이도와 검색어에 해당하는 데이터 정렬
+			const choiceDifficulty = document.getElementById('choiceDifficulty').value; // 선택한 값을 저장
+			const sortedData = Array.from(dataRows);
+			const searchContent = document.getElementById('searchContent').value;
+			console.log('입력한 searchContent : ' , searchContent);
+			sortedData.forEach(row => {
+				const difficultyValue = row.getAttribute("data-value");
+				const content = row.querySelector("td:nth-child(7)").textContent;
+				console.log('출력한 content : ' , content);
+				if((choiceDifficulty === "전체" || difficultyValue === choiceDifficulty)&&(searchContent === "" || content.includes(searchContent))){
+					/* $('tr.data-raw').show(); */
+					row.style.display = 'table-row';
+				}
+			});
+			
+			//난이도와 검색어 + 가격에 해당하는 데이터 정렬
+			const selectedPrice = choicePrice.value;
+	        if (selectedPrice === "높음") {
+	            sortedData.sort((rowA, rowB) => {
+	                const priceA = parseFloat(rowA.querySelector(".list_finalPrice").textContent);
+	                console.log('priceA : ' , priceA);
+	                const priceB = parseFloat(rowB.querySelector(".list_finalPrice").textContent);
+	                return priceB - priceA;
+	            });
+	        } else if (selectedPrice === "낮음") {
+	            sortedData.sort((rowA, rowB) => {
+	                const priceA = parseFloat(rowA.querySelector(".list_finalPrice").textContent);
+	                const priceB = parseFloat(rowB.querySelector(".list_finalPrice").textContent);
+	                return priceA - priceB;
+	            });
+	        }
+	        const tableBody = document.querySelector('#result-table tbody');
+        	sortedData.forEach(row => {
+ 	        	tableBody.appendChild(row);
+        		//row.style.display = 'table-row';
+ 	        });
+		});
+			//1. 첫 번째 조건문
+			/* if(choiceDifficulty == "전체"){
 				$('tr.data-raw').show();
 			}else {
 				$('tr.data-raw[data-value="' + choiceDifficulty + '"]').show();
@@ -147,48 +184,6 @@ th, tr, td{
 		                row.style.display = 'table-row';
 		            }
 		      }); */
-		        
-			const choiceDifficulty = document.getElementById('choiceDifficulty').value;
-	        console.log('choiceDifficulty : ' , choiceDifficulty);
-		    const searchContent = document.getElementById('searchContent').value;
-	        const sortedData = Array.from(dataRows);
-	        const tableBody = document.querySelector('#result-table tbody');
-	        sortedData.forEach(row => {
-	            const difficultyValue = row.getAttribute("data-value");
-	            console.log('difficultyValue : ' , difficultyValue);
-	            const content = row.querySelector("td:nth-child(8)").textContent;
- 
-	            // 첫 번째와 세 번째 조건을 순차적으로 적용
-	            if ((choiceDifficulty === "전체" || difficultyValue === choiceDifficulty) &&
-	                (searchContent === "" || content.includes(searchContent))
-	            ){
-	                row.style.display = 'tr.data-raw';
-	            }
-	        }); 
-	        
-	        // 두 번째 조건 적용
-	        const selectedPrice = choicePrice.value;
-
-	        if (selectedPrice === "높음") {
-	            sortedData.sort((rowA, rowB) => {
-	                const priceA = parseFloat(rowA.querySelector(".list_finalPrice").textContent);
-	                console.log('priceA : ' , priceA);
-	                const priceB = parseFloat(rowB.querySelector(".list_finalPrice").textContent);
-	                return priceB - priceA;
-	            });
-	        } else if (selectedPrice === "낮음") {
-	            sortedData.sort((rowA, rowB) => {
-	                const priceA = parseFloat(rowA.querySelector(".list_finalPrice").textContent);
-	                const priceB = parseFloat(rowB.querySelector(".list_finalPrice").textContent);
-	                return priceA - priceB;
-	            });
-	        }
-	        
-        	sortedData.forEach(row => {
- 	        	tableBody.appendChild(row);
- 	        });      
-		});
-		
 		
 		$('#reqSubscribe').click(function() {
 			var checked_Data = [];
@@ -224,7 +219,52 @@ th, tr, td{
 		            //console.error(error);
 		        }
 		    });
-		});
+		}); 
 	}); //$(document).ready EndPoint
+	
+	
+	// const choiceDifficulty = document.getElementById('choiceDifficulty').value;
+    //console.log('choiceDifficulty : ' , choiceDifficulty);
+    /*const searchContent = document.getElementById('searchContent').value;
+    const sortedData = Array.from(dataRows);
+    //console.log('sortedData : ' , sortedData);
+    const tableBody = document.querySelector('#result-table tbody');
+    sortedData.forEach(row => {
+        const difficultyValue = row.getAttribute("data-value");
+        //console.log('difficultyValue : ' , difficultyValue);
+        const content = row.querySelector("td:nth-child(8)").textContent;
+			//console.log('content : ' , content);
+        
+        // 첫 번째와 세 번째 조건을 순차적으로 적용
+        if ((choiceDifficulty === "전체" || difficultyValue === choiceDifficulty) &&
+            (searchContent === "" || content.includes(searchContent))
+        ){
+            row.style.display = 'tr.data-raw';
+        }
+    }); 
+    
+    // 두 번째 조건 적용
+    const selectedPrice = choicePrice.value;
+
+    if (selectedPrice === "높음") {
+        sortedData.sort((rowA, rowB) => {
+            const priceA = parseFloat(rowA.querySelector(".list_finalPrice").textContent);
+            console.log('priceA : ' , priceA);
+            const priceB = parseFloat(rowB.querySelector(".list_finalPrice").textContent);
+            return priceB - priceA;
+        });
+    } else if (selectedPrice === "낮음") {
+        sortedData.sort((rowA, rowB) => {
+            const priceA = parseFloat(rowA.querySelector(".list_finalPrice").textContent);
+            const priceB = parseFloat(rowB.querySelector(".list_finalPrice").textContent);
+            return priceA - priceB;
+        });
+    }
+    
+	//sortedData.forEach(row => {
+     	tableBody.appendChild(row);
+     });      
+});*/
 </script>
+
 </html>

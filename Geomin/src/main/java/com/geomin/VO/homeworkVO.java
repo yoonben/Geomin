@@ -20,6 +20,7 @@ public class homeworkVO {
 	private String person;
 	private String groupResDate;
 	private String joinStatus;
+	private String age;
 	
 	// 숙제 전송 페이지 추가
 	private String sname; 

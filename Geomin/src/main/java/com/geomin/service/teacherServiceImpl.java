@@ -32,9 +32,15 @@ public class teacherServiceImpl implements teacherService{
 */
 
 	@Override
-	public List<contentVO> regSubinfo() {
+	public List<contentVO> getSubGroup() {
 		// TODO Auto-generated method stub
-		return teachermapper.regSubinfo();
+		return teachermapper.getSubGroup();
+	}
+
+	@Override
+	public void regStudyGroup(List<contentVO> groupData) {
+		teachermapper.regStudyGroup(groupData);
+		
 	}
 
 	@Override

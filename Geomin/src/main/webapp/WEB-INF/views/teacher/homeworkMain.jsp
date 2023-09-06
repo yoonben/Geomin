@@ -37,7 +37,26 @@
 		    width: 500px;
 		    border-bottom: 2px solid black;
 		} 
-		
+		#searchDiv{
+			width: 100%;
+		}
+		div#searchFieldDiv {
+		    float: left;
+		    width: 35%;
+		}
+		div#searchWordDiv {
+		    width: 50%;
+		    float: left;
+		}
+		#sname{
+			width: 100px;
+		}
+		#age{
+			width: 50px;
+		}
+		#mphone{
+			width: 140px;
+		}
 </style>
 
 <title>Insert title here</title>
@@ -91,6 +110,9 @@ window.addEventListener('load', function(){
 	//console.log(contentList.value);
 	
 	homeworkGroupSelect.addEventListener('change', function(){
+		content = ""; 
+		content2 = ""; 
+		
 		//contentList.style.display = '';
 		console.log('클릭되었어요222222');
 		
@@ -98,22 +120,119 @@ window.addEventListener('load', function(){
 		
 		let obj = {
 				groupid : homeworkGroupSelect.value
+				,pageNo: 1
 		    };
 		    
 		fetchPost('/geomin/homeworkID', obj, (map) => {
-	
-			document.getElementById('groupid').value= map.homeworkvo[0].groupid;
+			if(map.homeworklist.length > 0){
+				map.homeworklist.forEach(function(item, index) {
+					content += "<th scope='row'><input class='form-control' type='checkbox' name='rowCheck' class='studentid' readonly></th>"
+								+"<td style = 'width'><input class='form-control' type='text' name='sname' id='sname' value = '"+item.sname+"' readonly></td>"
+								+"<td><input class='form-control' type='text' name='age' id='age' value = '"+item.age+"' readonly></td>"
+								+"<td><input class='form-control' type='text' name='mphone' id='mphone' value = '"+item.mphone+"' readonly></td>"
+								+"<td><input class='form-control' type='text' name='memail' id='memail' value = '"+item.memail+"' readonly></td>"
+								+"</tr>";
+				})
+				
+				content2 += "  <ul class='pagination justify-content-center'>"
+				    + "   <!-- 첫 페이지 -->"
+				    + "   <li>"
+				    + "      <a class='page-link' onclick='go(1)'>처음</a>"
+				    + "    </li>"
+				    + "   <!-- 이전 페이지 -->"
+				    + "    <li class='page-item " + (map.pageDto.prev ? '' : 'disabled') + "'>"
+				    + "      <a class='page-link' onclick='go(" + (map.pageDto.startNo - 1) + ")'>이전</a>"
+				    + "    </li>"
+				    + "    <!-- 페이지목록 -->";
+				for (var i = map.pageDto.startNo; i <= map.pageDto.endNo; i++) {
+				    if (i === map.pageDto.cri.pageNo) {
+				        content2 += "<li class='page-item active'><span class='page-link' style='color: black; background-color: white;'>" + i + "</span></li>";
+				    } else {
+				        content2 += "<li class='page-item'><a class='page-link' onclick='go(" + i + ")'>" + i + "</a></li>";
+				    }
+				}
+				content2 += "    <!-- 다음페이지 -->"
+					+ "    <li class='page-item " + (map.pageDto.next ? '' : 'disabled') + "'>"
+				    + "      <a class='page-link' onclick='go(" + (map.pageDto.endNo + 1) + ")'>다음</a>"
+				    + "    </li>"
+				    + "    <!-- 끝 페이지 -->"
+				    + "    <li class='page-item '>"
+				    + "      <a class='page-link' onclick='go(" + map.pageDto.realEnd + ")'>끝</a>"
+				    + "    </li>"
+				    + "  </ul>";
+			}else {
+				content += "<tr>"
+			        + "  <th colspan='4'>등록된 학생이 없습니다.</th>" 
+					+ "</tr>";
+			}
 			
-			document.getElementById('sname').innerHTML= map.homeworkvo[0].sname;
 			
-			document.getElementById('mbirthdate').innerHTML= map.homeworkvo[0].mbirthdate;
 			
-			document.getElementById('mphone').innerHTML= map.homeworkvo[0].mphone;
-			
-			document.getElementById('memail').innerHTML= map.homeworkvo[0].memail;
-	
+			document.querySelector('#studentSelect').innerHTML = content;
+			document.querySelector('#pageNavi').innerHTML = content2;
 	})
 	});	
+	
+	Search.addEventListener('click', function(e){
+		content = ""; 
+		content2 = ""; 
+		
+		let obj = {
+				searchField : document.querySelector('#searchField').value
+				,searchWord : document.querySelector('#searchWord').value
+				,groupid : homeworkGroupSelect.value
+				,pageNo: 1
+		    };
+		    
+		fetchPost('/geomin/homeworkID', obj, (map) => {
+			if(map.homeworklist.length > 0){
+				map.homeworklist.forEach(function(item, index) {
+					content += "<th scope='row'><input class='form-control' type='checkbox' name='rowCheck' class='studentid' readonly></th>"
+								+"<td style = 'width'><input class='form-control' type='text' name='sname' id='sname' value = '"+item.sname+"' readonly></td>"
+								+"<td><input class='form-control' type='text' name='age' id='age' value = '"+item.age+"' readonly></td>"
+								+"<td><input class='form-control' type='text' name='mphone' id='mphone' value = '"+item.mphone+"' readonly></td>"
+								+"<td><input class='form-control' type='text' name='memail' id='memail' value = '"+item.memail+"' readonly></td>"
+								+"</tr>";
+				})
+				
+				content2 += "  <ul class='pagination justify-content-center'>"
+				    + "   <!-- 첫 페이지 -->"
+				    + "   <li>"
+				    + "      <a class='page-link' onclick='go(1)'>처음</a>"
+				    + "    </li>"
+				    + "   <!-- 이전 페이지 -->"
+				    + "    <li class='page-item " + (map.pageDto.prev ? '' : 'disabled') + "'>"
+				    + "      <a class='page-link' onclick='go(" + (map.pageDto.startNo - 1) + ")'>이전</a>"
+				    + "    </li>"
+				    + "    <!-- 페이지목록 -->";
+				for (var i = map.pageDto.startNo; i <= map.pageDto.endNo; i++) {
+				    if (i === map.pageDto.cri.pageNo) {
+				        content2 += "<li class='page-item active'><span class='page-link' style='color: black; background-color: white;'>" + i + "</span></li>";
+				    } else {
+				        content2 += "<li class='page-item'><a class='page-link' onclick='go(" + i + ")'>" + i + "</a></li>";
+				    }
+				}
+				content2 += "    <!-- 다음페이지 -->"
+					+ "    <li class='page-item " + (map.pageDto.next ? '' : 'disabled') + "'>"
+				    + "      <a class='page-link' onclick='go(" + (map.pageDto.endNo + 1) + ")'>다음</a>"
+				    + "    </li>"
+				    + "    <!-- 끝 페이지 -->"
+				    + "    <li class='page-item '>"
+				    + "      <a class='page-link' onclick='go(" + map.pageDto.realEnd + ")'>끝</a>"
+				    + "    </li>"
+				    + "  </ul>";
+			}else {
+				content += "<tr>"
+			        + "  <th colspan='4'>등록된 학생이 없습니다.</th>" 
+					+ "</tr>";
+			}
+			
+			
+			
+			document.querySelector('#studentSelect').innerHTML = content;
+			document.querySelector('#pageNavi').innerHTML = content2;
+		})
+		})
 	
 	})
 
@@ -135,6 +254,65 @@ window.addEventListener('load', function(){
     	}
     }
     
+function go(pageNo) {	
+	content = ""; 
+	content2 = "";
+	let obj={
+		searchField : document.querySelector('#searchField').value
+		, searchWord : document.querySelector('#searchWord').value
+		, groupid : document.getElementById('homeworkGroupSelect').value
+		, pageNo : pageNo
+	}
+	
+	fetchPost('/geomin/homeworkID', obj, (map) => {
+		if(map.homeworklist.length > 0){
+			map.homeworklist.forEach(function(item, index) {
+				content += "<th scope='row'><input class='form-control' type='checkbox' name='rowCheck' class='studentid' readonly></th>"
+							+"<td style = 'width'><input class='form-control' type='text' name='sname' id='sname' value = '"+item.sname+"' readonly></td>"
+							+"<td><input class='form-control' type='text' name='age' id='age' value = '"+item.age+"' readonly></td>"
+							+"<td><input class='form-control' type='text' name='mphone' id='mphone' value = '"+item.mphone+"' readonly></td>"
+							+"<td><input class='form-control' type='text' name='memail' id='memail' value = '"+item.memail+"' readonly></td>"
+							+"</tr>";
+			})
+			
+			content2 += "  <ul class='pagination justify-content-center'>"
+			    + "   <!-- 첫 페이지 -->"
+			    + "   <li>"
+			    + "      <a class='page-link' onclick='go(1)'>처음</a>"
+			    + "    </li>"
+			    + "   <!-- 이전 페이지 -->"
+			    + "    <li class='page-item " + (map.pageDto.prev ? '' : 'disabled') + "'>"
+			    + "      <a class='page-link' onclick='go(" + (map.pageDto.startNo - 1) + ")'>이전</a>"
+			    + "    </li>"
+			    + "    <!-- 페이지목록 -->";
+			for (var i = map.pageDto.startNo; i <= map.pageDto.endNo; i++) {
+			    if (i === map.pageDto.cri.pageNo) {
+			        content2 += "<li class='page-item active'><span class='page-link' style='color: black; background-color: white;'>" + i + "</span></li>";
+			    } else {
+			        content2 += "<li class='page-item'><a class='page-link' onclick='go(" + i + ")'>" + i + "</a></li>";
+			    }
+			}
+			content2 += "    <!-- 다음페이지 -->"
+				+ "    <li class='page-item " + (map.pageDto.next ? '' : 'disabled') + "'>"
+			    + "      <a class='page-link' onclick='go(" + (map.pageDto.endNo + 1) + ")'>다음</a>"
+			    + "    </li>"
+			    + "    <!-- 끝 페이지 -->"
+			    + "    <li class='page-item '>"
+			    + "      <a class='page-link' onclick='go(" + map.pageDto.realEnd + ")'>끝</a>"
+			    + "    </li>"
+			    + "  </ul>";
+		}else {
+			content += "<tr>"
+		        + "  <th colspan='4'>등록된 학생이 없습니다.</th>" 
+				+ "</tr>";
+		}
+		
+		
+		
+		document.querySelector('#studentSelect').innerHTML = content;
+		document.querySelector('#pageNavi').innerHTML = content2;
+})
+}
 </script>    
 
 
@@ -169,10 +347,20 @@ window.addEventListener('load', function(){
 								 </c:forEach>
 							</select>           		
              		</div>
-             		
-             		homeworkGroupList : ${homeworkGroupList }
-             		
-             		<input type="text" name="groupid" id='groupid' value="${homeworkvo.groupid}">
+             		<div id="searchDiv">
+             			<div id="searchFieldDiv">
+							<select id="searchField" name="searchField" class="form-select" aria-label="Default select example">
+							   <option selected value="sname">이름</option>
+							  <option value="age">나이</option>
+							</select>
+ 						</div>
+ 						<div id="searchWordDiv">
+ 							 <input class="form-control me-2" id="searchWord" name="searchWord" type="search" placeholder="Search" aria-label="Search">
+ 						</div>
+ 						<div id="searchBtnDiv">
+ 							<button class="btn btn-outline-success" id="Search" type="submit">Search</button>
+ 						</div>
+             		</div>
            			 	
 			                <table class="table" border="1px solid" style="height:50%;weight:100%">
 								  <thead>
@@ -186,16 +374,12 @@ window.addEventListener('load', function(){
 								  </thead>
 								  
 							    <tbody id='studentSelect'>
-								    <tr>
-								      <th scope="row"><input type='checkbox' name='rowCheck' value='${boardVO.bno }'></th>
-								      <td><div id='sname'></div></td>
-								      <td><div id='mbirthdate'></div></td>
-								      <td><div id='mphone'></div></td>
-								      <td><div id='memail'></div></td>
-								    </tr>
+								
 							  </tbody>
 							</table>
-							
+							<nav aria-label="Page navigation example" id="pageNavi">
+					
+				  			</nav>
 	             		<form>
 	             			<table class="table" border="1px solid" style="height:50%;weight:100%">
 								    <tr class="table-success">

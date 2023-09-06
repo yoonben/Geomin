@@ -28,6 +28,9 @@ public class contentVO {
 	
 	private String groupid;
 	
+	private Date studyStartDate;
+	private Date studyEndDate;
+	
 	//모든 학습 컨텐츠 출력
 	public contentVO(String pkgId, String pkgName, int Personnel, String fixedPrice, String finalPrice, String difficulty,String pkgContent
 			) {

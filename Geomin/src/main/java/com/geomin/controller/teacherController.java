@@ -46,7 +46,10 @@ public class teacherController extends CommonRestController{
 		return "/teacher/groupRegist";
 	}
 	
-	
+	@PostMapping("/teacher/groupRegist")
+	public void groupRegist2(@RequestBody List<contentVO> groupData, Model model) {
+		System.out.println("groupData : " + groupData);
+		teacherService.regStudyGroup(groupData);
 	
 	// 그룹 신청한 학습자 리스트
 	@GetMapping("/teacher/teacherMain")

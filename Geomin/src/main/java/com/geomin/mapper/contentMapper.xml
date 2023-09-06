@@ -18,6 +18,10 @@
 		<foreach collection="list" item="list"><!--  separator=";" -->
     		INSERT INTO PKGSUBSDETAIL(pkgId, memberID, PKGNAME, SUBSDATE, PERSONNEL, SUBSPRICE)
     		VALUES (#{list.pkgId}, 'memberID22', #{list.pkgName}, sysdate, #{list.personnel}, #{list.finalPrice})
+<!--     		INSERT INTO STUDY_GROUP(GROUPID)
+    		VALUES ('NOT GROUP')
+    		INSERT INTO PACKAGE(finalPrice)
+    		VALUES (#{list.finalPrice}) -->
     	</foreach>
 	</insert>
 	
@@ -30,6 +34,7 @@
     		p.finalPrice,
     		p.difficulty,
     		d.PERSONNEL,
+    		p.pkgContent,
     		NVL2(g.groupID, g.groupID, 'NOT GROUP') AS groupID
 		FROM 
     		package p

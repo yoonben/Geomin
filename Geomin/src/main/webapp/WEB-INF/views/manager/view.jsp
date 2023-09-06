@@ -117,9 +117,13 @@ function goView(bno){
 	         	+"<li class='left'>"+map.boardVO.writer+"</li>"
 	         	+"<li class='right'>"+map.boardVO.regdate+"</li>"
 	         	+"</ul>"
-	         	+"<div class='dv'>"
-	         	+map.boardVO.boardcontent
-	         	+"</div>";
+	         	+"<div class='dv'>";
+	         	if(map.boardVO.boardcontent != null){
+	         		content += map.boardVO.boardcontent;
+					}else{
+						content += "내용이 없습니다.";
+					}
+	         	content += "</div>";
 	         	if(map.boardVO.boardnotice == 'N'){
 		         	if(map.boardVO.answer != null){
 		         		content+="<div class='dv2'>"

@@ -86,4 +86,39 @@
 		        and groupid = #{groupid}
 	</update>
 
+	<select id='getSubGroup' resultType="com.geomin.VO.contentVO">
+		SELECT
+    		P.pkgId,
+    		p.pkgName,
+    		m.memberID,
+    		d.subsDate,
+    		p.finalPrice,
+    		p.difficulty,
+    		d.PERSONNEL,
+    		p.pkgContent,
+    		NVL2(g.groupID, g.groupID, 'NOT GROUP') AS groupID
+		FROM 
+    		package p
+		JOIN
+    		PKGSUBSDETAIL D
+		ON  
+    		P.pkgId = D.pkgId
+		JOIN
+    		member m
+		ON 
+    		D.memberID = m.memberID
+		LEFT JOIN
+    		study_group g
+		ON
+    		D.pkgId = g.pkgId
+		WHERE 
+    		p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID22'
+	</select>
+	
+	<insert id="regStudyGroup" parameterType="java.util.List">
+		<foreach collection="list" item="list"><!--  separator=";" -->
+    		INSERT INTO STUDY_GROUP(GROUPID, PKGID, MEMBERID, GROUPMEM, STUDYSTARTDATE, STUDYENDDATE)
+    		VALUES (#{list.groupid}, #{list.pkgId}, 'memberID22', 0, #{list.studyStartDate}, #{list.studyEndDate})
+    	</foreach>
+	</insert>
 </mapper>

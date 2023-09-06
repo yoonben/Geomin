@@ -36,52 +36,289 @@
             </div>
             <%-- <label>Title</label> <input name='title' value='<c:out value = "${board.title}" />' readonly="readonly"> --%>
             <div class='content'>
-            <%-- ${list } --%>
             <c:forEach items="${list2}" var="list2">
-            	<div style="display: none;">
-            		<label>그룹명 : </label>
-            		<input name='pkgID' value='<c:out value = "${list2.pkgId}" />' readonly="readonly" disabled="disabled">
-            	</div>
-            	<div>
-            		<label>그룹명 : </label>
-            		<input type="text" placeholder="그룹명을 입력해 주세요">
-            	</div>
-            	<div>
-            		<label>패키지명 : </label>
-            		<input name='pkgName' value='<c:out value = "${list2.pkgName}" />' readonly="readonly" disabled="disabled">
-            	</div>
-            	<div>
-            		<label>학습 가능 인원 : </label>
-            		<input type="text" placeholder="인원 수 적기"> 명
-            	</div>
-            	<div>
-            		<label>학습 수준 : </label>
-            		<input name='difficulty' value='<c:out value = "${list2.difficulty}" />' readonly="readonly" disabled="disabled">
-            	</div>
-            	<div>
-            		<label>구독 날짜 : </label>
-            		<input name='subsDate' value='<c:out value = "${list2.subsDate}" />' readonly="readonly" disabled="disabled">
-            	</div>
-            	<div>
-            		<label>학습 기간 : </label>
-            		<input type="text" placeholder="From - To">
-            	</div>
-            	<div>
-            		<label>학습 내용 : </label>
-            		<input name='content' value='<c:out value = "${list2.pkgContent}" />' readonly="readonly" disabled="disabled">
-            	</div>
-            </c:forEach>
+            	<c:if test ="${list2.pkgName == pkgName}">
+            		<div style="display: none;">
+            			<label>그룹명 : </label>
+            			<input name='pkgId' id = "pkgId" value='<c:out value = "${list2.pkgId}" />' readonly="readonly" disabled="disabled">
+            		</div>
+            		<div>
+            			<label>그룹명 : </label>
+            			<input type="text" id="groupid" placeholder="그룹명을 입력해 주세요">
+            		</div>
+            		<div>
+            			<label>패키지명 : </label>
+            			<input name='pkgName' value='<c:out value = "${list2.pkgName}" />' readonly="readonly" disabled="disabled">
+            		</div>
+            		<div>
+            			<label>학습 가능 인원 : </label>
+            			<input type="text" id='groupperson' placeholder="인원 수 적기"> 명
+            		</div>
+            		<div>
+            			<label>학습 수준 : </label>
+            			<input name='difficulty' value='<c:out value = "${list2.difficulty}" />' readonly="readonly" disabled="disabled">
+            		</div>
+            		<div>
+            			<label>구독 날짜 : </label>
+            			<input name='subsDate' value='<c:out value = "${list2.subsDate}" />' readonly="readonly" disabled="disabled">
+            		</div>
+					<div>
+						<label>학습 기간 : 최대 3개월</label> 
+							<select id="select_yearB" class= "select_yearB" onchange="javascript:lastdayB();"></select>
+							<select id="select_monthB" class= "select_monthB" onchange="javascript:lastdayB();"></select>
+							<select id="select_dayB" class= "select_dayB"></select>
+						
+							~
+						
+							<select id="select_yearA" class= "select_yearA" onchange="javascript:lastdayA();"></select>
+							<select id="select_monthA" class= "select_monthA" onchange="javascript:lastdayA();"></select>
+							<select id="select_dayA" class= "select_dayA"></select>
+						</div>
+            		<div>
+						<label>학습 내용 : </label>
+            			<input name='content' value='<c:out value = "${list2.pkgContent}" />' readonly="readonly" disabled="disabled">
+            		</div>
+				</c:if>
+			</c:forEach>
+			
             <br>
             <button id="regStudy">학습그룹 등록</button>
-		</div>
-            <div class='banner'>
-            </div>
+	</div>
+            <div class='banner'></div>
     </div>
 </div>	
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
+$(document).ready(function () {
+	/* var pkgName = document.getElementById('pkgNameElement').getAttribute('data-pkgName');
+    document.getElementById('receivedData').textContent = "Received Data: " + pkgName; */
+	
+	//var pkgName = document.getElementById('pkgNameElement').getAttribute('data-pkgName');
+	//console.log('pkgName : ' , pkgName);
+	//const pkgName = document.getElementById('pkgName').value;
+	
+	var start_year = "2023";// 시작할 년도
+	var today = new Date();
+	var today_year = today.getFullYear();
+	var indexB=0;
+	var indexA=0;
+	for(var y=start_year; y<=today_year; y++){ //start_year ~ 현재 년도
+		document.getElementById('select_yearB').options[indexB] = new Option(y, y);
+		document.getElementById('select_yearA').options[indexA] = new Option(y, y);
+		indexB++;
+		indexA++;
+	}
 
+	indexB = 0;
+	indexA = 0;
+	for(var m=1; m<=12; m++){
+		document.getElementById('select_monthB').options[indexB] = new Option(m, m);
+		document.getElementById('select_monthA').options[indexA] = new Option(m, m);
+		indexB++;
+		indexA++;
+	}
+
+	lastdayB();
+	function lastdayB(){ //년과 월에 따라 마지막 일 구하기 
+		var yearB = document.getElementById('select_yearB').value;
+		var monthB = document.getElementById('select_monthB').value;
+		var dayB = new Date(new Date(yearB,monthB,1)-86400000).getDate();
+		var dayBB = document.getElementById('select_yearB').value;
+	
+		var dayindex_lenB=document.getElementById('select_dayB').length;
+		if(dayB>dayindex_lenB){
+			for(var i=(dayindex_lenB+1); i<=dayB; i++){
+				document.getElementById('select_dayB').options[i-1] = new Option(i, i);
+			}
+		}
+		else if(dayB<dayindex_lenB){
+			for(var i=dayindex_lenB; i>=dayB; i--){
+				document.getElementById('select_dayB').options[i]=null;
+			}
+		}
+	}
+
+	lastdayA();
+	function lastdayA(){ //년과 월에 따라 마지막 일 구하기 
+		var yearA = document.getElementById('select_yearA').value;
+		var monthA = document.getElementById('select_monthA').value;
+		var dayA = new Date(new Date(yearA,monthA,1)-86400000).getDate();
+
+		var dayindex_lenA=document.getElementById('select_dayA').length;
+		if(dayA>dayindex_lenA){
+			for(var i=(dayindex_lenA+1); i<=dayA; i++){
+				document.getElementById('select_dayA').options[i-1] = new Option(i, i);
+			}
+		}
+		else if(dayA<dayindex_lenA){
+			for(var i=dayindex_lenA; i>=dayA; i--){
+				document.getElementById('select_dayA').options[i]=null;
+			}
+		}
+	}
+
+	$('#regStudy').click(function() {
+		const groupid = document.getElementById('groupid').value;
+		const groupperson = document.getElementById('groupperson').value;
+		const pkgId = document.getElementById('pkgId').value;
+		console.log('pkgId : ' , pkgId);
+		
+		var yearB = document.getElementById('select_yearB').value;
+		var monthB = document.getElementById('select_monthB').value;
+		var dayBB = document.getElementById('select_dayB').value;
+		const dateB = new Date(yearB, monthB - 1, dayBB);
+		const totalDateB = dateB.toISOString().slice(0, 10);
+		console.log('dateB : ' , dateB);
+		//console.log('formattedDateB : ' , formattedDateB);
+		
+		var yearA = document.getElementById('select_yearA').value;
+		var monthA = document.getElementById('select_monthA').value;
+		var dayAA = document.getElementById('select_dayA').value;
+		const dateA = new Date(yearA, monthA - 1, dayAA);
+		const totalDateA = dateA.toISOString().slice(0, 10);
+		console.log('dateA : ' , dateA);
+		//console.log('formattedDateA : ' , formattedDateA);
+		
+		const groupData = [];
+	
+		const rowData = {
+			groupid: groupid,
+			pkgId : pkgId,
+			Personnel : groupperson,
+			studyStartDate : totalDateB,
+			studyEndDate : totalDateA
+		}
+		groupData.push(rowData);
+		
+		console.log('groupData : ' , groupData);
+		
+	$.ajax({
+        url: '/geomin/teacher/groupRegist',
+        type: 'POST',
+        data: JSON.stringify(groupData),
+        contentType: "application/json",
+        dataType: "json",
+        success: function(response) {
+            alert('성공');
+            //console.log(response);
+        },
+        error: function(error) {
+            alert('실패');
+            //console.error(error);
+        }
+    });
+});
+	
+});
+
+
+
+/* lastday();
+
+function lastday(){ //년과 월에 따라 마지막 일 구하기 
+	var yearB=document.getElementById('select_yearB').value;
+	var monthB=document.getElementById('select_monthB').value;
+	var dayB = new Date(new Date(YearB,MonthB,1)-86400000).getDate();
+	console.log('dayB : ' , dayB);
+	
+	var yearA=document.getElementById('select_yearA').value;
+	var monthA=document.getElementById('select_monthA').value;
+	var dayA = new Date(new Date(YearA,MonthA,1)-86400000).getDate();
+	console.log('dayA : ' , dayA);
+	
+	var dayindex_lenB = document.getElementById('select_dayB').length;
+	if(dayB>dayindex_lenB){
+		for(var B=(dayindex_lenB+1); B<=dayB; B++){
+			document.getElementById('select_dayB').options[B-1] = new Option(B, B);
+		}
+	}
+	else if(dayB<dayindex_lenB){
+		for(var B=dayindex_lenB; B>=dayB; B--){
+			document.getElementById('select_dayB').options[B]=null;
+		}
+	}
+	
+	var dayindex_lenA = document.getElementById('select_dayA').length;
+	if(dayA>dayindex_lenA){
+		for(var A=(dayindex_lenA+1); A<=dayA; A++){
+			document.getElementById('select_dayA').options[A-1] = new Option(A, A);
+		}
+	}
+	else if(dayA<dayindex_lenA){
+		for(var A=dayindex_lenA; A>=dayA; A--){
+			document.getElementById('select_dayA').options[A]=null;
+		}
+	}
+} */
+
+/* Now = new Date();
+NowDay = Now.getDate();
+NowMonth = Now.getMonth();
+NowYear = Now.getYear();
+if (NowYear < 2000) NowYear += 1900;
+function DaysInMonth(WhichMonth, WhichYear)
+{
+  var DaysInMonth = 31;
+  if (WhichMonth == "Apr" || WhichMonth == "Jun" || WhichMonth == "Sep" || WhichMonth == "Nov") DaysInMonth = 30;
+  if (WhichMonth == "Feb" && (WhichYear/4) != Math.floor(WhichYear/4))        DaysInMonth = 28;
+  if (WhichMonth == "Feb" && (WhichYear/4) == Math.floor(WhichYear/4))        DaysInMonth = 29;
+  return DaysInMonth;
+}
+
+function ChangeOptionDays(Which)
+{
+  DaysObject = eval("document.Form1." + Which + "Day");
+  MonthObject = eval("document.Form1." + Which + "Month");
+  YearObject = eval("document.Form1." + Which + "Year");
+
+  Month = MonthObject[MonthObject.selectedIndex].text;
+  Year = YearObject[YearObject.selectedIndex].text;
+
+  DaysForThisSelection = DaysInMonth(Month, Year);
+  CurrentDaysInSelection = DaysObject.length;
+  if (CurrentDaysInSelection > DaysForThisSelection)
+  {
+    for (i=0; i<(CurrentDaysInSelection-DaysForThisSelection); i++)
+    {
+      DaysObject.options[DaysObject.options.length - 1] = null
+    }
+  }
+  if (DaysForThisSelection > CurrentDaysInSelection)
+  {
+    for (i=0; i<(DaysForThisSelection-CurrentDaysInSelection); i++)
+    {
+      NewOption = new Option(DaysObject.options.length + 1);
+      DaysObject.add(NewOption);
+    }
+  }
+    if (DaysObject.selectedIndex < 0) DaysObject.selectedIndex == 0;
+}
+
+function SetToToday(Which)
+{
+  DaysObject = eval("document.Form1." + Which + "Day");
+  MonthObject = eval("document.Form1." + Which + "Month");
+  YearObject = eval("document.Form1." + Which + "Year");
+
+  YearObject[0].selected = true;
+  MonthObject[NowMonth].selected = true;
+
+  ChangeOptionDays(Which);
+
+  DaysObject[NowDay-1].selected = true;
+}
+
+function WriteYearOptions(YearsAhead)
+{
+  line = "";
+  for (i=0; i<YearsAhead; i++)
+  {
+    line += "<OPTION>";
+    line += NowYear + i;
+  }
+  return line;
+} */
 /* var listData = ${list.pkgname};
 console.log('listData : ' , listData); */
     /* console.log("여기는 아닌거같아요..");

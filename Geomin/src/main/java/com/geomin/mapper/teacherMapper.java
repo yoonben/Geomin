@@ -17,10 +17,16 @@ public interface teacherMapper {
 	//그룹 선택
 	public List<memberVO> contentOne(memberVO vo);
 	
+<<<<<<< HEAD
 	public List<contentVO> regSubinfo();
 	
 	//그룹가입 승인
 	public int updateJoinStatus(memberVO vo);
+=======
+	List<contentVO> getSubGroup();
+
+	void regStudyGroup(List<contentVO> groupData);
+>>>>>>> refs/remotes/origin/master
 	
 	
 }

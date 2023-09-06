@@ -48,12 +48,6 @@ th, tr, td{
 				</ul>
 			</div>
 			<div class="content">
-				<!-- <div class="today">
-					<h2>230901</h2>
-					<h2>오늘의 기분은 어떤가요?</h2>
-					<img src="/resources/img/pingwing-bee_angry.png">
-				</div> -->
-				
 				<button id="1day">1일 전</button>
 				<button id="3day">3일 전</button>
 				<button id="1month">1달 전</button>
@@ -85,15 +79,14 @@ th, tr, td{
 						<tr id="data-raw" class="data-raw" data-value="${list.subsDate}">
 							<td><input type="checkbox" name="check" value="check" id="check"></td>
 							<td>${list.memberID }</td>
-							<td><a href="geomin/teacher/groupRegist">${list.pkgName }</a></td><!-- ?memberID='memberID22' -->
+							<td class="list_pkgName">${list.pkgName }</td> <!-- ?memberID='memberID22' --> <!-- <a href="geomin/teacher/groupRegist"></a> -->
 							<td class="list_subsDate">${list.subsDate }</td>
 							<td>${list.personnel}</td>
 							<td>${list.finalPrice }</td>
 							<td>${list.difficulty }</td>
 							<c:choose>
 								<c:when test="${list.groupid == 'NOT GROUP'}"> <!-- NULL을 N으로 변경-->
-									<td><button type='button' id="regButton" name='regButton' 
-												onclick='location.href="../teacher/groupRegist"'>그룹 등록</button></td>
+									<td><button type='button' id="regButton" name='regButton' onclick='location.href="../teacher/groupRegist?pkgName=${list.pkgName}"'>그룹 등록</button></td> <%-- onclick='location.href="../teacher/groupRegist?pkgName=${list.pkgName }"' --%>
 								</c:when>
 								<c:otherwise>
 									<td>등록 완료</td>
@@ -115,7 +108,7 @@ th, tr, td{
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
-
+	
     $('#1day').click(function () {
     	console.log('1일전 버튼 클릭');
     	$('tr.data-raw').hide();
@@ -169,48 +162,71 @@ $(document).ready(function () {
     }
     
     const tableBody = document.querySelector('#result-table tbody');
-	const dataRows = document.querySelectorAll("tr.data-raw");
-	const sortedData = Array.from(dataRows);
+    //const tableBody = document.querySelector('#result-table tbody');
+	//const dataRows = document.querySelectorAll("tr.data-raw");
+	const dataRows = Array.from(document.querySelectorAll("tr.data-raw"));
+	console.log('dataRows : ' , dataRows);
+	//const sortedData = Array.from(dataRows);
 	//var dataResult = null;
     $('#recent').click(function () {
     	$('tr.data-raw').hide();
-    	sortedData.sort((rowA, rowB) => {
-    		//const dataA = rowA.querySelector(".list_subsDate").textContent;
-    		//const dataA = $(rowA).data('value');
+    	/* sortedData.sort((rowA, rowB) => {
     		const dataA = new Date($(rowA).data('value'));
-    		//const dataA = new Date($(rowA).data('value')).getTime();
     		console.log('dataA : ' , dataA);
-    		//const dataB = rowB.querySelector(".list_subsDate").textContent;
-    		//const dataB = $(rowB).data('value');
     		const dataB = new Date($(rowB).data('value'));
-    		//const dataB = new Date($(rowB).data('value')).getTime();
     		console.log('dataB : ' , dataB);
-    		//CONSOLE.LOG('dataA - dataB : ' , dataA - dataB);
     		
     		var dataResult = dataA - dataB;
     		console.log('dataResult : ' , dataResult);
-        	//return dataA - dataB; 
         	return dataA - dataB; 
+    	}); */
+    	dataRows.sort((rowA, rowB) => {
+    	    const dateA = new Date($(rowA).find('.list_subsDate').text()); // 날짜 형식의 데이터를 Date 객체로 변환
+    	    console.log('dateA : ' , dateA);
+    	    const dateB = new Date($(rowB).find('.list_subsDate').text());
+    	    console.log('dateB : ' , dateB);
+    	    
+    	    return dateA - dateB; // 오름차순 정렬
     	});
+    	
+    	dataRows.forEach(row => {
+            tableBody.appendChild(row);
+        });
     });
-    
 	
-    sortedData.forEach(row => {
-    	//console.log('여기로 왔나요?');
-    	tableBody.appendChild(row);
-    	//tableBody.innerHTML = '여기는 TABLEBODY';
-    	//tableBody.innerHTML = dataResult;
- 	});
     
-   /*  let regButton = document.getElementById('regButton');
-    $('#regButton').click(function (){
-    	console.log('클릭완료!');
-    	//window.location.href = 'teacher/groupRegist.jsp?memberid='memberID22'';
-    	window.location.href = '../teacher/groupRegist';
+    
+    $('#regButton').click(function () {
+    	var pkgName = $(this).closest('tr').find('.list_pkgName').text();
+    	$.ajax({
+            type: "GET", // HTTP 요청 방식 (GET 또는 POST)
+            url: "/geomin/teacher/groupRegist", // JSP 페이지의 경로 또는 서블릿 URL
+            data: { pkgName: pkgName }, // 전송할 데이터
+            success: function(response) {
+            },
+            error: function(xhr, status, error) {
+            }
+        });
+    });
+    /* $('#regButton').click(function () {
+    	var pkgName = $(this).closest('tr').find('.list_pkgName').text();
+    	$.ajax({
+            type: "POST", // HTTP 요청 방식 (GET 또는 POST)
+            url: "../teacher/groupRegist", // JSP 페이지의 경로 또는 서블릿 URL
+            data: { pkgName: pkgName }, // 전송할 데이터
+            success: function(response) {
+            },
+            error: function(xhr, status, error) {
+            }
+        });
     }); */
-    
 });
-
+/*  let regButton = document.getElementById('regButton');
+$('#regButton').click(function (){
+	console.log('클릭완료!');
+	//window.location.href = 'teacher/groupRegist.jsp?memberid='memberID22'';
+	window.location.href = '../teacher/groupRegist';
+}); */
 /* $('#recent').click(function () {
 $('tr.data-raw').hide();
 sortDataByDate('desc');
