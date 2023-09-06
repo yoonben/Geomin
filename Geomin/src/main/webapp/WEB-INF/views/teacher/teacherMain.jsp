@@ -69,10 +69,11 @@
     	
     	$('#subnavi1').click(function (){
     		console.log('#subnavi1 작동 개시');
-    		$('#introduction1').show ();
+    		/* $('#introduction1').show ();
     		$('#introduction2').hide();
     		$('#introduction3').hide();
-    		$('#introduction4').hide();
+    		$('#introduction4').hide(); */
+    		location.href="../teacher/groupRegist";
     	});
     	
     	$('#subnavi2').click(function (){
