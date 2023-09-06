@@ -158,6 +158,12 @@ public class loginServiceImpl implements loginService {
 		return loginMapper.updatePw(member);
 	}
 
+	@Override
+	public int InfoUpdate(memberVO vo) {
+		
+		return loginMapper.InfoUpdate(vo);
+	}
+
 
 
 

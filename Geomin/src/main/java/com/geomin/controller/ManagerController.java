@@ -242,7 +242,11 @@ public class ManagerController extends CommonRestController{
 	        String memail = member.getMemail();
 	        String[] emailParts = memail.split("@");
 	        String mail = emailParts[0];
-
+	        String mail2 = emailParts[1];
+	        
+	        System.out.println(mail2);
+	        
+			map.put("mail2", mail2);
 			map.put("mail", mail);
 	        map.put("year", year);
 	        map.put("month", month);
@@ -259,4 +263,25 @@ public class ManagerController extends CommonRestController{
 		}
 	}
 	
+	@PostMapping("/InfoUpdate")
+	public @ResponseBody Map<String, Object> InfoUpdate(@RequestBody memberVO memberVo) {
+		
+		try {
+			
+			Map<String, Object> map = responseMap(REST_SUCCESS, "회원 정보가 업데이트 되었습니다");
+			
+			int res = login.InfoUpdate(memberVo);
+			
+			if(res == 0) {
+				return responseMap(REST_FAIL, "회원 정보를 업데이트하는 중 예외사항이 발생 하였습니다.");
+			}
+			
+			return map;
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return responseMap(REST_FAIL, "회원 정보를 업데이트하는 중 예외사항이 발생 하였습니다.");
+		}
+	}
 }

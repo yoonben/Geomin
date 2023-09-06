@@ -61,6 +61,8 @@
 		update member set mpassword = #{mpassword} where memberid = #{memberid}
 	</update>
 	
-
+	<update id="InfoUpdate" >
+		update member set mname = #{mname}, mtype = #{mtype}, mphone = #{mphone}, memail = #{memail}, maddr = #{maddr}, mbirthdate = #{mbirthdate}, mgender = #{mgender}, marketingagree = #{marketingagree}  where memberid = #{memberid}
+	</update>
   	
   </mapper>

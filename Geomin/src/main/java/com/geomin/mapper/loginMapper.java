@@ -21,6 +21,8 @@ public interface loginMapper {
 	
 	// 비밀번호 변경
 	public int updatePw(memberVO vo) throws Exception;
+	
+	public int InfoUpdate(memberVO vo);
 
 	
 }
