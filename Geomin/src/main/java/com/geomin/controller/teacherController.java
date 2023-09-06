@@ -53,6 +53,8 @@ public class teacherController extends CommonRestController{
 		teacherService.regStudyGroup(groupData);
 	}
 	
+	
+	
 	// 그룹 신청한 학습자 리스트
 	@GetMapping("/teacher/teacherMain")
 	public String getGroup(Model model) {

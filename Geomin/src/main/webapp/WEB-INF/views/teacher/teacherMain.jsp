@@ -127,8 +127,7 @@
 
 
     	
-    	// 그룹 승인 신청 페이지 
-		
+    	// 그룹 승인  페이지 
 		let contentSelect = document.getElementById('contentSelect');
 		let contentList = document.getElementById('contentList');
 		
@@ -137,52 +136,117 @@
 		let set = new Set(contentSelectOptions.map(option => option.value));
 		
 		console.log(set.size);
+		console.log(set);
 		
+		// set을 다시 배열로 변환
+		let setAsArray = Array.from(set);
 		
-		// 중복 제거된 옵션으로 셀렉트 박스 업데이트
-		contentSelect.innerHTML = ''; // 기존 옵션 삭제
-		uniqueOptions.forEach(optionValue => {
+		// 기존 옵션 삭제
+		contentSelect.innerHTML = '';
+
+		// setAsArray 배열을 사용하여 옵션 생성 및 업데이트
+		setAsArray.forEach(optionValue => {
 		    let option = document.createElement('option');
 		    option.value = optionValue;
 		    option.text = optionValue;
 		    contentSelect.appendChild(option);
 		});
+		
+			//배열로 변환한 후에 인덱스를 사용 (Set 객체에는 change 이벤트가 없어서 작동X)
+			contentSelect.addEventListener('change', function(){
+			    let selectedValue = contentSelect.value;
+			    console.log('선택된 값:', selectedValue);
 
-		console.log(uniqueOptions);
-		
-		
-		set.addEventListener('change', function(){
-			//contentList.style.display = '';
-			console.log('클릭되었어요');
-			//console.log(contentSelect.value);
-			
-			let obj = {
-					pkgname : set
+			    let obj = {
+			        pkgname: selectedValue
 			    };
 			    
 			fetchPost('/geomin/contentId', obj, (map) => {
 				
 				console.log('map : ', map);
 				
-				//var sname1 =  map.membervo[3].sname;
-				//console.log('sname1 : ' , sname1);
+				/*
+				let selectedData = map.membervo.filter(membervo => membervo.pkgname === selectedValue);
+				console.log(selectedData);
+				console.log(map.membervo);
+				// selectedData 배열을 이용하여 각 <td> 내용 변경
+		       selectedData.forEach((membervo, index) => {
+			    // 여기서 index 변수를 사용할 수 있습니다.
+			    document.querySelector(`.snameOutput:nth-child(${index + 1})`).innerHTML = membervo.sname;
+			    document.querySelector(`.mbirthdateOutput:nth-child(${index + 1})`).innerHTML = membervo.mbirthdate;
+			    document.querySelector(`.mphoneOutput:nth-child(${index + 1})`).innerHTML = membervo.mphone;
+			    document.querySelector(`.memailOutput:nth-child(${index + 1})`).innerHTML = membervo.memail;
+			    document.querySelector(`.groupResDateOutput:nth-child(${index + 1})`).innerHTML = membervo.groupResDate;
+			    document.querySelector(`.joinStatusOutput:nth-child(${index + 1})`).innerHTML = membervo.joinStatus;
+			});
+				*/
 				
-				//var sname2 = document.getElementById('sname').textcontent;
-				//console.log('sname2 : ' , sname2);
+				// 이 부분은 테이블의 <thead> 부분을 그대로 유지합니다.
+				let thead = document.querySelector('.table-success');
 				
-				
-				for(let i = 0; i <= map.membervo.length; i++){
-					let membervo = map.membervo[i];
-					document.getElementById('pkgname').innerHTML= membervo.pkgname;
-					document.getElementById('groupidOutput').innerHTML= membervo.groupid;
-					document.getElementById('personOutput').innerHTML= membervo.person;
-					document.getElementById('snameOutput').innerHTML= membervo.sname;
-					document.getElementById('mbirthdateOutput').innerHTML= membervo.mbirthdate;
-					document.getElementById('mphoneOutput').innerHTML= membervo.mphone;
-					document.getElementById('memailOutput').innerHTML= membervo.memail;
-					document.getElementById('groupResDateOutput').innerHTML= membervo.groupResDate;
-					document.getElementById('joinStatusOutput').innerHTML= membervo.joinStatus;
-					}
+				 // contentList 요소를 초기화 (이전 데이터를 지움)
+		        contentList.innerHTML = '';
+
+		        let selectedData = map.membervo;
+
+		        // selectedData 배열을 이용하여 데이터를 출력 또는 처리
+		        selectedData.forEach(membervo => {
+		            // membervo에 있는 데이터를 이용하여 필요한 처리 수행
+		            let row = document.createElement('tr');
+
+		            // 체크박스 열 추가
+		            let checkboxCell = document.createElement('td');
+		            checkboxCell.innerHTML = '<input type="checkbox" name="rowCheck">';
+		            row.appendChild(checkboxCell);
+
+		            // 나머지 열 추가
+		            let snameCell = document.createElement('td');
+		            snameCell.innerHTML = membervo.sname;
+		            row.appendChild(snameCell);
+
+		            let mbirthdateCell = document.createElement('td');
+		            mbirthdateCell.innerHTML = membervo.mbirthdate;
+		            row.appendChild(mbirthdateCell);
+
+		            let mphoneCell = document.createElement('td');
+		            mphoneCell.innerHTML = membervo.mphone;
+		            row.appendChild(mphoneCell);
+
+		            let memailCell = document.createElement('td');
+		            memailCell.innerHTML = membervo.memail;
+		            row.appendChild(memailCell);
+
+		            let groupResDateCell = document.createElement('td');
+		            groupResDateCell.innerHTML = membervo.groupResDate;
+		            row.appendChild(groupResDateCell);
+
+		            let joinStatusCell = document.createElement('td');
+		            joinStatusCell.innerHTML = membervo.joinStatus;
+		            row.appendChild(joinStatusCell);
+
+		            contentList.appendChild(row);
+		        });
+		     // 기존의 <thead> 부분을 테이블에 추가합니다.
+		        contentList.insertBefore(thead, contentList.firstChild);
+		        
+		        
+		        
+				/*  기존 코드 
+				let selectedData = map.membervo.filter(membervo => membervo.pkgname === selectedValue);
+
+		        // selectedData 배열을 이용하여 데이터를 출력 또는 처리
+		        selectedData.forEach(membervo => {
+		            // membervo에 있는 데이터를 이용하여 필요한 처리 수행
+		            document.getElementById('pkgname').innerHTML = membervo.pkgname;
+		            document.getElementById('groupidOutput').textContent  = membervo.groupid;
+		            document.getElementById('personOutput').textContent  = membervo.person;
+		            document.getElementById('snameOutput').textContent  = membervo.sname;
+		            document.getElementById('mbirthdateOutput').textContent  = membervo.mbirthdate;
+		            document.getElementById('mphoneOutput').textContent  = membervo.mphone;
+		            document.getElementById('memailOutput').textContent  = membervo.memail;
+		            document.getElementById('groupResDateOutput').textContent  = membervo.groupResDate;
+		            document.getElementById('joinStatusOutput').textContent = membervo.joinStatus;
+					}) */
 			
 		})
     });	
@@ -353,8 +417,8 @@
 							</select>           		
              		</div>
 					<div  id='contentList'>
-	             			그룹명 : <div id='groupidOutput'></div>
-	             			가입입원 : <div id='personOutput'></div>
+	             			그룹명 : <div class='groupidOutput'></div>
+	             			가입입원 : <div class='personOutput'></div>
            			 
 	             		<form id='updateJoinStatus' name='updateJoinStatus'>
 	             		membervo : ${membervo}
@@ -377,30 +441,25 @@
 								  </thead>
 								  
 							    <tbody>
-								    <tr>
-								      <th rowspan='3' scope="row"><input type='checkbox' name='rowCheck'></th>
-								      <!-- 
-									      <td><div id='sname'></div></td>
-									      <td><div id='mbirthdate'></div></td>
-									      <td><div id='mphone'></div></td>
-									      <td><div id='memail'></div></td>
-									      <td><div id='groupResDate'></div></td>
-									      <td><div id='joinStatus'></div></td>
-								       -->
-								        <td><div id='snameOutput'></div></td>
-				                        <td><div id='mbirthdateOutput'></div></td>
-				                        <td><div id='mphoneOutput'></div></td>
-				                        <td><div id='memailOutput'></div></td>
-				                        <td><div id='groupResDateOutput'></div></td>
+								    <c:forEach var="membervo" items="${map.membervo}">
+								        <tr>
+								            <th rowspan='3' scope="row"><input type='checkbox' name='rowCheck'></th>
+								            <td><div class='snameOutput'>${membervo.sname }</div></td>
+								            <td><div class='mbirthdateOutput'>${membervo.mbirthdate }</div></td>
+								            <td><div class='mphoneOutput'>${membervo.mphone }</div></td>
+								            <td><div class='memailOutput'>${membervo.memail }</div></td>
+								            <td><div class='groupResDateOutput'>${membervo.groupResDate }</div></td>
+								            <td><div class='joinStatusOutput'>${membervo.joinStatus }</div></td>
 				                        <c:choose>
 											<c:when test="${membervo.joinstatus == 'N'}"> 
-												<td><div id='joinStatusOutput'></div></td>
+												<td><div class='joinStatusOutput'>${membervo.joinStatus }</div></td>
 											</c:when>
 											<c:otherwise>
-												<td><div id='joinStatusOutput'></div></td>
+												<td><div class='joinStatusOutput'>${membervo.joinStatus }</div></td>
 											</c:otherwise>
 										</c:choose>
-								    </tr> 
+								          </tr>
+   									 </c:forEach>
 							  </tbody>
 							  
 							</table>
