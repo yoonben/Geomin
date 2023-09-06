@@ -47,4 +47,8 @@ public class teacherServiceImpl implements teacherService{
 	public int updateJoinStatus(memberVO vo) {
 		return teachermapper.updateJoinStatus(vo);
 	}
+
+
+
+
 }
