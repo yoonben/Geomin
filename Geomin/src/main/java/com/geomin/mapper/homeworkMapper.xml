@@ -5,19 +5,62 @@
   <mapper namespace="com.geomin.mapper.homeworkMapper">
   
   	<select id='homeworkGroupList' resultType='com.geomin.VO.homeworkVO'>
-   		select  g.sname  , m.memail, m.mphone, m.mbirthdate, h.groupid
-			from   homework h, member m, groupStudent g 
-			where  h.memberid = m.memberid
-			and h.groupid = g.groupid
+   		SELECT
+		    g.sname,
+		    m.memail,
+		    m.mphone,
+		    m.mbirthdate,
+		    g.groupid
+		FROM
+		    groupStudent g
+		JOIN
+		    member m ON g.studentid = m.memberid
     </select>
     
     
    	<select id='studentSelect' resultType='com.geomin.VO.homeworkVO'>
-			select  g.sname  , m.memail, m.mphone, m.mbirthdate, h.groupid     
-			from   homework h, member m, groupStudent g 
-			where  h.memberid = m.memberid
-			and h.groupid = g.groupid
-			and g.groupid = #{groupid}
+				select * 
+	from (	select homework.*,rownum rn 
+        from (
+				SELECT
+		    g.sname,
+		    m.memail,
+		    m.mphone,
+		    m.mbirthdate,
+            FLOOR(MONTHS_BETWEEN(SYSDATE, TO_DATE(m.mbirthdate)) / 12) AS age,
+		    g.groupid
+		FROM
+		    groupStudent g
+		JOIN
+		    member m ON g.studentid = m.memberid
+			) homework where groupid = #{groupid} <include refid="criteria"/>
+		) where rn between #{startNo} and #{endNo} 
   	</select>
+  	
+  	<select id="totalCnt" resultType="int">
+ 		select count(*) FROM (SELECT
+		    g.sname,
+		    m.memail,
+		    m.mphone,
+		    m.mbirthdate,
+            FLOOR(MONTHS_BETWEEN(SYSDATE, TO_DATE(m.mbirthdate)) / 12) AS age,
+		    g.groupid
+		FROM
+		    groupStudent g
+		JOIN
+		    member m ON g.studentid = m.memberid) where groupid = #{groupid} <include refid="criteria"/>
+ 	</select>
+  	
+  	<sql id="criteria">
+ 	 	<choose>
+ 	 		<when test="searchField == 'age'">
+ 	 			and age like '%'||#{searchWord}||'%'
+ 	 		</when>
+ 	 		<when test="searchField == 'sname'">
+ 	 			and sname like '%'||#{searchWord}||'%'
+ 	 		</when>
+ 	 		
+ 	 	</choose>
+ 	 </sql>
   </mapper>
   

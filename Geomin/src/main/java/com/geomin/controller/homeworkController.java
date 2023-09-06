@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.geomin.VO.Criteria;
+import com.geomin.VO.PageDto;
 import com.geomin.VO.homeworkVO;
 import com.geomin.service.homeworkService;
 
@@ -36,16 +38,21 @@ public class homeworkController extends CommonRestController{
 	
 	// 그룹선택하면 학생리스트 출력
 	@PostMapping("/homeworkID")
-	public @ResponseBody Map<String, Object> studentSelect(@RequestBody homeworkVO vo, Model model) {
+	public @ResponseBody Map<String, Object> studentSelect(@RequestBody Criteria cri) {
 		
 		try {
 			Map<String, Object> map = responseMap(REST_SUCCESS, "리스트 조회");
 			
-			List<homeworkVO> homeworkvo = homeworkservice.studentSelect(vo);
+			List<homeworkVO> homeworklist = homeworkservice.studentSelect(cri);
 			
-			System.out.println("homeworkvo :==========" + homeworkvo);
+			int total = homeworkservice.totalCnt(cri);
 			
-			map.put("homeworkvo", homeworkvo);
+			
+			PageDto  pageDto = new PageDto(cri, total);
+			
+			
+			map.put("homeworklist", homeworklist);
+			map.put("pageDto", pageDto);
 			
 			return map;
 

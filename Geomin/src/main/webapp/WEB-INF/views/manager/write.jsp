@@ -26,13 +26,19 @@
 			e.preventDefault();
 			
 			let boardcontent = document.querySelector('#boardcontent').value;
-
+			let boardtitle = document.querySelector('#boardtitle').value;
+			
 		    // 사용자 입력 내용에서 엔터키를 줄바꿈 문자 \n로 치환
 		    boardcontent = boardcontent.replace(/\n/g, '<br>');
 			
+		    if (!boardtitle.trim()) {
+		        alert('제목을 입력하세요.');
+		        return;
+		    }
+		    
 			let obj={
 					memberid : document.querySelector('#memberid').value
-					, boardtitle : document.querySelector('#boardtitle').value
+					, boardtitle : boardtitle
 					, writer : document.querySelector('#writer').value
 					, boardcontent : boardcontent
 					, boardnotice : document.querySelector('#boardnotice').value
@@ -52,15 +58,22 @@
 		
 		editbtn.addEventListener('click', function(e){
 			e.preventDefault();
+			
+			let boardtitle = document.querySelector('#boardtitle').value;
 			let boardcontent = document.querySelector('#boardcontent').value;
 
 		    // 사용자 입력 내용에서 엔터키를 줄바꿈 문자 \n로 치환
 		    boardcontent = boardcontent.replace(/\n/g, '<br>');
 			
+		    if (!boardtitle.trim()) {
+		        alert('제목을 입력하세요.');
+		        return;
+		    }
+		    
 			let obj={
 					memberid : document.querySelector('#memberid').value
 					, bno : document.querySelector('#bno').value
-					, boardtitle : document.querySelector('#boardtitle').value
+					, boardtitle : boardtitle
 					, writer : document.querySelector('#writer').value
 					, boardcontent : boardcontent
 					, boardnotice : document.querySelector('#boardnotice').value
@@ -117,9 +130,9 @@ function goView(){
 				<div id="boardRiter">
 						<input type="hidden" value="${member.memberid}" id="memberid" name="memberid">
 						<input type="hidden" value="${board.bno }" id="bno" name="bno">
-						<div><p>제목</p><input id="boardtitle" name="boardtitle" value="${board.boardtitle }" class="form-control" type="text" aria-label="default input example"></div>
+						<div><p>제목</p><input id="boardtitle" name="boardtitle" value="${board.boardtitle }" class="form-control" type="text" aria-label="default input example" required></div>
 	             		<div><p>글쓴이</p><input id="writer" name="writer" value="${member.mname}" class="form-control" type="text" aria-label="default input example" disabled></div>
-	             		<div><p>문의 내용</p> <textarea id="boardcontent" name="boardcontent" class="form-control" id="exampleFormControlTextarea1" rows="3">${board.boardcontent }</textarea></div>
+	             		<div><p>문의 내용</p> <textarea id="boardcontent" name="boardcontent" class="form-control" id="exampleFormControlTextarea1" rows="3">${board.boardcontent == null ? board.boardcontent : ''}</textarea></div>
 						<c:choose>
 						    <c:when test="${member.adminyn eq 'Y'}">
 						    	<div class="form-check">

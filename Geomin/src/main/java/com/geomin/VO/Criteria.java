@@ -7,6 +7,7 @@ public class Criteria {
 	
 	private String searchField; // 검색 조건
 	private String searchWord;	// 검색어
+	private String groupid;
 	
 	int pageNo = 1;		// 요청 페이지 번호
 	int amount = 10;	// 한페이지당 게시물 수
