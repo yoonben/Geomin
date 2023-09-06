@@ -74,5 +74,16 @@
                     
                     having p.pkgname = #{pkgname} 
   	</select>
+  	
+	<update id="updateJoinStatus">
+			UPDATE groupstudent
+				SET groupjoinstatus = CASE 
+		                                WHEN groupjoinstatus = 'Y' THEN 'N'
+		                                WHEN groupjoinstatus = 'N' THEN 'Y'
+		                                ELSE groupjoinstatus
+		                                END
+				WHERE sname = #{sname}
+		        and groupid = #{groupid}
+	</update>
 
 </mapper>

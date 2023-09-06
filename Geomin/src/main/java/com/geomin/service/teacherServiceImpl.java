@@ -36,4 +36,9 @@ public class teacherServiceImpl implements teacherService{
 		// TODO Auto-generated method stub
 		return teachermapper.regSubinfo();
 	}
+
+	@Override
+	public int updateJoinStatus(memberVO vo) {
+		return teachermapper.updateJoinStatus(vo);
+	}
 }

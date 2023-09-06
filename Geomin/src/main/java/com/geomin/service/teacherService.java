@@ -19,5 +19,7 @@ public interface teacherService {
 
 	public List<contentVO> regSubinfo();
 	
+	//그룹 가입 승인
+	public int updateJoinStatus(memberVO vo);
 	
 }

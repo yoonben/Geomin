@@ -61,6 +61,7 @@
     
     <script type="text/javascript">
     window.addEventListener('load', function(){
+    	
    	 	const subnavi1 = document.getElementById('#subnavi1');
     	const subnavi2 = document.getElementById('#subnavi2');
     	const subnavi3 = document.getElementById('#subnavi3');
@@ -98,26 +99,64 @@
     		$('#introduction4').hide();
     	});
     	
+    	/*
     	$('#introductionbtn').click(function (){
-    		console.log('#subnavi2 작동 개시');
-    		$('#introduction2').show();
-    		$('#introduction1').hide();
+			console.log('#introductionbtn 작동 개시');
+			joinStatusValue();
     	});
+		
+			console.log('클릭되었어요');
+			
+			let obj = {
+		        	   sname : document.getElementById('sname').value,
+		        	   groupid : document.getElementById('groupid').value
+		        }
+		        
+			console.log(obj);
+		fetchPost('/geomin/joinStatus', obj, (map) => {
+			
+			document.getElementById('sname').value= map.membervo.sname;
+			document.getElementById('groupid').value= map.membervo.groupid;
+		})
+	
+	alert("그룹 가입 신청을 승인하였습니다.");
+	});*/
+
+    		
+
 
     	
     	// 그룹 승인 신청 페이지 
-    	let contentSelect = document.getElementById('contentSelect');
-		let contentList = document.getElementById('contentList');
-		//contentList.style.display = 'none';
-		//console.log(contentList.value);
 		
-		contentSelect.addEventListener('change', function(){
+		let contentSelect = document.getElementById('contentSelect');
+		let contentList = document.getElementById('contentList');
+		
+		// contentSelect 엘리먼트에서 옵션 값을 가져와 Set 객체를 생성 (배열에서 중복값 제거)
+		let contentSelectOptions = Array.from(contentSelect.options);
+		let set = new Set(contentSelectOptions.map(option => option.value));
+		
+		console.log(set.size);
+		
+		
+		// 중복 제거된 옵션으로 셀렉트 박스 업데이트
+		contentSelect.innerHTML = ''; // 기존 옵션 삭제
+		uniqueOptions.forEach(optionValue => {
+		    let option = document.createElement('option');
+		    option.value = optionValue;
+		    option.text = optionValue;
+		    contentSelect.appendChild(option);
+		});
+
+		console.log(uniqueOptions);
+		
+		
+		set.addEventListener('change', function(){
 			//contentList.style.display = '';
 			console.log('클릭되었어요');
 			//console.log(contentSelect.value);
 			
 			let obj = {
-					pkgname : contentSelect.value
+					pkgname : set
 			    };
 			    
 			fetchPost('/geomin/contentId', obj, (map) => {
@@ -147,8 +186,65 @@
 		})
     });	
 		
-
 		
+		   /*
+		  // 목록 전체선택 /부분선택
+			$(function(){
+				var chkObj = document.getElementsByName('rowCheck');
+				var rowCnt = chkObj.length;
+				
+				$("input[name='allCheck']").click(function(){
+					var chk_listArr = $("input[name='rowCheck']");
+					for(var i=0; i<chk_listArr.length; i++){
+						chk_listArr[i].checked = this.checked;
+					}
+				});
+				
+				$("input[name='rowCheck']").click(function(){
+					if($("input[name='rowCheck']:checked").length == rowCnt){
+						$("input[name='allCheck']")[0].checked = true;
+					} else {
+						$("input[name='allCheck']")[0].checked = false;
+					}
+				});
+			});
+		  */
+
+
+				
+				
+			$('#introductionbtn').click(function() {
+				var vo = [];
+
+			    $('input[name="rowCheck"]:checked').each(function() {
+			        var rowData = {
+				        	groupid		: document.getElementById('groupid').innerHTML,
+				            sname		: document.getElementById('snameOutput').innerHTML
+			        };
+			        vo.push(rowData);
+			    });
+
+			    console.log(vo);
+			    
+			   $.ajax({
+			        url: '/geomin/joinStatus',
+			        type: 'POST',
+			        data: JSON.stringify(vo),
+	                contentType: "application/json",
+	                dataType: "json",
+			        success: function(response) {
+			            //alert('성공');
+			            //console.log(response);
+			        },
+			        error: function(error) {
+			            //alert('실패');
+			            //console.error(error);
+			        }
+			    });
+			});	  
+		  
+	});
+	
     function fetchPost(url, obj, callback){
     	try{
     		// url 요청
@@ -167,29 +263,51 @@
     	}
     }
     
-    
-  // 목록 전체선택 /부분선택
-	$(function(){
-		var chkObj = document.getElementsByName('rowCheck');
-		var rowCnt = chkObj.length;
+ 
+  /*
+	//승인 버튼 클릭시 
+	function joinStatusValue(){
+		var url = "/geomin/teacher/homeworkMain";    // 컨트롤러로 보내고자 하는 URL
+		var valueArr = new Array();
+		var list = $("input[name='rowCheck']");
 		
-		$("input[name='allCheck']").click(function(){
-			var chk_listArr = $("input[name='rowCheck']");
-			for(var i=0; i<chk_listArr.length; i++){
-				chk_listArr[i].checked = this.checked;
+		for(var i=0; i<list.length; i++){
+			if(list[i].checked){   //선택되어 있으면 배열에 값을 저장함
+				valueArr.push(list[i].value);
 			}
-		});
-		
-		$("input[name='rowCheck']").click(function(){
-			if($("input[name='rowCheck']:checked").length == rowCnt){
-				$("input[name='allCheck']")[0].checked = true;
-			} else {
-				$("input[name='allCheck']")[0].checked = false;
-			}
-		});
-	});
-    
-    })
+		}
+		if(valueArr.length == 0){
+			alert("학습자를 선택해주세요.");
+		} else{
+			var chk = confirm("그룹가입 신청을 승인하시겠습니까?");
+			$.ajax({
+				url : "/geomin/teacher/homeworkMain",   //전송 url
+				type : 'POST',
+				traditional : true,
+				data : {
+					valueArr : valueArr     //보내려는 data변수 설정
+				},
+				success : function(jdata){
+				console.log()
+				console.log("=============진입 2");
+					if(jdata.result == "success"){
+				console.log("=============진입 3");
+						alert("승인처리되었습니다.");
+						var form = document.createElement("form");
+					    form.setAttribute("method", "post");
+					    form.setAttribute("action", "/geomin/teacher/teacherMain");
+					    
+					    document.getElementById("updateJoinStatus").appendChild(form);
+					    
+					    form.submit();
+                    } else{
+						alert("승인 처리에 실패하였습니다.");
+					}
+				}
+			});
+		}
+	}   
+*/
 	</script>
 	
 	
@@ -237,10 +355,13 @@
 	             			그룹명 : <div id='groupidOutput'></div>
 	             			가입입원 : <div id='personOutput'></div>
            			 
-	             		<form>
-	             		membervo : ${membervo }
-	             		<input type="text" name="pkgname" id='pkgname' value="${membervo.pkgname}">
-           			 	
+	             		<form id='updateJoinStatus' name='updateJoinStatus'>
+	             		membervo : ${membervo}
+	             		updateRes : ${updateRes }
+	           			<input type="text" name="groupid" id='groupid' value="${membervo.groupid}">
+	           			<input type="text" name="sname"  id='sname' value="${membervo.sname}">
+	           			<input type="text" name="pkgname"  id='pkgname' value="${member.pkgname}">
+	           			
 			                <table class="table" border="1px solid" style="height:50%;weight:100%">
 								  <thead>
 								    <tr class="table-success">
@@ -256,7 +377,7 @@
 								  
 							    <tbody>
 								    <tr>
-								      <th rowspan='3' scope="row"><input type='checkbox' name='rowCheck' value='${boardVO.bno }'></th>
+								      <th rowspan='3' scope="row"><input type='checkbox' name='rowCheck'></th>
 								      <!-- 
 									      <td><div id='sname'></div></td>
 									      <td><div id='mbirthdate'></div></td>
@@ -270,15 +391,21 @@
 				                        <td><div id='mphoneOutput'></div></td>
 				                        <td><div id='memailOutput'></div></td>
 				                        <td><div id='groupResDateOutput'></div></td>
-				                        <td><div id='joinStatusOutput'></div></td>
+				                        <c:choose>
+											<c:when test="${membervo.joinstatus == 'N'}"> 
+												<td><div id='joinStatusOutput'></div></td>
+											</c:when>
+											<c:otherwise>
+												<td><div id='joinStatusOutput'></div></td>
+											</c:otherwise>
+										</c:choose>
 								    </tr> 
 							  </tbody>
 							  
 							</table>
 							
-							
 	             			<div class="d-grid gap-2 col-6 mx-auto">
-	             				<button type="submit" class="btn btn-success" id="introductionbtn">그룹가입 승인</button>
+	             				<button type="button" class="btn btn-success" id="introductionbtn" name='introductionbtn'>그룹가입 승인</button>
              				</div>
 	             		</form>
              		</div>	
@@ -294,6 +421,7 @@
 
              	<!-- 숙제 평가 페이지 -->
              	<div id="introduction4">
+             	
           	 	</div>
           	 	
             </div>

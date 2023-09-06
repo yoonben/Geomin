@@ -18,4 +18,9 @@ public interface teacherMapper {
 	public List<memberVO> contentOne(memberVO vo);
 	
 	public List<contentVO> regSubinfo();
+	
+	//그룹가입 승인
+	public int updateJoinStatus(memberVO vo);
+	
+	
 }
