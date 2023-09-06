@@ -36,180 +36,183 @@
             </div>
             <%-- <label>Title</label> <input name='title' value='<c:out value = "${board.title}" />' readonly="readonly"> --%>
             <div class='content'>
-            <%-- ${list } --%>
             <c:forEach items="${list2}" var="list2">
-            	<div style="display: none;">
-            		<label>그룹명 : </label>
-            		<input name='pkgID' value='<c:out value = "${list2.pkgId}" />' readonly="readonly" disabled="disabled">
-            	</div>
-            	<div>
-            		<label>그룹명 : </label>
-            		<input type="text" placeholder="그룹명을 입력해 주세요">
-            	</div>
-            	<div>
-            		<label>패키지명 : </label>
-            		<input name='pkgName' value='<c:out value = "${list2.pkgName}" />' readonly="readonly" disabled="disabled">
-            	</div>
-            	<div>
-            		<label>학습 가능 인원 : </label>
-            		<input type="text" placeholder="인원 수 적기"> 명
-            	</div>
-            	<div>
-            		<label>학습 수준 : </label>
-            		<input name='difficulty' value='<c:out value = "${list2.difficulty}" />' readonly="readonly" disabled="disabled">
-            	</div>
-            	<div>
-            		<label>구독 날짜 : </label>
-            		<input name='subsDate' value='<c:out value = "${list2.subsDate}" />' readonly="readonly" disabled="disabled">
-            	</div>
-				<div>
-					<label>학습 기간 : 최대 3개월</label> 
-						<!-- <body onLoad="SetToToday('FirstSelect');">
-						<B>오늘 연도와 날짜가 자동으로 선택 됩니다</B>
-						--- 3. 원하는 위치에 아래와 같이 코드를 붙여 넣으세요 -----
-						<FORM name="Form1">
-							<SELECT name="FirstSelectYear" onchange="ChangeOptionDays('FirstSelect')">
-								<script type="text/javascript">
-                					document.write(WriteYearOptions(50));
-        						</SCRIPT>
-							</SELECT> 
-							<SELECT name="FirstSelectMonth"
-								onchange="ChangeOptionDays('FirstSelect')">
-								---- 필요하면 아래 월 표시를 한글로 바꾸어 주세요 -----
-								<OPTION>01월
-								<OPTION>02월
-								<OPTION>03월
-								<OPTION>04월
-								<OPTION>05월
-								<OPTION>06월
-								<OPTION>07월
-								<OPTION>08월
-								<OPTION>09월
-								<OPTION>10월
-								<OPTION>11월
-								<OPTION>12월
-							</SELECT>
-							<SELECT name="FirstSelectDay">
-        						<OPTION>1
-								<OPTION>2
-								<OPTION>3
-								<OPTION>4
-								<OPTION>5
-								<OPTION>6
-								<OPTION>7
-								<OPTION>8
-								<OPTION>9
-								<OPTION>10
-								<OPTION>11
-								<OPTION>12
-								<OPTION>13
-								<OPTION>14
-								<OPTION>15
-								<OPTION>16
-								<OPTION>17
-								<OPTION>18
-								<OPTION>19
-								<OPTION>20
-								<OPTION>21
-								<OPTION>22
-								<OPTION>23
-								<OPTION>24
-								<OPTION>25
-								<OPTION>26
-								<OPTION>27
-								<OPTION>28
-								<OPTION>29
-								<OPTION>30
-								<OPTION>31
-							</SELECT>
-						</FORM> -->
-						<!-- HTML -->
-						<select id="select_yearB" class= "select_yearB" onchange="javascript:lastdayB();"></select>
-						<select id="select_monthB" class= "select_monthB" onchange="javascript:lastdayB();"></select>
-						<select id="select_dayB" class= "select_dayB"></select>
+            	<c:if test ="${list2.pkgName == pkgName}">
+            		<div style="display: none;">
+            			<label>그룹명 : </label>
+            			<input name='pkgId' id = "pkgId" value='<c:out value = "${list2.pkgId}" />' readonly="readonly" disabled="disabled">
+            		</div>
+            		<div>
+            			<label>그룹명 : </label>
+            			<input type="text" id="groupid" placeholder="그룹명을 입력해 주세요">
+            		</div>
+            		<div>
+            			<label>패키지명 : </label>
+            			<input name='pkgName' value='<c:out value = "${list2.pkgName}" />' readonly="readonly" disabled="disabled">
+            		</div>
+            		<div>
+            			<label>학습 가능 인원 : </label>
+            			<input type="text" id='groupperson' placeholder="인원 수 적기"> 명
+            		</div>
+            		<div>
+            			<label>학습 수준 : </label>
+            			<input name='difficulty' value='<c:out value = "${list2.difficulty}" />' readonly="readonly" disabled="disabled">
+            		</div>
+            		<div>
+            			<label>구독 날짜 : </label>
+            			<input name='subsDate' value='<c:out value = "${list2.subsDate}" />' readonly="readonly" disabled="disabled">
+            		</div>
+					<div>
+						<label>학습 기간 : 최대 3개월</label> 
+							<select id="select_yearB" class= "select_yearB" onchange="javascript:lastdayB();"></select>
+							<select id="select_monthB" class= "select_monthB" onchange="javascript:lastdayB();"></select>
+							<select id="select_dayB" class= "select_dayB"></select>
 						
-						~
+							~
 						
-						<select id="select_yearA" class= "select_yearA" onchange="javascript:lastdayA();"></select>
-						<select id="select_monthA" class= "select_monthA" onchange="javascript:lastdayA();"></select>
-						<select id="select_dayA" class= "select_dayA"></select>
-					</div>
-            	<div>
-					<label>학습 내용 : </label>
-            		<input name='content' value='<c:out value = "${list2.pkgContent}" />' readonly="readonly" disabled="disabled">
-            	</div>
-				</c:forEach>
+							<select id="select_yearA" class= "select_yearA" onchange="javascript:lastdayA();"></select>
+							<select id="select_monthA" class= "select_monthA" onchange="javascript:lastdayA();"></select>
+							<select id="select_dayA" class= "select_dayA"></select>
+						</div>
+            		<div>
+						<label>학습 내용 : </label>
+            			<input name='content' value='<c:out value = "${list2.pkgContent}" />' readonly="readonly" disabled="disabled">
+            		</div>
+				</c:if>
+			</c:forEach>
+			
             <br>
             <button id="regStudy">학습그룹 등록</button>
 	</div>
-            <div class='banner'>
-            </div>
+            <div class='banner'></div>
     </div>
 </div>	
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-var start_year = "2023";// 시작할 년도
-var today = new Date();
-var today_year = today.getFullYear();
-var indexB=0;
-var indexA=0;
-for(var y=start_year; y<=today_year; y++){ //start_year ~ 현재 년도
-	document.getElementById('select_yearB').options[indexB] = new Option(y, y);
-	document.getElementById('select_yearA').options[indexA] = new Option(y, y);
-	indexB++;
-	indexA++;
-}
+$(document).ready(function () {
+	/* var pkgName = document.getElementById('pkgNameElement').getAttribute('data-pkgName');
+    document.getElementById('receivedData').textContent = "Received Data: " + pkgName; */
+	
+	//var pkgName = document.getElementById('pkgNameElement').getAttribute('data-pkgName');
+	//console.log('pkgName : ' , pkgName);
+	//const pkgName = document.getElementById('pkgName').value;
+	
+	var start_year = "2023";// 시작할 년도
+	var today = new Date();
+	var today_year = today.getFullYear();
+	var indexB=0;
+	var indexA=0;
+	for(var y=start_year; y<=today_year; y++){ //start_year ~ 현재 년도
+		document.getElementById('select_yearB').options[indexB] = new Option(y, y);
+		document.getElementById('select_yearA').options[indexA] = new Option(y, y);
+		indexB++;
+		indexA++;
+	}
 
-indexB = 0;
-indexA = 0;
-for(var m=1; m<=12; m++){
-	document.getElementById('select_monthB').options[indexB] = new Option(m, m);
-	document.getElementById('select_monthA').options[indexA] = new Option(m, m);
-	indexB++;
-	indexA++;
-}
+	indexB = 0;
+	indexA = 0;
+	for(var m=1; m<=12; m++){
+		document.getElementById('select_monthB').options[indexB] = new Option(m, m);
+		document.getElementById('select_monthA').options[indexA] = new Option(m, m);
+		indexB++;
+		indexA++;
+	}
 
-
-lastdayB();
-function lastdayB(){ //년과 월에 따라 마지막 일 구하기 
-	var yearB=document.getElementById('select_yearB').value;
-	var monthB=document.getElementById('select_monthB').value;
-	var dayB=new Date(new Date(yearB,monthB,1)-86400000).getDate();
-    /* = new Date(new Date(Year,Month,0)).getDate(); */
-    
-	var dayindex_lenB=document.getElementById('select_dayB').length;
-	if(dayB>dayindex_lenB){
-		for(var i=(dayindex_lenB+1); i<=dayB; i++){
-			document.getElementById('select_dayB').options[i-1] = new Option(i, i);
+	lastdayB();
+	function lastdayB(){ //년과 월에 따라 마지막 일 구하기 
+		var yearB = document.getElementById('select_yearB').value;
+		var monthB = document.getElementById('select_monthB').value;
+		var dayB = new Date(new Date(yearB,monthB,1)-86400000).getDate();
+		var dayBB = document.getElementById('select_yearB').value;
+	
+		var dayindex_lenB=document.getElementById('select_dayB').length;
+		if(dayB>dayindex_lenB){
+			for(var i=(dayindex_lenB+1); i<=dayB; i++){
+				document.getElementById('select_dayB').options[i-1] = new Option(i, i);
+			}
+		}
+		else if(dayB<dayindex_lenB){
+			for(var i=dayindex_lenB; i>=dayB; i--){
+				document.getElementById('select_dayB').options[i]=null;
+			}
 		}
 	}
-	else if(dayB<dayindex_lenB){
-		for(var i=dayindex_lenB; i>=dayB; i--){
-			document.getElementById('select_dayB').options[i]=null;
-		}
-	}
-}
 
-lastdayA();
-function lastdayA(){ //년과 월에 따라 마지막 일 구하기 
-	var yearA=document.getElementById('select_yearA').value;
-	var monthA=document.getElementById('select_monthA').value;
-	var dayA = new Date(new Date(yearA,monthA,1)-86400000).getDate();
-    /* = new Date(new Date(Year,Month,0)).getDate(); */
-    
-	var dayindex_lenA=document.getElementById('select_dayA').length;
-	if(dayA>dayindex_lenA){
-		for(var i=(dayindex_lenA+1); i<=dayA; i++){
-			document.getElementById('select_dayA').options[i-1] = new Option(i, i);
+	lastdayA();
+	function lastdayA(){ //년과 월에 따라 마지막 일 구하기 
+		var yearA = document.getElementById('select_yearA').value;
+		var monthA = document.getElementById('select_monthA').value;
+		var dayA = new Date(new Date(yearA,monthA,1)-86400000).getDate();
+
+		var dayindex_lenA=document.getElementById('select_dayA').length;
+		if(dayA>dayindex_lenA){
+			for(var i=(dayindex_lenA+1); i<=dayA; i++){
+				document.getElementById('select_dayA').options[i-1] = new Option(i, i);
+			}
+		}
+		else if(dayA<dayindex_lenA){
+			for(var i=dayindex_lenA; i>=dayA; i--){
+				document.getElementById('select_dayA').options[i]=null;
+			}
 		}
 	}
-	else if(dayA<dayindex_lenA){
-		for(var i=dayindex_lenA; i>=dayA; i--){
-			document.getElementById('select_dayA').options[i]=null;
+
+	$('#regStudy').click(function() {
+		const groupid = document.getElementById('groupid').value;
+		const groupperson = document.getElementById('groupperson').value;
+		const pkgId = document.getElementById('pkgId').value;
+		console.log('pkgId : ' , pkgId);
+		
+		var yearB = document.getElementById('select_yearB').value;
+		var monthB = document.getElementById('select_monthB').value;
+		var dayBB = document.getElementById('select_dayB').value;
+		const dateB = new Date(yearB, monthB - 1, dayBB);
+		const totalDateB = dateB.toISOString().slice(0, 10);
+		console.log('dateB : ' , dateB);
+		//console.log('formattedDateB : ' , formattedDateB);
+		
+		var yearA = document.getElementById('select_yearA').value;
+		var monthA = document.getElementById('select_monthA').value;
+		var dayAA = document.getElementById('select_dayA').value;
+		const dateA = new Date(yearA, monthA - 1, dayAA);
+		const totalDateA = dateA.toISOString().slice(0, 10);
+		console.log('dateA : ' , dateA);
+		//console.log('formattedDateA : ' , formattedDateA);
+		
+		const groupData = [];
+	
+		const rowData = {
+			groupid: groupid,
+			pkgId : pkgId,
+			Personnel : groupperson,
+			studyStartDate : totalDateB,
+			studyEndDate : totalDateA
 		}
-	}
-}
+		groupData.push(rowData);
+		
+		console.log('groupData : ' , groupData);
+		
+	$.ajax({
+        url: '/geomin/teacher/groupRegist',
+        type: 'POST',
+        data: JSON.stringify(groupData),
+        contentType: "application/json",
+        dataType: "json",
+        success: function(response) {
+            alert('성공');
+            //console.log(response);
+        },
+        error: function(error) {
+            alert('실패');
+            //console.error(error);
+        }
+    });
+});
+	
+});
+
+
 
 /* lastday();
 

@@ -17,7 +17,8 @@ public interface teacherService {
 	//그룹 선택
 	public List<memberVO> contentOne(memberVO vo);
 
-	public List<contentVO> regSubinfo();
-	
+	List<contentVO> getSubGroup();
+
+	void regStudyGroup(List<contentVO> groupData);
 	
 }

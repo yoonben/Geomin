@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.geomin.VO.contentVO;
@@ -22,12 +23,7 @@ import com.geomin.service.teacherService;
 public class teacherController extends CommonRestController{
 	
 	@Autowired
-	private contentService contentService;
-	
-	@Autowired
 	teacherService teacherService;
-	
-
 	
 	/*
 	@GetMapping("/teacher/teacherMain")
@@ -36,17 +32,28 @@ public class teacherController extends CommonRestController{
 	}
 	*/
 	
+//	@GetMapping("/teacher/groupRegist")
+//	public String groupRegist(Model model) { 
+//		List<contentVO> list1 = teacherService.getSubGroup();
+//		model.addAttribute("list2", list1);
+//		
+//		return "/teacher/groupRegist";
+//	}
+	
 	@GetMapping("/teacher/groupRegist")
-	public String groupRegist(Model model) {
-		List<contentVO> list = contentService.getSubList();
-		model.addAttribute("list2", list);
+	public String groupRegist(@RequestParam("pkgName") String pkgName, Model model) { 
+		List<contentVO> list1 = teacherService.getSubGroup();
+		model.addAttribute("list2", list1);
 		
-		//List<contentVO> list2 = helloService.regSubinfo();
-		//model.addAttribute("list2", list2);
+		model.addAttribute("pkgName", pkgName);
 		return "/teacher/groupRegist";
 	}
 	
-	
+	@PostMapping("/teacher/groupRegist")
+	public void groupRegist2(@RequestBody List<contentVO> groupData, Model model) {
+		System.out.println("groupData : " + groupData);
+		teacherService.regStudyGroup(groupData);
+	}
 	
 	// 그룹 신청한 학습자 리스트
 	@GetMapping("/teacher/teacherMain")

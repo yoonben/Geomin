@@ -31,6 +31,8 @@ public class contentController {
 		List<contentVO> list = contentService.getList();
 		model.addAttribute("list", list);
 		
+		
+		
 		return "subscribe/searchContent";
 	}
 	

@@ -110,9 +110,11 @@ th, tr, td{
 			const choiceDifficulty = document.getElementById('choiceDifficulty').value; // 선택한 값을 저장
 			const sortedData = Array.from(dataRows);
 			const searchContent = document.getElementById('searchContent').value;
+			console.log('입력한 searchContent : ' , searchContent);
 			sortedData.forEach(row => {
 				const difficultyValue = row.getAttribute("data-value");
-				const content = row.querySelector("td:nth-child(8)").textContent;
+				const content = row.querySelector("td:nth-child(7)").textContent;
+				console.log('출력한 content : ' , content);
 				if((choiceDifficulty === "전체" || difficultyValue === choiceDifficulty)&&(searchContent === "" || content.includes(searchContent))){
 					/* $('tr.data-raw').show(); */
 					row.style.display = 'table-row';
