@@ -69,6 +69,8 @@ function joinMemberInfo() {
 		
 		fetchPost('/geomin/joinMemberInfo', obj, (map)=>{
 			if(map.result == 'success'){
+				let formattedPhoneNumber = formatPhoneNumber(map.member.mphone);
+				
 				document.querySelector('#tdMemberid') .innerHTML  = '<input type="text" readonly class="form-control-plaintext" id="memberid" name="memberid" value="">';
 				document.querySelector('#tdMname') .innerHTML  = '<input type="text" readonly class="form-control-plaintext" id="mname" name="mname" value="">';
 				document.querySelector('#tdMbirthdate') .innerHTML  = '<input type="text" readonly class="form-control-plaintext" id="mbirthdate" name="mbirthdate" value="">';
@@ -94,7 +96,7 @@ function joinMemberInfo() {
 		            document.querySelector('#memail').value = map.member.memail;
 		            document.querySelector('#memail').style.border = '0 solid black';
 
-		            document.querySelector('#mphone').value = map.member.mphone;
+		            document.querySelector('#mphone').value = formattedPhoneNumber;
 		            document.querySelector('#mphone').style.border = '0 solid black';
 
 		            document.querySelector('#mtype').value = map.member.mtype;
@@ -131,6 +133,9 @@ function memberUpdate(){
 		}
     
     fetchPost('/geomin/joinMembers', obj, (map)=>{
+    	document.querySelector('#mphone').value = map.member.mphone;
+    	
+    	console.log(map.member.marketingagree);
     	
 	    document.querySelector('#tdMbirthdate').innerHTML  = '<input style = "width: 25%; height : 30px;" type="text" class="form-control-plaintext" id="year" name="year" value="'+map.year+'">'
 		    +'-<input style = "width: 25%; height : 30px;" type="text" class="form-control-plaintext" id="month" name="month" value="'+map.month+'">'
@@ -227,13 +232,13 @@ function memberUpdate(){
 			    +'<option value="emailAgree">이메일</option>'
 			    +'<option value="smsAgree">SMS(문자)</option>'
 		  	+'</select>';
-		}else if(map.member.mtype === "emailAgree"){
+		}else if(map.member.marketingagree === "emailAgree"){
 			document.querySelector('#tdMarketingagree').innerHTML = '<select class="form-select form-select-sm" aria-label="Small select example" id="marketingagree" name="marketingagree">'
 		    +'<option value="notAgree">미동의</option>'
 		    +'<option value="emailAgree" selected>이메일</option>'
 		    +'<option value="smsAgree">SMS(문자)</option>'
 	  	+'</select>';
-		}else if(map.member.mtype === "smsAgree"){
+		}else if(map.member.marketingagree === "smsAgree"){
 			document.querySelector('#tdMarketingagree').innerHTML = '<select class="form-select form-select-sm" aria-label="Small select example" id="marketingagree" name="marketingagree">'
 		    +'<option value="notAgree">미동의</option>'
 		    +'<option value="emailAgree">이메일</option>'
@@ -254,7 +259,7 @@ function memberUpdate(){
 
 function InfoUpdate(){
 	let mname = document.querySelector('#mname').value;
-	let mbirthdate = document.querySelector('#year').value+"-"+document.querySelector('#month').value+"-"+document.querySelector('#day').value;
+	let mbirthdate = document.querySelector('#year').value+"-"+formatMonth(document.querySelector('#month').value)+"-"+formatMonth(document.querySelector('#day').value);
 	let maddr = document.querySelector('#maddr').value;
 	let memail = document.querySelector('#mail1').value+document.querySelector('#mail2').value;
 	let mphone = document.querySelector('#mphone').value;
@@ -285,6 +290,25 @@ function InfoUpdate(){
 		}
 	})
 }
+
+function formatPhoneNumber(phoneNumber) {
+	  phoneNumber = phoneNumber.replace(/\s+/g, '').replace(/-/g, '');
+	  
+	  if (phoneNumber.length === 11) {
+	    return phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+	  }
+	  else if (phoneNumber.length === 10) {
+	    return phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+	  }
+	  else {
+	    return phoneNumber;
+	  }
+	}
+
+function formatMonth(month) {
+	  return (month < 10 ? '0' : '') + month;
+	}
+
 </script>
 
 </head>
