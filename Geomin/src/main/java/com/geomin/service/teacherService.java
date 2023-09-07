@@ -26,6 +26,10 @@ public interface teacherService {
 
 	public void regStudyGroup(List<contentVO> groupData);
 
+	
+	//★그룹아이디 중복처리
+	public int checkGroupid(String groupid);
+
 
 	
 }

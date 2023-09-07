@@ -1,62 +1,76 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+	crossorigin="anonymous">
 
 <style type="text/css">
-    	#container>#section>.subnavi>ul{
-    		text-align: left;
-    		list-style-type: none;
-    	}
-        #container>#section>.subnavi>ul>li{
-    		padding-left: 60px;
-            margin-top: 25px;
-            font-size: 14px;
-    	}
-    	#introduction3{
-    		width: 630px;
-    		text-align: center;
-    	}
-    	 #introduction3>h3{
-    		float: left;
-		    width: 310px;
-		    font-size: 1.1rem;
-		    line-height: 80px;
-		    font-weight: 900;
-    	}
-    	#introduction3>h5{
-    		font-size: 0.9rem;
-    		line-height: 50px;
-    	} 
-    	
-     	.box_title01 {
-		    margin-bottom: 24px;
-		    width: 500px;
-		    border-bottom: 2px solid black;
-		} 
-		#searchDiv{
-			width: 100%;
-		}
-		div#searchFieldDiv {
-		    float: left;
-		    width: 35%;
-		}
-		div#searchWordDiv {
-		    width: 50%;
-		    float: left;
-		}
-		#sname{
-			width: 100px;
-		}
-		#age{
-			width: 50px;
-		}
-		#mphone{
-			width: 140px;
-		}
+#container>#section>.subnavi>ul {
+	text-align: left;
+	list-style-type: none;
+}
+
+#container>#section>.subnavi>ul>li {
+	padding-left: 60px;
+	margin-top: 25px;
+	font-size: 14px;
+}
+
+#introduction3 {
+	width: 630px;
+	text-align: center;
+}
+
+#introduction3>h3 {
+	float: left;
+	width: 310px;
+	font-size: 1.1rem;
+	line-height: 80px;
+	font-weight: 900;
+}
+
+#introduction3>h5 {
+	font-size: 0.9rem;
+	line-height: 50px;
+}
+
+.box_title01 {
+	margin-bottom: 24px;
+	width: 500px;
+	border-bottom: 2px solid black;
+}
+
+#searchDiv {
+	width: 100%;
+}
+
+div#searchFieldDiv {
+	float: left;
+	width: 35%;
+}
+
+div#searchWordDiv {
+	width: 50%;
+	float: left;
+}
+
+#sname {
+	width: 100px;
+}
+
+#age {
+	width: 50px;
+}
+
+#mphone {
+	width: 140px;
+}
 </style>
 
 <title>Insert title here</title>
@@ -129,8 +143,12 @@ window.addEventListener('load', function(){
 		    
 		fetchPost('/geomin/homeworkID', obj, (map) => {
 			if(map.homeworklist.length > 0){
+				
+				
 				map.homeworklist.forEach(function(item, index) {
-					content += "<th scope='row'><input type='checkbox' class='Checkbox' name='Checkbox'></th>"
+					document.querySelector('#pkgid').value = item.pkgid;
+					
+					content += "<th scope='row'><input type='checkbox' class='Checkbox' name='Checkbox' value='"+item.studentid+"'></th>"
 								+"<td><input class='form-control' type='text' name='sname' id='sname"+item.studentid+"' value = '"+item.sname+"' readonly></td>"
 								+"<td><input class='form-control' type='text' name='age' id='age"+item.studentid+"' value = '"+item.age+"' readonly></td>"
 								+"<td><input class='form-control' type='text' name='mphone' id='mphone"+item.studentid+"' value = '"+item.mphone+"' readonly></td>"
@@ -188,10 +206,11 @@ window.addEventListener('load', function(){
 				,pageNo: 1
 		    };
 		    
-		fetchPost('/geomin/homeworkID', obj, (map) => {
+		fetchPost('/geomin/howorkList', obj, (map) => {
 			if(map.homeworklist.length > 0){
+				
 				map.homeworklist.forEach(function(item, index) {
-					content += "<th scope='row'><input type='checkbox' class='Checkbox' name='Checkbox'></th>"
+					content += "<th scope='row'><input type='checkbox' class='Checkbox' name='Checkbox' value='"+item.studentid+"'></th>"
 								+"<td><input class='form-control' type='text' name='sname' id='sname"+item.studentid+"' value = '"+item.sname+"' readonly></td>"
 								+"<td><input class='form-control' type='text' name='age' id='age"+item.studentid+"' value = '"+item.age+"' readonly></td>"
 								+"<td><input class='form-control' type='text' name='mphone' id='mphone"+item.studentid+"' value = '"+item.mphone+"' readonly></td>"
@@ -270,12 +289,13 @@ function go(pageNo) {
 	
 	fetchPost('/geomin/homeworkID', obj, (map) => {
 		if(map.homeworklist.length > 0){
+			
 			map.homeworklist.forEach(function(item, index) {
-				content += "<th scope='row'><input type='checkbox' class='Checkbox' name='Checkbox'></th>"
-							+"<td><input class='form-control' type='text' name='sname' id='sname"+item.studentid+"' value = '"+item.sname+"' readonly></td>"
-							+"<td><input class='form-control' type='text' name='age' id='age"+item.studentid+"' value = '"+item.age+"' readonly></td>"
-							+"<td><input class='form-control' type='text' name='mphone' id='mphone"+item.studentid+"' value = '"+item.mphone+"' readonly></td>"
-							+"<td><input class='form-control' type='text' name='memail' id='memail"+item.studentid+"' value = '"+item.memail+"' readonly></td>"
+				content += "<th scope='row'><input type='checkbox' class='Checkbox' name='Checkbox' value='"+item.studentid+"'></th>"
+								+"<td><input class='form-control' type='text' name='sname' id='sname"+item.studentid+"' value = '"+item.sname+"' readonly></td>"
+								+"<td><input class='form-control' type='text' name='age' id='age"+item.studentid+"' value = '"+item.age+"' readonly></td>"
+								+"<td><input class='form-control' type='text' name='mphone' id='mphone"+item.studentid+"' value = '"+item.mphone+"' readonly></td>"
+								+"<td><input class='form-control' type='text' name='memail' id='memail"+item.studentid+"' value = '"+item.memail+"' readonly></td>"
 							+"</tr>";
 			})
 			
@@ -345,104 +365,192 @@ function toggleCheckboxes() {
         checkboxes[i].checked = allCheck.checked;
     }
 }
-</script>    
+
+function workSubmit() {
+	
+	const homeworkCont = document.querySelector('#homeworkCont').value.trim();
+    
+    if (homeworkCont === "") {
+        alert("숙제 내용을 입력하세요.");
+        return; // Prevent further processing if the textarea is empty
+    }
+	
+	const selectedCheckboxes = document.querySelectorAll('.Checkbox:checked');
+	
+	 if (selectedCheckboxes.length > 0) {
+
+	        console.log('selectedCheckboxes.length:', selectedCheckboxes.length);
+	        
+	        let deleteCount = 0; // 실제 삭제된 패키지 수 추적
+
+	        selectedCheckboxes.forEach(checkbox => {
+	            console.log(checkbox.value);
+
+	            let obj = {
+	            	studentid: checkbox.value
+	            ,	groupid : document.querySelector('#homeworkGroupSelect').value
+	            ,   pkgid : document.querySelector('#pkgid').value
+	            ,   memberid : document.querySelector('#memberid').value
+	            ,   day : document.querySelector('#daySelect').value
+	            ,   homeworkcont : document.querySelector('#homeworkCont').value
+	            
+	            }
+	            
+	            console.log(obj);
+	           
+	            fetchPost('/geomin/homeworkUpdate', obj, (map) => {
+	                deleteCount++; 
+	                if (deleteCount === selectedCheckboxes.length) {
+	                    
+	                    alert(map.msg);
+
+	                    // 작업 완료로 표시
+	                    deletingInProgress = false;
+	                }
+	            })
+	 		})
+	        
+	 	}else {
+ 			alert("숙제 보내는 중 예외사항이 발생 하였습니다.");
+	    }
+	
+}
+</script>
 
 
 </head>
 <body>
 	<div id='container'>
-	<%@include file="../header/header.jsp" %>
-	<div id='section'>
+		<%@include file="../header/header.jsp"%>
+		<div id='section'>
 			<div class='subnavi'>
-            	<ul>
-            		<li><b>강사마당</b></li>
-                    <li><label style="cursor:pointer;"><a id="subnavi1">학습 그룹 등록</a></label></li>
-                   	<li><label style="cursor:pointer;"><a id="subnavi2">그룹 가입 승인</a></label></li>
-                   	<li><label style="cursor:pointer;"><a id="subnavi3">숙제 전송</a></label></li>
-                   	<li><label style="cursor:pointer;"><a id="subnavi4">숙제 평가</a></label></li>
-               	</ul>
-				
-            </div>
-            <div class='content'>
-            	<input type="hidden" value="${sessionScope.member.memberid }" id="memberid" name="memberid">
-            	<input type="text" value="" id="pkgid" name="pkgid">
+				<ul>
+					<li><b>강사마당</b></li>
+					<li><label style="cursor: pointer;"><a id="subnavi1">학습
+								그룹 등록</a></label></li>
+					<li><label style="cursor: pointer;"><a id="subnavi2">그룹
+								가입 승인</a></label></li>
+					<li><label style="cursor: pointer;"><a id="subnavi3">숙제
+								전송</a></label></li>
+					<li><label style="cursor: pointer;"><a id="subnavi4">숙제
+								평가</a></label></li>
+				</ul>
+
+			</div>
+			<div class='content'>
+				<input type="hidden" value="${sessionScope.member.memberid }"
+					id="memberid" name="memberid"> <input type="hidden"
+					value="" id="pkgid" name="pkgid">
 				<!-- 숙제 전송 페이지-->
-             	<div id="introduction3">
-             		<div>
-             			<h1><b>숙제 전송</b></h1><br>
-             		</div>
-             		
-             		<div>
-		      				<select id='homeworkGroupSelect' class="form-select" aria-label="Default select example">
-																
-							</select>           		
-             		</div>
-             		<div id="searchDiv">
-             			<div id="searchFieldDiv">
-							<select id="searchField" name="searchField" class="form-select" aria-label="Default select example">
-							   <option selected value="sname">이름</option>
-							  <option value="age">나이</option>
+				<div id="introduction3">
+					<div>
+						<h1>
+							<b>숙제 전송</b>
+						</h1>
+						<br>
+					</div>
+
+					<div>
+						<select id='homeworkGroupSelect' class="form-select"
+							aria-label="Default select example">
+
+						</select>
+					</div>
+					<div id="searchDiv">
+						<div id="searchFieldDiv">
+							<select id="searchField" name="searchField" class="form-select"
+								aria-label="Default select example">
+								<option selected value="sname">이름</option>
+								<option value="age">나이</option>
 							</select>
- 						</div>
- 						<div id="searchWordDiv">
- 							 <input class="form-control me-2" id="searchWord" name="searchWord" type="search" placeholder="Search" aria-label="Search">
- 						</div>
- 						<div id="searchBtnDiv">
- 							<button class="btn btn-outline-success" id="Search" type="submit">Search</button>
- 						</div>
-             		</div>
-           			 	
-			                <table class="table" border="1px solid" style="height:50%;weight:100%">
-								  <thead>
-								    <tr class="table-success">
-								      <th><input type='checkbox' id='allCheck' name='allCheck' onclick='toggleCheckboxes()'></th>
-								      <th>학습자명</th>
-								      <th>나이</th>
-								      <th>연락처</th>
-								      <th>이메일</th>
-								    </tr>
-								  </thead>
-								  
-							    <tbody id='studentSelect'>
-								
-							  </tbody>
-							</table>
-							<nav aria-label="Page navigation example" id="pageNavi">
-					
-				  			</nav>
-	             		<form>
-	             			<table class="table" border="1px solid" style="height:50%;weight:100%">
-								    <tr class="table-success">
-								      <th>숙제내용</th>
-								      <td><textarea id='homeworkCont' name='homeworkCont' style="width:100%; height:200px;"></textarea></td>
-								    </tr>
-								    <tr> 
-								      <th>제출기한</th>
-								     
-								      
-								      <td>
-								      <select id="daySelect">
-										  <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> <option value="5">5</option>
-										  <option value="6">6</option> <option value="7">7</option> <option value="8">8</option> <option value="9">9</option> <option value="10">10</option> 
-										  <option value="11">11</option> <option value="12">12</option> <option value="13">13</option> <option value="14">14</option> <option value="15">15</option>
-										  <option value="16">16</option> <option value="7">17</option> <option value="8">18</option> <option value="9">19</option> <option value="10">20</option>
-										  <option value="11">21</option> <option value="12">22</option> <option value="13">23</option> <option value="14">24</option> <option value="15">25</option>
-										  <option value="26">16</option> <option value="27">27</option> <option value="28">28</option> <option value="29">29</option> <option value="30">30</option>
-										  <option value="31">31</option>
-										</select> 일
-									</td>
-								    </tr>
-	             			</table>
-	             			
-	             			<div class="d-grid gap-2 col-6 mx-auto">
-	             				<button class="btn btn-success" id='submitbtn' name='submitbtn'> 숙제 전송 </button>
-             				</div>
-	             		</form>
-          			</div>
-       	 		</div>
-       	 	</div>
-       	</div> 	
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-          	 	
+						</div>
+						<div id="searchWordDiv">
+							<input class="form-control me-2" id="searchWord"
+								name="searchWord" type="search" placeholder="Search"
+								aria-label="Search">
+						</div>
+						<div id="searchBtnDiv">
+							<button class="btn btn-outline-success" id="Search" type="submit">Search</button>
+						</div>
+					</div>
+
+					<table class="table" border="1px solid"
+						style="height: 50%; weight: 100%">
+						<thead>
+							<tr class="table-success">
+								<th><input type='checkbox' id='allCheck' name='allCheck'
+									onclick='toggleCheckboxes()'></th>
+								<th>학습자명</th>
+								<th>나이</th>
+								<th>연락처</th>
+								<th>이메일</th>
+							</tr>
+						</thead>
+
+						<tbody id='studentSelect'>
+
+						</tbody>
+					</table>
+					<nav aria-label="Page navigation example" id="pageNavi"></nav>
+					<table class="table" border="1px solid"
+						style="height: 50%; weight: 100%">
+						<tr class="table-success">
+							<th>숙제내용</th>
+							<td><textarea id='homeworkCont' name='homeworkCont'
+									style="width: 100%; height: 200px;"></textarea></td>
+						</tr>
+						<tr>
+							<th>제출기한</th>
+
+
+							<td><select id="daySelect">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+									<option value="16">16</option>
+									<option value="7">17</option>
+									<option value="8">18</option>
+									<option value="9">19</option>
+									<option value="10">20</option>
+									<option value="11">21</option>
+									<option value="12">22</option>
+									<option value="13">23</option>
+									<option value="14">24</option>
+									<option value="15">25</option>
+									<option value="26">16</option>
+									<option value="27">27</option>
+									<option value="28">28</option>
+									<option value="29">29</option>
+									<option value="30">30</option>
+									<option value="31">31</option>
+							</select> 일</td>
+						</tr>
+					</table>
+
+					<div class="d-grid gap-2 col-6 mx-auto">
+						<button class="btn btn-success" onclick="workSubmit()">
+							숙제 전송</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+		crossorigin="anonymous"></script>
+
 </body>
 </html>

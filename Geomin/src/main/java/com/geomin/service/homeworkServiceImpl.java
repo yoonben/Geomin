@@ -32,5 +32,23 @@ public class homeworkServiceImpl implements homeworkService {
 		return homeworkmapper.totalCnt(cri);
 	}
 
+	@Override
+	public int homeworkUpdate(homeworkVO vo) {
+		
+		return homeworkmapper.homeworkUpdate(vo);
+	}
+
+	@Override
+	public List<homeworkVO> studentHomeworkList(homeworkVO vo) {
+		
+		return homeworkmapper.studentHomeworkList(vo);
+	}
+
+	@Override
+	public int studentHomework(homeworkVO vo) {
+		
+		return homeworkmapper.studentHomework(vo);
+	}
+
 
 }

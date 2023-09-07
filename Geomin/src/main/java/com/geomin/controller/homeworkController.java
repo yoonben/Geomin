@@ -64,7 +64,6 @@ public class homeworkController extends CommonRestController{
 			
 			PageDto  pageDto = new PageDto(cri, total);
 			
-			
 			map.put("homeworklist", homeworklist);
 			map.put("pageDto", pageDto);
 			
@@ -75,4 +74,67 @@ public class homeworkController extends CommonRestController{
 			return responseMap(REST_FAIL, "예외사항이 발생 하였습니다.");
 		}
 	}
+	
+	
+		@PostMapping("/homeworkUpdate")
+		public @ResponseBody Map<String, Object> homeworkUpdate(@RequestBody homeworkVO vo) {
+			
+			try {
+				Map<String, Object> map = responseMap(REST_SUCCESS, "숙제가 전송되었습니다");
+				
+				int res = homeworkservice.homeworkUpdate(vo);
+				
+				if(res == 0) {
+					
+					return responseMap(REST_FAIL, "숙제 전송중 예외사항이 발생 하였습니다.");
+				}
+				
+				return map;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				return responseMap(REST_FAIL, "숙제 전송중 예외사항이 발생 하였습니다.");
+			}
+		}
+		
+		@PostMapping("/howorkList")
+		public @ResponseBody Map<String, Object> howorkList(@RequestBody homeworkVO vo) {
+			
+			try {
+				Map<String, Object> map = responseMap(REST_SUCCESS, "리스트 조회");
+				
+				List<homeworkVO> homeworklist = homeworkservice.studentHomeworkList(vo);
+				
+				map.put("homeworklist", homeworklist);
+				
+				return map;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				return responseMap(REST_FAIL, "숙제 전송중 예외사항이 발생 하였습니다.");
+			}
+		}
+		
+		@PostMapping("/studentHomework")
+		public @ResponseBody Map<String, Object> studentHomework(@RequestBody homeworkVO vo) {
+			
+			try {
+				System.out.println(vo);
+				
+				Map<String, Object> map = responseMap(REST_SUCCESS, "숙제가 전송되었습니다");
+				
+				int res = homeworkservice.studentHomework(vo);
+				
+				if(res == 0) {
+					
+					return responseMap(REST_FAIL, "숙제 전송중 예외사항이 발생 하였습니다.");
+				}
+				
+				return map;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				return responseMap(REST_FAIL, "숙제 전송중 예외사항이 발생 하였습니다.");
+			}
+		}
 }

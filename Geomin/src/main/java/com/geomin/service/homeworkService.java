@@ -16,4 +16,10 @@ public interface homeworkService {
 	public List<homeworkVO> studentSelect(Criteria cri);
 	
 	public int totalCnt(Criteria cri);
+	
+	public int homeworkUpdate(homeworkVO vo);
+	
+	public List<homeworkVO> studentHomeworkList(homeworkVO vo);
+	
+	public int studentHomework(homeworkVO vo);
 }

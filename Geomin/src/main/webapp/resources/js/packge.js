@@ -76,17 +76,17 @@ window.addEventListener('load', function(){
 	// 패키지명 입력 제한
     pkgname.addEventListener("blur", function() {
         const inputValue = pkgname.value;
-        const regex = /^[A-Za-z0-9]{6}$/; // 영문 대소문자와 숫자 6자
+        const regex = /^[A-Z0-9]{6}$/; // 영문 대소문자와 숫자 6자
 
         if (!regex.test(inputValue)) {
-        	document.getElementById('message').innerHTML = "공백 없이 영문, 숫자 6자로 입력하세요.";
+        	document.getElementById('message').innerHTML = "공백 없이 영어(대문자), 숫자 6자로 입력하세요.";
         	pkgnameCheck.value = "0";
         	pkgname.focus();
         } else {
         	document.getElementById('message').innerHTML = "";
         	pkgnameCheck.value = "1";
         }
-    });
+    }); 
 	
 	// 인원수 체크 필드
 	personnel.addEventListener('blur', function() {

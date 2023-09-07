@@ -46,7 +46,6 @@ public class contentController {
 //	}
 	
 	@PostMapping("searchContent")
-	@ResponseBody
 	public void searchContent(@RequestBody List<contentVO> checked_Data) {
 		System.out.println("checked_Data : " + checked_Data);
 		//체크박스가 선택된 라인의 데이터 처리

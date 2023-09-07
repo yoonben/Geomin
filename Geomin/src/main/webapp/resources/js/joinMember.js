@@ -96,7 +96,7 @@ window.addEventListener('load', function(){
 	mName.addEventListener('input', function () {
 	    hideErrorMessage(nameErrorElement);
 	});
-	// 비밀번호 입력창 벗어났을 때 오류 보여줌
+	// 입력창 벗어났을 때 오류 보여줌
 	mName.addEventListener('focusout', function () {
 	    const mnameValue = mName.value.trim();
 	    

@@ -97,8 +97,9 @@ th, tr, td{
 					</tbody>
 				</table>
 				<button id="reqSubscribe">구독 철회</button>
-				<button id="recent">날짜가 최근순</button>
-				<button id="oldest">날짜가 오래된순</button>
+				<button id="recent">날짜 순서 토글</button>
+				<!-- <button id="recent">날짜가 최근순</button>
+				<button id="oldest">날짜가 오래된순</button> -->
 			</div>
 			<div class='banner'></div>
 		</div>
@@ -160,6 +161,40 @@ $(document).ready(function () {
             }
         });
     }
+    
+    
+    //날짜 순 정렬 버튼
+    let sortByRecent  = true; // 초기에는 최근 순으로 정렬
+
+    $('#recent').click(function () {
+        sortByRecent = !sortByRecent;
+        $('tr.data-raw').hide();
+        sortDataByDate(sortByRecent);
+    });
+
+    function sortDataByDate(sortByRecent) {
+        const currentDate = new Date();
+        console.log("currentDate: ", currentDate);
+
+        $('tr.data-raw').sort(function (a, b) {
+            const dateA = new Date($(a).data('value'));
+	        console.log("dateA: ", dateA);
+            
+            const dateB = new Date($(b).data('value'));
+	        console.log("dateB: ", dateB);
+
+            if (sortByRecent) {
+                // 최근 순으로 정렬
+                return dateB - dateA;
+            } else {
+                // 오래된 순으로 정렬
+                return dateA - dateB;
+            }
+        }).each(function () {
+            $(this).show();
+        });
+    }
+    
     
     const tableBody = document.querySelector('#result-table tbody');
     //const tableBody = document.querySelector('#result-table tbody');
