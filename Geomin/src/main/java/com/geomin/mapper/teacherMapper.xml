@@ -51,7 +51,7 @@
   	
   	  	<select id='contentOne' resultType='com.geomin.VO.memberVO'>
   		     SELECT 
-				    g.sName, p.pkgname,
+				    g.memberid, g.sName, p.pkgname,
 				    TO_CHAR(TO_DATE('20' || g.groupResDate), 'YYYY-MM-DD HH:MM:SS') AS groupResDate,
 				    DECODE(g.groupjoinStatus, 'Y', '승인', 'N', '미승인', '') AS joinStatus,
 				    m.memail,
@@ -67,7 +67,7 @@
 				WHERE
 				    m.mtype = 'S'
                     
-                    group by g.sName, p.pkgname, g.groupResDate, g.groupjoinStatus, m.memail,
+                    group by g.memberid, g.sName, p.pkgname, g.groupResDate, g.groupjoinStatus, m.memail,
 				    m.mphone,
 				    m.mbirthdate,
 				    g.groupid,s.curpersonnel, s.personnel
@@ -75,7 +75,7 @@
                     having p.pkgname = #{pkgname} 
   	</select>
   	
-	<update id="updateJoinStatus">
+<!-- 	<update id="updateJoinStatus">
 			UPDATE groupstudent
 				SET groupjoinstatus = CASE 
 		                                WHEN groupjoinstatus = 'Y' THEN 'N'
@@ -84,8 +84,74 @@
 		                                END
 				WHERE sname = #{sname}
 		        and groupid = #{groupid}
-	</update>
+	</update> -->
+	
+	<!-- <update id="updateJoinStatus" parameterType="java.util.List">
+	    UPDATE groupstudent
+	    SET groupjoinstatus = CASE 
+	                            WHEN groupjoinstatus = 'Y' THEN 'N'
+	                            WHEN groupjoinstatus = 'N' THEN 'Y'
+	                            ELSE groupjoinstatus
+	                        END
+	    WHERE memberid IN
+	    <foreach collection="memberidOutput_list" item="memberid" open="(" separator="," close=")">
+	        #{memberid}
+	    </foreach>
+	</update> -->
+	
+	<!-- <update id="updateJoinStatus" parameterType="java.util.List">        
+	<foreach collection="memberidOutput_list" item="member" separator=";">
+        UPDATE groupstudent
+        SET groupjoinstatus = CASE 
+                                WHEN groupjoinstatus = 'Y' THEN 'N'
+                                WHEN groupjoinstatus = 'N' THEN 'Y'
+                                ELSE groupjoinstatus
+                            END
+        WHERE memberid = #{member.memberid}
+    </foreach>
+	</update> -->
+	
+	<!-- <update id="updateJoinStatus" parameterType="java.util.List">        
+		<foreach collection="list" item="list">
+        	UPDATE GROUPSTUDENT
+        	SET GROUPJOINSTATUS = 'Y' 
+        	WHERE memberid = #{list.memberid} and sname = #{list.sname}
+    	</foreach>
+	</update> -->
 
+
+	<update id="updateJoinStatus" parameterType="java.util.List">
+	    UPDATE groupstudent
+	    SET groupjoinstatus = CASE 
+	                            WHEN groupjoinstatus = 'Y' THEN 'N'
+	                            WHEN groupjoinstatus = 'N' THEN 'Y'
+	                            ELSE groupjoinstatus
+	                        END
+	    WHERE memberid IN
+	   <foreach collection="list" item="list" open="(" separator="," close=")">
+        	#{list.memberid}
+       </foreach>
+    	AND sname IN
+    	<foreach collection="list" item="list" open="(" separator="," close=")">
+        	#{list.sname}
+    	</foreach>
+	</update>
+	
+	
+	
+	<!-- <update id="updateJoinStatus" parameterType="java.util.List">
+		<foreach collection="list" item="list">
+	    UPDATE groupstudent
+	    SET groupjoinstatus = CASE 
+	                            WHEN groupjoinstatus = 'Y' THEN 'N'
+	                            WHEN groupjoinstatus = 'N' THEN 'Y'
+	                            ELSE groupjoinstatus
+	                        END
+	    WHERE memberid = #{list.memberid} AND sname = #{list.sname}
+    	</foreach>
+	</update> -->
+	
+	
 	<select id='getSubGroup' resultType="com.geomin.VO.contentVO">
 		SELECT
     		P.pkgId,

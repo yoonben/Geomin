@@ -21,7 +21,8 @@ public interface teacherMapper {
 	public List<contentVO> regSubinfo();
 	
 	//그룹가입 승인
-	public int updateJoinStatus(memberVO vo);
+	//public int updateJoinStatus(List<String> memberIds);
+	public int updateJoinStatus(List<memberVO> memberidOutput_list);
 
 	List<contentVO> getSubGroup();
 

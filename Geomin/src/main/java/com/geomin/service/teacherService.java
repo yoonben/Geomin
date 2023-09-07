@@ -19,7 +19,8 @@ public interface teacherService {
 
 	
 	//그룹 가입 승인
-	public int updateJoinStatus(memberVO vo);
+	//public int updateJoinStatus(List<String> memberIds);
+	public int updateJoinStatus(List<memberVO> memberidOutput_list);
 
 	List<contentVO> getSubGroup();
 

@@ -43,9 +43,13 @@ public class teacherServiceImpl implements teacherService{
 		
 	}
 
+//	@Override
+//	public int updateJoinStatus(List<String> memberIds) {
+//		return teachermapper.updateJoinStatus(memberIds);
+//	}
 	@Override
-	public int updateJoinStatus(memberVO vo) {
-		return teachermapper.updateJoinStatus(vo);
+	public int updateJoinStatus(List<memberVO> memberidOutput_list) {
+		return teachermapper.updateJoinStatus(memberidOutput_list);
 	}
 
 
