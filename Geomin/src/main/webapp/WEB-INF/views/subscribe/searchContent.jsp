@@ -80,7 +80,7 @@ th, tr, td{
 					<c:forEach var="list" items="${list}">
 						<tr id="data-raw" class="data-raw" data-value="${list.difficulty }">
 							<td><input type="checkbox" name="check" value="check" id="check"></td>
-							<%-- <td style="display: none;">${list.pkgId }</td> --%>
+							<td style="display: none;">${list.pkgId }</td>
 							<%-- <td>${list.pkgId }</td> --%>
 							<td>${list.pkgName }</td>
 							<td>${list.personnel }</td>
@@ -113,7 +113,7 @@ th, tr, td{
 			console.log('입력한 searchContent : ' , searchContent);
 			sortedData.forEach(row => {
 				const difficultyValue = row.getAttribute("data-value");
-				const content = row.querySelector("td:nth-child(7)").textContent;
+				const content = row.querySelector("td:nth-child(8)").textContent;
 				console.log('출력한 content : ' , content);
 				if((choiceDifficulty === "전체" || difficultyValue === choiceDifficulty)&&(searchContent === "" || content.includes(searchContent))){
 					/* $('tr.data-raw').show(); */
@@ -191,7 +191,7 @@ th, tr, td{
 		    $('input[name="check"]:checked').each(function() {
 		        var $row = $(this).closest('tr');
 		        var rowData = {
-		        	pkgID: $row.find('td:eq(1)').text(),
+		        	pkgId: $row.find('td:eq(1)').text(),
 		            pkgName: $row.find('td:eq(2)').text(),
 		            Personnel: $row.find('td:eq(3)').text(),
 		            fixedPrice: $row.find('td:eq(4)').text(),
