@@ -44,7 +44,11 @@
             		</div>
             		<div>
             			<label>그룹명 : </label>
-            			<input type="text" id="groupid" placeholder="그룹명을 입력해 주세요">
+            			<input type="text" id="groupid" name = "groupid" placeholder="그룹명을 입력해 주세요" ><br>
+            			<input type='button' id='groupidCheck' name='groupidCheck'  value='중복확인버튼'>
+            			<div id='result'>아이디를 확인해주세요.</div>
+            			<!-- <span class="id_ok">사용 가능한 아이디입니다.</span><br>
+						<span class="id_already">누군가 이 아이디를 사용하고 있어요.</span> -->
             		</div>
             		<div>
             			<label>패키지명 : </label>
@@ -52,7 +56,8 @@
             		</div>
             		<div>
             			<label>학습 가능 인원 : </label>
-            			<input type="text" id='groupperson' placeholder="인원 수 적기"> 명
+            			<input type="text" id='groupperson'  name='groupperson' placeholder="인원 수 적기"> 명
+            			<div id='grouppersonError'></div>
             		</div>
             		<div>
             			<label>학습 수준 : </label>
@@ -80,7 +85,6 @@
             		</div>
 				</c:if>
 			</c:forEach>
-			
             <br>
             <button id="regStudy">학습그룹 등록</button>
 	</div>
@@ -90,7 +94,9 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
+
 $(document).ready(function () {
+	
 	/* var pkgName = document.getElementById('pkgNameElement').getAttribute('data-pkgName');
     document.getElementById('receivedData').textContent = "Received Data: " + pkgName; */
 	
@@ -162,220 +168,255 @@ $(document).ready(function () {
 		const groupid = document.getElementById('groupid').value;
 		const groupperson = document.getElementById('groupperson').value;
 		const pkgId = document.getElementById('pkgId').value;
-		console.log('pkgId : ' , pkgId);
+		
+		//1. groupid 중복 체크
+		/* $.ajax({
+            url:'/geomin/teacher/groupRegist', //Controller에서 요청 받을 주소
+            type:'POST', //POST 방식으로 전달
+            data:{pkgId : pkgId},
+            success:function(cnt){ //컨트롤러에서 넘어온 cnt값을 받는다 
+                if(cnt == 0){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디 
+                    $('.id_ok').css("display","inline-block"); 
+                    $('.id_already').css("display", "none");
+                } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
+                    $('.id_already').css("display","inline-block");
+                    $('.id_ok').css("display", "none");
+                    alert("이미 사용중인 그룹명입니다.");
+                    $('#id').val('');
+                }
+            },
+            error:function(){
+                alert("에러입니다");
+            }
+        }); */
+		
+		
 		
 		var yearB = document.getElementById('select_yearB').value;
 		var monthB = document.getElementById('select_monthB').value;
 		var dayBB = document.getElementById('select_dayB').value;
 		const dateB = new Date(yearB, monthB - 1, dayBB);
 		const totalDateB = dateB.toISOString().slice(0, 10);
-		console.log('dateB : ' , dateB);
-		//console.log('formattedDateB : ' , formattedDateB);
-		
+
 		var yearA = document.getElementById('select_yearA').value;
 		var monthA = document.getElementById('select_monthA').value;
 		var dayAA = document.getElementById('select_dayA').value;
 		const dateA = new Date(yearA, monthA - 1, dayAA);
 		const totalDateA = dateA.toISOString().slice(0, 10);
-		console.log('dateA : ' , dateA);
-		//console.log('formattedDateA : ' , formattedDateA);
 		
-		const groupData = [];
+		const timeDiff = dateA - dateB;
+    	const daysDiff = timeDiff / (1000 * 3600 * 24);  /* // 일(day) 단위로 계산 */
+
+    	// 3개월은 대략 90일로 가정
+    	const threeMonthsInDays = 90;
+
+    	if (daysDiff > threeMonthsInDays) {
+        	alert('학습기간은 최대 3개월을 넘을 수 없습니다.');
+        	return; // 간격이 3개월을 넘으면 AJAX 요청을 보내지 않고 종료
+    	}
+		
+			const groupData = [];
+			const rowData = {
+				groupid: groupid,
+				pkgId : pkgId,
+				Personnel : groupperson,
+				studyStartDate : totalDateB,
+				studyEndDate : totalDateA
+			}
+			groupData.push(rowData);
+
+			console.log('groupData : ' , groupData);
+
+			$.ajax({
+				url: '/geomin/teacher/groupRegist',
+				type: 'POST',
+				data: JSON.stringify(groupData),
+				contentType: "application/json",
+				dataType: "json",
+				success: function(response) {
+		    		alert('성공');
+		    		//console.log(response);
+				},
+				error: function(error) {
+		    		alert('실패');
+		    		//console.error(error);
+				}
+			});
+		});
 	
-		const rowData = {
-			groupid: groupid,
-			pkgId : pkgId,
-			Personnel : groupperson,
-			studyStartDate : totalDateB,
-			studyEndDate : totalDateA
-		}
-		groupData.push(rowData);
-		
-		console.log('groupData : ' , groupData);
-		
+	
+});
+
+//★그룹아이디 중복처리
+$("#groupidCheck").click(function(){
+	let groupid = document.getElementById('groupid').value;
+	
+	console.log('groupid : ' , groupid);
+	
+	//1. groupid 중복 체크
 	$.ajax({
-        url: '/geomin/teacher/groupRegist',
-        type: 'POST',
-        data: JSON.stringify(groupData),
-        contentType: "application/json",
-        dataType: "json",
-        success: function(response) {
-            alert('성공');
-            //console.log(response);
-        },
-        error: function(error) {
-            alert('실패');
-            //console.error(error);
-        }
-    });
-});
-	
-});
-
-
-
-/* lastday();
-
-function lastday(){ //년과 월에 따라 마지막 일 구하기 
-	var yearB=document.getElementById('select_yearB').value;
-	var monthB=document.getElementById('select_monthB').value;
-	var dayB = new Date(new Date(YearB,MonthB,1)-86400000).getDate();
-	console.log('dayB : ' , dayB);
-	
-	var yearA=document.getElementById('select_yearA').value;
-	var monthA=document.getElementById('select_monthA').value;
-	var dayA = new Date(new Date(YearA,MonthA,1)-86400000).getDate();
-	console.log('dayA : ' , dayA);
-	
-	var dayindex_lenB = document.getElementById('select_dayB').length;
-	if(dayB>dayindex_lenB){
-		for(var B=(dayindex_lenB+1); B<=dayB; B++){
-			document.getElementById('select_dayB').options[B-1] = new Option(B, B);
-		}
-	}
-	else if(dayB<dayindex_lenB){
-		for(var B=dayindex_lenB; B>=dayB; B--){
-			document.getElementById('select_dayB').options[B]=null;
-		}
-	}
-	
-	var dayindex_lenA = document.getElementById('select_dayA').length;
-	if(dayA>dayindex_lenA){
-		for(var A=(dayindex_lenA+1); A<=dayA; A++){
-			document.getElementById('select_dayA').options[A-1] = new Option(A, A);
-		}
-	}
-	else if(dayA<dayindex_lenA){
-		for(var A=dayindex_lenA; A>=dayA; A--){
-			document.getElementById('select_dayA').options[A]=null;
-		}
-	}
-} */
-
-/* Now = new Date();
-NowDay = Now.getDate();
-NowMonth = Now.getMonth();
-NowYear = Now.getYear();
-if (NowYear < 2000) NowYear += 1900;
-function DaysInMonth(WhichMonth, WhichYear)
-{
-  var DaysInMonth = 31;
-  if (WhichMonth == "Apr" || WhichMonth == "Jun" || WhichMonth == "Sep" || WhichMonth == "Nov") DaysInMonth = 30;
-  if (WhichMonth == "Feb" && (WhichYear/4) != Math.floor(WhichYear/4))        DaysInMonth = 28;
-  if (WhichMonth == "Feb" && (WhichYear/4) == Math.floor(WhichYear/4))        DaysInMonth = 29;
-  return DaysInMonth;
-}
-
-function ChangeOptionDays(Which)
-{
-  DaysObject = eval("document.Form1." + Which + "Day");
-  MonthObject = eval("document.Form1." + Which + "Month");
-  YearObject = eval("document.Form1." + Which + "Year");
-
-  Month = MonthObject[MonthObject.selectedIndex].text;
-  Year = YearObject[YearObject.selectedIndex].text;
-
-  DaysForThisSelection = DaysInMonth(Month, Year);
-  CurrentDaysInSelection = DaysObject.length;
-  if (CurrentDaysInSelection > DaysForThisSelection)
-  {
-    for (i=0; i<(CurrentDaysInSelection-DaysForThisSelection); i++)
-    {
-      DaysObject.options[DaysObject.options.length - 1] = null
-    }
-  }
-  if (DaysForThisSelection > CurrentDaysInSelection)
-  {
-    for (i=0; i<(DaysForThisSelection-CurrentDaysInSelection); i++)
-    {
-      NewOption = new Option(DaysObject.options.length + 1);
-      DaysObject.add(NewOption);
-    }
-  }
-    if (DaysObject.selectedIndex < 0) DaysObject.selectedIndex == 0;
-}
-
-function SetToToday(Which)
-{
-  DaysObject = eval("document.Form1." + Which + "Day");
-  MonthObject = eval("document.Form1." + Which + "Month");
-  YearObject = eval("document.Form1." + Which + "Year");
-
-  YearObject[0].selected = true;
-  MonthObject[NowMonth].selected = true;
-
-  ChangeOptionDays(Which);
-
-  DaysObject[NowDay-1].selected = true;
-}
-
-function WriteYearOptions(YearsAhead)
-{
-  line = "";
-  for (i=0; i<YearsAhead; i++)
-  {
-    line += "<OPTION>";
-    line += NowYear + i;
-  }
-  return line;
-} */
-/* var listData = ${list.pkgname};
-console.log('listData : ' , listData); */
-    /* console.log("여기는 아닌거같아요..");
-$(document).ready(function() {
-	var listData = ${list};
-	console.log('listData : ' , listData);
-    var $selectElement = $("#optionSelect");
-    var $personnelInfo = $("#personnelInfo");
-	
-    
-    $selectElement.on("change", function () {
-        console.log("여기에요!!")
-    	var selectedValue = $selectElement.val();
-
-        var selectedData = null;
-        $.each(listData, function (index, item) {
-            if (item.memberID === selectedValue) {
-                selectedData = item;
-                return false; // 반복문 종료
+        url:'/geomin/teacher/groupidCheck', //Controller에서 요청 받을 주소
+        type:'POST', //POST 방식으로 전달
+        data:{groupid : groupid},
+        success:function(data){ //컨트롤러에서 넘어온 cnt값을 받는다 
+        	console.log('cnt : ' , data);
+            if(data == 1){ //cnt가0이 아니면(=1일 경우) -> 사용 불가능한 아이디 
+                $('#result').text("이미 사용중인 그룹명 입니다."); 
+                $("#result").attr("style", "color:#f00"); 
+            } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
+            	$('#result').text("사용가능한 그룹명 입니다."); 
+            	$("#result").attr("style", "color:#00f");
             }
-        });
-
-        if (selectedData) {
-            $personnelInfo.text("학습 가능 인원 : " + selectedData.personnel);
-           
-        } else {
-            $personnelInfo.text("학습 가능 인원 : ");
-            
-        }
+        }/* 
+        error:function(){
+            //alert("에러입니다");
+        } */
     });
+})
+
+// 인원수 유효성 검사
+    const groupperson = document.getElementById("groupperson");
+    const regGroupperson = /^[0-9]+$/;
+	const personErrorElement = document.getElementById("grouppersonError");
+
+	groupperson.addEventListener('input', function () {
+	    hideErrorMessage(personErrorElement);
+	});
+	// 비밀번호 입력창 벗어났을 때 오류 보여줌
+	groupperson.addEventListener('focusout', function () {
+	    const grouppersonValue = groupperson.value.trim();
+	    
+	    //빈칸일 경우 아무것도 출력X
+	    if (grouppersonValue.length === 0) {
+	        return;
+	    }
+	    
+	    if (!regGroupperson.test(groupperson.value)) {
+	        displayErrorMessage(personErrorElement, "숫자만 입력 가능합니다.");
+	        return;
+	    }
+	});
+	
+	function displayErrorMessage(element, message) {
+	    element.textContent = message;
+	    element.style.color = "#f00";
+	}
+	function hideErrorMessage(element) {
+	    element.textContent = "";
+	}
+	
+
+/* $('#regStudy').click(function() {
+const groupid = document.getElementById('groupid').value;
+const groupperson = document.getElementById('groupperson').value;
+const pkgId = document.getElementById('pkgId').value;
+console.log('pkgId : ' , pkgId);
+
+var yearB = document.getElementById('select_yearB').value;
+var monthB = document.getElementById('select_monthB').value;
+var dayBB = document.getElementById('select_dayB').value;
+const dateB = new Date(yearB, monthB - 1, dayBB);
+const totalDateB = dateB.toISOString().slice(0, 10);
+console.log('dateB : ' , dateB);
+//console.log('formattedDateB : ' , formattedDateB);
+
+var yearA = document.getElementById('select_yearA').value;
+var monthA = document.getElementById('select_monthA').value;
+var dayAA = document.getElementById('select_dayA').value;
+const dateA = new Date(yearA, monthA - 1, dayAA);
+const totalDateA = dateA.toISOString().slice(0, 10);
+console.log('dateA : ' , dateA);
+//console.log('formattedDateA : ' , formattedDateA);
+	
+	const groupData = [];
+	const rowData = {
+		groupid: groupid,
+		pkgId : pkgId,
+		Personnel : groupperson,
+		studyStartDate : totalDateB,
+		studyEndDate : totalDateA
+	}
+	groupData.push(rowData);
+
+	console.log('groupData : ' , groupData);
+
+	$.ajax({
+		url: '/geomin/teacher/groupRegist',
+		type: 'POST',
+		data: JSON.stringify(groupData),
+		contentType: "application/json",
+		dataType: "json",
+		success: function(response) {
+    		alert('성공');
+    		//console.log(response);
+		},
+		error: function(error) {
+    		alert('실패');
+    		//console.error(error);
+		}
+	});
+
 }); */
-/* $(document).ready(function() {
-    var $selectElement = $("#optionSelect");
-    var $personnelInfo = $("#personnelInfo");
 
-    $selectElement.on("change", function () {
-        var selectedValue = $selectElement.val();
+/*
+ 			window.onload = disablePreviousDates;
+			// 현재 날짜 가져오기
+			const currentDate = new Date();
 
-        var selectedData = null;
-        $.each(list, function (index, item) {
-            if (item.memberID === selectedValue) {
-                selectedData = item;
-                return false; // 반복문 종료
-            }
-        });
+			// 이전 기간을 선택하지 못하게 하는 함수
+			function disablePreviousDates() {
+			    const yearBSelect = document.getElementById('select_yearB');
+			    const monthBSelect = document.getElementById('select_monthB');
+			    const dayBSelect = document.getElementById('select_dayB');
 
-        if (selectedData) {
-            $personnelInfo.text("학습 가능 인원 : " + selectedData.personnel);
-           
-        } else {
-            $personnelInfo.text("학습 가능 인원 : ");
-            
-        }
-    });
-}); */
-/* var $curPersonnelInfo = $("#curPersonnelInfo"); */
-/* $curPersonnelInfo.text("현재 학습 중 : " + selectedData.curpersonnel); */
- /* $curPersonnelInfo.text("현재 학습 중 : "); */
+			    // 현재 연도 가져오기
+			    const currentYear = currentDate.getFullYear();
+
+			    // 현재 월 가져오기 (0부터 시작하므로 +1 해줌)
+			    const currentMonth = currentDate.getMonth() + 1;
+
+			    // 현재 일 가져오기
+			    const currentDay = currentDate.getDate();
+
+			    // 이전 연도, 월, 일을 선택하지 못하게 처리
+			    for (let year = currentYear; year >= 1900; year--) {
+			        if (yearBSelect) {
+			            const option = document.createElement('option');
+			            option.value = year;
+			            option.text = year;
+			            yearBSelect.add(option);
+			            if (year === currentYear) {
+			                yearBSelect.value = currentYear;
+			            }
+			        }
+			    }
+
+			    for (let month = 1; month <= 12; month++) {
+			        if (monthBSelect) {
+			            const option = document.createElement('option');
+			            option.value = month;
+			            option.text = month;
+			            monthBSelect.add(option);
+			            if (month === currentMonth) {
+			                monthBSelect.value = currentMonth;
+			            }
+			        }
+			    }
+
+			    for (let day = 1; day <= 31; day++) {
+			        if (dayBSelect) {
+			            const option = document.createElement('option');
+			            option.value = day;
+			            option.text = day;
+			            dayBSelect.add(option);
+			            if (day === currentDay) {
+			                dayBSelect.value = currentDay;
+			            }
+			        }
+			    }
+			} 
+ 
+ 
+ */
 </script>
 </html>

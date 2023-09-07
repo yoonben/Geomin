@@ -3,6 +3,8 @@ package com.geomin.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,9 +24,6 @@ import com.geomin.service.teacherService;
 @Controller
 @RequestMapping("/geomin*")
 public class teacherController extends CommonRestController{
-	
-	@Autowired
-	private contentService helloService;
 	
 	@Autowired
 	teacherService teacherService;
@@ -53,6 +53,34 @@ public class teacherController extends CommonRestController{
 		teacherService.regStudyGroup(groupData);
 	}
 	
+	
+	/*
+	 * //★그룹아이디 중복처리
+	 * 
+	 * @PostMapping("/teacher/checkGroupid") public int
+	 * checkGroupid(@RequestParam("groupid") contentVO groupid) {
+	 * System.out.println("groupid : " + groupid); //int cnt =
+	 * teacherService.checkGroupid(groupid); //System.out.println("cnt : " + cnt);
+	 * //return cnt; return 0; }
+	 */
+	
+	@ResponseBody
+	@RequestMapping(value = "/teacher/groupidCheck", method = RequestMethod.POST)
+	public int postIdCheck(@RequestParam(name = "groupid") String groupid, HttpServletRequest req) throws Exception {
+
+		String groupidVal = req.getParameter("groupid");
+		System.out.println("groupid=========" + groupidVal);
+
+		int groupidCheck = teacherService.checkGroupid(groupidVal);
+		System.out.println("groupidCheck=========" + groupidCheck);
+
+		int result = 0;
+
+		if (groupidCheck == 1) {
+			result = 1;
+		}
+		return result;
+	}
 	
 	
 	// 그룹 신청한 학습자 리스트
