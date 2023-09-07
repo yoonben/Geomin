@@ -17,8 +17,8 @@ public class homeworkServiceImpl implements homeworkService {
 	homeworkMapper homeworkmapper;
 	
 	@Override
-	public List<homeworkVO> homeworkGroupList() {
-		return homeworkmapper.homeworkGroupList();
+	public List<homeworkVO> homeworkGroupList(homeworkVO vo) {
+		return homeworkmapper.homeworkGroupList(vo);
 	}
 
 	@Override

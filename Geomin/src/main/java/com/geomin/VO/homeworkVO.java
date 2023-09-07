@@ -26,5 +26,6 @@ public class homeworkVO {
 	private String sname; 
 	private String mphone; 
 	private String memail; 
-	private String mbirthdate; 
+	private String mbirthdate;
+	private String day;
 }

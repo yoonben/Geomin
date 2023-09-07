@@ -64,6 +64,9 @@
 <script type="text/javascript">
 
 window.addEventListener('load', function(){
+	
+	groupList();
+	
 	const subnavi1 = document.getElementById('#subnavi1');
 	const subnavi2 = document.getElementById('#subnavi2');
 	const subnavi3 = document.getElementById('#subnavi3');
@@ -113,6 +116,7 @@ window.addEventListener('load', function(){
 		content = ""; 
 		content2 = ""; 
 		
+		
 		//contentList.style.display = '';
 		console.log('클릭되었어요222222');
 		
@@ -126,11 +130,11 @@ window.addEventListener('load', function(){
 		fetchPost('/geomin/homeworkID', obj, (map) => {
 			if(map.homeworklist.length > 0){
 				map.homeworklist.forEach(function(item, index) {
-					content += "<th scope='row'><input class='form-control' type='checkbox' name='rowCheck' class='studentid' readonly></th>"
-								+"<td style = 'width'><input class='form-control' type='text' name='sname' id='sname' value = '"+item.sname+"' readonly></td>"
-								+"<td><input class='form-control' type='text' name='age' id='age' value = '"+item.age+"' readonly></td>"
-								+"<td><input class='form-control' type='text' name='mphone' id='mphone' value = '"+item.mphone+"' readonly></td>"
-								+"<td><input class='form-control' type='text' name='memail' id='memail' value = '"+item.memail+"' readonly></td>"
+					content += "<th scope='row'><input type='checkbox' class='Checkbox' name='Checkbox'></th>"
+								+"<td><input class='form-control' type='text' name='sname' id='sname"+item.studentid+"' value = '"+item.sname+"' readonly></td>"
+								+"<td><input class='form-control' type='text' name='age' id='age"+item.studentid+"' value = '"+item.age+"' readonly></td>"
+								+"<td><input class='form-control' type='text' name='mphone' id='mphone"+item.studentid+"' value = '"+item.mphone+"' readonly></td>"
+								+"<td><input class='form-control' type='text' name='memail' id='memail"+item.studentid+"' value = '"+item.memail+"' readonly></td>"
 								+"</tr>";
 				})
 				
@@ -187,11 +191,11 @@ window.addEventListener('load', function(){
 		fetchPost('/geomin/homeworkID', obj, (map) => {
 			if(map.homeworklist.length > 0){
 				map.homeworklist.forEach(function(item, index) {
-					content += "<th scope='row'><input class='form-control' type='checkbox' name='rowCheck' class='studentid' readonly></th>"
-								+"<td style = 'width'><input class='form-control' type='text' name='sname' id='sname' value = '"+item.sname+"' readonly></td>"
-								+"<td><input class='form-control' type='text' name='age' id='age' value = '"+item.age+"' readonly></td>"
-								+"<td><input class='form-control' type='text' name='mphone' id='mphone' value = '"+item.mphone+"' readonly></td>"
-								+"<td><input class='form-control' type='text' name='memail' id='memail' value = '"+item.memail+"' readonly></td>"
+					content += "<th scope='row'><input type='checkbox' class='Checkbox' name='Checkbox'></th>"
+								+"<td><input class='form-control' type='text' name='sname' id='sname"+item.studentid+"' value = '"+item.sname+"' readonly></td>"
+								+"<td><input class='form-control' type='text' name='age' id='age"+item.studentid+"' value = '"+item.age+"' readonly></td>"
+								+"<td><input class='form-control' type='text' name='mphone' id='mphone"+item.studentid+"' value = '"+item.mphone+"' readonly></td>"
+								+"<td><input class='form-control' type='text' name='memail' id='memail"+item.studentid+"' value = '"+item.memail+"' readonly></td>"
 								+"</tr>";
 				})
 				
@@ -267,11 +271,11 @@ function go(pageNo) {
 	fetchPost('/geomin/homeworkID', obj, (map) => {
 		if(map.homeworklist.length > 0){
 			map.homeworklist.forEach(function(item, index) {
-				content += "<th scope='row'><input class='form-control' type='checkbox' name='rowCheck' class='studentid' readonly></th>"
-							+"<td style = 'width'><input class='form-control' type='text' name='sname' id='sname' value = '"+item.sname+"' readonly></td>"
-							+"<td><input class='form-control' type='text' name='age' id='age' value = '"+item.age+"' readonly></td>"
-							+"<td><input class='form-control' type='text' name='mphone' id='mphone' value = '"+item.mphone+"' readonly></td>"
-							+"<td><input class='form-control' type='text' name='memail' id='memail' value = '"+item.memail+"' readonly></td>"
+				content += "<th scope='row'><input type='checkbox' class='Checkbox' name='Checkbox'></th>"
+							+"<td><input class='form-control' type='text' name='sname' id='sname"+item.studentid+"' value = '"+item.sname+"' readonly></td>"
+							+"<td><input class='form-control' type='text' name='age' id='age"+item.studentid+"' value = '"+item.age+"' readonly></td>"
+							+"<td><input class='form-control' type='text' name='mphone' id='mphone"+item.studentid+"' value = '"+item.mphone+"' readonly></td>"
+							+"<td><input class='form-control' type='text' name='memail' id='memail"+item.studentid+"' value = '"+item.memail+"' readonly></td>"
 							+"</tr>";
 			})
 			
@@ -313,6 +317,34 @@ function go(pageNo) {
 		document.querySelector('#pageNavi').innerHTML = content2;
 })
 }
+
+function groupList() {
+	content = ""; 
+	content2 = "";
+	let obj={
+		memberid : document.querySelector('#memberid').value
+	}
+	
+	fetchPost('/geomin/homeworkGroup', obj, (map) => {
+		if(map.groupList.length > 0){
+			content += '<option selected>숙제 부여할 그룹 선택</option>';
+			map.groupList.forEach(function(item, index) {
+				content+='<option value="'+item.groupid+'">'+item.groupid+'</option>';
+			})
+		}
+		
+		document.querySelector('#homeworkGroupSelect').innerHTML = content;
+	})
+}
+
+function toggleCheckboxes() {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"].Checkbox');
+    var allCheck = document.getElementById('allCheck');
+    
+    for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = allCheck.checked;
+    }
+}
 </script>    
 
 
@@ -332,7 +364,8 @@ function go(pageNo) {
 				
             </div>
             <div class='content'>
-            
+            	<input type="hidden" value="${sessionScope.member.memberid }" id="memberid" name="memberid">
+            	<input type="text" value="" id="pkgid" name="pkgid">
 				<!-- 숙제 전송 페이지-->
              	<div id="introduction3">
              		<div>
@@ -341,10 +374,7 @@ function go(pageNo) {
              		
              		<div>
 		      				<select id='homeworkGroupSelect' class="form-select" aria-label="Default select example">
-								 	<option selected>숙제 부여할 그룹 선택</option>
-								 <c:forEach var="homeworkGroup" items="${homeworkGroupList }">
-								  	<option value="${homeworkGroup.groupid}">${homeworkGroup.groupid}</option>
-								 </c:forEach>
+																
 							</select>           		
              		</div>
              		<div id="searchDiv">
@@ -365,7 +395,7 @@ function go(pageNo) {
 			                <table class="table" border="1px solid" style="height:50%;weight:100%">
 								  <thead>
 								    <tr class="table-success">
-								      <th><input type='checkbox' id='allCheck' name='allCheck'></th>
+								      <th><input type='checkbox' id='allCheck' name='allCheck' onclick='toggleCheckboxes()'></th>
 								      <th>학습자명</th>
 								      <th>나이</th>
 								      <th>연락처</th>
@@ -388,7 +418,19 @@ function go(pageNo) {
 								    </tr>
 								    <tr> 
 								      <th>제출기한</th>
-								      <td><input type='text' id='deadline' name='deadline'></td>
+								     
+								      
+								      <td>
+								      <select id="daySelect">
+										  <option value="1">1</option> <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> <option value="5">5</option>
+										  <option value="6">6</option> <option value="7">7</option> <option value="8">8</option> <option value="9">9</option> <option value="10">10</option> 
+										  <option value="11">11</option> <option value="12">12</option> <option value="13">13</option> <option value="14">14</option> <option value="15">15</option>
+										  <option value="16">16</option> <option value="7">17</option> <option value="8">18</option> <option value="9">19</option> <option value="10">20</option>
+										  <option value="11">21</option> <option value="12">22</option> <option value="13">23</option> <option value="14">24</option> <option value="15">25</option>
+										  <option value="26">16</option> <option value="27">27</option> <option value="28">28</option> <option value="29">29</option> <option value="30">30</option>
+										  <option value="31">31</option>
+										</select> 일
+									</td>
 								    </tr>
 	             			</table>
 	             			

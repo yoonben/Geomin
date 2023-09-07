@@ -6,15 +6,10 @@
   
   	<select id='homeworkGroupList' resultType='com.geomin.VO.homeworkVO'>
    		SELECT
-		    g.sname,
-		    m.memail,
-		    m.mphone,
-		    m.mbirthdate,
-		    g.groupid
+		   *
 		FROM
-		    groupStudent g
-		JOIN
-		    member m ON g.studentid = m.memberid
+		    study_group
+		where memberid = #{memberid}
     </select>
     
     
@@ -28,6 +23,8 @@
 		    m.mphone,
 		    m.mbirthdate,
             FLOOR(MONTHS_BETWEEN(SYSDATE, TO_DATE(m.mbirthdate)) / 12) AS age,
+            g.studentid,  
+            g.pkgid,          
 		    g.groupid
 		FROM
 		    groupStudent g
