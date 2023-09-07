@@ -84,7 +84,7 @@
              		<form>
              		<div id="message"></div>
              			
-             		<div><p>패키지명<p> <input id="pkgname" name="pkgname" class="form-control" type="text" placeholder="공백 없이 영어/숫자 6자" aria-label="default input example"></div>
+             		<div><p>패키지명<p> <input id="pkgname" name="pkgname" class="form-control" type="text" placeholder="공백 없이 영어(대문자)/숫자 6자" aria-label="default input example"></div>
              		<div>
              			<p>학습 난이도</p>
              			<select id="difficulty" name="difficulty" class="form-select" aria-label="Default select example">

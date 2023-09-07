@@ -21,9 +21,11 @@ public class homeworkVO {
 	private String groupResDate;
 	private String joinStatus;
 	private String age;
+	private String pkgname;
 	
 	// 숙제 전송 페이지 추가
-	private String sname; 
+	private String sname;
+	private String mname;
 	private String mphone; 
 	private String memail; 
 	private String mbirthdate;

@@ -30,6 +30,7 @@
 		    groupStudent g
 		JOIN
 		    member m ON g.studentid = m.memberid
+		where g.GROUPJOINSTATUS = 'Y'
 			) homework where groupid = #{groupid} <include refid="criteria"/>
 		) where rn between #{startNo} and #{endNo} 
   	</select>
@@ -47,6 +48,24 @@
 		JOIN
 		    member m ON g.studentid = m.memberid) where groupid = #{groupid} <include refid="criteria"/>
  	</select>
+  	
+  	<update id="homeworkUpdate">
+  		insert into homework(homeworkno,studentid,groupid,pkgid,memberid,deadlinedate,homeworkcont)
+		values (#{groupid}||'_'||HOMEWORK_SEQ.nextval,#{studentid},#{groupid},#{pkgid},#{memberid},(TRUNC(sysdate) + INTERVAL '8' HOUR)+#{day},#{homeworkcont})
+  	</update>
+  	
+  	<select id='studentHomeworkList' resultType='com.geomin.VO.homeworkVO'>
+   		select h.*,pkgname ,mname
+			from homework h 
+			join package p on h.pkgid = p.pkgid 
+			join member m on m.memberid = h.memberid  
+   			where studentid = #{studentid}
+    </select>
+  	
+  	<update id="studentHomework">
+  		UPDATE homework SET submitdate = sysdate, studycont = #{studycont}
+		where homeworkno = #{homeworkno} 
+  	</update>
   	
   	<sql id="criteria">
  	 	<choose>
