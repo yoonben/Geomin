@@ -93,11 +93,7 @@
     		location.href="../teacher/homeworkMain";
     	});
     	$('#subnavi4').click(function (){
-    		console.log('#subnavi4 작동 개시');
-    		$('#introduction4').show();
-    		$('#introduction1').hide();
-    		$('#introduction2').hide();
-    		$('#introduction4').hide();
+    		location.href="../teacher/homeworkEvaluation";
     	});
     	
     	/*

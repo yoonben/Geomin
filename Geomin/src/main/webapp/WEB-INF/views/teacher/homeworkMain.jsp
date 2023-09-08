@@ -117,7 +117,7 @@ window.addEventListener('load', function(){
 		$('#introduction1').hide();
 		$('#introduction2').hide();
 		$('#introduction3').hide(); */
-		location.href="../teacher/teacherMain";
+		location.href="../teacher/homeworkEvaluation";
 	});
 	
 	//숙제전송 페이지 =========================================================================
