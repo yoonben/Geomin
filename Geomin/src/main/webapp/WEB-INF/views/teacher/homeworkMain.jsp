@@ -488,7 +488,9 @@ function workSubmit() {
 						</thead>
 
 						<tbody id='studentSelect'>
-
+							<tr>
+								<th colspan="5">그룹을 선택 해주세요.</th>
+							</tr>
 						</tbody>
 					</table>
 					<nav aria-label="Page navigation example" id="pageNavi"></nav>

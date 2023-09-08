@@ -409,7 +409,7 @@
 
 						<tbody id="homeworkList">
 							<tr>
-								<td colspan='6'>좀 더 자세한 정보를 얻기 위해 숙제를 조회하십시오.</td>
+								<td colspan='6' style="text-align: center;">좀 더 자세한 정보를 얻기 위해 숙제를 조회하십시오.</td>
 							</tr>
 						</tbody>
 					</table>
