@@ -6,7 +6,7 @@
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>   
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Q & A</title>
 	<style type="text/css">
 			#container>#section>.subnavi>ul{
 	    		text-align: left;
@@ -118,11 +118,15 @@ function goView(){
 	<div id='section'>
 		<div class='subnavi'>
 		    <ul>
-		        <li><a href="/geomin/manager">학습콘텐츠 등록</a></li>
+		   	<c:if test="${sessionScope.member.adminyn eq 'Y'}">
+		        	<li><a href="/geomin/manager">학습콘텐츠 등록</a></li>
+		    </c:if>
 		        <li><a href="/geomin/board">Q&A</a></li>
+		 	<c:if test="${sessionScope.member.adminyn eq 'Y'}">
 		        <li><a href="/geomin/salesTally">매출 관리</a></li>
 		        <li><a href="/geomin/salesTally">- 매출 집계</a></li>
 		        <li><a href="/geomin/salesInquiry">- 매출 조회</a></li>
+		 	</c:if>
 		    </ul>
 		</div>
 		<div class='content'>

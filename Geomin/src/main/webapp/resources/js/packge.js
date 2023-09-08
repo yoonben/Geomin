@@ -67,6 +67,12 @@ window.addEventListener('load', function(){
 		fetchPost('/geomin/packageInsert', obj, (map)=>{
 			if(map.result == 'success'){
 				alert('패키지가 등록되었습니다.');
+				
+				$('#packgeList').show();
+			    $('#packgeInsert').hide();
+			    $('#searchWord').val("");
+				
+				go(1);
 			}else{
 				document.getElementById('message').innerHTML = map.msg;
 			}

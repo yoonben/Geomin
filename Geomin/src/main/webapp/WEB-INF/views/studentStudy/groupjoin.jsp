@@ -205,9 +205,13 @@
 		                    + "<td>" + item.pkgname + "</td>"
 		                    + "<td>" + item.mname + "</td>"
 		                    + "<td>" + item.homeworkcont + "</td>"
-		                    + "<td>" + item.deadlinedate + "</td>"
-		                    + "<td><textarea id = 'studycont"+i+"' name='studycont' class='form-control'></textarea></td>"
-		                    + "</tr>";
+		                    + "<td>" + item.deadlinedate + "</td>";
+		                    if(item.studycont === null){
+		                    	content += "<td><textarea id = 'studycont"+i+"' name='studycont' class='form-control'></textarea></td>";
+		                    }else{
+		                    	content += "<td><textarea id = 'studycont"+i+"' name='studycont' class='form-control'>"+item.studycont+"</textarea></td>";
+		                    }
+		                    content += "</tr>";
 		                    i++;
 
 		            });

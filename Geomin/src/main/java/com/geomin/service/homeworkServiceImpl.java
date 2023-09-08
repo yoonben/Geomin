@@ -50,5 +50,29 @@ public class homeworkServiceImpl implements homeworkService {
 		return homeworkmapper.studentHomework(vo);
 	}
 
+	@Override
+	public List<homeworkVO> homeworkEva(Criteria cri) {
+		
+		return homeworkmapper.homeworkEva(cri);
+	}
+
+	@Override
+	public int evaTotalCnt(Criteria cri) {
+		
+		return homeworkmapper.evaTotalCnt(cri);
+	}
+
+	@Override
+	public int HomeworkEva(homeworkVO vo) {
+		
+		return homeworkmapper.HomeworkEva(vo);
+	}
+
+	@Override
+	public homeworkVO homeworkGetOne(homeworkVO vo) {
+		
+		return homeworkmapper.homeworkGetOne(vo);
+	}
+
 
 }

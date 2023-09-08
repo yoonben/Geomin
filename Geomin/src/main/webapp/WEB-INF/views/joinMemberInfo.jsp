@@ -170,7 +170,7 @@ function memberUpdate(){
 			    +'@<select class="form-select form-select-sm" aria-label="Small select example" id="mail2" name="mail2">'
 				    +'<option value="@naver.com">naver.com</option>'
 				    +'<option value="@daum.net">daum.net</option>'
-				    +'<option value="@gmail.com" selected>gmail.com</option>'
+				    +'<option value="@gmail.com">gmail.com</option>'
 				    +'<option value="@hanmail.com" selected>hanmail.com</option>'
 			  	+'</select>';
 		 }else{

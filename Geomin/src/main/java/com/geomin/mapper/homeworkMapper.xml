@@ -60,12 +60,53 @@
 			join package p on h.pkgid = p.pkgid 
 			join member m on m.memberid = h.memberid  
    			where studentid = #{studentid}
+   			order by deadlinedate
     </select>
   	
   	<update id="studentHomework">
   		UPDATE homework SET submitdate = sysdate, studycont = #{studycont}
 		where homeworkno = #{homeworkno} 
   	</update>
+  	
+  	<select id='homeworkEva' resultType='com.geomin.VO.homeworkVO'>
+   		select * 
+	from (	
+        select homework.*,rownum rn 
+        from (
+                select m.mname  as sname, homeworkno, studentid, groupid, pkgid
+                , h.memberid, TO_CHAR(deadlinedate,'YYYY-MM-DD hh24:mi') as deadlinedate, homeworkcont
+                , TO_CHAR(submitdate,'YYYY-MM-DD hh24:mi') as  submitdate, studycont, evaluation
+                from homework h
+                JOIN
+                member m ON h.studentid = m.memberid
+                where groupid = #{groupid} <include refid="homework"/> <include refid="evaluation"/>
+                order by deadlinedate, homeworkno
+			) homework 
+		) where rn between #{startNo} and #{endNo} 
+    </select>
+  	
+  	<select id="evaTotalCnt" resultType="int">
+ 		select count(*) FROM (
+                select m.mname  as sname, homeworkno, studentid, groupid, pkgid
+                , h.memberid, TO_CHAR(deadlinedate,'YYYY-MM-DD hh24:mi') as deadlinedate, homeworkcont
+                , TO_CHAR(submitdate,'YYYY-MM-DD hh24:mi') as  submitdate, studycont, evaluation
+                from homework h
+                JOIN
+                member m ON h.studentid = m.memberid
+                where groupid = #{groupid} <include refid="homework"/> <include refid="evaluation"/>
+			)
+ 	</select>
+  	
+  	
+  	<update id="HomeworkEva">
+  		UPDATE homework SET evaluation = #{evaluation}
+		where homeworkno = #{homeworkno} 
+  	</update>
+  	
+  	
+  	<select id='homeworkGetOne' resultType='com.geomin.VO.homeworkVO'>
+   		select * from homework where homeworkno = #{homeworkno} 
+    </select>
   	
   	<sql id="criteria">
  	 	<choose>
@@ -76,6 +117,35 @@
  	 			and sname like '%'||#{searchWord}||'%'
  	 		</when>
  	 		
+ 	 	</choose>
+ 	 </sql>
+ 	 
+ 	 <sql id="homework">
+ 	 	<choose>
+ 	 		<when test="searchField == 'mname'">
+ 	 			and mname like '%'||#{searchWord}||'%'
+ 	 		</when>
+ 	 		<when test="searchField == 'homeworkcont'">
+ 	 			and homeworkcont like '%'||#{searchWord}||'%'
+ 	 		</when>
+ 	 		
+ 	 	</choose>
+ 	 </sql>
+ 	 
+ 	 <sql id="evaluation">
+ 	 	<choose>
+ 	 		<when test="evaluation == '평가'">
+ 	 			and evaluation like '평가'
+ 	 		</when>
+ 	 		<when test="evaluation == '우수'">
+ 	 			and evaluation like '우수'
+ 	 		</when>
+ 	 		<when test="evaluation == '보통'">
+ 	 			and evaluation like '보통'
+ 	 		</when>
+ 	 		<when test="evaluation == '미흡'">
+ 	 			and evaluation like '미흡'
+ 	 		</when>
  	 	</choose>
  	 </sql>
   </mapper>

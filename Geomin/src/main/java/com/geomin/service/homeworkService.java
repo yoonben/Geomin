@@ -22,4 +22,12 @@ public interface homeworkService {
 	public List<homeworkVO> studentHomeworkList(homeworkVO vo);
 	
 	public int studentHomework(homeworkVO vo);
+	
+	public List<homeworkVO> homeworkEva(Criteria cri);
+	
+	public int evaTotalCnt(Criteria cri);
+	
+	public int HomeworkEva(homeworkVO vo);
+	
+	public homeworkVO homeworkGetOne (homeworkVO vo);
 }

@@ -24,6 +24,11 @@ public class homeworkController extends CommonRestController{
 	@Autowired
 	homeworkService homeworkservice;
 	
+	@GetMapping("/teacher/homeworkEvaluation")
+	public String homeworkEvaluation(Model model, homeworkVO homework) {
+		
+		return "/teacher/homeworkEvaluation";
+	}
 	 
 	@GetMapping("/teacher/homeworkMain")
 	public String getHomework(Model model, homeworkVO homework) {
@@ -35,6 +40,8 @@ public class homeworkController extends CommonRestController{
 	public @ResponseBody Map<String, Object> homeworkGroup(@RequestBody homeworkVO vo) {
 		try {
 				Map<String, Object> map = responseMap(REST_SUCCESS, "리스트 조회");
+				
+				System.out.println(vo);
 				
 				List<homeworkVO> groupList = homeworkservice.homeworkGroupList(vo);
 				
@@ -135,6 +142,52 @@ public class homeworkController extends CommonRestController{
 			} catch (Exception e) {
 				e.printStackTrace();
 				return responseMap(REST_FAIL, "숙제 전송중 예외사항이 발생 하였습니다.");
+			}
+		}
+		
+		@PostMapping("/homeworkEvaluation")
+		public @ResponseBody Map<String, Object> homeworkEvaluation(@RequestBody Criteria cri) {
+			
+			try {
+				Map<String, Object> map = responseMap(REST_SUCCESS, "리스트 조회");
+				
+				List<homeworkVO> homeworklist = homeworkservice.homeworkEva(cri);
+				
+				int total = homeworkservice.evaTotalCnt(cri);
+				
+				System.out.println(cri);
+				
+				PageDto  pageDto = new PageDto(cri, total);
+				
+				map.put("homeworklist", homeworklist);
+				map.put("pageDto", pageDto);
+				
+				return map;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				return responseMap(REST_FAIL, "예외사항이 발생 하였습니다.");
+			}
+		}
+		
+		@PostMapping("/HomeworkEva")
+		public @ResponseBody Map<String, Object> HomeworkEva(@RequestBody homeworkVO vo) {
+			
+			try {
+				Map<String, Object> map = responseMap(REST_SUCCESS, "숙제가 평가되었습니다");
+				
+				int res = homeworkservice.HomeworkEva(vo);
+				
+				if(res == 0) {
+					
+					return responseMap(REST_FAIL, "숙제 평가중 예외사항이 발생 하였습니다.");
+				}
+				
+				return map;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				return responseMap(REST_FAIL, "숙제 평가중 예외사항이 발생 하였습니다.");
 			}
 		}
 }
