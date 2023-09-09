@@ -74,8 +74,18 @@
     		$('#introduction2').hide();
     		$('#introduction3').hide();
     		$('#introduction4').hide(); */
-    		location.href="../teacher/groupRegist";
+    		//location.href="../teacher/groupRegist";
+    		redirectToGroupRegist("");
     	});
+    	
+    	function redirectToGroupRegist(pkgName) {
+    	    // pkgName 파라미터를 이용하여 페이지 이동
+    	    if (pkgName !== "") {
+    	        location.href = `../teacher/groupRegist?pkgName=${pkgName}`;
+    	    } else {
+    	        location.href = "../teacher/groupRegist";
+    	    }
+    	}
     	
     	$('#subnavi2').click(function (){
     		console.log('#subnavi2 작동 개시');

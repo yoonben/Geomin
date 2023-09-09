@@ -36,6 +36,8 @@
             </div>
             <%-- <label>Title</label> <input name='title' value='<c:out value = "${board.title}" />' readonly="readonly"> --%>
             <div class='content'>
+            <c:choose>
+            <c:when test="${not empty pkgName}">
             <c:forEach items="${list2}" var="list2">
             	<c:if test ="${list2.pkgName == pkgName}">
             		<div style="display: none;">
@@ -85,10 +87,16 @@
             		</div>
 				</c:if>
 			</c:forEach>
+			</c:when>
+			<c:otherwise>
+                <!-- pkgName이 비어있을 때 출력할 내용 -->
+                <p>성공이다.</p>
+            </c:otherwise>
+        </c:choose>
             <br>
-            <button id="regStudy">학습그룹 등록</button>
-	</div>
-            <div class='banner'></div>
+            	<button id="regStudy">학습그룹 등록</button>
+			</div>
+            	<div class='banner'></div>
     </div>
 </div>	
 </body>

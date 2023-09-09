@@ -84,9 +84,14 @@ th, tr, td{
 							<td>${list.personnel}</td>
 							<td>${list.finalPrice }</td>
 							<td>${list.difficulty }</td>
+							<c:url var="groupRegistURL" value="../teacher/groupRegist">
+    							<c:param name="pkgName" value="${list.pkgName}" />
+							</c:url>
 							<c:choose>
 								<c:when test="${list.groupid == 'NOT GROUP'}"> <!-- NULL을 N으로 변경-->
-									<td><button type='button' id="regButton" name='regButton' onclick='location.href="../teacher/groupRegist?pkgName=${list.pkgName}"'>그룹 등록</button></td> <%-- onclick='location.href="../teacher/groupRegist?pkgName=${list.pkgName }"' --%>
+									<td><button type='button' id="regButton" name='regButton' onclick='location.href="${groupRegistURL}"'>그룹 등록</button></td>
+									<%-- <td><button type='button' id="regButton" name='regButton' onclick='location.href="../teacher/groupRegist?pkgName=${list.pkgName}"'>그룹 등록</button></td> --%> 
+									<%-- onclick='location.href="../teacher/groupRegist?pkgName=${list.pkgName }"' --%>
 								</c:when>
 								<c:otherwise>
 									<td>등록 완료</td>

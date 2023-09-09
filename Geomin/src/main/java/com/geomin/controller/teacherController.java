@@ -42,11 +42,11 @@ public class teacherController extends CommonRestController{
 	*/
 	
 	@GetMapping("/teacher/groupRegist")
-	public String groupRegist(@RequestParam("pkgName") String pkgName, Model model) { 
+	public String groupRegist(@RequestParam(name = "pkgName", required = false, defaultValue = "") String pkgName, Model model) { 
 		List<contentVO> list1 = teacherService.getSubGroup();
-		model.addAttribute("list2", list1);
-		
-		
+		if (!pkgName.isEmpty()) {
+			model.addAttribute("list2", list1);
+		}	
 		model.addAttribute("pkgName", pkgName);
 		return "/teacher/groupRegist";
 	}

@@ -57,7 +57,6 @@ public class contentController {
 		//구독한 학습 컨텐츠 출력
 		List<contentVO> list = contentService.getSubList();
 		model.addAttribute("list", list);
-		System.out.println("list2 : " + list);
 		
 		return "subscribe/subscribeSearchContent";
 	}
