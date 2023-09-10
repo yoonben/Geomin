@@ -34,5 +34,5 @@ public interface loginService {
 
 	public int InfoUpdate(memberVO vo);
 	
-	
+	public int loginCheck(String studentid);
 }

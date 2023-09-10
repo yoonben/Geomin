@@ -65,9 +65,9 @@
 
 <script type="text/javascript">
     window.addEventListener('load', function(){
-   	 	const subnavi1 = document.getElementById('#subnavi1');
-    	const subnavi2 = document.getElementById('#subnavi2');
-    	const introductionbtn = document.getElementById('#introductionbtn');
+   	 	const subnavi1 = document.getElementById('subnavi1');
+    	const subnavi2 = document.getElementById('subnavi2');
+    	const introductionbtn = document.getElementById('introductionbtn');
     	
     	$('#subnavi1').click(function (){
     		console.log('#subnavi1 작동 개시');

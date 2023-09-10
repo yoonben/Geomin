@@ -65,4 +65,8 @@
 		update member set mname = #{mname}, mtype = #{mtype}, mphone = #{mphone}, memail = #{memail}, maddr = #{maddr}, mbirthdate = #{mbirthdate}, mgender = #{mgender}, marketingagree = #{marketingagree}  where memberid = #{memberid}
 	</update>
   	
+  	
+  	<select id='loginCheck' resultType='int'>
+  		SELECT COUNT(*) FROM groupstudent WHERE studentid = #{studentid} AND groupjoinstatus = 'Y'
+  	</select>
   </mapper>

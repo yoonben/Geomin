@@ -22,9 +22,26 @@ window.addEventListener('load', function(){
 		    body: JSON.stringify(obj)
 		  })
 		  .then(response => response.json())
-		  .then(loginCheck)
-		});
- 
+		  .then(data => {
+			// 서버에서 가져온 그룹 회원 여부 정보를 JavaScript 변수로 저장
+			  let isGroupMember = data.isGroupMember;
+
+			  // 그룹 회원 여부에 따라 페이지 섹션을 표시
+			  let intro1 = document.getElementById("introduction1");
+			  let intro2 = document.getElementById("introduction2");
+
+			  if (isGroupMember) {
+			      // 그룹 회원인 경우 숙제 제출 섹션 표시
+			      intro2.style.display = "block";              
+			  } else {
+			      // 그룹 회원이 아닌 경우 그룹 가입 섹션 표시
+			      intro1.style.display = "block";
+			  }
+    });
+	});
+    
+    
+    
 
 		//아이디 찾기 
 		let findIdbtn = document.querySelector('#findIdbtn');
@@ -308,6 +325,7 @@ window.addEventListener('load', function(){
    		//로그인성공 > 메인페이지로 이동
    		//로그인 실패 > 메세지 처리
    		if(map.result == 'success'){
+   			msg.innerHTML=map.msg;
    			location.href=map.url;
    		} else {
     		alert(map.msg);

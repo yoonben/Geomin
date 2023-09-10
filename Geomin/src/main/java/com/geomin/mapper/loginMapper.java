@@ -24,5 +24,7 @@ public interface loginMapper {
 	
 	public int InfoUpdate(memberVO vo);
 
+	//로그인 체크(그룹가입 유무에 따른 페이지 이동처리)
+	public int loginCheck(String studentid);
 	
 }

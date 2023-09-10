@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.geomin.VO.groupstudentVO;
 import com.geomin.VO.memberVO;
 import com.geomin.service.loginService;
 
@@ -85,35 +87,75 @@ public class loginController extends CommonRestController {
 		return "/login";
 	}
 
-	// 로그인 처리
+	/*
+	 * // 로그인 처리
+	 * 
+	 * @PostMapping(value = "/main", produces = "application/json")
+	 * public @ResponseBody Map<String, Object> loginAction(@RequestBody memberVO
+	 * member, HttpSession session) { System.out.println("id : " +
+	 * member.getMemberid()); System.out.println("pw : " + member.getMpassword());
+	 * 
+	 * memberVO membervo = loginService.login(member); Map<String, Object> map = new
+	 * HashMap<>();
+	 * 
+	 * // 그룹 회원 여부에 따라 isGroupMember 값을 설정 boolean loginRes =
+	 * loginService.loginCheck(member.getStudentid());
+	 * 
+	 * if (membervo != null && pwdEncoder.matches(member.getMpassword(),
+	 * membervo.getMpassword())) { session.setAttribute("member", membervo);
+	 * session.setAttribute("memberid", membervo.getMemberid());
+	 * 
+	 * //Map<String, Object> map = responseMap(REST_SUCCESS, "로그인 되었습니다.");
+	 * 
+	 * 
+	 * //TODO : 그룹 등록되어있으면 숙제페이지로 이동 / 그룹등록 안되어 있으면 그룹등록 페이지 이동 처리하기!
+	 * 
+	 * if (loginRes) { map = responseMap(REST_SUCCESS, "로그인 되었습니다.");
+	 * 
+	 * // JSON 응답에 isGroupMember 값을 추가 map.put("isGroupMember", membervo); } else {
+	 * map = responseMap(REST_SUCCESS, "로그인 되었습니다. (그룹 회원이 아닙니다.)");
+	 * map.put("isGroupMember", membervo); } } else { map = responseMap(REST_FAIL,
+	 * "아이디와 비밀번호를 확인해주세요."); }
+	 * 
+	 * return map; }
+	 */
+	
 	@PostMapping(value = "/main", produces = "application/json")
-	public @ResponseBody Map<String, Object> loginAction(@RequestBody memberVO member, Model model,
-			HttpSession session) {
-		System.out.println("id" + member.getMemberid());
-		System.out.println("pw" + member.getMpassword());
+	public ResponseEntity<Map<String, Object>> loginAction(@RequestBody memberVO member, HttpSession session) {
+	    System.out.println("id : " + member.getMemberid());
+	    System.out.println("pw : " + member.getMpassword());
 
-		memberVO membervo = loginService.login(member);
+	    memberVO membervo = loginService.login(member);
+	    Map<String, Object> map = new HashMap<>();
+	    
+	    // 그룹 회원 여부에 따라 isGroupMember 값을 설정
+	    int loginRes = loginService.loginCheck(member.getMemberid());
+	    
+	    if (membervo != null && pwdEncoder.matches(member.getMpassword(), membervo.getMpassword())) {
+	    	System.out.println("loginRes1111 : ===============" + loginRes);
+	        session.setAttribute("member", membervo);
+	        session.setAttribute("memberid", membervo.getMemberid());
+	        
+	        System.out.println("loginRes : ===============" + loginRes);
 
-		if (membervo != null && pwdEncoder.matches(member.getMpassword(), membervo.getMpassword())) {
-			session.setAttribute("member", membervo);
-			session.setAttribute("memberid", membervo.getMemberid());
+	        if (loginRes == 1) {
+	            map.put("result", "success");
+	            //map.put("message", "로그인 되었습니다.");
+	            map.put("isGroupMember", true); // 그룹 회원 여부를 응답에 포함
+	        } else {
+	            map.put("result", "success");
+	            //map.put("message", "로그인 되었습니다. (그룹 회원이 아닙니다.)");
+	            map.put("isGroupMember", false); // 그룹 회원 여부를 응답에 포함
+	        }
+	    } else {
+	        map.put("result", "fail");
+	        map.put("message", "아이디와 비밀번호를 확인해주세요.");
+	    }
 
-			Map<String, Object> map = responseMap(REST_SUCCESS, "로그인 되었습니다.");
-
-			// if(membervo.getRole() != null && member.getRole().contains("ADMIN ROLE")) {
-			// TODO : 그룹 등록되어있으면 숙제페이지로 이동 / 그룹등록 안되어 있으면 그룹등록 페이지 이동 처리하기!
-			map.put("url", "/geomin/main"); // ★login.jsp이동후 로그인시 이동하는 페이지 수정 (function loginCheck)
-			// } else {
-			// map.put("url", "/board/list");
-			// }
-
-			return map;
-		} else {
-
-			return responseMap(REST_FAIL, "아이디와 비밀번호를 확인해주세요.");
-		}
+	    return ResponseEntity.ok(map);
 	}
-
+	
+	
 	// 아이디 찾기
 	@PostMapping("/findId")
 	public @ResponseBody Map<String, Object> findId(@RequestBody memberVO member) {

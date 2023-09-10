@@ -164,6 +164,11 @@ public class loginServiceImpl implements loginService {
 		return loginMapper.InfoUpdate(vo);
 	}
 
+	@Override
+	public int loginCheck(String studentid) {
+		return loginMapper.loginCheck(studentid);
+	}
+
 
 
 
