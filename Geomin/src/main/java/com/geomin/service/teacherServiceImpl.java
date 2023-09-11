@@ -51,13 +51,18 @@ public class teacherServiceImpl implements teacherService{
 	public int updateJoinStatus(List<memberVO> memberidOutput_list) {
 		return teachermapper.updateJoinStatus(memberidOutput_list);
 	}
+
+
 	
 	//★그룹아이디 중복처리
+	/*
+	 * @Override public int checkGroupid(String groupid) { return
+	 * teachermapper.checkGroupid(groupid); }
+	 */
 	@Override
-	public int checkGroupid(String groupid) {
-		return teachermapper.checkGroupid(groupid);
+	public List<memberVO> checkGroupid(memberVO vo) {
+		return teachermapper.checkGroupid(vo);
 	}
-
 
 
 

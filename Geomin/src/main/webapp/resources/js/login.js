@@ -23,19 +23,23 @@ window.addEventListener('load', function(){
 		  })
 		  .then(response => response.json())
 		  .then(data => {
-			// 서버에서 가져온 그룹 회원 여부 정보를 JavaScript 변수로 저장
-			  let isGroupMember = data.isGroupMember;
-			  console.log("isGroupMember : ", isGroupMember);
-			  // 그룹 회원 여부에 따라 페이지 섹션을 표시
-			  let intro1 = document.getElementById("introduction1");
-			  let intro2 = document.getElementById("introduction2");
-
-			  if (true) {
-			      // 그룹 회원인 경우 숙제 제출 섹션 표시
-			      intro2.style.display = "block";              
-			  } else {
-			      // 그룹 회원이 아닌 경우 그룹 가입 섹션 표시
-			      intro1.style.display = "block";
+			  
+			  console.log(data.result);
+			  
+			  if(data.result === "success"){
+				// 서버에서 가져온 그룹 회원 여부 정보를 JavaScript 변수로 저장
+				  let isGroupMember = data.isGroupMember;
+				  console.log("isGroupMember : ", isGroupMember);
+				  
+				  if (data.myType == "S") {
+				      //그룹 회원인 경우 숙제 제출 섹션 표시
+					  location.href='/geomin/studentStudy/groupjoin';
+				  } else{
+				      // 그룹 회원이 아닌 경우 그룹 가입 섹션 표시
+					  location.href='/geomin/main';
+				  }
+			  }else{
+				  alert(data.message);
 			  }
     });
 	});

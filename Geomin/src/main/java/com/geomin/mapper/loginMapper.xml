@@ -69,4 +69,6 @@
   	<select id='loginCheck' resultType='int'>
   		SELECT COUNT(*) FROM groupstudent WHERE studentid = #{studentid} AND groupjoinstatus = 'Y'
   	</select>
+
+  	
   </mapper>

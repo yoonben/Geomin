@@ -87,67 +87,27 @@ public class loginController extends CommonRestController {
 		return "/login";
 	}
 
-	/*
-	 * // 로그인 처리
-	 * 
-	 * @PostMapping(value = "/main", produces = "application/json")
-	 * public @ResponseBody Map<String, Object> loginAction(@RequestBody memberVO
-	 * member, HttpSession session) { System.out.println("id : " +
-	 * member.getMemberid()); System.out.println("pw : " + member.getMpassword());
-	 * 
-	 * memberVO membervo = loginService.login(member); Map<String, Object> map = new
-	 * HashMap<>();
-	 * 
-	 * // 그룹 회원 여부에 따라 isGroupMember 값을 설정 boolean loginRes =
-	 * loginService.loginCheck(member.getStudentid());
-	 * 
-	 * if (membervo != null && pwdEncoder.matches(member.getMpassword(),
-	 * membervo.getMpassword())) { session.setAttribute("member", membervo);
-	 * session.setAttribute("memberid", membervo.getMemberid());
-	 * 
-	 * //Map<String, Object> map = responseMap(REST_SUCCESS, "로그인 되었습니다.");
-	 * 
-	 * 
-	 * //TODO : 그룹 등록되어있으면 숙제페이지로 이동 / 그룹등록 안되어 있으면 그룹등록 페이지 이동 처리하기!
-	 * 
-	 * if (loginRes) { map = responseMap(REST_SUCCESS, "로그인 되었습니다.");
-	 * 
-	 * // JSON 응답에 isGroupMember 값을 추가 map.put("isGroupMember", membervo); } else {
-	 * map = responseMap(REST_SUCCESS, "로그인 되었습니다. (그룹 회원이 아닙니다.)");
-	 * map.put("isGroupMember", membervo); } } else { map = responseMap(REST_FAIL,
-	 * "아이디와 비밀번호를 확인해주세요."); }
-	 * 
-	 * return map; }
-	 */
 	
+	
+	// 로그인 처리
 	@PostMapping(value = "/main", produces = "application/json")
 	public ResponseEntity<Map<String, Object>> loginAction(@RequestBody memberVO member, HttpSession session) {
-	    System.out.println("id : " + member.getMemberid());
+		
+		System.out.println("id : " + member.getMemberid());
 	    System.out.println("pw : " + member.getMpassword());
-
+	    
 	    memberVO membervo = loginService.login(member);
 	    Map<String, Object> map = new HashMap<String, Object>();
 	    
-	    // 그룹 회원 여부에 따라 isGroupMember 값을 설정
-	    int loginRes = loginService.loginCheck(member.getMemberid());
-	    
+
 	    if (membervo != null && pwdEncoder.matches(member.getMpassword(), membervo.getMpassword())) {
-	    	System.out.println("loginRes1111 : ===============" + loginRes);
+	    	map.put("result", "success");
+	    	
 	        session.setAttribute("member", membervo);
 	        session.setAttribute("memberid", membervo.getMemberid());
 	        
-	        System.out.println("loginRes : ===============" + loginRes);
+	        map.put("myType", membervo.getMtype());
 
-	        if (loginRes >= 1) {
-	            map.put("result", "success");
-	            //map.put("message", "로그인 되었습니다.");
-	            map.put("isGroupMember", true); // 그룹 회원 여부를 응답에 포함
-	        } else {
-	            map.put("result", "success");
-	            System.out.println("여기에 왔다========================");
-	            //map.put("message", "로그인 되었습니다. (그룹 회원이 아닙니다.)");
-	            map.put("isGroupMember", false); // 그룹 회원 여부를 응답에 포함
-	        }
 	    } else {
 	        map.put("result", "fail");
 	        map.put("message", "아이디와 비밀번호를 확인해주세요.");
@@ -155,6 +115,30 @@ public class loginController extends CommonRestController {
 
 	    return ResponseEntity.ok(map);
 	}
+	
+	
+	
+	//로그인 성공 후 그룹가입 여부에 따른 처리 
+	@PostMapping("/studentLogin")
+	public @ResponseBody Map<String, Object> loginMemberCheck(@RequestBody memberVO member, HttpSession session){
+	    // 그룹 회원 여부에 따라 isGroupMember 값을 설정
+		System.out.println();
+		
+	    int loginRes = loginService.loginCheck(member.getStudentid());
+	    
+	    
+	    Map<String, Object> map = new HashMap<String, Object>();
+	    
+	    if (loginRes >= 1) {
+            map.put("result", "success");
+            return responseMap(REST_SUCCESS, "로그인 성공(숙제페이지 이동)");
+        } else {
+            map.put("result", "false");
+            System.out.println("여기에 왔다========================");
+            return responseMap(REST_FAIL, "로그인 성공(그룹 신청 페이지 이동)");
+        }
+	}
+	
 	
 	
 	// 아이디 찾기

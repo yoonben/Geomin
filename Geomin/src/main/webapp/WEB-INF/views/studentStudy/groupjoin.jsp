@@ -65,6 +65,8 @@
 
 <script type="text/javascript">
     window.addEventListener('load', function(){
+    	
+ 
    	 	const subnavi1 = document.getElementById('subnavi1');
     	const subnavi2 = document.getElementById('subnavi2');
     	const introductionbtn = document.getElementById('introductionbtn');
@@ -101,7 +103,7 @@
     		$('#introduction1').hide();
     	});
 
-    
+    	
     	//숙제 목록 전체선택 /부분선택
 		$(function(){
 			var chkObj = document.getElementsByName('rowCheck');
@@ -122,6 +124,10 @@
 				}
 			});
 		});
+    	
+
+    	studentLogin();	
+    
     	/*
 	    yearSelect.addEventListener('change', function () {
 	    	const yearSelect = document.querySelector('#yearSelect');
@@ -131,6 +137,7 @@
 	        monthChart(yearInput.value);
     	*/
 		
+    	
 		let groupSelect = document.getElementById('groupSelect');
 		let groupCont = document.getElementById('groupCont');
 		groupCont.style.display = 'none';
@@ -221,6 +228,35 @@
 		    });
 		}
 		
+		
+		function studentLogin(){
+			
+			let intro1 = document.getElementById('introduction1');
+			let intro2 = document.getElementById('introduction2');
+		
+			let obj = {
+					studentid: document.querySelector('#studentid').value
+			}
+			    
+			
+			fetchPost('/geomin/studentLogin', obj, (map) => {
+				
+			
+			  console.log("map.result : ", map.result);
+			  
+			  if (map.result === "success") {
+			      // 그룹 회원인 경우 숙제 제출 섹션 표시
+				  intro2.style.display='block';
+				  intro1.style.display='none';
+			  }else{
+				  intro2.style.display='none';
+				  intro1.style.display='block';
+			  }
+			});
+        }
+        
+		
+			
 		function toggleCheckboxes() {
 		    var checkboxes = document.querySelectorAll('input[type="checkbox"].Checkbox');
 		    var allCheck = document.getElementById('allCheckbox');

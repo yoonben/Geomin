@@ -57,31 +57,29 @@ public class teacherController extends CommonRestController{
 		teacherService.regStudyGroup(groupData);
 	}
 	
-	/*
-	 * //★그룹아이디 중복처리
-	 * 
-	 * @PostMapping("/teacher/checkGroupid") public int
-	 * checkGroupid(@RequestParam("groupid") contentVO groupid) {
-	 * System.out.println("groupid : " + groupid); //int cnt =
-	 * teacherService.checkGroupid(groupid); //System.out.println("cnt : " + cnt);
-	 * //return cnt; return 0; }
-	 */
+
+	 
+	 @PostMapping("/teacher/checkGroupid") 
+	  public int checkGroupid(@RequestParam("groupid") contentVO groupid) {
+	  System.out.println("groupid : " + groupid); 
+	  
+	  return 0; 
+	  }
+
 	
 	@ResponseBody
 	@RequestMapping(value = "/teacher/groupidCheck", method = RequestMethod.POST)
-	public int postIdCheck(@RequestParam(name = "groupid") String groupid, HttpServletRequest req) throws Exception {
+	public int postIdCheck(@RequestParam(name = "groupid") memberVO vo, HttpServletRequest req) throws Exception {
 
-		String groupidVal = req.getParameter("groupid");
-		System.out.println("groupid=========" + groupidVal);
-
-		int groupidCheck = teacherService.checkGroupid(groupidVal);
+		List<memberVO> groupidCheck = teacherService.checkGroupid(vo);
 		System.out.println("groupidCheck=========" + groupidCheck);
 
 		int result = 0;
 
-		if (groupidCheck == 1) {
+		if (groupidCheck != null) {
 			result = 1;
 		}
+		
 		return result;
 	}
 	
@@ -89,8 +87,10 @@ public class teacherController extends CommonRestController{
 	// 그룹 신청한 학습자 리스트
 	@GetMapping("/teacher/teacherMain")
 	public String getGroup(Model model, memberVO vo) {
+		System.out.println("vo : "+	vo);
 		
 		List<memberVO> list = teacherService.contentList();	
+		
 		model.addAttribute("contentRes", list);		
 		
 		return "/teacher/teacherMain";
@@ -162,7 +162,7 @@ public class teacherController extends CommonRestController{
 //	}
 	
 	@PostMapping("/joinStatus")
-	public @ResponseBody Map<String, Object> joinjoinStatus(@RequestBody List<memberVO> memberidOutput_list, Model model) {
+	public @ResponseBody Map<String, Object> joinjoinStatus(@RequestBody List<memberVO> memberidOutput_list) {
 	    try {
 	    	System.out.println("memberidOutput_list2 : " + memberidOutput_list);
 	        

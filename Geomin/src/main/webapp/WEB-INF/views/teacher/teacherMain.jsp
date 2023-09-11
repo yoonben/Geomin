@@ -60,6 +60,7 @@
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
+    
     window.addEventListener('load', function(){
     	
    	 	const subnavi1 = document.getElementById('subnavi1');
@@ -106,29 +107,24 @@
     		location.href="../teacher/homeworkEvaluation";
     	});
     	
-    	/*
-    	$('#introductionbtn').click(function (){
-			console.log('#introductionbtn 작동 개시');
-			joinStatusValue();
-    	});
-		
+    	
+  	
+    	$('#contentSelect').click(function (){
+			console.log('#contentSelect 작동 개시');
+
 			console.log('클릭되었어요');
 			
 			let obj = {
-		        	   sname : document.getElementById('sname').value,
-		        	   groupid : document.getElementById('groupid').value
+		        	   memberid : document.getElementById('memberid').value
 		        }
 		        
 			console.log(obj);
-		fetchPost('/geomin/joinStatus', obj, (map) => {
+		
+			fetchPost('/geomin/groupidCheck', obj, (map) => {
 			
-			document.getElementById('sname').value= map.membervo.sname;
-			document.getElementById('groupid').value= map.membervo.groupid;
 		})
 	
-	alert("그룹 가입 신청을 승인하였습니다.");
-	});*/
-
+	});
     		
 
 
@@ -319,7 +315,7 @@
 			    });
 			});	  
 			 */
-
+			 
 	});
 	
 	/* $('#introductionbtn').click(function() {
@@ -347,7 +343,7 @@
    					sname: $row.find('td:eq(1)').text()
    			}
    			var rowData2 = {
-   					memberid : document.getElementById("memberid")
+   					memberid : document.getElementById("memberid").value
    			}
    		memberidOutput_list.push(rowData);
    		memberidOutput_list.push(rowData2);

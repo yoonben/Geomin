@@ -182,13 +182,18 @@
 	</select>
 	
 	<!-- //★그룹아이디 중복처리 -->
-	<select id="checkGroupid"  resultType="int">
+<!-- 	<select id="checkGroupid"  resultType="int">
 		SELECT
 			COUNT(groupid)
 		FROM
 			STUDY_GROUP
 		where 
 			groupid = #{groupid}
+	</select> -->
+	
+	<select id="checkGroupid"  resultType="com.geomin.VO.memberVO">
+		SELECT groupid FROM STUDY_GROUP
+			where  memberid = #{memberid}
 	</select>
 	
 	<insert id="regStudyGroup" parameterType="java.util.List">
