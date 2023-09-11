@@ -313,11 +313,11 @@
 
 					<form id='groupjoinForm' name='groupjoin'>
 
-						<input type="text" name="groupid" id='groupid' value=""> 
-						<input type="text" name="studentid" id='studentid' value="${member.memberid}"> 
-						<input type="text" name="sname" id='sname' value="${member.mname}"> 
-						<input type="text" name="pkgid" id='pkgid' value=""> 
-						<input type="text" name="memberid" id='memberid' value="">
+						<input type="hidden" name="groupid" id='groupid' value=""> 
+						<input type="hidden" name="studentid" id='studentid' value="${member.memberid}"> 
+						<input type="hidden" name="sname" id='sname' value="${member.mname}"> 
+						<input type="hidden" name="pkgid" id='pkgid' value=""> 
+						<input type="hidden" name="memberid" id='memberid' value="">
 
 						<table class="table" border="1px solid"
 							style="height: 50%; weight: 100%">

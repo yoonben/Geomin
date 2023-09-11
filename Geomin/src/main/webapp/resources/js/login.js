@@ -25,12 +25,12 @@ window.addEventListener('load', function(){
 		  .then(data => {
 			// 서버에서 가져온 그룹 회원 여부 정보를 JavaScript 변수로 저장
 			  let isGroupMember = data.isGroupMember;
-
+			  console.log("isGroupMember : ", isGroupMember);
 			  // 그룹 회원 여부에 따라 페이지 섹션을 표시
 			  let intro1 = document.getElementById("introduction1");
 			  let intro2 = document.getElementById("introduction2");
 
-			  if (isGroupMember) {
+			  if (true) {
 			      // 그룹 회원인 경우 숙제 제출 섹션 표시
 			      intro2.style.display = "block";              
 			  } else {

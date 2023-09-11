@@ -126,7 +126,7 @@ public class loginController extends CommonRestController {
 	    System.out.println("pw : " + member.getMpassword());
 
 	    memberVO membervo = loginService.login(member);
-	    Map<String, Object> map = new HashMap<>();
+	    Map<String, Object> map = new HashMap<String, Object>();
 	    
 	    // 그룹 회원 여부에 따라 isGroupMember 값을 설정
 	    int loginRes = loginService.loginCheck(member.getMemberid());
@@ -138,12 +138,13 @@ public class loginController extends CommonRestController {
 	        
 	        System.out.println("loginRes : ===============" + loginRes);
 
-	        if (loginRes == 1) {
+	        if (loginRes >= 1) {
 	            map.put("result", "success");
 	            //map.put("message", "로그인 되었습니다.");
 	            map.put("isGroupMember", true); // 그룹 회원 여부를 응답에 포함
 	        } else {
 	            map.put("result", "success");
+	            System.out.println("여기에 왔다========================");
 	            //map.put("message", "로그인 되었습니다. (그룹 회원이 아닙니다.)");
 	            map.put("isGroupMember", false); // 그룹 회원 여부를 응답에 포함
 	        }
