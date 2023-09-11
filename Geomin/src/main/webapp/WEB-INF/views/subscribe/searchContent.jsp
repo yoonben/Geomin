@@ -78,10 +78,17 @@ th, tr, td{
 					</thead>
 					<tbody>
 					<c:forEach var="list" items="${list}">
+					
 						<tr id="data-raw" class="data-raw" data-value="${list.difficulty }">
-							<td><input type="checkbox" name="check" value="check" id="check"></td>
+								<c:choose>
+									<c:when test="${list.pkgId eq list2.pkgId}">
+										<td><input type="checkbox" name="check" value="check" id="check" disabled="disabled"></td>
+									</c:when>
+									<c:otherwise>
+										<td><input type="checkbox" name="check" value="check" id="check"></td>
+									</c:otherwise>
+								</c:choose>
 							<td style="display: none;">${list.pkgId }</td>
-							<%-- <td>${list.pkgId }</td> --%>
 							<td>${list.pkgName }</td>
 							<td>${list.personnel }</td>
 							<td>${list.fixedPrice }</td>
@@ -102,6 +109,17 @@ th, tr, td{
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$('input[type="checkbox"][name="check"]').click(function(){
+			 
+			if($(this).prop('checked')){
+		 
+				$('input[type="checkbox"][name="check"]').prop('checked',false);
+			 
+			    $(this).prop('checked',true);
+			 
+			 }
+		});
+		
 		const dataRows = document.querySelectorAll("tr.data-raw");
 		$('#searchButton').click(function() {
 			$('tr.data-raw').hide();
