@@ -205,8 +205,10 @@ window.addEventListener('load', function(){
 				,groupid : homeworkGroupSelect.value
 				,pageNo: 1
 		    };
-		    
-		fetchPost('/geomin/howorkList', obj, (map) => {
+			
+			console.log(obj);
+		
+		fetchPost('/geomin/homeworkID', obj, (map) => {
 			if(map.homeworklist.length > 0){
 				
 				map.homeworklist.forEach(function(item, index) {
