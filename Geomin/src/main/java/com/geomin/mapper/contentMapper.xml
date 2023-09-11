@@ -13,17 +13,36 @@
 			elimination = 'N'
 	</select>
 	
+	<!-- 구독한 학습 컨텐츠의 아이디 가졍오기 -->
+	<select id="getpkgId" resultType="com.geomin.VO.contentVO">
+		SELECT
+    		P.pkgId    		
+		FROM 
+    		package p
+		JOIN
+    		PKGSUBSDETAIL D
+		ON  
+    		P.pkgId = D.pkgId
+		JOIN
+    		member m
+		ON 
+    		D.memberID = m.memberID
+		LEFT JOIN
+    		study_group g
+		ON
+    		D.pkgId = g.pkgId
+		WHERE 
+    		p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6'
+	</select>
+	
 	<!-- //체크박스가 선택된 라인의 데이터 처리 -->
 	<insert id="addSubContent" parameterType="java.util.List"> 
 		<foreach collection="list" item="list"><!--  separator=";" -->
-    		INSERT INTO PKGSUBSDETAIL(pkgId, memberID, PKGNAME, SUBSDATE, PERSONNEL, SUBSPRICE)
-    		VALUES (#{list.pkgId}, 'memberID22', #{list.pkgName}, sysdate, #{list.personnel}, #{list.finalPrice})
-<!--     		INSERT INTO STUDY_GROUP(GROUPID)
-    		VALUES ('NOT GROUP')
-    		INSERT INTO PACKAGE(finalPrice)
-    		VALUES (#{list.finalPrice}) -->
+    		INSERT INTO PKGSUBSDETAIL(pkgId, memberID, PKGNAME, SUBSDATE, PERSONNEL, CURPERSONNEL, SUBSPRICE)
+    		VALUES (#{list.pkgId}, 'memberID6', #{list.pkgName}, sysdate, #{list.personnel}, 0 ,#{list.finalPrice})
     	</foreach>
 	</insert>
+	
 	
 	<select id="getSubList" resultType="com.geomin.VO.contentVO">
 		SELECT
@@ -51,21 +70,6 @@
 		ON
     		D.pkgId = g.pkgId
 		WHERE 
-    		p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID22'
+    		p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6'
 	</select>
-	
-	<!-- <select id="">
-	<![CDATA[ 
-	SELECT
-  TO_CHAR(calendar_day, 'YYYY-MM-DD') AS calendar_day,
-  TO_CHAR(calendar_day, 'Day') AS day_name
-FROM (
-  SELECT
-    TRUNC(TO_DATE('2023' || LPAD('8', 2, '0') || '01', 'YYYYMMDD') + (LEVEL - 1)) AS calendar_day
-  FROM dual
-  CONNECT BY LEVEL <= LAST_DAY(TO_DATE('2023' || LPAD('8', 2, '0') || '01', 'YYYYMMDD')) - TO_DATE('2023' || LPAD('8', 2, '0') || '01', 'YYYYMMDD') + 1
-) WHERE calendar_day >= SYSDATE;
- ]]>
-</select>	 -->
-
 </mapper>

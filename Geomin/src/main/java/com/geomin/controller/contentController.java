@@ -31,9 +31,9 @@ public class contentController {
 		List<contentVO> list = contentService.getList();
 		model.addAttribute("list", list);
 		
-		//구독한 학습 컨텐츠 출력
-		List<contentVO> list2 = contentService.getSubList();
-		model.addAttribute("list2", list2);
+		//구독한 학습 컨텐츠 아이디 찾아오기
+		List<contentVO> pkgId = contentService.getpkgId();
+		model.addAttribute("pkgId", pkgId);
 		
 		return "subscribe/searchContent";
 	}

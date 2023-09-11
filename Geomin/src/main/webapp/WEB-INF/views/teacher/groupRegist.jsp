@@ -350,7 +350,7 @@ $("#groupidCheck").click(function(){
 
 // 인원수 유효성 검사
     const groupperson = document.getElementById("groupperson");
-    const maxgroupperson = document.getElementById("maxgroupperson").value;
+    const maxgroupperson = document.getElementById("maxgroupperson");
     console.log('maxgroupperson : ' , maxgroupperson);
     const regGroupperson = /^[0-9]+$/;
 	const personErrorElement = document.getElementById("grouppersonError");

@@ -8,6 +8,7 @@ public interface contentMapper {
 
 	List<contentVO> getList();
 	
+	List<contentVO> getpkgId();
 	List<contentVO> getSubList();
 	
 	void addSubContent(List<contentVO> checked_Data);

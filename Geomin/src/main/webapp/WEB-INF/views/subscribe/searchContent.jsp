@@ -63,7 +63,7 @@ th, tr, td{
 				<button id="searchButton">조회</button>
 				<br>
 			<div class="content">
-				<table id="result-table">
+				<%-- <table id="result-table">
 					<thead>
 					<tr>
 						<th style="font-weight: 900;">ㅁ</th>
@@ -77,18 +77,23 @@ th, tr, td{
 					</tr>
 					</thead>
 					<tbody>
+					<c:forEach var="pkgIdItem" items="${pkgId}">
+						<td style="display: none">${pkgIdItem.pkgId}</td>
+						<tr data-pkgid="${pkgIdItem.pkgId}"></tr>
+					</c:forEach>
 					<c:forEach var="list" items="${list}">
-					
+						<tr data-pkgid="${list.pkgId}"></tr>
 						<tr id="data-raw" class="data-raw" data-value="${list.difficulty }">
-								<c:choose>
-									<c:when test="${list.pkgId eq list2.pkgId}">
-										<td><input type="checkbox" name="check" value="check" id="check" disabled="disabled"></td>
-									</c:when>
-									<c:otherwise>
-										<td><input type="checkbox" name="check" value="check" id="check"></td>
-									</c:otherwise>
-								</c:choose>
+							<c:choose>
+								<c:when test="${list.pkgId eq pkgIdItem.pkgId}">
+									<td><input type="checkbox" name="check" value="check" id="check" disabled="disabled"></td>
+								</c:when>
+								<c:otherwise>
+									<td><input type="checkbox" name="check" value="check" id="check"></td>
+								</c:otherwise>
+							</c:choose>
 							<td style="display: none;">${list.pkgId }</td>
+							<td style="display: none">${list.pkgId}</td>
 							<td>${list.pkgName }</td>
 							<td>${list.personnel }</td>
 							<td>${list.fixedPrice }</td>
@@ -98,7 +103,38 @@ th, tr, td{
 						</tr>
 					</c:forEach>
 					</tbody>
-				</table>
+				</table> --%>
+				<table id="result-table">
+    <thead>
+        <tr>
+            <th style="font-weight: 900;">ㅁ</th>
+            <th>패키지명</th>
+            <th>학습 인원</th>
+            <th>정가</th>
+            <th>최종가</th>
+            <th>학습 수준</th>
+            <th>학습 내용</th>
+            <!-- <th>구독</th> -->
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach var="pkgIdItem" items="${pkgId}">
+            <p id="pkgIdItem" data-value= "${pkgIdItem.pkgId}"></p>
+        </c:forEach>
+        <c:forEach var="list" items="${list}">
+            <tr data-pkgid="${list.pkgId}">
+                <td><input type="checkbox" name="check" value="check" class="check"></td>
+                <td style="display: none" id="listpkgId">${list.pkgId}</td>
+                <td>${list.pkgName}</td>
+                <td>${list.personnel}</td>
+                <td>${list.fixedPrice}</td>
+                <td class="list_finalPrice">${list.finalPrice}</td>
+                <td>${list.difficulty}</td>
+                <td>${list.pkgContent}</td>
+            </tr>
+        </c:forEach>
+    </tbody>
+</table>
 				<button id="reqSubscribe">구독 신청</button>
 			</div>
 			<!-- <div class='banner'></div> -->
@@ -120,6 +156,60 @@ th, tr, td{
 			 }
 		});
 		
+		/* $('.data-raw input[type="checkbox"]').prop('disabled', function () {
+	        var pkgId = $(this).closest('tr').data('pkgid');
+	        return pkgId !== undefined && pkgId !== null && pkgId !== '';
+	    }); */
+		
+	   /*  $('.check').prop('disabled', function () {
+	    	var listpkgId = $(this).closest('tr').data('pkgid'); // 현재 행의 pkgId 값을 가져옵니다.
+	        console.log('listpkgId : ' , listpkgId);
+	        //var pkgIdItem = ${pkgIdItem.pkgId}; // pkgIdItem의 값입니다.
+	       // var pkgIdItempkgId = document.getElementById('pkgIdItem').textContent; // pkgIdItem의 값입니다.
+	       //var pkgIdItempkgId = document.getElementById('pkgIdItem').value; // pkgIdItem의 값입니다.
+	       	var pkgIdItems = document.querySelectorAll('#pkgIdItem');
+	       	var pkgIdItemValue = null;
+	       	var pkgIdValues = [];
+	       	pkgIdItems.forEach(function (element) {
+    			var pkgIdItemValue = element.getAttribute('data-value');
+    			pkgIdValues.push(pkgIdItemValue); 
+			});
+	       	pkgIdValues.forEach(function (pkgIdValue) {
+	       	});
+	        	return listpkgId === pkgIdValue;
+	    }); */
+	    
+	    $('.check').prop('disabled', function () {
+	    
+	    var pkgIdValues = []; // 데이터 속성 값을 저장할 배열을 만듭니다.
+
+	    // 여러 개의 요소를 선택합니다.
+	    var pkgIdItems = document.querySelectorAll('#pkgIdItem');	//구독한 컨텐츠의 아이디
+
+	    // 각 요소의 데이터 속성 값을 배열에 저장합니다.
+	    pkgIdItems.forEach(function (element) {
+	        var pkgIdItemValue = element.getAttribute('data-value');
+	        pkgIdValues.push(pkgIdItemValue); // 배열에 값을 추가합니다.
+	    });
+		console.log('pkgIdValues : ' , pkgIdValues);
+		
+	    //var listpkgId = document.getElementById('listpkgId').textContent;
+	    
+		/* $('.data-raw input[type="checkbox"]').prop('disabled', function () { */
+	    	var listpkgId = $(this).closest('tr').data('pkgid'); // 현재 행의 pkgId 값을 가져옵니다.
+			console.log('listpkgId : ' , listpkgId);
+	        
+	        // pkgIdValues 배열을 순회하면서 현재 행의 pkgId와 비교합니다.
+	        for (var i = 0; i < pkgIdValues.length; i++) {
+	            if (listpkgId === pkgIdValues[i]) {
+	                return true; // 현재 행의 pkgId가 배열에 포함된 경우 checkbox를 비활성화합니다.
+	            }
+	        }
+	        
+	        return false; // 현재 행의 pkgId가 배열에 포함되지 않은 경우 checkbox를 활성화합니다.
+	    });
+	    
+	    
 		const dataRows = document.querySelectorAll("tr.data-raw");
 		$('#searchButton').click(function() {
 			$('tr.data-raw').hide();

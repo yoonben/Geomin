@@ -39,4 +39,10 @@ public class contentServiceImpl implements contentService{
 		return helloMapper.regSubinfo();
 	}
 
+	@Override
+	public List<contentVO> getpkgId() {
+		// TODO Auto-generated method stub
+		return helloMapper.getpkgId();
+	}
+
 }
