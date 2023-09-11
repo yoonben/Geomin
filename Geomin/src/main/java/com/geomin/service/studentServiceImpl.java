@@ -22,6 +22,10 @@ public class studentServiceImpl implements studentService {
 		return studentmapper.groupList();
 	}
 	
+	@Override
+	public List<packageVO> teacherGroupList(packageVO pkg) {
+		return studentmapper.teacherGroupList(pkg);
+	}
 
 
 

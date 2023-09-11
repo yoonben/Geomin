@@ -266,56 +266,43 @@
 		    }
 		}
 		
-		function workSubmit() {
+		// 선생님 검색 
+		function teacherSearch() {
 			
-			const selectedCheckboxes = document.querySelectorAll('.Checkbox:checked');
-			
-			 if (selectedCheckboxes.length > 0) {
+			let obj = {
+					mName: document.querySelector('#teacherName').value
+			}
+			   
+			fetchPost('/geomin/teacherSearch', obj, (map) => {
+				.then(response => response.json())
+		        .then(data => {
+	        	if (data && data.teacherGroups) {
+		        
+				 // 받아온 데이터로 select 옵션 업데이트
+                const groupSelect = document.getElementById("groupSelect");
+                groupSelect.innerHTML = ""; // 기존 옵션 삭제
+                
+                data.teacherGroups.forEach(group => {
+                    const option = document.createElement("option");
+                    option.value = group.groupid;
+                    option.textContent = group.pkgname;
+                    groupSelect.appendChild(option);
+                });
 
-			        console.log('selectedCheckboxes.length:', selectedCheckboxes.length);
-			        
-			        let deleteCount = 0; // 실제 삭제된 패키지 수 추적
-					let i = 0;
-			        
-			        
-			        selectedCheckboxes.forEach(checkbox => {
-			            console.log(checkbox.value);
-						
-			            const studycont = document.querySelector('#studycont'+i).value.trim();
-					    
-					    if (studycont === "") {
-					        alert("학습 내용을 입력하세요.");
-					        return; // Prevent further processing if the textarea is empty
-					    }
-			            
-			            let obj = {
-			            	homeworkno : document.querySelector('#homeworkno'+i).value
-			            	, studentid: checkbox.value
-			            	, studycont : document.querySelector('#studycont'+i).value
-			            
-			            }
-			            
-			            console.log(obj);
-			            
-			            fetchPost('/geomin/studentHomework', obj, (map) => {
-			                deleteCount++; 
-			                if (deleteCount === selectedCheckboxes.length) {
-			                    
-			                    alert(map.msg);
-
-			                    // 작업 완료로 표시
-			                    deletingInProgress = false;
-			                }
-			            })
-			            
-			           i++
-			 		})
-			        
-			 	}else {
-		 			alert("숙제 보내는 중 예외사항이 발생 하였습니다.");
-			    }
-			
-		}    
+                // 그룹 정보 표시
+                if (data.teacherGroups.length > 0) {
+                    displayGroupInfo(data.teacherGroups[0]);
+                }
+            } else {
+                console.error('Invalid response from server.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+		
+		
 	</script>
 
 
@@ -347,63 +334,77 @@
 					<h3>"바둑의 첫 걸음, 그룹신청!"</h3>
 					<br>
 
-					<form id='groupjoinForm' name='groupjoin'>
+				<form id='groupjoinForm' name='groupjoin'>
 
-						<input type="hidden" name="groupid" id='groupid' value=""> 
-						<input type="hidden" name="studentid" id='studentid' value="${member.memberid}"> 
-						<input type="hidden" name="sname" id='sname' value="${member.mname}"> 
-						<input type="hidden" name="pkgid" id='pkgid' value=""> 
-						<input type="hidden" name="memberid" id='memberid' value="">
+					<input type="hidden" name="groupid" id='groupid' value=""> 
+					<input type="hidden" name="studentid" id='studentid' value="${member.memberid}"> 
+					<input type="hidden" name="sname" id='sname' value="${member.mname}"> 
+					<input type="hidden" name="pkgid" id='pkgid' value=""> 
+					<input type="hidden" name="memberid" id='memberid' value="">
 
-						<table class="table" border="1px solid"
-							style="height: 50%; weight: 100%">
-							<thead>
-								<tr class="table-success">
-									<th>그룹목록</th>
-									<td><select id='groupSelect' class="form-select" aria-label="Default select example">
-											<option selected>그룹 선택</option>
-											<c:forEach var="groupRes" items="${groupRes }">
-												<option value="${groupRes.groupid}">${groupRes.groupid}</option>
-											</c:forEach>
-									</select></td>
-								</tr>
-							</thead>
+					<!-- 선생님 이름 검색 박스 시작 -->
+					<div style="width: 100%; height: 50px;" class="d-grid gap-2 d-md-flex justify-content-md-end">
+						<div style="width: 75%; float: left;">
+							<div style="width: 15%; float: left; line-height: 30px;">선생님 : </div>
+							<div style="width: 35%; float: left;">
+								<input class='form-control' type='text' name='teacherName' id='teacherName' value=''>
+							</div>
+						</div>
+						<div style="width: 20%; float: left;">
+							<button type="button" class="btn btn-success" onclick="teacherSearch()">검색</button>
+						</div>
+					</div>
+					<!-- 선생님 이름 검색 박스 끝 -->
+					
+					
+					<table class="table" border="1px solid" style="height: 50%; weight: 100%">
+						<thead>
+							<tr class="table-success">
+								<th>그룹목록</th>
+								<td><select id='groupSelect' class="form-select" aria-label="Default select example">
+										<option selected>그룹 선택</option>
+										<c:forEach var="groupRes" items="${groupRes }">
+											<option value="${groupRes.groupid}">${groupRes.groupid}</option>
+										</c:forEach>
+								</select></td>
+							</tr>
+						</thead>
 
-							<%-- <c:set var="groupPick" value="${groupSelect}"/> --%>
-							<tbody id='groupCont'>
-								<!-- 그룹목록 선택에 따른 정보 출력-->
-								<tr>
-									<th>학습컨텐츠</th>
-									<td><div id='pkgname'></div></td>
-								</tr>
-								<tr>
-									<th>학습내용</th>
-									<td><div id='pkgcont'></div></td>
-								</tr>
-								<tr>
-									<th>학습선생님</th>
-									<td><div id='mname'></div></td>
-								</tr>
-								<tr>
-									<th>학습기간</th>
-									<td><div id='period'></div></td>
-								</tr>
-								<tr>
-									<th>학습난이도</th>
-									<td><div id='difficulty'></div></td>
-								</tr>
-								<tr>
-									<th>가입현황</th>
-									<!-- 시간될때 현재 가입가능 여부  표시 -->
-									<td><div id='person'></div></td>
-								</tr>
-							</tbody>
+						<%-- <c:set var="groupPick" value="${groupSelect}"/> --%>
+						<tbody id='groupCont'>
+							<!-- 그룹목록 선택에 따른 정보 출력-->
+							<tr>
+								<th>학습컨텐츠</th>
+								<td><div id='pkgname'></div></td>
+							</tr>
+							<tr>
+								<th>학습내용</th>
+								<td><div id='pkgcont'></div></td>
+							</tr>
+							<tr>
+								<th>학습선생님</th>
+								<td><div id='mname'></div></td>
+							</tr>
+							<tr>
+								<th>학습기간</th>
+								<td><div id='period'></div></td>
+							</tr>
+							<tr>
+								<th>학습난이도</th>
+								<td><div id='difficulty'></div></td>
+							</tr>
+							<tr>
+								<th>가입현황</th>
+								<!-- 시간될때 현재 가입가능 여부  표시 -->
+								<td><div id='person'></div></td>
+							</tr>
+						</tbody>
 
-						</table>
-						<button type="button" class="btn btn-success" id="introductionbtn">그룹
-							신청하기</button>
-					</form>
-				</div>
+					</table>
+					<button type="button" class="btn btn-success" id="introductionbtn">그룹
+						신청하기</button>
+				</form>
+			</div>
 
 
 

@@ -15,6 +15,8 @@ public interface studentService {
 	// 그룹조회
 	public List<packageVO> groupList();
 	
+	// 그룹조회
+		public List<packageVO> teacherGroupList(packageVO pkg);
 	
 	public packageVO groupOne(packageVO pkg);
 	

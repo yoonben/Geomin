@@ -29,9 +29,6 @@ public class studentController extends CommonRestController{
 	@Autowired
 	studentService studentService;
 	
-	
-	
-
 
 	// 그룹 신청에서 그룹 조회 후 가입신청
 	@GetMapping("/studentStudy/groupjoin")
@@ -43,6 +40,25 @@ public class studentController extends CommonRestController{
 		return "/studentStudy/groupjoin";
 	}
 
+	
+	// 선생님 이름을 기반으로 해당 선생님의 그룹 정보를 조회
+	@PostMapping("/teacherSearch")
+    public @ResponseBody Map<String, Object> teacherSearch(@RequestBody Map<String, String> requestBody, packageVO vo) {
+        try {
+
+            List<packageVO> teacherGroups = studentService.teacherGroupList(vo);
+            System.out.println("teacherGroups=========="+ teacherGroups);
+            
+            Map<String, Object> map = responseMap(REST_SUCCESS, "그룹 조회 성공");
+            map.put("teacherGroups", teacherGroups);
+
+            return map;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return responseMap(REST_FAIL, "그룹 조회 중 오류 발생");
+        }
+    }
+	
 	
 	@PostMapping("/groupId")
 	public @ResponseBody Map<String, Object> groupPick(@RequestBody packageVO vo, Model model) {

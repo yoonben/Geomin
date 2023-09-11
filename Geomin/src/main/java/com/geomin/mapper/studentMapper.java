@@ -12,6 +12,9 @@ public interface studentMapper {
 	// 그룹조회
 	public List<packageVO> groupList();
 	
+	// 선생님이름으로 그룹조회
+	public List<packageVO> teacherGroupList(packageVO pkg);
+		
 	public packageVO groupOne(packageVO pkg);
 	
 	// 그룹가입 신청
