@@ -33,7 +33,7 @@
     		d.subsDate,
     		p.finalPrice,
     		p.difficulty,
-    		d.PERSONNEL,
+    		p.PERSONNEL,
     		p.pkgContent,
     		NVL2(g.groupID, g.groupID, 'NOT GROUP') AS groupID
 		FROM 

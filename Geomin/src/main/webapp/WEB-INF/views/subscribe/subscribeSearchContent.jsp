@@ -68,7 +68,7 @@ th, tr, td{
 						<th>학습 관리자</th>
 						<th>콘텐츠 이름</th>
 						<th>콘텐츠 구독 날짜</th>
-						<th>학습 가능 인원</th>
+						<th>학습 인원</th>
 						<th>콘텐츠 최종 가격</th>
 						<th>콘텐츠 수준</th>
 						<th>학습 그룹 등록</th>
@@ -114,6 +114,16 @@ th, tr, td{
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
+	$('input[type="checkbox"][name="check"]').click(function(){
+		 
+		if($(this).prop('checked')){
+	 
+			$('input[type="checkbox"][name="check"]').prop('checked',false);
+		 
+		    $(this).prop('checked',true);
+		 
+		 }
+	});
 	
     $('#1day').click(function () {
     	console.log('1일전 버튼 클릭');

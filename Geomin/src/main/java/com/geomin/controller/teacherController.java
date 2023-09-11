@@ -27,7 +27,7 @@ import com.geomin.service.teacherService;
 public class teacherController extends CommonRestController{
 	
 	@Autowired
-	private contentService helloService;
+	private contentService contentService;
 	
 	@Autowired
 	teacherService teacherService;
@@ -44,10 +44,15 @@ public class teacherController extends CommonRestController{
 	@GetMapping("/teacher/groupRegist")
 	public String groupRegist(@RequestParam(name = "pkgName", required = false, defaultValue = "") String pkgName, Model model) { 
 		List<contentVO> list1 = teacherService.getSubGroup();
+		
+		//
 		if (!pkgName.isEmpty()) {
 			model.addAttribute("list2", list1);
 		}	
 		model.addAttribute("pkgName", pkgName);
+		
+		List<contentVO> list = contentService.getSubList();
+		model.addAttribute("list", list);
 		return "/teacher/groupRegist";
 	}
 	

@@ -31,7 +31,9 @@ public class contentController {
 		List<contentVO> list = contentService.getList();
 		model.addAttribute("list", list);
 		
-		
+		//구독한 학습 컨텐츠 출력
+		List<contentVO> list2 = contentService.getSubList();
+		model.addAttribute("list2", list2);
 		
 		return "subscribe/searchContent";
 	}
@@ -46,10 +48,12 @@ public class contentController {
 //	}
 	
 	@PostMapping("searchContent")
-	public void searchContent(@RequestBody List<contentVO> checked_Data) {
+	public String searchContent(@RequestBody List<contentVO> checked_Data) {
 		System.out.println("checked_Data : " + checked_Data);
 		//체크박스가 선택된 라인의 데이터 처리
 		contentService.addSubContent(checked_Data);
+		
+		return "subscribe/searchContent";
 	}
 	
 	@GetMapping("subscribeSearchContent")

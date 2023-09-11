@@ -46,8 +46,7 @@
             		</div>
             		<div>
             			<label>그룹명 : </label>
-            			<input type="text" id="groupid" name = "groupid" placeholder="그룹명을 입력해 주세요" ><br>
-            			<input type='button' id='groupidCheck' name='groupidCheck'  value='중복확인버튼'>
+            			<input type="text" id="groupid" name = "groupid" placeholder="그룹명을 입력해 주세요" ><input type='button' id='groupidCheck' name='groupidCheck'  value='중복확인버튼'>
             			<div id='result'>아이디를 확인해주세요.</div>
             			<!-- <span class="id_ok">사용 가능한 아이디입니다.</span><br>
 						<span class="id_already">누군가 이 아이디를 사용하고 있어요.</span> -->
@@ -58,8 +57,13 @@
             		</div>
             		<div>
             			<label>학습 가능 인원 : </label>
-            			<input type="text" id='groupperson'  name='groupperson' placeholder="인원 수 적기"> 명
+            			<input type="text" id='groupperson'  name='groupperson' placeholder="인원 수 적기"> 명 / ${list2.personnel}명
             			<div id='grouppersonError'></div>
+            			<!-- <div id='grouppersonError2'></div> -->
+            		</div>
+            		<div style="display: none"><!--  -->
+            			<label>최대 학습 가능 인원 : </label>
+            			<input type="text" id='maxgroupperson' name='maxgroupperson' value='<c:out value = "${list2.personnel}" />' readonly="readonly" disabled="disabled">명
             		</div>
             		<div>
             			<label>학습 수준 : </label>
@@ -71,14 +75,18 @@
             		</div>
 					<div>
 						<label>학습 기간 : 최대 3개월</label> 
-							<select id="select_yearB" class= "select_yearB" onchange="javascript:lastdayB();"></select>
-							<select id="select_monthB" class= "select_monthB" onchange="javascript:lastdayB();"></select>
+							<!-- <select id="select_yearB" class= "select_yearB" onchange="javascript:lastdayB();"></select> -->
+							<select id="select_yearB" class= "select_yearB"></select>
+							<!-- <select id="select_monthB" class= "select_monthB" onchange="javascript:lastdayB();"></select> -->
+							<select id="select_monthB" class= "select_monthB"></select>
 							<select id="select_dayB" class= "select_dayB"></select>
 						
 							~
 						
-							<select id="select_yearA" class= "select_yearA" onchange="javascript:lastdayA();"></select>
-							<select id="select_monthA" class= "select_monthA" onchange="javascript:lastdayA();"></select>
+							<select id="select_yearA" class= "select_yearA" ></select>
+							<select id="select_monthA" class= "select_monthA"></select>
+<!-- 							<select id="select_yearA" class= "select_yearA" onchange="javascript:lastdayA();"></select>
+							<select id="select_monthA" class= "select_monthA" onchange="javascript:lastdayA();"></select> -->
 							<select id="select_dayA" class= "select_dayA"></select>
 						</div>
             		<div>
@@ -90,6 +98,12 @@
 			</c:when>
 			<c:otherwise>
                 <!-- pkgName이 비어있을 때 출력할 내용 -->
+               	 패키지 선택 : <select id="select_package">
+               	 			<option selected="selected">패키지 선택</option>
+               	 			<c:forEach items="${list}" var="list">
+               	 				<option id="">${list.pkgName }</option>
+               	 			</c:forEach>
+               	 </select>
                 <p>성공이다.</p>
             </c:otherwise>
         </c:choose>
@@ -132,8 +146,58 @@ $(document).ready(function () {
 		indexB++;
 		indexA++;
 	}
+	
+	$(document).ready(function () {
+	    $('#select_yearB, #select_monthB').on('change', function () {
+	        lastdayB();
+	    });
+	});
 
-	lastdayB();
+	function lastdayB() {
+	    var yearB = $('#select_yearB').val();
+	    var monthB = $('#select_monthB').val();
+	    var dayB = new Date(new Date(yearB, monthB, 1) - 86400000).getDate();
+	    var $selectDayB = $('#select_dayB');
+	    var dayindex_lenB = $selectDayB.find('option').length;
+
+	    if (dayB > dayindex_lenB) {
+	        for (var i = dayindex_lenB + 1; i <= dayB; i++) {
+	            $selectDayB.append($('<option>', {
+	                value: i,
+	                text: i
+	            }));
+	        }
+	    } else if (dayB < dayindex_lenB) {
+	        $selectDayB.find('option:gt(' + (dayB - 1) + ')').remove();
+	    }
+	}
+	
+	$(document).ready(function () {
+	    $('#select_yearA, #select_monthA').on('change', function () {
+	        lastdayA();
+	    });
+	});
+
+	function lastdayA() {
+	    var yearA = $('#select_yearA').val();
+	    var monthA = $('#select_monthA').val();
+	    var dayA = new Date(new Date(yearA, monthA, 1) - 86400000).getDate();
+	    var $selectDayA = $('#select_dayA');
+	    var dayindex_lenA = $selectDayA.find('option').length;
+
+	    if (dayA > dayindex_lenA) {
+	        for (var i = dayindex_lenA + 1; i <= dayA; i++) {
+	            $selectDayA.append($('<option>', {
+	                value: i,
+	                text: i
+	            }));
+	        }
+	    } else if (dayA < dayindex_lenA) {
+	        $selectDayA.find('option:gt(' + (dayA - 1) + ')').remove();
+	    }
+	}
+	
+	/* lastdayB();
 	function lastdayB(){ //년과 월에 따라 마지막 일 구하기 
 		var yearB = document.getElementById('select_yearB').value;
 		var monthB = document.getElementById('select_monthB').value;
@@ -151,9 +215,9 @@ $(document).ready(function () {
 				document.getElementById('select_dayB').options[i]=null;
 			}
 		}
-	}
+	} */
 
-	lastdayA();
+	/* lastdayA();
 	function lastdayA(){ //년과 월에 따라 마지막 일 구하기 
 		var yearA = document.getElementById('select_yearA').value;
 		var monthA = document.getElementById('select_monthA').value;
@@ -170,13 +234,14 @@ $(document).ready(function () {
 				document.getElementById('select_dayA').options[i]=null;
 			}
 		}
-	}
+	} */
 
 	$('#regStudy').click(function() {
 		const groupid = document.getElementById('groupid').value;
 		const groupperson = document.getElementById('groupperson').value;
 		const pkgId = document.getElementById('pkgId').value;
-		
+		const maxgroupperson = document.getElementById("groupperson").value;
+    	console.log('maxgroupperson : ' , maxgroupperson);
 		//1. groupid 중복 체크
 		/* $.ajax({
             url:'/geomin/teacher/groupRegist', //Controller에서 요청 받을 주소
@@ -197,8 +262,6 @@ $(document).ready(function () {
                 alert("에러입니다");
             }
         }); */
-		
-		
 		
 		var yearB = document.getElementById('select_yearB').value;
 		var monthB = document.getElementById('select_monthB').value;
@@ -252,7 +315,10 @@ $(document).ready(function () {
 			});
 		});
 	
-	
+	/* $('#select_package').click(function() {	
+		console.log('select_package 클릭완료 : ', select_package );
+		
+	}); */
 });
 
 //★그룹아이디 중복처리
@@ -284,15 +350,21 @@ $("#groupidCheck").click(function(){
 
 // 인원수 유효성 검사
     const groupperson = document.getElementById("groupperson");
+    const maxgroupperson = document.getElementById("maxgroupperson").value;
+    console.log('maxgroupperson : ' , maxgroupperson);
     const regGroupperson = /^[0-9]+$/;
 	const personErrorElement = document.getElementById("grouppersonError");
+	//const personErrorElement2 = document.getElementById("grouppersonError2");
 
+	if(groupperson != null){
 	groupperson.addEventListener('input', function () {
 	    hideErrorMessage(personErrorElement);
 	});
+	
 	// 비밀번호 입력창 벗어났을 때 오류 보여줌
 	groupperson.addEventListener('focusout', function () {
 	    const grouppersonValue = groupperson.value.trim();
+	    //const grouppersonValue2 = groupperson2.value.trim();
 	    
 	    //빈칸일 경우 아무것도 출력X
 	    if (grouppersonValue.length === 0) {
@@ -303,6 +375,10 @@ $("#groupidCheck").click(function(){
 	        displayErrorMessage(personErrorElement, "숫자만 입력 가능합니다.");
 	        return;
 	    }
+	    if(grouppersonValue > maxgroupperson){
+	    	displayErrorMessage(personErrorElement, "최대 학습 가능한 인원을 초과할 수 없습니다.");
+	    	return;
+		}
 	});
 	
 	function displayErrorMessage(element, message) {
@@ -312,8 +388,13 @@ $("#groupidCheck").click(function(){
 	function hideErrorMessage(element) {
 	    element.textContent = "";
 	}
-	
+}	
+</script>
 
+
+
+
+<script>
 /* $('#regStudy').click(function() {
 const groupid = document.getElementById('groupid').value;
 const groupperson = document.getElementById('groupperson').value;
