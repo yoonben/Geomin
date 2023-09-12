@@ -16,26 +16,24 @@
 			JOIN study_group g ON s.pkgid = g.pkgid
 			JOIN member m ON m.memberid = s.memberid
   	</select>
-  
+  	
+  	<!-- 선생님 검색  -->
+  	<select id='teacherSearch' resultType='com.geomin.VO.memberVO'>
+			SELECT memberid,mname,mtype,mphone
+			FROM member
+			WHERE mname = #{mname}
+  	</select>
+  	
   	<!-- 선생님 이름으로 그룹 목록 조회 -->
   	<select id='teacherGroupList' resultType='com.geomin.VO.packageVO'>
-			SELECT p.pkgName, p.difficulty, p.pkgcontent, m.mname,
-			       s.curpersonnel || '명' || '/' || s.personnel || '명' AS person,
-			       g.groupid,
-			       TO_CHAR(TO_DATE('20' || g.studyStartDate), 'YYYY-MM-DD') || ' ~ ' ||
-			       TO_CHAR(TO_DATE('20' || g.studyEndDate), 'YYYY-MM-DD') AS period
-			FROM package p
-			JOIN pkgsubsDetail s ON p.pkgid = s.pkgid
-			JOIN study_group g ON s.pkgid = g.pkgid
-			JOIN member m ON m.memberid = s.memberid
-			WHERE m.mname = #{mname}
+			select * from study_group where memberid = #{memberid}
   	</select>
   
   
 
   	  	<select id='groupOne' resultType='com.geomin.VO.packageVO'>
   		SELECT p.pkgid,p.pkgName, p.difficulty, p.pkgcontent, m.mname, g.memberid,
-			       s.curpersonnel || '명' || '/' || s.personnel || '명' AS person,
+			       (select count(*) from groupStudent where groupID = #{groupid} and groupjoinstatus = 'Y') || '명' || '/' || g.groupMem || '명' AS person,
 			       g.groupid,
 			       TO_CHAR(TO_DATE('20' || g.studyStartDate), 'YYYY-MM-DD') || ' ~ ' ||
 			       TO_CHAR(TO_DATE('20' || g.studyEndDate), 'YYYY-MM-DD') AS period
@@ -49,7 +47,7 @@
   	
   	<insert id='groupjoin'>
   		insert into groupstudent (studentid,groupid,pkgid,memberid,sname,groupresdate,groupjoinstatus) 
-  							values(#{studentid}, #{groupid}, #{pkgid} , #{memberid}, #{sname}, sysdate, 'N')
+  							values(#{studentid}, #{groupid}, LPAD(#{pkgid}, 4, '0') , #{memberid}, #{sname}, sysdate, 'N')
   	</insert>
   
   </mapper>

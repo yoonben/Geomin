@@ -196,8 +196,16 @@
 		
 		function homwerkList() {
 		    content = "";
+		    
+		    let studentid = document.querySelector('#studentid').value
+		    
+		    if(studentid === null || studentid === ''){
+				alert("로그인후 이용할 수 있습니다.")
+				return;
+			}
+		    
 		    let obj = {
-		        studentid: document.querySelector('#studentid').value
+		        studentid: studentid
 		    };
 		    
 		    console.log(obj);
@@ -268,40 +276,35 @@
 		
 		// 선생님 검색 
 		function teacherSearch() {
+			content = '';
+			let studentid = document.querySelector('#studentid').value
+			
+			if(studentid === null || studentid === ''){
+				alert("로그인후 이용할 수 있습니다.")
+				return;
+			}
 			
 			let obj = {
-					mName: document.querySelector('#teacherName').value
+					mname : document.querySelector('#teacherName').value
 			}
 			   
 			fetchPost('/geomin/teacherSearch', obj, (map) => {
-				.then(response => response.json())
-		        .then(data => {
-	        	if (data && data.teacherGroups) {
-		        
-				 // 받아온 데이터로 select 옵션 업데이트
-                const groupSelect = document.getElementById("groupSelect");
-                groupSelect.innerHTML = ""; // 기존 옵션 삭제
-                
-                data.teacherGroups.forEach(group => {
-                    const option = document.createElement("option");
-                    option.value = group.groupid;
-                    option.textContent = group.pkgname;
-                    groupSelect.appendChild(option);
-                });
+				if(map.result == 'success'){
+					content += '<option selected>그룹을 선택해주세요</option>';
+					
+					map.teacherGroups.forEach(function (item, index) {
+						content +='<option	>'+item.groupid+'</option>';
+					})
+					
+					document.querySelector('#groupSelect').innerHTML = content;
+				}else{
+					alert(map.msg)
+				}
+	        	
+            } )
+        }
 
-                // 그룹 정보 표시
-                if (data.teacherGroups.length > 0) {
-                    displayGroupInfo(data.teacherGroups[0]);
-                }
-            } else {
-                console.error('Invalid response from server.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
-		
+	
 		
 	</script>
 
@@ -362,10 +365,7 @@
 							<tr class="table-success">
 								<th>그룹목록</th>
 								<td><select id='groupSelect' class="form-select" aria-label="Default select example">
-										<option selected>그룹 선택</option>
-										<c:forEach var="groupRes" items="${groupRes }">
-											<option value="${groupRes.groupid}">${groupRes.groupid}</option>
-										</c:forEach>
+										<option selected>선생님을 검색해주세요</option>
 								</select></td>
 							</tr>
 						</thead>
