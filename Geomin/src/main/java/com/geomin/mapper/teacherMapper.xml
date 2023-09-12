@@ -10,7 +10,7 @@
   	
   	
   	 <select id='contentOne' resultType='com.geomin.VO.memberVO'>
-  		select m.memberid, m.mname, m.mphone
+  			select m.memberid, m.mname, m.mphone
             , TRUNC(MONTHS_BETWEEN(SYSDATE, TO_DATE(mbirthdate, 'YYYY-MM-DD')) / 12) AS mbirthdate
             , g.groupjoinstatus, TO_char(g.groupresdate, 'YYYY-MM-DD') as groupresdate
             ,(select count(*) from groupStudent g where g.groupid = #{groupid} and GROUPJOINSTATUS = 'Y') || '명' || '/' || s.groupMem || '명' AS person
@@ -18,24 +18,29 @@
             join member m on g.studentid = m.memberid 
             JOIN study_group s ON g.pkgid = s.pkgid
   			where g.groupid = #{groupid}
+  	 </select>
+	
+	<select id='groupjoinstatusOne' resultType='com.geomin.VO.groupstudentVO'>
+  			select groupjoinstatus from groupStudent  where studentid = #{studentid}
+  	 </select>
+	
+	<select id='totalGroupStu' resultType='int'>
+		select count(*) from groupStudent g where g.groupid = #{groupid} and GROUPJOINSTATUS = 'Y'
   	</select>
-
-
-	<update id="updateJoinStatus" parameterType="java.util.List">
+	
+	<select id='totalgroupmem' resultType='int'>
+		select groupmem from study_group where groupid = #{groupid}
+  	</select>
+	
+	
+	<update id="updateJoinStatus">
 	    UPDATE groupstudent
 	    SET groupjoinstatus = CASE 
 	                            WHEN groupjoinstatus = 'Y' THEN 'N'
 	                            WHEN groupjoinstatus = 'N' THEN 'Y'
 	                            ELSE groupjoinstatus
-	                        END
-	    WHERE memberid IN
-	   <foreach collection="list" item="list" open="(" separator="," close=")">
-        	#{list.memberid}
-       </foreach>
-    	AND sname IN
-    	<foreach collection="list" item="list" open="(" separator="," close=")">
-        	#{list.sname}
-    	</foreach>
+	                          END
+	    WHERE studentid = #{studentid}
 	</update>
 	
 	

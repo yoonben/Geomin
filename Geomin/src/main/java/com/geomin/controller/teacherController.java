@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.geomin.VO.contentVO;
+import com.geomin.VO.groupstudentVO;
 import com.geomin.VO.memberVO;
 import com.geomin.VO.packageVO;
 import com.geomin.service.contentService;
@@ -148,17 +149,60 @@ public class teacherController extends CommonRestController{
 
 	
 	@PostMapping("/joinStatus")
-	public @ResponseBody Map<String, Object> joinjoinStatus(@RequestBody List<memberVO> memberidOutput_list) {
+	public @ResponseBody Map<String, Object> joinjoinStatus(@RequestBody groupstudentVO groupstudent) {
 	    try {
-	    	System.out.println("memberidOutput_list2 : " + memberidOutput_list);
-	        
-	        int updateRes = teacherService.updateJoinStatus(memberidOutput_list);
-	        System.out.println("updateRes : " + updateRes);
-	        
-	        Map<String, Object> map = responseMap(REST_SUCCESS, "그룹 승인 완료!");
-	        map.put("updateRes", updateRes);
-
-	        return map;
+	    	
+	    	
+	    	if ("Y".equals(groupstudent.getGroupjoinstatus())) {
+	    		
+	    	    System.out.println(groupstudent);
+	    	    
+	    	    int res = teacherService.updateJoinStatus(groupstudent.getStudentid());
+	    	    
+    	    	if(res > 0) {
+    	    		groupstudentVO groupjoinstatusOne = teacherService.groupjoinstatusOne(groupstudent.getStudentid());
+    	    		
+	    	    	Map<String, Object> map = responseMap(REST_SUCCESS, "그룹 승인 완료!");
+	    	    	
+	    	    	map.put("groupjoinstatusOne", groupjoinstatusOne);
+	    	    	
+	    	    	return map;
+    	    	}else {
+    	    		return responseMap(REST_FAIL, "그룹 업데이트 중 예외사항이 발생하였습니다.");
+    	    	}
+	    	} else if ("N".equals(groupstudent.getGroupjoinstatus())) {
+	    		int totalGroupStu = teacherService.totalGroupStu(groupstudent.getGroupid());
+		    	
+		    	System.out.println(totalGroupStu);
+		    	
+		    	int totalgroupmem = teacherService.totalgroupmem(groupstudent.getGroupid());
+		    	
+		    	System.out.println(totalgroupmem);
+		    	
+	    	    System.out.println(groupstudent);
+	    	    
+	    	    if(totalgroupmem >= totalGroupStu) {
+	    	    	int res = teacherService.updateJoinStatus(groupstudent.getStudentid());
+	    	    	
+	    	    	if(res > 0) {
+	    	    		groupstudentVO groupjoinstatusOne = teacherService.groupjoinstatusOne(groupstudent.getStudentid());
+	    	    		
+		    	    	Map<String, Object> map = responseMap(REST_SUCCESS, "그룹 승인 완료!");
+		    	    	
+		    	    	map.put("groupjoinstatusOne", groupjoinstatusOne);
+		    	    	
+		    	    	return map;
+	    	    	}else {
+	    	    		return responseMap(REST_FAIL, "그룹 업데이트 중 예외사항이 발생하였습니다.");
+	    	    	}
+	    	    } else{
+	    	    	return responseMap(REST_FAIL, "그룹 인원 초괴 완료!");
+	    	    }
+	    	} else {
+	    	    return responseMap(REST_FAIL, "그룹 등록 중 예외사항이 발생하였습니다.");
+	    	}
+	    	
+	       
 	    } catch (Exception e) {
 	       // e.printStackTrace();
 	        return responseMap(REST_FAIL, "패키지 등록중 예외사항이 발생 하였습니다.");

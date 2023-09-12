@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.geomin.VO.contentVO;
+import com.geomin.VO.groupstudentVO;
 import com.geomin.VO.memberVO;
 import com.geomin.VO.packageVO;
 import com.geomin.mapper.teacherMapper;
@@ -25,7 +26,27 @@ public class teacherServiceImpl implements teacherService{
 	public List<memberVO> contentOne(memberVO vo) {
 		return teachermapper.contentOne(vo);
 	}
-/*
+	
+	@Override
+	public int totalGroupStu(String groupid) {
+		// TODO Auto-generated method stub
+		return teachermapper.totalGroupStu(groupid);
+	}
+	
+	@Override
+	public int totalgroupmem(String groupid) {
+		// TODO Auto-generated method stub
+		return teachermapper.totalgroupmem(groupid);
+	}
+	
+
+	@Override
+	public groupstudentVO groupjoinstatusOne(String studentid) {
+		// TODO Auto-generated method stub
+		return teachermapper.groupjoinstatusOne(studentid);
+	}
+	
+/*	
 	@Override
 	public String contentList1(String memberID) {
 		return teachermapper.contentList1(memberID);
@@ -49,8 +70,8 @@ public class teacherServiceImpl implements teacherService{
 //		return teachermapper.updateJoinStatus(memberIds);
 //	}
 	@Override
-	public int updateJoinStatus(List<memberVO> memberidOutput_list) {
-		return teachermapper.updateJoinStatus(memberidOutput_list);
+	public int updateJoinStatus(String studentid) {
+		return teachermapper.updateJoinStatus(studentid);
 	}
 
 
@@ -59,7 +80,6 @@ public class teacherServiceImpl implements teacherService{
 		// TODO Auto-generated method stub
 		return teachermapper.checkGroupid(groupid);
 	}
-
 	
 
 	

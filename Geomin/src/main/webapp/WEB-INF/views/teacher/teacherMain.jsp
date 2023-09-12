@@ -118,7 +118,7 @@
 				      			+"<td>"+item.mbirthdate+"</td>"
 				      			+"<td>"+formatPhoneNumber(item.mphone)+"</td>"
 				      			+"<td>"+item.groupResDate+"</td>"
-				      			+"<td>"+item.groupjoinstatus+"</td>"
+				      			+"<td id='groupjoinstatus"+item.memberid+"'>"+item.groupjoinstatus+"</td>"
 				      			+'</tr>';
     			document.querySelector('#personOutput').value = item.person;
     			})
@@ -232,17 +232,29 @@
 		        
 		        let deleteCount = 0; // 실제 삭제된 패키지 수 추적
 				let i = 0;
-		        
-		        
+		        let studentid;
+		        let groupjoinstatus;
 		        selectedCheckboxes.forEach(checkbox => {
-		            console.log(checkbox.value);
-					
+		        	
+		            studentid = checkbox.value;
+		            
+		            groupjoinstatus = document.querySelector('#groupjoinstatus'+studentid+'').innerHTML;
+		            
 		            let obj = {
-		            	studentid: checkbox.value   
+		            	studentid: studentid
+		            	, groupjoinstatus: groupjoinstatus
+		            	, groupid : document.querySelector('#groupidOutput').value
 		            }
 		            
 		            console.log(obj);
-
+					
+		            fetchPost('/geomin/joinStatus', obj, (map) => {
+		            	console.log(map.msg);
+		            	
+		            	groupjoinstatus = map.groupjoinstatusOne;
+		    			
+		    		})
+		    		
 		 		})
 		        
 		 	}else {
