@@ -29,7 +29,8 @@ public interface teacherService {
 	
 	//★그룹아이디 중복처리
 	//public int checkGroupid(String groupid);
-	public List<memberVO> checkGroupid(memberVO vo);
+	//public List<contentVO> checkGroupid(contentVO vo);
+	public List<contentVO> checkGroupid(contentVO groupid);
 
 	
 }

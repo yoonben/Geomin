@@ -36,13 +36,11 @@
             </div>
             <%-- <label>Title</label> <input name='title' value='<c:out value = "${board.title}" />' readonly="readonly"> --%>
             <div class='content'>
-            <c:choose>
-            <c:when test="${not empty pkgName}">
-            <c:forEach items="${list2}" var="list2">
-            	<c:if test ="${list2.pkgName == pkgName}">
+            <c:forEach items="${list1}" var="list1">
+            	<c:if test ="${list1.pkgName == pkgName}">
             		<div style="display: none;">
-            			<label>그룹명 : </label>
-            			<input name='pkgId' id = "pkgId" value='<c:out value = "${list2.pkgId}" />' readonly="readonly" disabled="disabled">
+            			<label>컨텐츠 아이디 : </label>
+            			<input name='pkgId' id = "pkgId" value='<c:out value = "${list1.pkgId}" />' readonly="readonly" disabled="disabled">
             		</div>
             		<div>
             			<label>그룹명 : </label>
@@ -53,25 +51,25 @@
             		</div>
             		<div>
             			<label>패키지명 : </label>
-            			<input name='pkgName' value='<c:out value = "${list2.pkgName}" />' readonly="readonly" disabled="disabled">
+            			<input name='pkgName' value='<c:out value = "${list1.pkgName}" />' readonly="readonly" disabled="disabled">
             		</div>
             		<div>
             			<label>학습 가능 인원 : </label>
-            			<input type="text" id='groupperson'  name='groupperson' placeholder="인원 수 적기"> 명 / ${list2.personnel}명
+            			<input type="text" id='groupperson'  name='groupperson' placeholder="인원 수 적기"> 명 / ${list1.personnel}명
             			<div id='grouppersonError'></div>
             			<!-- <div id='grouppersonError2'></div> -->
             		</div>
             		<div style="display: none"><!--  -->
             			<label>최대 학습 가능 인원 : </label>
-            			<input type="text" id='maxgroupperson' name='maxgroupperson' value='<c:out value = "${list2.personnel}" />' readonly="readonly" disabled="disabled">명
+            			<input type="text" id='maxgroupperson' name='maxgroupperson' data-value="${list1.personnel}" readonly="readonly" disabled="disabled">value='<c:out value = "${list1.personnel}" />' 명
             		</div>
             		<div>
             			<label>학습 수준 : </label>
-            			<input name='difficulty' value='<c:out value = "${list2.difficulty}" />' readonly="readonly" disabled="disabled">
+            			<input name='difficulty' value='<c:out value = "${list1.difficulty}" />' readonly="readonly" disabled="disabled">
             		</div>
             		<div>
             			<label>구독 날짜 : </label>
-            			<input name='subsDate' value='<c:out value = "${list2.subsDate}" />' readonly="readonly" disabled="disabled">
+            			<input name='subsDate' value='<c:out value = "${list1.subsDate}" />' readonly="readonly" disabled="disabled">
             		</div>
 					<div>
 						<label>학습 기간 : 최대 3개월</label> 
@@ -85,18 +83,18 @@
 						
 							<select id="select_yearA" class= "select_yearA" ></select>
 							<select id="select_monthA" class= "select_monthA"></select>
-<!-- 							<select id="select_yearA" class= "select_yearA" onchange="javascript:lastdayA();"></select>
+							<!-- <select id="select_yearA" class= "select_yearA" onchange="javascript:lastdayA();"></select>
 							<select id="select_monthA" class= "select_monthA" onchange="javascript:lastdayA();"></select> -->
 							<select id="select_dayA" class= "select_dayA"></select>
 						</div>
             		<div>
 						<label>학습 내용 : </label>
-            			<input name='content' value='<c:out value = "${list2.pkgContent}" />' readonly="readonly" disabled="disabled">
+            			<input name='content' value='<c:out value = "${list1.pkgContent}" />' readonly="readonly" disabled="disabled">
             		</div>
 				</c:if>
 			</c:forEach>
-			</c:when>
-			<c:otherwise>
+			
+			 <c:if test="${empty pkgName}">
                 <!-- pkgName이 비어있을 때 출력할 내용 -->
                	 패키지 선택 : <select id="select_package">
                	 			<option selected="selected">패키지 선택</option>
@@ -105,8 +103,7 @@
                	 			</c:forEach>
                	 </select>
                 <p>성공이다.</p>
-            </c:otherwise>
-        </c:choose>
+             </c:if>
             <br>
             	<button id="regStudy">학습그룹 등록</button>
 			</div>
@@ -196,7 +193,7 @@ $(document).ready(function () {
 	        $selectDayA.find('option:gt(' + (dayA - 1) + ')').remove();
 	    }
 	}
-	
+	 
 	/* lastdayB();
 	function lastdayB(){ //년과 월에 따라 마지막 일 구하기 
 		var yearB = document.getElementById('select_yearB').value;
@@ -240,8 +237,8 @@ $(document).ready(function () {
 		const groupid = document.getElementById('groupid').value;
 		const groupperson = document.getElementById('groupperson').value;
 		const pkgId = document.getElementById('pkgId').value;
-		const maxgroupperson = document.getElementById("groupperson").value;
-    	console.log('maxgroupperson : ' , maxgroupperson);
+		const maxgroupperson = document.getElementById("maxgroupperson").value;
+    	//console.log('maxgroupperson : ' , maxgroupperson);
 		//1. groupid 중복 체크
 		/* $.ajax({
             url:'/geomin/teacher/groupRegist', //Controller에서 요청 받을 주소
@@ -276,7 +273,7 @@ $(document).ready(function () {
 		const totalDateA = dateA.toISOString().slice(0, 10);
 		
 		const timeDiff = dateA - dateB;
-    	const daysDiff = timeDiff / (1000 * 3600 * 24);  /* // 일(day) 단위로 계산 */
+    	const daysDiff = timeDiff / (1000 * 3600 * 24);  /* 일(day) 단위로 계산 */
 
     	// 3개월은 대략 90일로 가정
     	const threeMonthsInDays = 90;
@@ -313,82 +310,90 @@ $(document).ready(function () {
 		    		//console.error(error);
 				}
 			});
-		});
+		});	//endpoint $('#regStudy').click
 	
 	/* $('#select_package').click(function() {	
 		console.log('select_package 클릭완료 : ', select_package );
 		
 	}); */
+	
+	//★그룹아이디 중복처리
+	$("#groupidCheck").click(function(){
+		let groupid = document.getElementById('groupid').value;
+		console.log('groupid : ' , groupid);
+		
+		//1. groupid 중복 체크
+		$.ajax({
+	        url:'/geomin/teacher/groupidCheck', //Controller에서 요청 받을 주소
+	        type:'POST', //POST 방식으로 전달
+	        data:{groupid : groupid},
+	        success:function(data){ //컨트롤러에서 넘어온 cnt값을 받는다 
+	        	console.log('cnt : ' , data);
+	            if(data == 1){ //cnt가0이 아니면(=1일 경우) -> 사용 불가능한 아이디 
+	                $('#result').text("이미 사용중인 그룹명 입니다."); 
+	                $("#result").attr("style", "color:#f00"); 
+	            } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
+	            	$('#result').text("사용가능한 그룹명 입니다."); 
+	            	$("#result").attr("style", "color:#00f");
+	            }
+	        }/* 
+	        error:function(){
+	            //alert("에러입니다");
+	        } */
+	    });
+	})
+
+	// 인원수 유효성 검사
+	    const groupperson = document.getElementById("groupperson");
+	   // const maxgroupperson = document.getElementById("maxgroupperson").value;
+	    var maxgroupperson = document.getElementById("maxgroupperson");
+		var maxpersonnelValue = parseInt(maxgroupperson.getAttribute("data-value"));	//내가 DB에서 불러온 값(최종)
+		
+	    console.log('maxpersonnelValue : ' , maxpersonnelValue);
+	    const regGroupperson = /^[0-9]+$/;
+		const personErrorElement = document.getElementById("grouppersonError");
+		//const personErrorElement2 = document.getElementById("grouppersonError2");
+
+		if(groupperson != null){
+		groupperson.addEventListener('input', function () {
+		    hideErrorMessage(personErrorElement);
+		});
+		
+		// 비밀번호 입력창 벗어났을 때 오류 보여줌
+		groupperson.addEventListener('focusout', function () {
+		    const grouppersonValue = parseInt(groupperson.value.trim()); //내가 입력한 값(최종)
+		    console.log('grouppersonValue : ' , grouppersonValue);
+		    //const grouppersonValue2 = groupperson2.value.trim();
+		    
+		    
+		    //빈칸일 경우 아무것도 출력X
+		    if (grouppersonValue.length === 0) {
+		        return;
+		    }
+		    
+		    if (!regGroupperson.test(groupperson.value)) {
+		        displayErrorMessage(personErrorElement, "숫자만 입력 가능합니다.");
+		        return;
+		    }
+		    if(grouppersonValue > maxpersonnelValue){
+		    	console.log('maxpersonnelValue : ' , maxpersonnelValue);
+		    	displayErrorMessage(personErrorElement, "최대 학습 가능한 인원을 초과할 수 없습니다.");
+		    	return;
+			}
+		});
+		
+		function displayErrorMessage(element, message) {
+		    element.textContent = message;
+		    element.style.color = "#f00";
+		}
+		function hideErrorMessage(element) {
+		    element.textContent = "";
+		}
+	}	
+	
 });
 
-//★그룹아이디 중복처리
-$("#groupidCheck").click(function(){
-	let groupid = document.getElementById('groupid').value;
-	
-	console.log('groupid : ' , groupid);
-	
-	//1. groupid 중복 체크
-	$.ajax({
-        url:'/geomin/teacher/groupidCheck', //Controller에서 요청 받을 주소
-        type:'POST', //POST 방식으로 전달
-        data:{groupid : groupid},
-        success:function(data){ //컨트롤러에서 넘어온 cnt값을 받는다 
-        	console.log('cnt : ' , data);
-            if(data == 1){ //cnt가0이 아니면(=1일 경우) -> 사용 불가능한 아이디 
-                $('#result').text("이미 사용중인 그룹명 입니다."); 
-                $("#result").attr("style", "color:#f00"); 
-            } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
-            	$('#result').text("사용가능한 그룹명 입니다."); 
-            	$("#result").attr("style", "color:#00f");
-            }
-        }/* 
-        error:function(){
-            //alert("에러입니다");
-        } */
-    });
-})
 
-// 인원수 유효성 검사
-    const groupperson = document.getElementById("groupperson");
-    const maxgroupperson = document.getElementById("maxgroupperson");
-    console.log('maxgroupperson : ' , maxgroupperson);
-    const regGroupperson = /^[0-9]+$/;
-	const personErrorElement = document.getElementById("grouppersonError");
-	//const personErrorElement2 = document.getElementById("grouppersonError2");
-
-	if(groupperson != null){
-	groupperson.addEventListener('input', function () {
-	    hideErrorMessage(personErrorElement);
-	});
-	
-	// 비밀번호 입력창 벗어났을 때 오류 보여줌
-	groupperson.addEventListener('focusout', function () {
-	    const grouppersonValue = groupperson.value.trim();
-	    //const grouppersonValue2 = groupperson2.value.trim();
-	    
-	    //빈칸일 경우 아무것도 출력X
-	    if (grouppersonValue.length === 0) {
-	        return;
-	    }
-	    
-	    if (!regGroupperson.test(groupperson.value)) {
-	        displayErrorMessage(personErrorElement, "숫자만 입력 가능합니다.");
-	        return;
-	    }
-	    if(grouppersonValue > maxgroupperson){
-	    	displayErrorMessage(personErrorElement, "최대 학습 가능한 인원을 초과할 수 없습니다.");
-	    	return;
-		}
-	});
-	
-	function displayErrorMessage(element, message) {
-	    element.textContent = message;
-	    element.style.color = "#f00";
-	}
-	function hideErrorMessage(element) {
-	    element.textContent = "";
-	}
-}	
 </script>
 
 
