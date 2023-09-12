@@ -43,16 +43,18 @@ public class teacherController extends CommonRestController{
 	
 	@GetMapping("/teacher/groupRegist")
 	public String groupRegist(@RequestParam(name = "pkgName", required = false, defaultValue = "") String pkgName, Model model) { 
-		List<contentVO> list1 = teacherService.getSubGroup();
 		
-		//
 		if (!pkgName.isEmpty()) {
-			model.addAttribute("list2", list1);
+			List<contentVO> list1 = teacherService.getSubGroup();
+			model.addAttribute("list1", list1);
+			//System.out.println("pkgName : " + pkgName);
 		}	
 		model.addAttribute("pkgName", pkgName);
 		
-		List<contentVO> list = contentService.getSubList();
-		model.addAttribute("list", list);
+		if(pkgName.isEmpty()) {
+			List<contentVO> list = contentService.getSubList();
+			model.addAttribute("list", list);
+		}
 		return "/teacher/groupRegist";
 	}
 	
@@ -62,31 +64,62 @@ public class teacherController extends CommonRestController{
 		teacherService.regStudyGroup(groupData);
 	}
 	
-
-	 
-	 @PostMapping("/teacher/checkGroupid") 
-	  public int checkGroupid(@RequestParam("groupid") contentVO groupid) {
-	  System.out.println("groupid : " + groupid); 
-	  
-	  return 0; 
-	  }
-
-	
-	@ResponseBody
-	@RequestMapping(value = "/teacher/groupidCheck", method = RequestMethod.POST)
-	public int postIdCheck(@RequestParam(name = "groupid") memberVO vo, HttpServletRequest req) throws Exception {
-
-		List<memberVO> groupidCheck = teacherService.checkGroupid(vo);
-		System.out.println("groupidCheck=========" + groupidCheck);
-
+	@PostMapping("/teacher/groupidCheck")
+	public int groupIdCheck(@RequestParam(name = "groupid") contentVO groupid) {
+		System.out.println("groupid : " + groupid);
+		List<contentVO> groupidCheck = teacherService.checkGroupid(groupid);
+		
 		int result = 0;
-
+		
 		if (groupidCheck != null) {
 			result = 1;
 		}
 		
 		return result;
 	}
+	
+//	@ResponseBody
+//	@RequestMapping(value = "/teacher/groupidCheck", method = RequestMethod.POST)
+//	public int postIdCheck(@RequestParam(name = "groupid") contentVO vo, HttpServletRequest req) throws Exception {
+//		System.out.println("vo : " + vo);
+//		
+//		List<contentVO> groupidCheck = teacherService.checkGroupid(vo);
+//		System.out.println("groupidCheck=========" + groupidCheck);
+//
+//		int result = 0;
+//
+//		if (groupidCheck != null) {
+//			result = 1;
+//		}
+//		
+//		return result;
+//	} 
+		
+		
+		
+		
+//	 @PostMapping("/teacher/checkGroupid") 
+//	 public int checkGroupid(@RequestParam("groupid") contentVO groupid) {
+//		 System.out.println("groupid : " + groupid); 
+//		 return 0; 
+//	 }
+
+	 
+//	@ResponseBody
+//	@RequestMapping(value = "/teacher/groupidCheck", method = RequestMethod.POST)
+//	public int postIdCheck(@RequestParam(name = "groupid") memberVO vo, HttpServletRequest req) throws Exception {
+//
+//		List<memberVO> groupidCheck = teacherService.checkGroupid(vo);
+//		System.out.println("groupidCheck=========" + groupidCheck);
+//
+//		int result = 0;
+//
+//		if (groupidCheck != null) {
+//			result = 1;
+//		}
+//		
+//		return result;
+//	}
 	
 	
 	// 그룹 신청한 학습자 리스트
