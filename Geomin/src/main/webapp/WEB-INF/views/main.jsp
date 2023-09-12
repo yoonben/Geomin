@@ -8,14 +8,42 @@
 <head>
     <style type="text/css">
     	#container>#section>.subnavi>ul{
-    		text-align: left;
+    		/* text-align: left; */
     		list-style-type: none;
+    		width: 150px;
+			height:150px;
+			text-align: center;
     	}
         #container>#section>.subnavi>ul>li{
-    		padding-left: 60px;
             margin-top: 25px;
             font-size: 14px;
+            cursor: pointer;
+            width: 150px;
+			height:50px;
+			text-align: center;
+			padding-top:13px;
+			border-top:1px solid #002A51;
+			border-bottom:1px solid #002A51;
     	}
+    	#container>#section>.subnavi>ul>li:hover{
+            margin-top: 25px;
+            font-size: 14px;
+            cursor: pointer;
+            color: #003C72;
+			width: 150px;
+			height:50px;
+			text-align: center;
+			box-shadow: 0px 3px 6px rgba(0, 0, 0.2, 0.2);
+			border-top:1px solid #002A51;
+			border-bottom:1px solid #002A51;
+			background-color: #CDE6FD;
+			padding-top:11px;
+			font-size: 1.2rem;
+        	font-weight: 600;
+    	}
+    	
+
+    	
     	#introduction1{
     		width: 630px;
     		text-align: center;
@@ -116,12 +144,28 @@
                 	<img src="/resources/img/website.jpg" alt="" id='introduction1img'>
                 	<h5>"게임으로 배우는 어린이 바둑 교실"은 바둑을 처음 접하는 사람들을 위한 온라인 서비스입니다. <br/>
                          	간편한 규칙 설명과 튜토리얼을 통해 누구나 쉽게 바둑을 배울 수 있습니다. <br/>
-                        	 언제 어디서나 접속하여 바둑의 재미를 느껴보세요.</h5>
+                        	 언제 어디서나 접속하여 바둑의 재미를 느껴보세요.</h5><br>
                         	 
+                        	<div style="border-top:1px solid #003C72; 
+                        				border-bottom:1px solid #003C72;
+                        				background-color: #003C72;
+                        				color:#FFFFFF;">
+                        		<h3><b>↓ 바둑이 궁금하다면 ↓</b></h3>
+                        	</div><br>
+		                    <iframe width="630" height="340" 
+		                    		src="https://www.youtube.com/embed/-ezZ1Aavv-I?si=ERZpYB6nTn-jl5rZ" 
+		                    		title="YouTube video player" frameborder="0" 
+		                    		allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; 
+		                    				picture-in-picture; web-share" 
+		                    		allowfullscreen>
+                    		</iframe>
+                    		
    	                        <c:if test="${empty memberid}" var="res">       
 						          <button type="button" class="btn btn-primary" onclick='location.href="/geomin/login"'>로그인</button>
 					        </c:if>
 					        <c:if test="${not res}">       
+					        
+					        
 					        		<!-- 로그인시 바둑공부로 이동하는 주소 작성하기 또는 대국 안내 버튼 (클릭시 대국정보 사이트 이동) -->
 						          <button type="button" class="btn btn-primary" onclick='location.href="/geomin/main"'>바둑공부</button>
 					        </c:if> 

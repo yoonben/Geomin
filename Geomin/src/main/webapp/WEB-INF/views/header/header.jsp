@@ -93,6 +93,22 @@
             text-align: center;
             letter-spacing: -1px;
         }
+        
+        #header .navi>ul>li>a:hover {
+            height: 60px;
+            line-height: 60px;
+            display: block;
+            position: relative;
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: -1px;
+            background-color: #D5EBFF;
+            border-top:1px solid #002A51;
+			border-bottom:1px solid #002A51;
+			color: #003C72;
+        }
+        
 
         a {
             text-decoration: none;

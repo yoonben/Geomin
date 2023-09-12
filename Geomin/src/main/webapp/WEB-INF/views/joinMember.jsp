@@ -25,18 +25,18 @@ input[type=checkbox]{
 }
 
 select{
-    	height:30px; 
+    	height:40px; 
     	width:120px;
         transition: all 3s ease-in;	//모든 속성을 1초동안 ease-in
     }
     
 select:hover{
-    	height:30px; 
+    	height:40px; 
     	width:120px;
     }
     
 select:active{ 		
-    	height:30px; 
+    	height:40px; 
     	width:120px;
     }
 
@@ -45,13 +45,30 @@ select:active{
    	width:120px;
 }  
 
-#email{
-	height:100%; 
+#memail1{
+	height:50px; 
 }
-#email2{
-	height:100%; 
+#memail2{
+	height:50px; 
 }
 
+#idCheck{
+	height:100%; 
+   	width:100px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+}
+#idCheck:hover{
+	height:100%; 
+   	width:100px;
+   	background-color: #002F5A;
+   	color:#FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 5px;
+   	cursor: pointer;
+}
 
 </style>
 
@@ -69,12 +86,13 @@ select:active{
 	<!-- 생년월일 형식 저장한 값  히든 처리 -->
 	<input type="hidden" id="mbirthdate" name="mbirthdate">
 	<input type="hidden" id="memail" name="memail">
-	<table style='border:1px solid;width:750px;height:900px;margin: 80px auto;' >
+	<table style='border-top:1px solid;border-bottom:1px solid;
+			width:800px;height:900px;margin: 80px auto; border-spacing:15px 10px;' >
 		<tr>
-			<th colspan='2'><h2>회원가입</h2></th>
+			<th colspan='3'><h2>회원가입</h2></th>
 		</tr>
 		<tr>
-			<th>아이디 <span style='color:#FF0000;'>*</span></th>
+			<th style="background-color: #E4EDF5;border-radius: 5px;">아이디 <span style='color:#FF0000;'>*</span></th>
 			<td><input type='text' name='memberid' id='loginId' placeholder='공백없이 영문/숫자 6-15자' 
 						required='required' pattern='^(?=.*[A-Za-z0-9])[A-Za-z0-9]{6,15}$'
 						maxlength='15' ></td>
@@ -86,13 +104,13 @@ select:active{
 			<td></td>
 		</tr>
 		<tr>
-			<th>비밀번호 <span style='color:#FF0000;'>*</span></th>
+			<th style="background-color: #E4EDF5;border-radius: 5px;">비밀번호 <span style='color:#FF0000;'>*</span></th>
 			<td><input type='password' name='mpassword' id='loginPw' placeholder='공백없이 영문(대/소문자) 숫자 및 특수문자 조합 8-15자' 
 						style="height:100%; width:99%" required='required' pattern='^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$'></td>
 			<td></td>
 		</tr>
 		<tr>
-			<th>비밀번호 확인 <span style='color:#FF0000;'>*</span></th>
+			<th style="background-color: #E4EDF5;border-radius: 5px;">비밀번호 확인 <span style='color:#FF0000;'>*</span></th>
 			<td><input type='password' name='loginPwCheck' id='loginPwCheck' placeholder='비밀번호를 한 번 더 입력해주세요' 
 						style="height:100%; width:99%" required='required' pattern='^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$'></td>
 			<td></td>
@@ -103,7 +121,7 @@ select:active{
 			<td></td>
 		</tr>
 		<tr>
-			<th>이름 <span style='color:#FF0000;'>*</span></th>
+			<th style="background-color: #E4EDF5;border-radius: 5px;">이름 <span style='color:#FF0000;'>*</span></th>
 			<td><input type='text' name='mname' id='mName' placeholder='아이디를 입력해주세요' required='required'></td>
 			<td></td>
 		</tr>
@@ -113,7 +131,7 @@ select:active{
 			<td></td>
 		</tr>
 		<tr>
-			<th>생년월일 <span style='color:#FF0000;'>*</span></th>
+			<th style="background-color: #E4EDF5;border-radius: 5px;">생년월일 <span style='color:#FF0000;'>*</span></th>
 			<td>
 				<select id="year"  name="year" required='required'  value='' >
 					<option>선택</option>
@@ -127,12 +145,12 @@ select:active{
             </td>
 		</tr>
 		<tr>
-			<th>주소</th>
+			<th style="background-color: #E4EDF5;border-radius: 5px;">주소</th>
 			<td><input type='text' name='maddr' id='mAddr' placeholder='주소를 입력하세요' ></td>
 			<td></td>
 		</tr>
 		<tr>
-			<th>이메일주소 <span style='color:#FF0000;'>*</span></th>
+			<th style="background-color: #E4EDF5;border-radius: 5px;">이메일주소 <span style='color:#FF0000;'>*</span></th>
 			<td><input type='text' name='memail1' id='memail1' placeholder='이메일 아이디를 입력하세요' required='required' style='weight:50%;' >		
 					</td>
 			<td><select name="memail2" id="memail2" required='required' style='weight:50%;' value=''>
@@ -143,13 +161,13 @@ select:active{
 					</select></td>
 		</tr>
 		<tr>
-			<th>휴대폰 번호 <span style='color:#FF0000;'>*</span></th>
+			<th style="background-color: #E4EDF5;border-radius: 5px;">휴대폰 번호 <span style='color:#FF0000;'>*</span></th>
 			<td><input type='text' name='mphone' id='mPhone' placeholder='공백, (-)없이  숫자' 
 								maxlength='11' required='required' ></td>
 			<td></td>
 		</tr>
 		<tr>
-			<th>회원구분 <span style='color:#FF0000;'>*</span></th>
+			<th style="background-color: #E4EDF5;border-radius: 5px;">회원구분 <span style='color:#FF0000;'>*</span></th>
 			<td>				
 				<select id="mType" name='mtype' style="height:30px; width:150px" required='required'>
 					<option value='T'>학습관리자</option>
@@ -160,7 +178,7 @@ select:active{
 			<td></td>
 		</tr>
 		<tr>
-			<th>성별</th>
+			<th style="background-color: #E4EDF5;border-radius: 5px;">성별</th>
 			<td>
 				<label><input type='radio' name='mgender' id='mGender' value='M' > 남자</label>
 				<label><input type='radio' name='mgender' id='mGender' value='W' > 여자</label>	
@@ -168,7 +186,7 @@ select:active{
 			<td></td>
 		</tr>
 		<tr>
-			<th>수신동의(선택)</th>
+			<th style="background-color: #E4EDF5;border-radius: 5px;">수신동의(선택)</th>
 			<td>이벤트, 커리큘럼, 신규콘텐츠 등 광고 메시지 수신</td>
 			<td></td>
 		</tr>
