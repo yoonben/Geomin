@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.geomin.VO.contentVO;
 import com.geomin.VO.memberVO;
+import com.geomin.VO.packageVO;
 import com.geomin.mapper.teacherMapper;
 
 @Service
@@ -16,8 +17,8 @@ public class teacherServiceImpl implements teacherService{
 	teacherMapper teachermapper;
 	
 	@Override
-	public List<memberVO> contentList() {
-		return teachermapper.contentList();
+	public List<packageVO> contentList(String memberid) {
+		return teachermapper.contentList(memberid);
 	}
 
 	@Override
@@ -53,16 +54,24 @@ public class teacherServiceImpl implements teacherService{
 	}
 
 
+	@Override
+	public int checkGroupid(contentVO groupid) {
+		// TODO Auto-generated method stub
+		
+		return teachermapper.checkGroupid(groupid);
+	}
+
+
 	
 	//★그룹아이디 중복처리
 	/*
 	 * @Override public int checkGroupid(String groupid) { return
 	 * teachermapper.checkGroupid(groupid); }
 	 */
-	@Override
-	public List<memberVO> checkGroupid(memberVO vo) {
-		return teachermapper.checkGroupid(vo);
-	}
+//	@Override
+//	public List<contentVO> checkGroupid(contentVO vo) {
+//		return teachermapper.checkGroupid(vo);
+//	}
 
 
 

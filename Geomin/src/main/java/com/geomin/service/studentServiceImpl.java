@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.geomin.VO.groupstudentVO;
+import com.geomin.VO.memberVO;
 import com.geomin.VO.packageVO;
 import com.geomin.mapper.studentMapper;
 
@@ -23,8 +24,8 @@ public class studentServiceImpl implements studentService {
 	}
 	
 	@Override
-	public List<packageVO> teacherGroupList(packageVO pkg) {
-		return studentmapper.teacherGroupList(pkg);
+	public List<packageVO> teacherGroupList(String memberid) {
+		return studentmapper.teacherGroupList(memberid);
 	}
 
 
@@ -38,6 +39,12 @@ public class studentServiceImpl implements studentService {
 	@Override
 	public int groupjoin(groupstudentVO groupstudent) {
 		return studentmapper.groupjoin(groupstudent);
+	}
+
+	@Override
+	public memberVO teacherSearch(String mname) {
+		
+		return studentmapper.teacherSearch(mname);
 	}
 
 
