@@ -48,10 +48,10 @@ $(window).scroll(function() {
 </head>
 <body>
 		<div id='banner' class="sideBanner">
-			<a href='../geomin/main'>
+			<a href='/geomin/main'>
 				<img src='/resources/img/sideBanner1.png' style='width:100px;height:80px; margin-bottom:40px;margin-top:30px; margin-left:13px;'>
 			</a>
-			<a href='../geomin/board'>
+			<a href='/geomin/board'>
 				<img src='/resources/img/sideBanner2.png' style='width:100px;height:80px; margin-bottom:40px; margin-left:13px;'>
 			</a>
 			<a href=''>
