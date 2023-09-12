@@ -53,12 +53,6 @@ public class teacherServiceImpl implements teacherService{
 		return teachermapper.updateJoinStatus(memberidOutput_list);
 	}
 
-	@Override
-	public List<contentVO> checkGroupid(contentVO groupid) {
-		// TODO Auto-generated method stub
-		return teachermapper.checkGroupid(groupid);
-	}
-
 
 	
 	//★그룹아이디 중복처리
@@ -67,7 +61,7 @@ public class teacherServiceImpl implements teacherService{
 	 * teachermapper.checkGroupid(groupid); }
 	 */
 	@Override
-	public List<contentVO> checkGroupid(contentVO vo) {
+	public List<memberVO> checkGroupid(memberVO vo) {
 		return teachermapper.checkGroupid(vo);
 	}
 
