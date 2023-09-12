@@ -124,9 +124,9 @@ input[type=text] {
 	</div>
 	<!-- 임시 비밀번호 변경 모달 끝 -->
 				
-	
 </div>	
-	
+
+<%@include file="header/footer.jsp" %>	
 				
 </body>
 </html>

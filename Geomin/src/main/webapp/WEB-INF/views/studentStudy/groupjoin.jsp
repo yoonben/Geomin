@@ -60,6 +60,23 @@
 	width: 500px;
 	border-bottom: 2px solid black;
 }
+
+/* 
+#section {
+	min-height: 100%;
+	height: 800px;
+	padding-bottom: 30px;	
+	/* padding-top: 60px; */
+}
+
+.content {
+	min-height: 100%;
+	/* padding-top: 60px; */
+	/* padding-bottom: 30px; */
+}
+ */
+
+
 </style>
 
 
@@ -307,15 +324,16 @@
 		<%@include file="../header/header.jsp"%>
 
 		<div id='section'>
+			
 			<div class='subnavi'>
 				<ul>
 					<li><b>학습서비스</b></li>
 					<li><label style="cursor: pointer;"><a id="subnavi1">학습	그룹 가입 신청</a></label></li>
 					<li><label style="cursor: pointer;"><a id="subnavi2">나의 숙제 제출</a></label></li>
 				</ul>
-
 			</div>
-
+			
+			
 			<div class='content'>
 
 				<!-- 학습그룹 신청 페이지 -->
@@ -444,19 +462,23 @@
 					<div class="d-grid gap-2 col-6 mx-auto">
 						<button type="submit" class="btn btn-success" id="introductionbtn" onclick="workSubmit()">숙제 제출하기</button>
 					</div>
-
 				</div>
-
+				
 			</div>
-
-			<div class='banner'></div>
+					<div class='banner' style='margin-left:840px;'>
+						<%@include file="../header/banner.jsp" %>
+					</div>
 		</div>
+		
 	</div>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-		crossorigin="anonymous"></script>
+		crossorigin="anonymous">
+	</script>
+	
+	<%@include file="../header/footer.jsp" %>	
 
 </body>
 </html>

@@ -106,7 +106,7 @@
             position: relative;
             margin: 0 auto;
             max-width: 1050px;
-            height: 600px;
+            height: 850px;
 
         }
 
@@ -133,7 +133,6 @@
         #section>.banner {
             width: 205px;
             height: 600px;
-
             float: left;    
         }
 
