@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.geomin.VO.contentVO;
 import com.geomin.VO.memberVO;
+import com.geomin.VO.packageVO;
 import com.geomin.mapper.teacherMapper;
 
 @Service
@@ -16,8 +17,8 @@ public class teacherServiceImpl implements teacherService{
 	teacherMapper teachermapper;
 	
 	@Override
-	public List<memberVO> contentList() {
-		return teachermapper.contentList();
+	public List<packageVO> contentList(String memberid) {
+		return teachermapper.contentList(memberid);
 	}
 
 	@Override

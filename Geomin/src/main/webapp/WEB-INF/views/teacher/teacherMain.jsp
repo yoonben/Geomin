@@ -43,9 +43,6 @@
     	 margin-bottom:30px;
     	 
     	 }
-    	#introduction2{
-    		display: none;
-    	}
 
 
     	
@@ -62,6 +59,8 @@
     <script type="text/javascript">
     
     window.addEventListener('load', function(){
+    	
+    	joiningGroup();
     	
    	 	const subnavi1 = document.getElementById('subnavi1');
     	const subnavi2 = document.getElementById('subnavi2');
@@ -84,11 +83,7 @@
     	}
     	
     	$('#subnavi2').click(function (){
-    		console.log('#subnavi2 작동 개시');
-    		$('#introduction2').show();
-    		$('#introduction1').hide();
-    		$('#introduction3').hide();
-    		$('#introduction4').hide();
+    		location.href="../teacher/teacherMain";
     	});
     	$('#subnavi3').click(function (){
     		console.log('#subnavi3 작동 개시');
@@ -97,25 +92,27 @@
     	$('#subnavi4').click(function (){
     		location.href="../teacher/homeworkEvaluation";
     	});
-    	
-    	
   	
-    	$('#contentSelect').click(function (){
-			console.log('#contentSelect 작동 개시');
-
-			console.log('클릭되었어요');
-			
-			let obj = {
-		        	   memberid : document.getElementById('memberid').value
-		        }
-		        
-			console.log(obj);
-		
-			fetchPost('/geomin/', obj, (map) => {
-			
-		})
-	
-	});
+    	contentSelect.addEventListener('change', function(e){
+    		let content = '';
+    		
+    		let groupid = document.getElementById('contentSelect').value;
+    		
+    		if(groupid === '그룹을 선택해주세요'){
+    			return;
+    		}
+    			
+    		let obj = {
+    			groupid : groupid
+    		}
+    		
+    		console.log(obj);
+    		
+    		
+    		fetchPost('/geomin/contentId', obj, (map) => {
+    			
+    		})
+    	})
     		
 
 
@@ -152,7 +149,32 @@
     }
   
 	function joiningGroup() {
+		let content = '';
 		
+		let memberid = document.getElementById('memberid').value;
+		
+		if(memberid === null || memberid === ''){
+			alert("로그인후 이용할 수 있습니다.")
+			location.href="/geomin/login";
+		}
+		
+		let obj = {
+	        	   memberid : document.getElementById('memberid').value
+	        }
+	        
+		console.log(obj);
+		
+		fetchPost('/geomin/joiningGroup', obj, (map) => {
+			
+			content += '<option selected>그룹을 선택해주세요</option>';
+			
+			map.groupList.forEach(function (item, index) {
+				content += '<option>'+item.groupid+'</option>';
+			})
+			
+			document.getElementById('contentSelect').innerHTML = content;
+		})
+
 	}
 	
 	
@@ -212,7 +234,7 @@
              		
              		<div>
 		      				<select id='contentSelect' class="form-select" aria-label="Default select example">
-							 	<option selected>학습컨텐츠 선택</option>
+							 	<option selected>그룹을 선택해주세요</option>
 							</select>           		
              		</div>
 					<div  id='contentList'>
@@ -220,7 +242,7 @@
 	             			가입입원 : <div class='personOutput'></div>
            			 
 	             		<form id='updateJoinStatus' name='updateJoinStatus'>
-	           			<input type="text" name="memberid" id="memberid" value="${sessionScope.member.memberid} ">
+	           			<input type="text" name="memberid" id="memberid" value="${sessionScope.member.memberid}">
 	           			
 			                <table class="table" border="1px solid" style="height:50%;weight:100%">
 								  <thead>

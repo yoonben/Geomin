@@ -7,9 +7,9 @@ import com.geomin.VO.memberVO;
 import com.geomin.VO.packageVO;
 
 public interface teacherMapper {
-
+	
 	// 그룹조회
-	public List<memberVO> contentList();
+	public List<packageVO> contentList(String memberid);
 	
 	
 	// public String contentList1(String memberID);
@@ -27,7 +27,7 @@ public interface teacherMapper {
 	List<contentVO> getSubGroup();
 
 	void regStudyGroup(List<contentVO> groupData);
-
+	
 	
 	//★그룹아이디 중복처리
 	//public int checkGroupid(String groupid);

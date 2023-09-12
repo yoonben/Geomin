@@ -6,12 +6,13 @@ import org.springframework.stereotype.Service;
 
 import com.geomin.VO.contentVO;
 import com.geomin.VO.memberVO;
+import com.geomin.VO.packageVO;
 
 @Service
 public interface teacherService {
 
 	// 그룹조회
-	public List<memberVO> contentList();
+	public List<packageVO> contentList(String memberid);
 	
 	//그룹 선택
 	public List<memberVO> contentOne(memberVO vo);

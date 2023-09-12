@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.geomin.VO.contentVO;
 import com.geomin.VO.memberVO;
+import com.geomin.VO.packageVO;
 import com.geomin.service.contentService;
 import com.geomin.service.teacherService;
 
@@ -101,6 +102,9 @@ public class teacherController extends CommonRestController{
 		try {
 			Map<String, Object> map = responseMap(REST_SUCCESS, "리스트 조회");
 			
+			List<packageVO> groupList = teacherService.contentList(vo.getMemberid());
+			
+			map.put("groupList", groupList);
 			
 			return map;
 			
@@ -118,11 +122,6 @@ public class teacherController extends CommonRestController{
 		try {
 			Map<String, Object> map = responseMap(REST_SUCCESS, "리스트 조회");
 			
-			List<memberVO> membervo = teacherService.contentOne(vo);
-			System.out.println("여기도 된다2222=====================");
-			
-			System.out.println("membervo : " + membervo);
-			map.put("membervo", membervo);
 			return map;
 			
 

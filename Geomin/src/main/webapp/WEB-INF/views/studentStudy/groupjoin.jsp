@@ -128,15 +128,6 @@
 
     	studentLogin();	
     
-    	/*
-	    yearSelect.addEventListener('change', function () {
-	    	const yearSelect = document.querySelector('#yearSelect');
-	    	
-	        yearInput.value = yearSelect.value;
-	        
-	        monthChart(yearInput.value);
-    	*/
-		
     	
 		let groupSelect = document.getElementById('groupSelect');
 		let groupCont = document.getElementById('groupCont');
@@ -201,7 +192,7 @@
 		    
 		    if(studentid === null || studentid === ''){
 				alert("로그인후 이용할 수 있습니다.")
-				return;
+				location.href="/geomin/login";
 			}
 		    
 		    let obj = {
@@ -281,7 +272,7 @@
 			
 			if(studentid === null || studentid === ''){
 				alert("로그인후 이용할 수 있습니다.")
-				return;
+				location.href="/geomin/login";
 			}
 			
 			let obj = {

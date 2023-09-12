@@ -88,35 +88,19 @@ window.addEventListener('load', function(){
 	
 	$('#subnavi1').click(function (){
 		console.log('#subnavi1 작동 개시');
-		/* $('#introduction1').show ();
-		$('#introduction2').hide();
-		$('#introduction3').hide();
-		$('#introduction4').hide(); */
 		location.href="../teacher/groupRegist";
 	});
 	
 	$('#subnavi2').click(function (){
 		console.log('#subnavi2 작동 개시');
-		/* $('#introduction2').show();
-		$('#introduction1').hide();
-		$('#introduction3').hide();
-		$('#introduction4').hide(); */
 		location.href="../teacher/teacherMain";
 	});
 	$('#subnavi3').click(function (){
 		console.log('#subnavi3 작동 개시');
-		/* $('#introduction3').show();
-		$('#introduction1').hide();
-		$('#introduction2').hide();
-		$('#introduction4').hide(); */
 		location.href="../teacher/homeworkMain";
 	});
 	$('#subnavi4').click(function (){
 		console.log('#subnavi4 작동 개시');
-		/* $('#introduction4').show();
-		$('#introduction1').hide();
-		$('#introduction2').hide();
-		$('#introduction3').hide(); */
 		location.href="../teacher/homeworkEvaluation";
 	});
 	
