@@ -111,6 +111,20 @@
     		
     		fetchPost('/geomin/contentId', obj, (map) => {
     			
+    			map.groupList.forEach(function (item, index) {
+				      content+= '<tr>'
+				    	  		+"<td><input type='checkbox' class='Checkbox' name='rowCheck' value='"+item.memberid+"'></td>"
+				      			+"<td>"+item.mname+"</td>"
+				      			+"<td>"+item.mbirthdate+"</td>"
+				      			+"<td>"+formatPhoneNumber(item.mphone)+"</td>"
+				      			+"<td>"+item.groupResDate+"</td>"
+				      			+"<td>"+item.groupjoinstatus+"</td>"
+				      			+'</tr>';
+    			document.querySelector('#personOutput').value = item.person;
+    			})
+				
+				document.querySelector('#groupidOutput').value = map.groupid;
+    			document.getElementById('contentList2').innerHTML = content;
     		})
     	})
     		
@@ -142,11 +156,6 @@
 			 
 	});
 	
-	
-	
-	function approveSelected() {
-		
-    }
   
 	function joiningGroup() {
 		let content = '';
@@ -196,7 +205,51 @@
     	}
     }
     
- 
+    function formatPhoneNumber(phoneNumber) {
+        // 숫자만 남기고 모든 문자 제거
+        phoneNumber = phoneNumber.replace(/\D/g, '');
+        
+        // 11자리인 경우: 010-3333-4444 형식으로 변환
+        if (phoneNumber.length === 11) {
+            return phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+        }
+        // 10자리인 경우: 032-111-2222 형식으로 변환
+        else if (phoneNumber.length === 10) {
+            return phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+        }
+        // 그 외의 경우: 변환하지 않고 그대로 반환
+        else {
+            return phoneNumber;
+        }
+    }
+    
+    function approveSelected() {
+		
+		const selectedCheckboxes = document.querySelectorAll('.Checkbox:checked');
+		
+		 if (selectedCheckboxes.length > 0) {
+		        console.log('selectedCheckboxes.length:', selectedCheckboxes.length);
+		        
+		        let deleteCount = 0; // 실제 삭제된 패키지 수 추적
+				let i = 0;
+		        
+		        
+		        selectedCheckboxes.forEach(checkbox => {
+		            console.log(checkbox.value);
+					
+		            let obj = {
+		            	studentid: checkbox.value   
+		            }
+		            
+		            console.log(obj);
+
+		 		})
+		        
+		 	}else {
+	 			alert("숙제 보내는 중 예외사항이 발생 하였습니다.");
+		    }
+		
+	}
 	</script>
 	
 	
@@ -238,11 +291,11 @@
 							</select>           		
              		</div>
 					<div  id='contentList'>
-	             			그룹명 : <div class='groupidOutput'></div>
-	             			가입입원 : <div class='personOutput'></div>
+	             			<div class='groupidOutput'> 그룹명 : <input type="text" name="groupid" id="groupidOutput" value=""></div>
+	             			<div class='personOutput'>가입입원 : <input type="text" name="person" id="personOutput" value=""></div>
            			 
 	             		<form id='updateJoinStatus' name='updateJoinStatus'>
-	           			<input type="text" name="memberid" id="memberid" value="${sessionScope.member.memberid}">
+	           			<input type="hidden" name="memberid" id="memberid" value="${sessionScope.member.memberid}">
 	           			
 			                <table class="table" border="1px solid" style="height:50%;weight:100%">
 								  <thead>
@@ -251,7 +304,6 @@
 								      <th>학습자명</th>
 								      <th>나이</th>
 								      <th>연락처</th>
-								      <th>이메일</th>
 								      <th>가입신청 일자</th>
 								      <th>승인 여부</th>
 								    </tr>

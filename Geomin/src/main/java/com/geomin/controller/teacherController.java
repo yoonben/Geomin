@@ -111,6 +111,12 @@ public class teacherController extends CommonRestController{
 		try {
 			Map<String, Object> map = responseMap(REST_SUCCESS, "리스트 조회");
 			
+			List<memberVO> memberList = teacherService.contentOne(vo);
+			
+			map.put("groupList", memberList);
+			map.put("groupid", vo.getGroupid());
+			
+			
 			return map;
 			
 		} catch (Exception e) {

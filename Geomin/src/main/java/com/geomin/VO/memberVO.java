@@ -28,7 +28,7 @@ public class memberVO {
 	private String groupResDate;
 	private String studentid;
 	private String groupjoinstatus;
-	
+	private String groupmem;
 	
 }
 

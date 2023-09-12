@@ -265,6 +265,55 @@
 		    }
 		}
 		
+function workSubmit() {
+			
+			const selectedCheckboxes = document.querySelectorAll('.Checkbox:checked');
+			
+			 if (selectedCheckboxes.length > 0) {
+			        console.log('selectedCheckboxes.length:', selectedCheckboxes.length);
+			        
+			        let deleteCount = 0; // 실제 삭제된 패키지 수 추적
+					let i = 0;
+			        
+			        
+			        selectedCheckboxes.forEach(checkbox => {
+			            console.log(checkbox.value);
+						
+			            const studycont = document.querySelector('#studycont'+i).value.trim();
+					    
+					    if (studycont === "") {
+					        alert("학습 내용을 입력하세요.");
+					        return; // Prevent further processing if the textarea is empty
+					    }
+			            
+			            let obj = {
+			            	homeworkno : document.querySelector('#homeworkno'+i).value
+			            	, studentid: checkbox.value
+			            	, studycont : document.querySelector('#studycont'+i).value
+			            
+			            }
+			            
+			            console.log(obj);
+			            
+			            fetchPost('/geomin/studentHomework', obj, (map) => {
+			                deleteCount++; 
+			                if (deleteCount === selectedCheckboxes.length) {
+			                    
+			                    alert(map.msg);
+			                    // 작업 완료로 표시
+			                    deletingInProgress = false;
+			                }
+			            })
+			            
+			           i++
+			 		})
+			        
+			 	}else {
+		 			alert("숙제 보내는 중 예외사항이 발생 하였습니다.");
+			    }
+			
+		}
+		
 		// 선생님 검색 
 		function teacherSearch() {
 			content = '';
