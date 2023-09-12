@@ -79,6 +79,26 @@ public class teacherController extends CommonRestController{
 //		return result;
 //	}
 	
+	
+	//@PostMapping("/teacher/groupidCheck")
+	@RequestMapping(value = "/teacher/groupidCheck", method = RequestMethod.POST)
+	@ResponseBody
+	public int groupIdCheck(String groupid)throws Exception {
+		System.out.println("groupid : " + groupid);
+		
+		int result = teacherService.checkGroupid(groupid);
+		
+		if (result != 0) {
+			result = 1;
+		}else {
+			result = 0;
+		}
+		
+		return result;
+	}
+	
+	
+	
 	// 그룹 신청한 학습자 리스트
 	@GetMapping("/teacher/teacherMain")
 	public String getGroup(Model model, memberVO vo) {	

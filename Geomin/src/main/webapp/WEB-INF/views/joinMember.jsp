@@ -51,6 +51,8 @@ select:active{
 #email2{
 	height:100%; 
 }
+
+
 </style>
 
 
@@ -60,6 +62,7 @@ select:active{
 <!-- 헤더영역 시작 -->
 <%@include file="header/header.jsp" %>
 <!-- 헤더영역 끝 -->
+
 
 <!--  회원가입 폼 시작 -->
 <form name='joinMember' id='joinMember' action='/geomin/login' method='POST'>
@@ -191,9 +194,9 @@ select:active{
 	</table>
 </form>	
 <!--  회원가입 폼 끝 -->	
-
+ 			
 
 	
-	
+<%@include file="header/footer.jsp" %>		
 </body>
 </html>

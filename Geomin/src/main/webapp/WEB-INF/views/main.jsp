@@ -63,7 +63,12 @@
 		    line-height: 50px;
 		    font-weight: 700;
 		}
+		
+
+        
     </style>
+    
+    
     <script type="text/javascript">
     window.addEventListener('load', function(){
    	 	const subnavi1 = document.getElementById('#subnavi1');
@@ -102,8 +107,9 @@
                     <li><a id="subnavi1">사이트 소개</a></li>
                    	<li><a id="subnavi2">이용 가이드</a></li>
                	</ul>
-				
             </div>
+            
+            
              <div class='content'>
              	<div id="introduction1">
              		<h3>즐거운 온라인 바둑 교육,<br/> "게임으로 배우는 어린이 바둑 교실"</h3>
@@ -144,8 +150,11 @@
                 
             </div>
             <div class='banner'>
+            	<%@include file="header/banner.jsp" %>
             </div>
+            
           </div>
+          
           <%@include file="header/footer.jsp" %>
       </div>
          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>

@@ -132,6 +132,7 @@ th, tr, td{
                 <td class="list_finalPrice">${list.finalPrice}</td>
                 <td>${list.difficulty}</td>
                 <td>${list.pkgContent}</td>
+                <td style="display: none">${sessionScope.member.memberid }</td>
             </tr>
         </c:forEach>
     </tbody>
@@ -145,6 +146,10 @@ th, tr, td{
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
+	fetch()
+	.then((response) => response.json())
+  	.then((data) => console.log(data))
+  	
 	$(document).ready(function() {
 		$('input[type="checkbox"][name="check"]').click(function(){
 			 
@@ -156,29 +161,6 @@ th, tr, td{
 			 
 			 }
 		});
-		
-		/* $('.data-raw input[type="checkbox"]').prop('disabled', function () {
-	        var pkgId = $(this).closest('tr').data('pkgid');
-	        return pkgId !== undefined && pkgId !== null && pkgId !== '';
-	    }); */
-		
-	   /*  $('.check').prop('disabled', function () {
-	    	var listpkgId = $(this).closest('tr').data('pkgid'); // 현재 행의 pkgId 값을 가져옵니다.
-	        console.log('listpkgId : ' , listpkgId);
-	        //var pkgIdItem = ${pkgIdItem.pkgId}; // pkgIdItem의 값입니다.
-	       // var pkgIdItempkgId = document.getElementById('pkgIdItem').textContent; // pkgIdItem의 값입니다.
-	       //var pkgIdItempkgId = document.getElementById('pkgIdItem').value; // pkgIdItem의 값입니다.
-	       	var pkgIdItems = document.querySelectorAll('#pkgIdItem');
-	       	var pkgIdItemValue = null;
-	       	var pkgIdValues = [];
-	       	pkgIdItems.forEach(function (element) {
-    			var pkgIdItemValue = element.getAttribute('data-value');
-    			pkgIdValues.push(pkgIdItemValue); 
-			});
-	       	pkgIdValues.forEach(function (pkgIdValue) {
-	       	});
-	        	return listpkgId === pkgIdValue;
-	    }); */
 	    
 	    $('.check').prop('disabled', function () {
 	    
@@ -306,7 +288,8 @@ th, tr, td{
 		            fixedPrice: $row.find('td:eq(4)').text(),
 		            finalPrice: $row.find('td:eq(5)').text(),
 		            difficulty: $row.find('td:eq(6)').text(),
-		            pkgContent: $row.find('td:eq(7)').text()
+		            pkgContent: $row.find('td:eq(7)').text(),
+		            memberID : $row.find('td:eq(8)').text()
 		        };
 		        checked_Data.push(rowData);
 		    });

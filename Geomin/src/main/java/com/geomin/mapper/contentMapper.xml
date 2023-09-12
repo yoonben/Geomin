@@ -13,10 +13,10 @@
 			elimination = 'N'
 	</select>
 	
-	<!-- 구독한 학습 컨텐츠의 아이디 가졍오기 -->
+	<!-- 구독한 학습 컨텐츠의 아이디 가져오기 -->
 	<select id="getpkgId" resultType="com.geomin.VO.contentVO">
-		SELECT
-    		P.pkgId    		
+		<!-- SELECT
+    		P.pkgId, m.memberID   		
 		FROM 
     		package p
 		JOIN
@@ -32,7 +32,25 @@
 		ON
     		D.pkgId = g.pkgId
 		WHERE 
-    		p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6'
+    		p.elimination = 'N' AND m.mType = 'T' AND m.memberID = #{memberID} -->
+    	SELECT
+    		P.pkgId
+    	FROM
+    		package p
+    	JOIN
+    		PKGSUBSDETAIL D
+		ON  
+    		P.pkgId = D.pkgId
+		JOIN
+    		member m
+		ON 
+    		D.memberID = m.memberID
+		LEFT JOIN
+    		STUDY_GROUP g
+		ON
+    		D.pkgId = g.pkgId
+    	WHERE 
+    		p.elimination = 'N'
 	</select>
 	
 	<!-- //체크박스가 선택된 라인의 데이터 처리 -->
