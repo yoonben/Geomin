@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.geomin.VO.groupstudentVO;
+import com.geomin.VO.memberVO;
 import com.geomin.VO.packageVO;
 import com.geomin.service.studentService;
 
@@ -34,23 +35,23 @@ public class studentController extends CommonRestController{
 	@GetMapping("/studentStudy/groupjoin")
 	public String getGroup(Model model, packageVO pkg) {
 		
-		List<packageVO> list = studentService.groupList();		
-		model.addAttribute("groupRes", list);		
-		
 		return "/studentStudy/groupjoin";
 	}
 
 	
 	// 선생님 이름을 기반으로 해당 선생님의 그룹 정보를 조회
 	@PostMapping("/teacherSearch")
-    public @ResponseBody Map<String, Object> teacherSearch(@RequestBody Map<String, String> requestBody, packageVO vo) {
+    public @ResponseBody Map<String, Object> teacherSearch(@RequestBody packageVO vo) {
         try {
-
-            List<packageVO> teacherGroups = studentService.teacherGroupList(vo);
-            System.out.println("teacherGroups=========="+ teacherGroups);
+        	memberVO teacher = studentService.teacherSearch(vo.getMname());
             
+        	System.out.println(teacher);
+            
+        	List<packageVO> teacherGroups = studentService.teacherGroupList(teacher.getMemberid());
+        	
             Map<String, Object> map = responseMap(REST_SUCCESS, "그룹 조회 성공");
             map.put("teacherGroups", teacherGroups);
+            map.put("teacher", teacher);
 
             return map;
         } catch (Exception e) {

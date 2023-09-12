@@ -88,19 +88,28 @@ public class teacherController extends CommonRestController{
 		return result;
 	}
 	
-	
+	// 여기부터 그룹 승인
 	// 그룹 신청한 학습자 리스트
 	@GetMapping("/teacher/teacherMain")
-	public String getGroup(Model model, memberVO vo) {
-		System.out.println("vo : "+	vo);
-		
-		List<memberVO> list = teacherService.contentList();	
-		
-		model.addAttribute("contentRes", list);		
+	public String getGroup(Model model, memberVO vo) {	
 		
 		return "/teacher/teacherMain";
 	}
 	
+	@PostMapping("/joiningGroup")
+	public @ResponseBody Map<String, Object> joiningGroup(@RequestBody memberVO vo, Model model) { 
+		try {
+			Map<String, Object> map = responseMap(REST_SUCCESS, "리스트 조회");
+			
+			
+			return map;
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return responseMap(REST_FAIL, "예외사항이 발생 하였습니다.");
+		}
+	}
 	
 	// 그룹 신청한 학습자 조회
 	@PostMapping("/contentId")
@@ -124,47 +133,6 @@ public class teacherController extends CommonRestController{
 	}
 	
 
-	
-	/*
-	 * // 그룹 신청한 학습자 그룹승인
-	 * 
-	 * @PostMapping("/joinStatus") public @ResponseBody Map<String, Object>
-	 * joinjoinStatus(@RequestBody memberVO vo, Model model) {
-	 * 
-	 * try { System.out.println("여기도 된다3333=====================");
-	 * System.out.println("updateJoinStatus (vo) ==========: " + vo);
-	 * 
-	 * int updateRes = teacherService.updateJoinStatus(vo);
-	 * System.out.println("vo ==============================" +
-	 * teacherService.updateJoinStatus(vo)); Map<String, Object> map =
-	 * responseMap(REST_SUCCESS, "그룹 승인 완료!");
-	 * 
-	 * map.put("updateRes", updateRes);
-	 * 
-	 * return map;
-	 * 
-	 * } catch (Exception e) { e.printStackTrace(); return responseMap(REST_FAIL,
-	 * "패키지 등록중 예외사항이 발생 하였습니다."); } }
-	 */
-	
-//	@PostMapping("/geomin/joinStatus")
-//	public @ResponseBody Map<String, Object> joinjoinStatus(@RequestBody List<String> memberIds, Model model) {
-//		System.out.println("memberIds : " + memberIds);
-//	    try {
-//	        //List<String> memberIds = requestMap.get("memberIds");
-//	        
-//	        // 학습자의 memberid 목록을 이용하여 승인 여부를 업데이트
-//	        int updateRes = teacherService.updateJoinStatus(memberIds);
-//
-//	        Map<String, Object> map = responseMap(REST_SUCCESS, "그룹 승인 완료!");
-//	        map.put("updateRes", updateRes);
-//
-//	        return map;
-//	    } catch (Exception e) {
-//	        e.printStackTrace();
-//	        return responseMap(REST_FAIL, "패키지 등록중 예외사항이 발생 하였습니다.");
-//	    }
-//	}
 	
 	@PostMapping("/joinStatus")
 	public @ResponseBody Map<String, Object> joinjoinStatus(@RequestBody List<memberVO> memberidOutput_list) {
