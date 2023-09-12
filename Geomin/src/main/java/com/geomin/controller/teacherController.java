@@ -116,7 +116,6 @@ public class teacherController extends CommonRestController{
 			map.put("membervo", membervo);
 			return map;
 			
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			return responseMap(REST_FAIL, "예외사항이 발생 하였습니다.");
