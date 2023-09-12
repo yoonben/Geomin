@@ -28,7 +28,7 @@ window.addEventListener('load', function(){
 		        } 
 		      //아이디 영어 대소문자 확인
 		        else if(!regId.test(loginId)){
-		            alert("4~15자 이내 영문 대소문자, 숫자만 입력하세요.")
+		            alert("6~15자 이내 영문 대소문자, 숫자만 입력하세요.")
 		            loginId.focus();
 		            return false;
 		        } else{

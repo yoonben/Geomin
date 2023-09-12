@@ -53,6 +53,7 @@ public class teacherServiceImpl implements teacherService{
 		return teachermapper.updateJoinStatus(memberidOutput_list);
 	}
 
+
 	@Override
 	public int checkGroupid(String groupid) throws Exception {
 		// TODO Auto-generated method stub
