@@ -274,15 +274,14 @@
 			}
 			   
 			fetchPost('/geomin/teacherSearch', obj, (map) => {
-				.then(response => response.json())
-		        .then(data => {
-	        	if (data && data.teacherGroups) {
+
+	        	if (map.teacherGroups) {
 		        
 				 // 받아온 데이터로 select 옵션 업데이트
                 const groupSelect = document.getElementById("groupSelect");
                 groupSelect.innerHTML = ""; // 기존 옵션 삭제
                 
-                data.teacherGroups.forEach(group => {
+                map.teacherGroups.forEach(group => {
                     const option = document.createElement("option");
                     option.value = group.groupid;
                     option.textContent = group.pkgname;
@@ -297,9 +296,6 @@
                 console.error('Invalid response from server.');
             }
         })
-        .catch(error => {
-            console.error('Error:', error);
-        });
 }
 		
 		
