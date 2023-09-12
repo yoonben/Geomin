@@ -54,12 +54,12 @@ public class teacherServiceImpl implements teacherService{
 	}
 
 	@Override
-	public int checkGroupid(contentVO groupid) {
+	public int checkGroupid(String groupid) throws Exception {
 		// TODO Auto-generated method stub
-		
 		return teachermapper.checkGroupid(groupid);
 	}
 
+	
 
 	
 	//★그룹아이디 중복처리

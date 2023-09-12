@@ -31,7 +31,7 @@ public interface teacherMapper {
 	
 	//★그룹아이디 중복처리
 	//public int checkGroupid(String groupid);
-	public int checkGroupid(contentVO groupid);
+	public int checkGroupid(String groupid);
 
 	
 	

@@ -85,6 +85,14 @@
 			groupid = #{groupid}
 	</select> -->
 	
+	<select id="checkGroupid"  resultType="int">
+		SELECT
+			COUNT(groupid)
+		FROM
+			STUDY_GROUP
+		where 
+			groupid = #{groupid}
+	</select>
 	
 	<insert id="regStudyGroup" parameterType="java.util.List">
 		<foreach collection="list" item="list"><!--  separator=";" -->
