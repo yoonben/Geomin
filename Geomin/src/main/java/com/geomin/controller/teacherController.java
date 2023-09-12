@@ -65,19 +65,19 @@ public class teacherController extends CommonRestController{
 		teacherService.regStudyGroup(groupData);
 	}
 	
-	@PostMapping("/teacher/groupidCheck")
-	public int groupIdCheck(@RequestParam(name = "groupid") contentVO groupid) {
-		System.out.println("groupid : " + groupid);
-		List<contentVO> groupidCheck = teacherService.checkGroupid(groupid);
-		
-		int result = 0;
-		
-		if (groupidCheck != null) {
-			result = 1;
-		}
-		
-		return result;
-	}
+//	@PostMapping("/teacher/groupidCheck")
+//	public int groupIdCheck(@RequestParam(name = "groupid") contentVO groupid) {
+//		System.out.println("groupid : " + groupid);
+//		List<contentVO> groupidCheck = teacherService.checkGroupid(groupid);
+//		
+//		int result = 0;
+//		
+//		if (groupidCheck != null) {
+//			result = 1;
+//		}
+//		
+//		return result;
+//	}
 	
 	// 그룹 신청한 학습자 리스트
 	@GetMapping("/teacher/teacherMain")

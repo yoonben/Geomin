@@ -54,8 +54,9 @@ public class teacherServiceImpl implements teacherService{
 	}
 
 	@Override
-	public List<contentVO> checkGroupid(contentVO groupid) {
+	public int checkGroupid(contentVO groupid) {
 		// TODO Auto-generated method stub
+		
 		return teachermapper.checkGroupid(groupid);
 	}
 
@@ -66,10 +67,10 @@ public class teacherServiceImpl implements teacherService{
 	 * @Override public int checkGroupid(String groupid) { return
 	 * teachermapper.checkGroupid(groupid); }
 	 */
-	@Override
-	public List<contentVO> checkGroupid(contentVO vo) {
-		return teachermapper.checkGroupid(vo);
-	}
+//	@Override
+//	public List<contentVO> checkGroupid(contentVO vo) {
+//		return teachermapper.checkGroupid(vo);
+//	}
 
 
 
