@@ -13,6 +13,7 @@
     		width: 150px;
 			height:150px;
 			text-align: center;
+			
     	}
         #container>#section>.subnavi>ul>li{
             margin-top: 25px;
@@ -24,6 +25,7 @@
 			padding-top:13px;
 			border-top:1px solid #002A51;
 			border-bottom:1px solid #002A51;
+			font-family: 'GmarketSansMedium';
     	}
     	#container>#section>.subnavi>ul>li:hover{
             margin-top: 25px;
@@ -40,6 +42,7 @@
 			padding-top:11px;
 			font-size: 1.2rem;
         	font-weight: 600;
+        	font-family: 'GmarketSansMedium';
     	}
     	
 
@@ -92,8 +95,12 @@
 		    font-weight: 700;
 		}
 		
-
-        
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
     </style>
     
     
