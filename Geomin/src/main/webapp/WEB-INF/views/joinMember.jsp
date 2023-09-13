@@ -186,7 +186,7 @@ select:active{
 		</tr>
 		<tr>
 			<th style="background-color: #E4EDF5;border-radius: 5px;">이름 <span style='color:#FF0000;'>*</span></th>
-			<td><input type='text' name='mname' id='mName' placeholder='아이디를 입력해주세요' required='required' pattern='/^[가-힣a-zA-Z]+$/'></td>
+			<td><input type='text' name='mname' id='mName' placeholder='이름을 입력해주세요' required='required' pattern='^[가-힣a-zA-Z]+$'></td>
 			<td></td>
 		</tr>
 			<tr>
