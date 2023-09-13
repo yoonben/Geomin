@@ -36,4 +36,5 @@ public interface teacherService {
 
 	public int checkGroupid(String groupid) throws Exception;;
 
+	List<contentVO> getSubList2();
 }

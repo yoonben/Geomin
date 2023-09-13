@@ -149,10 +149,10 @@ th, tr, td{
         </c:forEach>
     </tbody>
 </table>
-				<button id="reqSubscribe">구독 신청</button>
-				<form method="post" action="/kakaoPay">
+				 <button id="reqSubscribe">구독 신청</button>
+				<!--<form method="post" action="/kakaoPay">
     				<button>카카오페이로 결제하기</button>
-				</form>
+				</form> -->
 			</div>
 				<!--  배너 -->
 				<div class='banner' >
@@ -161,7 +161,7 @@ th, tr, td{
 		</div>
 		
 	</div>
-	카카오페이 결제가 정상적으로 완료되었습니다.
+<%-- 	카카오페이 결제가 정상적으로 완료되었습니다.
  
 결제일시:     [[${info.approved_at}]]<br/>
 주문번호:    [[${info.partner_order_id}]]<br/>
@@ -169,7 +169,7 @@ th, tr, td{
 상품수량:    [[${info.quantity}]]<br/>
 결제금액:    [[${info.amount.total}]]<br/>
 결제방법:    [[${info.payment_method_type}]]<br/>
-<h2>[[${info}]]</h2>
+<h2>[[${info}]]</h2> --%>
 
 	<%@include file="../header/footer.jsp" %>	
 	

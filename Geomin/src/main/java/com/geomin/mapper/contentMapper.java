@@ -16,4 +16,6 @@ public interface contentMapper {
 	List<contentVO> regSubinfo();
 
 	List<contentVO> getSubMatchingList(String pkgName);
+	
+	
 }

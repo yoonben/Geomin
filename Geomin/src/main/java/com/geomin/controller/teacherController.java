@@ -53,10 +53,12 @@ public class teacherController extends CommonRestController{
 		}	
 		model.addAttribute("pkgName", pkgName);
 		
-		if(pkgName.isEmpty()) {
-			List<contentVO> list = contentService.getSubList();
-			model.addAttribute("list", list);
+		if(pkgName.isEmpty()) { 
+			System.out.println("패키지 이름 없을 때");
+			List<contentVO> list2 = teacherService.getSubList2();
+			model.addAttribute("list2", list2); 
 		}
+		
 		return "/teacher/groupRegist";
 	}
 	
@@ -229,9 +231,9 @@ public class teacherController extends CommonRestController{
 	@ResponseBody 
 	public List<contentVO> groupRegist2(@RequestParam(name = "pkgName") String pkgName, Model model) { 
 		System.out.println("pkgNamepkgName : " + pkgName);
-		List<contentVO> listL2 = contentService.getSubMatchingList(pkgName);
-		System.out.println("listL2listL2 : " + listL2);
-		return listL2;
+		List<contentVO> list3 = contentService.getSubMatchingList(pkgName);
+		System.out.println("listlist3 : " + list3);
+		return list3;
 	}	
 
 	

@@ -120,39 +120,37 @@ th, tr, td{
 						<th>콘텐츠 이름</th>
 						<th>콘텐츠 구독 날짜</th>
 						<th>최대 학습 인원</th>
-						<!-- <th>학습 가능 인원</th> -->
+						<th>학습 가능 인원</th>
 						<th>콘텐츠 최종 가격</th>
 						<th>콘텐츠 수준</th>
 						<th>학습 그룹 등록</th>
 					</tr>
 					</thead>
 					<tbody>
-					<c:forEach var="list" items="${list}">
-						<%-- <tr id="data-raw" class="data-raw" data-value="${list.subsDate}">
+					<c:forEach var="list" items="${getSubList}">
+						<tr id="data-raw" class="data-raw" data-value="${list.subsDate}">
 							<td><input type="checkbox" name="check" value="check" id="check"></td>
-							<td style="display: none;">${list.memberID }</td>
+							 <td style="display: none;">${list.memberID }</td>
 							<td class="list_pkgName">${list.pkgName }</td> <!-- ?memberID='memberID22' --> <!-- <a href="geomin/teacher/groupRegist"></a> -->
 							<td class="list_subsDate">${list.subsDate }</td>
 							<td>${list.personnel}</td>
-							<td style="display: none;">${list.groupMem }</td>
-							<!-- <td id="possbleMem"></td> -->
+							<td>${list.possiblegroupMem }</td>
 							<td>${list.finalPrice }</td>
 							<td>${list.difficulty }</td>
-							<td>${list.pkgContent }</td>
-							<c:url var="groupRegistURL" value="../teacher/groupRegist">
+							<%-- <td>${list.pkgContent }</td> --%>
+							<%--<c:url var="groupRegistURL" value="../teacher/groupRegist">
     							<c:param name="pkgName" value="${list.pkgName}" />
-							</c:url>
-							<c:choose>
-								<c:when test="${list.groupid == 'NOT GROUP'}"> <!-- NULL을 N으로 변경-->
-									<td><button type='button' id="regButton" name='regButton' onclick='location.href="${groupRegistURL}"'>그룹 등록</button></td>
-									<td><button type='button' id="regButton" name='regButton' onclick='location.href="../teacher/groupRegist?pkgName=${list.pkgName}"'>그룹 등록</button></td> 
-									onclick='location.href="../teacher/groupRegist?pkgName=${list.pkgName }"'
-								</c:when>
+							</c:url>--%>
+							<%-- <c:choose>
+								<c:when test="${list.groupid == 'NOT GROUP'}">  --%>
+									<%-- <td><button type='button' id="regButton" name='regButton' onclick='location.href="${groupRegistURL}"'>그룹 등록</button></td> --%>
+									<td><button type='button' id="regButton" name='regButton' onclick='location.href="../teacher/groupRegist?pkgName=${list.pkgName}"'>그룹 등록</button></td>
+								<%-- </c:when>
 								<c:otherwise>
 									<td>등록 완료</td>
 								</c:otherwise>
-							</c:choose>
-						</tr> --%>
+							</c:choose> --%>
+						</tr> 
 					</c:forEach>
 					</tbody>
 				</table>

@@ -92,7 +92,11 @@ public class teacherServiceImpl implements teacherService{
 		return teachermapper.checkGroupid(groupid);
 	}
 	
-
+	@Override
+	public List<contentVO> getSubList2() {
+		// TODO Auto-generated method stub
+		return teachermapper.getSubList2();
+	}
 	
 	//★그룹아이디 중복처리
 	/*

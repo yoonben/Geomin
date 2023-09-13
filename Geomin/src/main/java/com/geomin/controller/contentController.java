@@ -58,8 +58,9 @@ public class contentController {
 	@GetMapping("subscribeSearchContent")
 	public String subscribeSearchContent(Model model) {
 		//구독한 학습 컨텐츠 출력
-		List<contentVO> list = contentService.getSubList();
-		model.addAttribute("list", list);
+		List<contentVO> getSubList = contentService.getSubList();
+		//System.out.println("getSubList : " + getSubList);
+		model.addAttribute("getSubList", getSubList);
 		
 		return "subscribe/subscribeSearchContent";
 	}
