@@ -72,9 +72,7 @@
             		</div>
 					<div>
 						<label>학습 기간 : 최대 3개월</label> 
-							<!-- <select id="select_yearB" class= "select_yearB" onchange="javascript:lastdayB();"></select> -->
 							<select id="select_yearB" class= "select_yearB"></select>
-							<!-- <select id="select_monthB" class= "select_monthB" onchange="javascript:lastdayB();"></select> -->
 							<select id="select_monthB" class= "select_monthB"></select>
 							<select id="select_dayB" class= "select_dayB"></select>
 						
@@ -82,8 +80,6 @@
 						
 							<select id="select_yearA" class= "select_yearA" ></select>
 							<select id="select_monthA" class= "select_monthA"></select>
-							<!-- <select id="select_yearA" class= "select_yearA" onchange="javascript:lastdayA();"></select>
-							<select id="select_monthA" class= "select_monthA" onchange="javascript:lastdayA();"></select> -->
 							<select id="select_dayA" class= "select_dayA"></select>
 						</div>
             		<div>
@@ -93,55 +89,49 @@
 				</c:if>
 			</c:forEach>
 			
-			
 			 <c:if test="${empty pkgName}">
                 <!-- pkgName이 비어있을 때 출력할 내용 -->
-               	 패키지 선택 : <%-- <select id="select_package">
-               	 			<option selected="selected">패키지 선택</option>
-               	 			<c:forEach items="${list}" var="list">
-               	 				<option class ="optPkgName">${list.pkgName }</option>
-               	 			</c:forEach>
-               	 </select> --%>
+               	 패키지 선택 : 
                	 <select id="select_package">
         			<option selected="selected">패키지 선택</option>
         			<c:forEach items="${list}" var="list">
             			<option class="optPkgName">${list.pkgName}</option>
         			</c:forEach>
     			</select>
-               	 학습 가능 인원 : <p></p>
-               	 그룹 등록 인원 : <p></p>
+               	 학습 가능 인원 : ${list1.personnel}<p></p>
+               	 <p>그룹 등록 인원 : curgroupmem(반영)</p>
                	 
-                <c:forEach items="${list1}" var="list1">
-            	<c:if test ="${list1.pkgName == list.pkgName}">
-            		<div style="display: none;">
+                <%-- <c:forEach items="${list1}" var="list1">
+            	<c:if test ="${list1.pkgName == list.pkgName}"> --%>
+            		<%-- <div style="display: none;">
             			<label>컨텐츠 아이디 : </label>
-            			<input name='pkgId' id = "pkgId" value='<c:out value = "${list1.pkgId}" />' readonly="readonly" disabled="disabled">
+            			<input name='pkgId' id = "pkgId2" value='<c:out value = "${list1.pkgId}" />' readonly="readonly" disabled="disabled">
             		</div>
             		<div>
             			<label>그룹명 : </label>
-            			<input type="text" id="groupid" name = "groupid" placeholder="그룹명을 입력해 주세요" ><input type='button' id='groupidCheck' name='groupidCheck'  value='중복확인버튼'>
+            			<input type="text" id="groupid2" name = "groupid" placeholder="그룹명을 입력해 주세요" ><input type='button' id='groupidCheck' name='groupidCheck'  value='중복확인버튼'>
             			<div id='result'></div>
             		</div>
             		<div>
             			<label>패키지명 : </label>
-            			<input name='pkgName' value='<c:out value = "${list1.pkgName}" />' readonly="readonly" disabled="disabled">
+            			<input name='pkgName' id="pkgName2" value='<c:out value = "${list1.pkgName}" />' readonly="readonly" disabled="disabled">
             		</div>
             		<div>
             			<label>학습 가능 인원 : </label>
-            			<input type="text" id='groupperson'  name='groupperson' placeholder="인원 수 적기"> 명 / ${list1.personnel}명
+            			<input type="text" id='groupperson2'  name='groupperson' placeholder="인원 수 적기"> 명 / ${list1.personnel}명
             			<div id='grouppersonError'></div>
             		</div>
             		<div style="display: none"><!--  -->
             			<label>최대 학습 가능 인원 : </label>
-            			<input type="text" id='maxgroupperson' name='maxgroupperson' data-value="${list1.personnel}" readonly="readonly" disabled="disabled">value='<c:out value = "${list1.personnel}" />' 명
+            			<input type="text" id='maxgroupperson2' name='maxgroupperson' data-value="${list1.personnel}" readonly="readonly" disabled="disabled">value='<c:out value = "${list1.personnel}" />' 명
             		</div>
             		<div>
             			<label>학습 수준 : </label>
-            			<input name='difficulty' value='<c:out value = "${list1.difficulty}" />' readonly="readonly" disabled="disabled">
+            			<input name='difficulty' id="difficulty2"value='<c:out value = "${list1.difficulty}" />' readonly="readonly" disabled="disabled">
             		</div>
             		<div>
             			<label>구독 날짜 : </label>
-            			<input name='subsDate' value='<c:out value = "${list1.subsDate}" />' readonly="readonly" disabled="disabled">
+            			<input name='subsDate' id="subsDate2"value='<c:out value = "${list1.subsDate}" />' readonly="readonly" disabled="disabled">
             		</div>
 					<div>
 						<label>학습 기간 : 최대 3개월</label> 
@@ -161,10 +151,60 @@
 						</div>
             		<div>
 						<label>학습 내용 : </label>
-            			<input name='content' value='<c:out value = "${list1.pkgContent}" />' readonly="readonly" disabled="disabled">
+            			<input name='content' id = "content2" value='<c:out value = "${list1.pkgContent}" />' readonly="readonly" disabled="disabled">
+            		</div> --%>
+				<%--</c:if>
+			 </c:forEach> --%>
+			 		<div style="display: none;">
+            			<label>컨텐츠 아이디 : </label>
+            			<input name='pkgId' id = "pkgId2" readonly="readonly" disabled="disabled">
             		</div>
-				</c:if>
-			</c:forEach>
+            		<div>
+            			<label>그룹명 : </label>
+            			<input type="text" id="groupid2" name = "groupid" placeholder="그룹명을 입력해 주세요" ><input type='button' id='groupidCheck' name='groupidCheck'  value='중복확인버튼'>
+            			<div id='result'></div>
+            		</div>
+            		<div>
+            			<label>패키지명 : </label>
+            			<input name='pkgName' id="pkgName2" readonly="readonly" disabled="disabled">
+            		</div>
+            		<div>
+            			<label>학습 가능 인원 : </label>
+            			<input type="text" id='groupperson2'  name='groupperson' placeholder="인원 수 적기"> 명 / <%-- ${list1.personnel}명 --%>
+            			<div id='grouppersonError'></div>
+            		</div>
+            		<div style="display: none"><!--  -->
+            			<label>최대 학습 가능 인원 : </label>
+            			<input type="text" id='maxgroupperson2' name='maxgroupperson' readonly="readonly" disabled="disabled">value='<c:out value = "${list1.personnel}" />' 명
+            		</div>
+            		<div>
+            			<label>학습 수준 : </label>
+            			<input name='difficulty' id="difficulty2"  readonly="readonly" disabled="disabled">
+            		</div>
+            		<div>
+            			<label>구독 날짜 : </label>
+            			<input name='subsDate' id="subsDate2" readonly="readonly" disabled="disabled">
+            		</div>
+					<div>
+						<label>학습 기간 : 최대 3개월</label> 
+							<!-- <select id="select_yearB" class= "select_yearB" onchange="javascript:lastdayB();"></select> -->
+							<select id="select_yearB" class= "select_yearB"></select>
+							<!-- <select id="select_monthB" class= "select_monthB" onchange="javascript:lastdayB();"></select> -->
+							<select id="select_monthB" class= "select_monthB"></select>
+							<select id="select_dayB" class= "select_dayB"></select>
+						
+							~
+						
+							<select id="select_yearA" class= "select_yearA" ></select>
+							<select id="select_monthA" class= "select_monthA"></select>
+							<!-- <select id="select_yearA" class= "select_yearA" onchange="javascript:lastdayA();"></select>
+							<select id="select_monthA" class= "select_monthA" onchange="javascript:lastdayA();"></select> -->
+							<select id="select_dayA" class= "select_dayA"></select>
+						</div>
+            		<div>
+						<label>학습 내용 : </label>
+            			<input name='content' id = "content2" readonly="readonly" disabled="disabled">
+            		</div>
              </c:if>
             <br>
             	<button id="regStudy">학습그룹 등록</button>
@@ -176,6 +216,22 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
+	/* $.ajax({
+        url: "/geomin/teacher/groupRegist", // 컨트롤러 엔드포인트의 URL
+        method: "GET",
+        dataType: "json", // 데이터 형식을 JSON으로 지정
+        success: function (data) {
+            // 서버에서 받아온 JSON 데이터를 처리
+            console.log(data.list1);
+            // 여기서 data.list1을 원하는 방식으로 활용할 수 있습니다.
+        },
+        error: function (error) {
+            // 오류 처리
+            console.error(error);
+        }
+    }); */
+	
+	
 	/* var list1Data = [
         <c:forEach items="${list1}" var="item" varStatus="loop">
             {
@@ -201,40 +257,79 @@ $(document).ready(function () {
             },
         </c:forEach>
     ]; */
-    var list1Data = ${list1};
-	$("#select_package").change(function() {
+    
+    $("#select_package").change(function() {
+        // 선택된 option 요소의 값을 가져옵니다.
+       var pkgName = $(this).val();
+       console.log('pkgName : ' , pkgName);
+       
+       $.ajax({
+    	   url: "/geomin/teacher/groupRegist2",
+    	   type : 'POST',
+    	   data : {pkgName : pkgName},
+    	   success : function(data) {
+    		   console.log(data);
+    		   var ListL2 = data[0];
+    		   console.log("ListL2.groupId");
+    		   
+    		   $('#pkgId2').val(ListL2.pkgId); // 예시로 pkgId 필드 업데이트
+    		   $('#groupid2').val(ListL2.groupId); // 예시로 groupId 필드 업데이트
+    		   $('#pkgName2').val(ListL2.pkgName); // 예시로 pkgName 필드 업데이트
+    		   $('#groupperson2').val(ListL2.groupperson);
+    		   $('#maxgroupperson2').val(ListL2.groupperson);
+    		   $('#difficulty2').val(ListL2.difficulty);
+    	   }
+       });
+       
+       
+    });
+    
+    /* $.ajax({
+    url: "/geomin/teacher/groupRegist",
+    method: "GET",
+    dataType: "html", // 데이터 형식을 HTML로 지정
+    success: function (data) {
+        console.log(data);
+        // 서버에서 받은 HTML 데이터를 출력하는 코드를 작성하세요.
+        // 예를 들어, 특정 div 요소에 데이터를 추가하려면 다음과 같이 사용할 수 있습니다.
+        $("#someDiv").html(data);
+    },
+    error: function (error) {
+        // 오류 처리
+        console.error(error);
+    }
+}); */
+/* $.ajax({
+    type: "GET", // 또는 "POST", 컨트롤러에서 지원하는 HTTP 메서드를 사용하세요.
+    url: "/teacher/groupRegist", // 컨트롤러의 엔드포인트 URL을 사용하세요.
+    data: { list : list }, // 서버로 전달할 데이터를 설정하세요.
+    dataType: "json", // 서버에서 반환되는 데이터 형식을 설정하세요. JSON 예시입니다.
+    success: function(data) {
+        // Ajax 요청이 성공하면 서버에서 반환한 데이터를 처리합니다.
+        // data 변수에는 서버에서 반환한 데이터가 들어있습니다.
+        // 여기서는 예시로 콘솔에 출력합니다.
+        console.log(data);
+        
+        // 원하는 작업을 수행하세요.
+    },
+    error: function(error) {
+        // Ajax 요청이 실패한 경우에 대한 처리를 여기서 수행할 수 있습니다.
+        console.error("Ajax request failed:", error);
+    }
+}); */
+    
+	/* $("#select_package").change(function() {
         // 선택된 option 요소의 값을 가져옵니다.
         var selectedValue = $(this).val();
-        
-        // 선택된 값이 "패키지 선택"이 아닌 경우에만 처리합니다.
-        /* if (selectedValue !== "패키지 선택") {
-            console.log("선택된 패키지: " + selectedValue);
-            var selectedData = null;
-            $.each(list1, function(index, item) {
-                if (item.pkgName === selectedValue) {
-                    selectedData = item;
-                    return false; // 반복문 종료
-                }
-            });
-            
-            if (selectedData) {
-                // 선택된 데이터를 HTML에 출력
-                $("#groupid").val(""); // 그룹명 초기화
-                $("#groupperson").val(""); // 학습 가능 인원 초기화
-                
-                // 나머지 필드에 데이터를 설정
-                $("#pkgId").val(selectedData.pkgId);
-                $("#pkgName").val(selectedData.pkgName);
-                $("#groupperson").attr("placeholder", "인원 수 적기");
-                /* $("#grouppersonError").text(""); */
-                // 나머지 필드에 데이터를 설정하는 부분을 필요에 따라 추가하십시오.
-            //} else {
-                // 선택된 패키지와 일치하는 데이터가 없을 경우 처리할 내용 추가
-            //}
-            // 여기에서 선택된 값을 활용하여 원하는 작업을 수행할 수 있습니다.
-        //} */
-        
-        if (selectedValue !== "패키지 선택") {
+        console.log('selectedValue : ' , selectedValue);
+        $.ajax({
+        url: "/geomin/teacher/groupRegist", // 컨트롤러 엔드포인트의 URL
+        method: "GET",
+        dataType: "json", // 데이터 형식을 JSON으로 지정
+        success: function (data) {
+            console.log(data.list1);
+            // 여기서 data.list1을 원하는 방식으로 활용할 수 있습니다.
+            if (selectedValue !== "패키지 선택") {
             var selectedData = null;
             for (var i = 0; i < list1Data.length; i++) {
                 if (list1Data[i].pkgName === selectedValue) {
@@ -257,7 +352,48 @@ $(document).ready(function () {
                 // 선택된 패키지와 일치하는 데이터가 없을 경우 처리할 내용 추가
             }
         }
-    });
+        },
+        error: function (error) {
+            // 오류 처리
+            console.log(error);
+        }
+    	});
+       
+        
+    }); */// endpoint #select_package
+    
+    
+    
+    
+    // 선택된 값이 "패키지 선택"이 아닌 경우에만 처리합니다.
+    /* if (selectedValue !== "패키지 선택") {
+        console.log("선택된 패키지: " + selectedValue);
+        var selectedData = null;
+        $.each(list1, function(index, item) {
+            if (item.pkgName === selectedValue) {
+                selectedData = item;
+                return false; // 반복문 종료
+            }
+        });
+        
+        if (selectedData) {
+            // 선택된 데이터를 HTML에 출력
+            $("#groupid").val(""); // 그룹명 초기화
+            $("#groupperson").val(""); // 학습 가능 인원 초기화
+            
+            // 나머지 필드에 데이터를 설정
+            $("#pkgId").val(selectedData.pkgId);
+            $("#pkgName").val(selectedData.pkgName);
+            $("#groupperson").attr("placeholder", "인원 수 적기");
+            /* $("#grouppersonError").text(""); */
+            // 나머지 필드에 데이터를 설정하는 부분을 필요에 따라 추가하십시오.
+        //} else {
+            // 선택된 패키지와 일치하는 데이터가 없을 경우 처리할 내용 추가
+        //}
+        // 여기에서 선택된 값을 활용하여 원하는 작업을 수행할 수 있습니다.
+    //} */
+    
+    
 	
     var start_year = "2023"; // 시작할 년도
     var today = new Date();
@@ -415,27 +551,6 @@ function lastdayA() {
 		const groupperson = document.getElementById('groupperson').value;
 		const pkgId = document.getElementById('pkgId').value;
 		const maxgroupperson = document.getElementById("maxgroupperson").value;
-    	//console.log('maxgroupperson : ' , maxgroupperson);
-		//1. groupid 중복 체크
-		/* $.ajax({
-            url:'/geomin/teacher/groupRegist', //Controller에서 요청 받을 주소
-            type:'POST', //POST 방식으로 전달
-            data:{pkgId : pkgId},
-            success:function(cnt){ //컨트롤러에서 넘어온 cnt값을 받는다 
-                if(cnt == 0){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디 
-                    $('.id_ok').css("display","inline-block"); 
-                    $('.id_already').css("display", "none");
-                } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
-                    $('.id_already').css("display","inline-block");
-                    $('.id_ok').css("display", "none");
-                    alert("이미 사용중인 그룹명입니다.");
-                    $('#id').val('');
-                }
-            },
-            error:function(){
-                alert("에러입니다");
-            }
-        }); */
 		
 		var yearB = document.getElementById('select_yearB').value;
 		var monthB = document.getElementById('select_monthB').value;
@@ -490,13 +605,9 @@ function lastdayA() {
 			});
 		});	//endpoint $('#regStudy').click
 	
-	/* $('#select_package').click(function() {	
-		console.log('select_package 클릭완료 : ', select_package );
-		
-	}); */
-	
 	//★그룹아이디 중복처리
 	$("#groupidCheck").click(function(){
+		console.log("groupidCheck 클릭됨");
 		let groupid = document.getElementById('groupid').value;
 		console.log('groupid : ' , groupid);
 		

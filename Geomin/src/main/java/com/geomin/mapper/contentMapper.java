@@ -14,4 +14,6 @@ public interface contentMapper {
 	void addSubContent(List<contentVO> checked_Data);
 	
 	List<contentVO> regSubinfo();
+
+	List<contentVO> getSubMatchingList(String pkgName);
 }

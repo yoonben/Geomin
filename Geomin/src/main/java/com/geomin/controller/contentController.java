@@ -18,7 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.geomin.VO.contentVO;
 import com.geomin.service.contentService;
 
+import lombok.Setter;
+import lombok.extern.log4j.Log4j;
+
 @Controller
+@Log4j
 @RequestMapping("/geomin/subscribe/*")
 public class contentController {
 	
@@ -38,15 +42,6 @@ public class contentController {
 		return "subscribe/searchContent";
 	}
 	
-//	@PostMapping("searchContent")
-//	public String searchContent(@RequestBody List<contentVO> checked_Data) {
-//		System.out.println("checked_Data : " + checked_Data);
-//		//체크박스가 선택된 라인의 데이터 처리
-//		contentService.addSubContent(checked_Data);
-//		
-//		return "subscribe/searchContent";
-//	}
-	
 	@PostMapping("searchContent")
 	public String searchContent(@RequestBody List<contentVO> checked_Data) {
 		System.out.println("checked_Data : " + checked_Data);
@@ -64,5 +59,4 @@ public class contentController {
 		
 		return "subscribe/subscribeSearchContent";
 	}
-	
 }

@@ -90,4 +90,33 @@
 		WHERE 
     		p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6'
 	</select>
+	
+	<select id="getSubMatchingList" resultType="com.geomin.VO.contentVO">
+		SELECT
+    		P.pkgId,
+    		p.pkgName,
+    		m.memberID,
+    		d.subsDate,
+    		p.finalPrice,
+    		p.difficulty,
+    		p.PERSONNEL,
+    		p.pkgContent,
+    		NVL2(g.groupID, g.groupID, 'NOT GROUP') AS groupID
+		FROM 
+    		package p
+		JOIN
+    		PKGSUBSDETAIL D
+		ON  
+    		P.pkgId = D.pkgId
+		JOIN
+    		member m
+		ON 
+    		D.memberID = m.memberID
+		LEFT JOIN
+    		study_group g
+		ON
+    		D.pkgId = g.pkgId
+		WHERE 
+    		p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6' and D.pkgName = #{pkgName}
+	</select>
 </mapper>
