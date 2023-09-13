@@ -128,7 +128,7 @@ public class teacherController extends CommonRestController{
 	// 그룹 신청한 학습자 조회
 	@PostMapping("/contentId")
 	public @ResponseBody Map<String, Object> studentjoin(@RequestBody memberVO vo, Model model) { 
-		System.out.println("여기 된다111=====================");
+		
 		try {
 			Map<String, Object> map = responseMap(REST_SUCCESS, "리스트 조회");
 			
@@ -152,71 +152,70 @@ public class teacherController extends CommonRestController{
 	public @ResponseBody Map<String, Object> joinjoinStatus(@RequestBody groupstudentVO groupstudent) {
 	    try {
 	    	
+	    	System.out.println(groupstudent.getStudentidList());
 	    	
-	    	if ("Y".equals(groupstudent.getGroupjoinstatus())) {
+	    	List<String> studentidList = groupstudent.getStudentidList();
+	    	
+	    	for (int i = 0; i < studentidList.size(); i++) {
 	    		
-	    	    System.out.println(groupstudent);
+	    	    System.out.println(studentidList.get(i));
 	    	    
-	    	    int res = teacherService.updateJoinStatus(groupstudent.getStudentid());
+	    	    groupstudentVO groupjoinstatusOne = teacherService.groupjoinstatusOne(studentidList.get(i));
 	    	    
-    	    	if(res > 0) {
-    	    		groupstudentVO groupjoinstatusOne = teacherService.groupjoinstatusOne(groupstudent.getStudentid());
-    	    		
-    	    		int res2 = teacherService.curpersonnelDown(groupstudent.getPkgid());
-    	    		
-    	    		if(res2 == 0) {
-    	    			return responseMap(REST_FAIL, "패키지 인원 증가 중 예외사항이 발생하였습니다.");
-    	    		}
-    	    		
-    	    		System.out.println("groupjoinstatusOne : "+groupjoinstatusOne);
-    	    		
-	    	    	Map<String, Object> map = responseMap(REST_SUCCESS, "그룹 승인 취소 완료!");
-	    	    	
-	    	    	map.put("groupjoinstatusOne", groupjoinstatusOne.getGroupjoinstatus());
-	    	    	
-	    	    	return map;
-    	    	}else {
-    	    		return responseMap(REST_FAIL, "그룹 업데이트 중 예외사항이 발생하였습니다.");
-    	    	}
-	    	} else if ("N".equals(groupstudent.getGroupjoinstatus())) {
-	    		int totalGroupStu = teacherService.totalGroupStu(groupstudent.getGroupid());
-		    	
-		    	System.out.println(totalGroupStu);
-		    	
-		    	int totalgroupmem = teacherService.totalgroupmem(groupstudent.getGroupid());
-		    	
-		    	System.out.println(totalgroupmem);
-		    	
-	    	    System.out.println(groupstudent);
+	    	    System.out.println(studentidList.get(i)+" : "+groupjoinstatusOne);
 	    	    
-	    	    if(totalgroupmem >= totalGroupStu) {
-	    	    	int res = teacherService.updateJoinStatus(groupstudent.getStudentid());
-	    	    	
+	    	    if ("Y".equals(groupjoinstatusOne.getGroupjoinstatus())) {
+		    		
+		    	    System.out.println(groupstudent);
+		    	    
+		    	    int res = teacherService.updateJoinStatus(studentidList.get(i));
+		    	    
 	    	    	if(res > 0) {
-	    	    		groupstudentVO groupjoinstatusOne = teacherService.groupjoinstatusOne(groupstudent.getStudentid());
 	    	    		
-	    	    		int res2 = teacherService.curpersonnelUP(groupstudent.getPkgid());
+	    	    		int res2 = teacherService.curpersonnelDown(groupstudent.getPkgid());
 	    	    		
 	    	    		if(res2 == 0) {
 	    	    			return responseMap(REST_FAIL, "패키지 인원 증가 중 예외사항이 발생하였습니다.");
 	    	    		}
-	    	    		
-	    	    		System.out.println("groupjoinstatusOne : "+groupjoinstatusOne);
-	    	    		
-		    	    	Map<String, Object> map = responseMap(REST_SUCCESS, "그룹 승인 완료!");
 		    	    	
-		    	    	map.put("groupjoinstatusOne", groupjoinstatusOne.getGroupjoinstatus());
-		    	    	
-		    	    	return map;
+
 	    	    	}else {
 	    	    		return responseMap(REST_FAIL, "그룹 업데이트 중 예외사항이 발생하였습니다.");
 	    	    	}
-	    	    } else{
-	    	    	return responseMap(REST_FAIL, "그룹 인원 초괴 완료!");
-	    	    }
-	    	} else {
-	    	    return responseMap(REST_FAIL, "그룹 등록 중 예외사항이 발생하였습니다.");
+		    	} else if ("N".equals(groupjoinstatusOne.getGroupjoinstatus())) {
+		    		int totalGroupStu = teacherService.totalGroupStu(groupstudent.getGroupid());
+			    	
+			    	int totalgroupmem = teacherService.totalgroupmem(groupstudent.getGroupid());
+			    	
+		    	    if(totalgroupmem > totalGroupStu) {
+		    	    	int res = teacherService.updateJoinStatus(studentidList.get(i));
+		    	    	
+		    	    	if(res > 0) {
+		    	    		
+		    	    		int res2 = teacherService.curpersonnelUP(groupstudent.getPkgid());
+		    	    		
+		    	    		if(res2 == 0) {
+		    	    			return responseMap(REST_FAIL, "패키지 인원 증가 중 예외사항이 발생하였습니다.");
+		    	    		}
+		    	    		
+		    	    		
+			    	    	Map<String, Object> map = responseMap(REST_SUCCESS, "그룹 승인 완료!");
+			    	    	
+		    	    	}else {
+		    	    		return responseMap(REST_FAIL, "그룹 업데이트 중 예외사항이 발생하였습니다.");
+		    	    	}
+		    	    } else{
+		    	    	return responseMap(REST_FAIL, "그룹 인원 초과");
+		    	    }
+		    	} else {
+		    	    return responseMap(REST_FAIL, "그룹 등록 중 예외사항이 발생하였습니다.");
+		    	}
+		    	
 	    	}
+	    	
+	    	Map<String, Object> map = responseMap(REST_SUCCESS, "그룹 승인(취소) 완료");
+	    	
+	    	return map;
 	    	
 	       
 	    } catch (Exception e) {

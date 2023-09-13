@@ -237,38 +237,26 @@
 		        
 		        let deleteCount = 0; // 실제 삭제된 패키지 수 추적
 				let i = 0;
+				const studentidList = [];
 		        let studentid;
 		        let groupjoinstatus;
-		        selectedCheckboxes.forEach(checkbox => {
-		        	
+		        selectedCheckboxes.forEach(checkbox => {	
 		            studentid = checkbox.value;
 		            
-		            groupjoinstatus = document.querySelector('#groupjoinstatus'+studentid+'').innerHTML;
-		            
-		            let obj = {
-		            	studentid: studentid
-		            	, groupjoinstatus: groupjoinstatus
+		            studentidList.push(studentid);
+		 		})
+		 		
+		 		  let obj = {
+		        		studentidList: studentidList
 		            	, groupid : document.querySelector('#groupidOutput').value
 		            	, pkgid : document.querySelector('#pkgid').value
 		            }
-		            
-		            console.log(obj);
-					
-		            fetchPost('/geomin/joinStatus', obj, (map) => {
-		            	deleteCount++;
-		                if (deleteCount === selectedCheckboxes.length) {
-		                    
-		                    alert(map.msg);
-		                    
-		                    studentJoin();
-
-		                   
-		                    deletingInProgress = false;
-		                }
-		    		})
-		    		
-		 		})
-		 		
+		        
+		        fetchPost('/geomin/joinStatus', obj, (map) => {
+		        	alert(map.msg);
+		        	document.querySelector('#allCheck').checked = false;
+		        	studentJoin();
+		        })
 		 	}else {
 	 			alert("숙제 보내는 중 예외사항이 발생 하였습니다.");
 		    }
