@@ -59,16 +59,17 @@
 		    font-weight: 900;
     	}
     	#introduction1>h5{
-    		font-size: 0.9rem;
-    		line-height: 50px;
+    		font-size: 1.1rem;
+    		line-height: 30px;
+    		font-family: 'KyoboHand';
     	}
-    	#introduction1img{
+     	#introduction1img{
     	
-    		float:left;
+    		/* float:right; */
     		margin-right : 10px;
-    		margin-top : 15px;
-    		width: 300px;
-    	}
+    		margin-top : 30px;
+    		height:180px;
+    	} 
     	
     	#introduction2{
     		display: none;
@@ -95,12 +96,90 @@
 		    font-weight: 700;
 		}
 		
+	.gobtn1{
+	width:130px; 
+	height:130px;
+	border:5px solid #003C72;
+	border-radius:100px;
+	margin-left:60px;
+	position:absolute;
+	background-color:#FFFFFF;
+	}
+	.gobtn1:hover{
+	width:130px; 
+	height:130px;
+	border:5px solid #003C72;
+	border-radius:100px;
+	margin-left:60px;
+	position:absolute;
+	background-color:#BCDFFF;
+	}
+		
+	.gobtn2{
+	width:130px; 
+	height:130px;
+	border:5px solid #003C72;
+	border-radius:100px;
+	margin-left:250px;
+	position:absolute;
+	background-color:#FFFFFF;
+	}	
+	.gobtn2:hover{
+	width:130px; 
+	height:130px;
+	border:5px solid #003C72;
+	border-radius:100px;
+	margin-left:250px;
+	position:absolute;
+	background-color:#BCDFFF;
+	}
+	
+	.gobtn3{
+	width:130px; 
+	height:130px;
+	border:5px solid #003C72;
+	border-radius:100px;
+	margin-right:60px;
+	margin-left:420px;
+	position:absolute;
+	background-color:#FFFFFF;
+	}
+	.gobtn3:hover{
+	width:130px; 
+	height:130px;
+	border:5px solid #003C72;
+	border-radius:100px;
+	margin-right:60px;
+	margin-left:420px;
+	position:absolute;
+	background-color:#BCDFFF;
+	}	
+		
+.radius_img_1{
+	width:80px; 
+	height:80px;
+	margin-top:18px;
+}
+		
 @font-face {
     font-family: 'GmarketSansMedium';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'Tenada';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'KyoboHand';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
     </style>
     
     
@@ -147,18 +226,29 @@
             
              <div class='content'>
              	<div id="introduction1">
-             		<h3>즐거운 온라인 바둑 교육,<br/> "게임으로 배우는 어린이 바둑 교실"</h3>
-                	<img src="/resources/img/website.jpg" alt="" id='introduction1img'>
+             		<a><h3 style='margin-top:15px; margin-bottom:15px; font-family:GmarketSansMedium;'>
+             		즐거운 온라인 바둑 교육, <br>"게임으로 배우는 어린이 바둑 교실"</h3></a>
+                	
                 	<h5>"게임으로 배우는 어린이 바둑 교실"은 바둑을 처음 접하는 사람들을 위한 온라인 서비스입니다. <br/>
                          	간편한 규칙 설명과 튜토리얼을 통해 누구나 쉽게 바둑을 배울 수 있습니다. <br/>
-                        	 언제 어디서나 접속하여 바둑의 재미를 느껴보세요.</h5><br>
+                        	 언제 어디서나 접속하여 바둑의 재미를 느껴보세요.</h5>
+                        	 
+                        	<!-- 바로가기 아이콘 --> 
+                        	<div id='goBtnBox' style='width:630px; height:130px; 
+                        								margin:20px auto; position:relative;'>
+                        		<div class='gobtn1'><a href='https://www.cosumi.net/ko/' target='_blank'><img src="../resources/img/mainbtn1.png" class="radius_img_1"></a></div>
+                        		<div class='gobtn2'><a href=''><img src="./img/puppy_.jpg" class="radius_img_1"></a></div>
+                        		<div class='gobtn3'><a href=''><img src="./img/puppy_.jpg" class="radius_img_1"></a></div>
+                        	</div>
+                        	
+                        	
                         	 
                         	<div style="border-top:1px solid #003C72; 
                         				border-bottom:1px solid #003C72;
                         				background-color: #003C72;
                         				color:#FFFFFF;">
-                        		<h3><b>↓ 바둑이 궁금하다면 ↓</b></h3>
-                        	</div><br>
+                        		<h3 style='font-family: Tenada; padding-top:15px;'><b>바둑이 궁금하다면 </b></h3>
+                        	</div>
 		                    <iframe width="630" height="340" 
 		                    		src="https://www.youtube.com/embed/-ezZ1Aavv-I?si=ERZpYB6nTn-jl5rZ" 
 		                    		title="YouTube video player" frameborder="0" 
