@@ -81,14 +81,14 @@ address {
     				<a href='/geomin/main' data-v-03c581ac class>바둑사이트 소개</a>
     			</li>
     			<li data-v-03c581ac>
-    				<a href='' data-v-03c581ac class>이용약관</a>
+    				<a href='/geomin/header/utilization' data-v-03c581ac class>이용약관</a>
     			</li>
     			<li data-v-03c581ac>
     				<a href='' data-v-03c581ac class>개인정보처리방침</a>
     			</li>
     		</ul>
     		<address href='' data-v-03c581ac class>
-    			KOREA BADUK ASSOCIATION. ALL rights reserved.
+    			(c)KOREA BADUK ASSOCIATION. ALL rights reserved.
     		</address>
     	</div>
     </footer>

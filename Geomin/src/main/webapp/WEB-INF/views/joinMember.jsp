@@ -52,6 +52,7 @@ select:active{
 	height:50px; 
 }
 
+/* 아이디 중복체크 버튼 */
 #idCheck{
 	height:100%; 
    	width:100px;
@@ -70,8 +71,71 @@ select:active{
    	cursor: pointer;
 }
 
-</style>
 
+/* 회원가입시 버튼 처리 */
+#joinSubmit{
+	height:100%; 
+   	width:130px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+   	font-size: 14px;
+}
+#joinSubmit:hover{
+	height:100%; 
+   	width:130px;
+   	background-color: #002F5A;
+   	color:#FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 5px;
+   	cursor: pointer;
+   	font-size: 14px;
+}
+
+#btnReset{
+	height:100%; 
+   	width:130px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+   	font-size: 14px;
+}
+#btnReset:hover{
+	height:100%; 
+   	width:130px;
+   	background-color: #002F5A;
+   	color:#FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 5px;
+   	cursor: pointer;
+   	font-size: 14px;
+}
+
+#mainPageGo{
+	height:100%; 
+   	width:130px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+   	font-size: 14px;
+}
+#mainPageGo:hover{
+	height:100%; 
+   	width:130px;
+   	background-color: #002F5A;
+   	color:#FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 5px;
+   	cursor: pointer;
+   	font-size: 14px;
+}
+
+
+
+</style>
 
 
 </head>
@@ -122,7 +186,7 @@ select:active{
 		</tr>
 		<tr>
 			<th style="background-color: #E4EDF5;border-radius: 5px;">이름 <span style='color:#FF0000;'>*</span></th>
-			<td><input type='text' name='mname' id='mName' placeholder='아이디를 입력해주세요' required='required'></td>
+			<td><input type='text' name='mname' id='mName' placeholder='아이디를 입력해주세요' required='required' pattern='/^[가-힣a-zA-Z]+$/'></td>
 			<td></td>
 		</tr>
 			<tr>
