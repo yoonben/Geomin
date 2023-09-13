@@ -16,7 +16,7 @@
 
 <style>
 input[type=text]{
-	height:45px; 
+	height:30px; 
 	width:99%;
 }
 
@@ -46,13 +46,34 @@ select:active{
     }
 
 th{
-	width: 400px
+	width: 300px;
+	height: 30px;
+}
+td{
+	font-size: 18px;
 }
 
+
 .btn{
-	height:30px; 
-   	width:120px;
-}  
+	height:45px; 
+   	width:130px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+   	font-size: 14px;
+}
+.btn:hover{
+	height:45px; 
+   	width:130px;
+   	background-color: #002F5A;
+   	color:#FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 5px;
+   	cursor: pointer;
+   	font-size: 14px;
+}
+
 </style>
 
 <script type="text/javascript" src="/resources/js/common.js"></script>
@@ -319,47 +340,47 @@ function formatMonth(month) {
 
 <!--  회원정보 폼 시작 -->
 		<input type="hidden" id="memberidCheck" name="memberidCheck" value="${member.memberid}">
-		<table style='border:1px solid;width:700px;height:900px;margin: 80px auto;' >
+		<table style='border-top:1px solid;border-bottom:1px solid;width:700px;height:900px;margin: 80px auto;border-spacing:30px 15px;' >
 		
 		<tr>
 			<th colspan='2'><h2>회원정보</h2></th>
 		</tr>
 		<tr>
-			<th>아이디 </th>
+			<th style="background-color: #E4EDF5;border-radius: 5px;">아이디 </th>
 			<td id="tdMemberid"><input type="text" readonly class="form-control-plaintext" id="memberid" name="memberid" value=""></td>
 		</tr>
 		<tr>
-			<th>이름 </th>
+			<th style="background-color: #E4EDF5;border-radius: 5px;">이름 </th>
 			<td id="tdMname"><input type="text" readonly class="form-control-plaintext" id="mname" name="mname" value=""></td>
 		</tr>
 		<tr>
-			<th>생년월일</th>
+			<th style="background-color: #E4EDF5;border-radius: 5px;">생년월일</th>
 			<td id="tdMbirthdate"><input type="text" readonly class="form-control-plaintext" id="mbirthdate" name="mbirthdate" value=""></td>
 		<tr>
-			<th>주소</th>
+			<th style="background-color: #E4EDF5;border-radius: 5px;">주소</th>
 			<td id="tdMaddr"><input type="text" readonly class="form-control-plaintext" id="maddr" name="maddr" value=""></td>
 		</tr>
 		<tr>
-			<th>이메일주소</th>
+			<th style="background-color: #E4EDF5;border-radius: 5px;">이메일주소</th>
 			<td id="tdMemail"><input type="text" readonly class="form-control-plaintext" id="memail" name="memail" value=""></td>
 		</tr>
 		<tr>
-			<th>휴대폰 번호</th>
+			<th style="background-color: #E4EDF5;border-radius: 5px;">휴대폰 번호</th>
 			<td id="tdMphone"><input type="text" readonly class="form-control-plaintext" id="mphone" name="mphone" value=""></td>
 		</tr>
 		<tr>
-			<th>회원구분</th>
+			<th style="background-color: #E4EDF5;border-radius: 5px;">회원구분</th>
 			<td id="tdMtype"><input type="text" readonly class="form-control-plaintext" id="mtype" name="mtype" value=""></td>
 		</tr>
 		<tr>
-			<th>성별</th>
+			<th style="background-color: #E4EDF5;border-radius: 5px;">성별</th>
 			<td id="tdMgender"><input type="text" readonly class="form-control-plaintext" id="mgender" name="mgender" value=""></td>
 		</tr>
 		<tr>
-			<th>이벤트, 커리큘럼, 신규콘텐츠 등 광고 메시지 수신</th>
+			<th style="background-color: #E4EDF5;border-radius: 5px;">이벤트, 커리큘럼, 신규콘텐츠 등 <br>광고 메시지 수신</th>
 			<td id="tdMarketingagree"> <input type="text" readonly class="form-control-plaintext" id="marketingagree" name="marketingagree" value=""></td>
 		</tr>
-		<tr>
+		<tr >
 			<th colspan='3' id="thButton1">
 				<input type='button' onclick="memberUpdate()" class="btn" value='회원정보 수정하기'>
 				<input type="button" id = "mainPageGo" onclick='location.href="/geomin/main"' value="돌아가기" class="btn">

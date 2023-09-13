@@ -225,9 +225,26 @@ select:active{
     }
 
 .btn{
-	height:30px; 
-   	width:120px;
-}  
+	height:45px; 
+   	width:130px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+   	font-size: 14px;
+}
+.btn:hover{
+	height:45px; 
+   	width:130px;
+   	background-color: #002F5A;
+   	color:#FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 5px;
+   	cursor: pointer;
+   	font-size: 14px;
+}
+
+
 </style>
 
 
