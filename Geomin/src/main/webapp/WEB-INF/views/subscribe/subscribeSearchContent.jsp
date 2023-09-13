@@ -65,10 +65,11 @@ th, tr, td{
 					<thead>
 					<tr>
 						<th style="font-weight: 900;">ㅁ</th>
-						<th>학습 관리자</th>
+						<th style="display: none;">학습 관리자</th>
 						<th>콘텐츠 이름</th>
 						<th>콘텐츠 구독 날짜</th>
-						<th>학습 인원</th>
+						<th>최대 학습 인원</th>
+						<!-- <th>학습 가능 인원</th> -->
 						<th>콘텐츠 최종 가격</th>
 						<th>콘텐츠 수준</th>
 						<th>학습 그룹 등록</th>
@@ -76,28 +77,31 @@ th, tr, td{
 					</thead>
 					<tbody>
 					<c:forEach var="list" items="${list}">
-						<tr id="data-raw" class="data-raw" data-value="${list.subsDate}">
+						<%-- <tr id="data-raw" class="data-raw" data-value="${list.subsDate}">
 							<td><input type="checkbox" name="check" value="check" id="check"></td>
-							<td>${list.memberID }</td>
+							<td style="display: none;">${list.memberID }</td>
 							<td class="list_pkgName">${list.pkgName }</td> <!-- ?memberID='memberID22' --> <!-- <a href="geomin/teacher/groupRegist"></a> -->
 							<td class="list_subsDate">${list.subsDate }</td>
 							<td>${list.personnel}</td>
+							<td style="display: none;">${list.groupMem }</td>
+							<!-- <td id="possbleMem"></td> -->
 							<td>${list.finalPrice }</td>
 							<td>${list.difficulty }</td>
+							<td>${list.pkgContent }</td>
 							<c:url var="groupRegistURL" value="../teacher/groupRegist">
     							<c:param name="pkgName" value="${list.pkgName}" />
 							</c:url>
 							<c:choose>
 								<c:when test="${list.groupid == 'NOT GROUP'}"> <!-- NULL을 N으로 변경-->
 									<td><button type='button' id="regButton" name='regButton' onclick='location.href="${groupRegistURL}"'>그룹 등록</button></td>
-									<%-- <td><button type='button' id="regButton" name='regButton' onclick='location.href="../teacher/groupRegist?pkgName=${list.pkgName}"'>그룹 등록</button></td> --%> 
-									<%-- onclick='location.href="../teacher/groupRegist?pkgName=${list.pkgName }"' --%>
+									<td><button type='button' id="regButton" name='regButton' onclick='location.href="../teacher/groupRegist?pkgName=${list.pkgName}"'>그룹 등록</button></td> 
+									onclick='location.href="../teacher/groupRegist?pkgName=${list.pkgName }"'
 								</c:when>
 								<c:otherwise>
 									<td>등록 완료</td>
 								</c:otherwise>
 							</c:choose>
-						</tr>
+						</tr> --%>
 					</c:forEach>
 					</tbody>
 				</table>
@@ -114,6 +118,11 @@ th, tr, td{
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
+	
+	//var possibleMem = ${list.personnel} - ${list.groupMem};
+	//console.log('possibleMem : ' , possibleMem);
+    //document.getElementById('possbleMem').textContent = possibleMem;
+	
 	$('input[type="checkbox"][name="check"]').click(function(){
 		 
 		if($(this).prop('checked')){
@@ -244,8 +253,6 @@ $(document).ready(function () {
         });
     });
 	
-    
-    
     $('#regButton').click(function () {
     	var pkgName = $(this).closest('tr').find('.list_pkgName').text();
     	$.ajax({
@@ -258,81 +265,6 @@ $(document).ready(function () {
             }
         });
     });
-    /* $('#regButton').click(function () {
-    	var pkgName = $(this).closest('tr').find('.list_pkgName').text();
-    	$.ajax({
-            type: "POST", // HTTP 요청 방식 (GET 또는 POST)
-            url: "../teacher/groupRegist", // JSP 페이지의 경로 또는 서블릿 URL
-            data: { pkgName: pkgName }, // 전송할 데이터
-            success: function(response) {
-            },
-            error: function(xhr, status, error) {
-            }
-        });
-    }); */
 });
-/*  let regButton = document.getElementById('regButton');
-$('#regButton').click(function (){
-	console.log('클릭완료!');
-	//window.location.href = 'teacher/groupRegist.jsp?memberid='memberID22'';
-	window.location.href = '../teacher/groupRegist';
-}); */
-/* $('#recent').click(function () {
-$('tr.data-raw').hide();
-sortDataByDate('desc');
-});
-$('#oldest').click(function () {
-$('tr.data-raw').hide();
-sortDataByDate('asc');
-});
-
-function sortDataByDate(order) {
-	const tableBody = document.querySelector('#result-table tbody');
-const dataRows = document.querySelectorAll("tr.data-raw");
-const sortedData = Array.from(dataRows);
-console.log('sortedData : ', sortedData);
-//const rows = $('tr.data-row').get();
-if (order === 'desc') {
-	sortedData.sort((rowA, rowB) => {
-		const dataA = rowA.querySelector(".list_subsDate").textContent;
-		const dataB = rowB.querySelector(".list_subsDate").textContent;
-		console.log('여기에요! DESC');
-    	return dataA - dataB;
-	});
-}else if (order === 'asc') {
-	sortedData.sort((rowA, rowB) => {
-		const dataA = rowA.querySelector(".list_subsDate").textContent;
-		const dataB = rowB.querySelector(".list_subsDate").textContent;
-		console.log('여기에요! ASC');
-    	return dataB - dataA;
-	});
-}
-
-sortedData.forEach(row => {
-	console.log('여기로 왔나요?');
-	tableBody.appendChild(row);
-});
-
-} */
-/* sortedData.sort(function (a, b) {
-console.log('여기에요!');
-const aDate = new Date($(a).data('value'));
-console.log('aDate : ' , aDate);
-const bDate = new Date($(b).data('value'));
-console.log('bDate : ' , bDate);
-if (order === 'desc') {
-	console.log('여기에요! DESC');
-    return bDate - aDate;
-} else if(order === 'asc'){
-	console.log('여기에요! ASC');
-    return aDate - bDate;
-}
-}); */
-
-//$('#table-body').empty();
-/* $.each(rows, function (index, row) {
-	tableBody.appendChild(row);
-    //$('tr.data-raw').append(row);
-}); */
 </script>
 </html>

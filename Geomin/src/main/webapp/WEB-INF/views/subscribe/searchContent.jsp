@@ -64,47 +64,6 @@ th, tr, td{
 				<button id="searchButton">조회</button>
 				<br>
 			<div class="content">
-				<%-- <table id="result-table">
-					<thead>
-					<tr>
-						<th style="font-weight: 900;">ㅁ</th>
-						<th>패키지명</th>
-						<th>학습 인원</th>
-						<th>정가</th>
-						<th>최종가</th>
-						<th>학습 수준</th>
-						<th>학습 내용</th>
-						<!-- <th>구독</th> -->
-					</tr>
-					</thead>
-					<tbody>
-					<c:forEach var="pkgIdItem" items="${pkgId}">
-						<td style="display: none">${pkgIdItem.pkgId}</td>
-						<tr data-pkgid="${pkgIdItem.pkgId}"></tr>
-					</c:forEach>
-					<c:forEach var="list" items="${list}">
-						<tr data-pkgid="${list.pkgId}"></tr>
-						<tr id="data-raw" class="data-raw" data-value="${list.difficulty }">
-							<c:choose>
-								<c:when test="${list.pkgId eq pkgIdItem.pkgId}">
-									<td><input type="checkbox" name="check" value="check" id="check" disabled="disabled"></td>
-								</c:when>
-								<c:otherwise>
-									<td><input type="checkbox" name="check" value="check" id="check"></td>
-								</c:otherwise>
-							</c:choose>
-							<td style="display: none;">${list.pkgId }</td>
-							<td style="display: none">${list.pkgId}</td>
-							<td>${list.pkgName }</td>
-							<td>${list.personnel }</td>
-							<td>${list.fixedPrice }</td>
-							<td class="list_finalPrice">${list.finalPrice }</td>
-							<td>${list.difficulty }</td>
-							<td>${list.pkgContent }</td>
-						</tr>
-					</c:forEach>
-					</tbody>
-				</table> --%>
 				<table id="result-table">
     <thead>
         <tr>
@@ -161,6 +120,60 @@ th, tr, td{
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
 $("#check_module").click(function () {
+	var checkedData = [];
+
+    $('input[name="check"]:checked').each(function() {
+        var $row = $(this).closest('tr');
+        var rowData = {
+        	pkgId: $row.find('td:eq(1)').text(),
+            pkgName: $row.find('td:eq(2)').text(),
+            Personnel: $row.find('td:eq(3)').text(),
+            fixedPrice: $row.find('td:eq(4)').text(),
+            finalPrice: $row.find('td:eq(5)').text(),
+            difficulty: $row.find('td:eq(6)').text(),
+            pkgContent: $row.find('td:eq(7)').text(),
+            //memberID : $row.find('td:eq(8)').text()
+        };
+        checkedData.push(rowData);
+    });
+
+    console.log(checkedData);
+    
+   /* $.ajax({
+        url: '/kakaoPay',
+        type: 'POST',
+        data: JSON.stringify(checked_Data),
+        contentType: "application/json",
+        dataType: "json",
+        success: function(response) {
+        	console.log('데이터 전달 성공')
+            //alert('성공');
+            //console.log(response);
+        },
+        error: function(error) {
+            //alert('실패');
+            //console.error(error);
+        }
+    }); */
+    $.ajax({
+        url: '/kakaoPay',
+        type: 'POST',
+        //data: JSON.stringify(checked_Data), // 데이터를 JSON 문자열로 직렬화
+        //contentType: MediaType.APPLICATION_JSON_UTF8_VALUE, // Content-Type 설정
+        //data: $.param({ checkedData: JSON.stringify(checked_Data) }), 
+        data: {checkedData : checkedData}, 
+        //contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        dataType: "json", // 서버에서 반환하는 데이터 형식 (옵션)
+        success: function(response) {
+            console.log('데이터 전달 성공')
+            // 성공 처리 로직 추가
+        },
+        error: function(error) {
+            console.log('데이터 전달 실패')
+            // 실패 처리 로직 추가
+        }
+    });
+	
 		var IMP = window.IMP; // 생략가능
 		IMP.init('imp58336322'); 
 		// i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
@@ -232,9 +245,6 @@ $("#check_module").click(function () {
 	    });
 		console.log('pkgIdValues : ' , pkgIdValues);
 		
-	    //var listpkgId = document.getElementById('listpkgId').textContent;
-	    
-		/* $('.data-raw input[type="checkbox"]').prop('disabled', function () { */
 	    	var listpkgId = $(this).closest('tr').data('pkgid'); // 현재 행의 pkgId 값을 가져옵니다.
 			console.log('listpkgId : ' , listpkgId);
 	        
@@ -252,7 +262,6 @@ $("#check_module").click(function () {
 		const dataRows = document.querySelectorAll("tr.data-raw");
 		$('#searchButton').click(function() {
 			console.log('#searchButton 버튼 클릭');
-			//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 			$('tr.data-raw').hide();
 			
 			//난이도와 검색어에 해당하는 데이터 정렬
