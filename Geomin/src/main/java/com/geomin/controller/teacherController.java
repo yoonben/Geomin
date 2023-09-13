@@ -209,7 +209,15 @@ public class teacherController extends CommonRestController{
 	    }
 	}
 	
-	
+	//@GetMapping("/teacher/groupRegist2")
+	@RequestMapping(value = "/teacher/groupRegist2", method = { RequestMethod.POST })
+	@ResponseBody 
+	public List<contentVO> groupRegist2(@RequestParam(name = "pkgName") String pkgName, Model model) { 
+		System.out.println("pkgNamepkgName : " + pkgName);
+		List<contentVO> listL2 = contentService.getSubMatchingList(pkgName);
+		System.out.println("listL2listL2 : " + listL2);
+		return listL2;
+	}	
 
 	
 }
