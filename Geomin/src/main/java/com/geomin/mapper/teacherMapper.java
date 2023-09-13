@@ -19,6 +19,10 @@ public interface teacherMapper {
 	
 	public int totalgroupmem(String groupid);
 	
+	public int curpersonnelUP(String pkgid);
+	
+	public int curpersonnelDown(String pkgid);
+	
 	public groupstudentVO groupjoinstatusOne(String studentid);
 	
 	public List<contentVO> regSubinfo();

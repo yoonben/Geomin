@@ -162,9 +162,17 @@ public class teacherController extends CommonRestController{
     	    	if(res > 0) {
     	    		groupstudentVO groupjoinstatusOne = teacherService.groupjoinstatusOne(groupstudent.getStudentid());
     	    		
-	    	    	Map<String, Object> map = responseMap(REST_SUCCESS, "그룹 승인 완료!");
+    	    		int res2 = teacherService.curpersonnelDown(groupstudent.getPkgid());
+    	    		
+    	    		if(res2 == 0) {
+    	    			return responseMap(REST_FAIL, "패키지 인원 증가 중 예외사항이 발생하였습니다.");
+    	    		}
+    	    		
+    	    		System.out.println("groupjoinstatusOne : "+groupjoinstatusOne);
+    	    		
+	    	    	Map<String, Object> map = responseMap(REST_SUCCESS, "그룹 승인 취소 완료!");
 	    	    	
-	    	    	map.put("groupjoinstatusOne", groupjoinstatusOne);
+	    	    	map.put("groupjoinstatusOne", groupjoinstatusOne.getGroupjoinstatus());
 	    	    	
 	    	    	return map;
     	    	}else {
@@ -187,9 +195,17 @@ public class teacherController extends CommonRestController{
 	    	    	if(res > 0) {
 	    	    		groupstudentVO groupjoinstatusOne = teacherService.groupjoinstatusOne(groupstudent.getStudentid());
 	    	    		
+	    	    		int res2 = teacherService.curpersonnelUP(groupstudent.getPkgid());
+	    	    		
+	    	    		if(res2 == 0) {
+	    	    			return responseMap(REST_FAIL, "패키지 인원 증가 중 예외사항이 발생하였습니다.");
+	    	    		}
+	    	    		
+	    	    		System.out.println("groupjoinstatusOne : "+groupjoinstatusOne);
+	    	    		
 		    	    	Map<String, Object> map = responseMap(REST_SUCCESS, "그룹 승인 완료!");
 		    	    	
-		    	    	map.put("groupjoinstatusOne", groupjoinstatusOne);
+		    	    	map.put("groupjoinstatusOne", groupjoinstatusOne.getGroupjoinstatus());
 		    	    	
 		    	    	return map;
 	    	    	}else {

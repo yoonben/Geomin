@@ -94,38 +94,7 @@
     	});
   	
     	contentSelect.addEventListener('change', function(e){
-    		let content = '';
-    		
-    		let groupid = document.getElementById('contentSelect').value;
-    		
-    		if(groupid === '그룹을 선택해주세요'){
-    			return;
-    		}
-    			
-    		let obj = {
-    			groupid : groupid
-    		}
-    		
-    		console.log(obj);
-    		
-    		
-    		fetchPost('/geomin/contentId', obj, (map) => {
-    			
-    			map.groupList.forEach(function (item, index) {
-				      content+= '<tr>'
-				    	  		+"<td><input type='checkbox' class='Checkbox' name='rowCheck' value='"+item.memberid+"'></td>"
-				      			+"<td>"+item.mname+"</td>"
-				      			+"<td>"+item.mbirthdate+"</td>"
-				      			+"<td>"+formatPhoneNumber(item.mphone)+"</td>"
-				      			+"<td>"+item.groupResDate+"</td>"
-				      			+"<td id='groupjoinstatus"+item.memberid+"'>"+item.groupjoinstatus+"</td>"
-				      			+'</tr>';
-    			document.querySelector('#personOutput').value = item.person;
-    			})
-				
-				document.querySelector('#groupidOutput').value = map.groupid;
-    			document.getElementById('contentList2').innerHTML = content;
-    		})
+    		studentJoin();
     	})
     		
 
@@ -186,6 +155,42 @@
 
 	}
 	
+	function studentJoin(){
+		let content = '';
+		
+		let groupid = document.getElementById('contentSelect').value;
+		
+		if(groupid === '그룹을 선택해주세요'){
+			return;
+		}
+			
+		let obj = {
+			groupid : groupid
+		}
+		
+		console.log(obj);
+		
+		
+		fetchPost('/geomin/contentId', obj, (map) => {
+			
+			map.groupList.forEach(function (item, index) {
+			      content+= '<tr>'
+			    	  		+"<td><input type='checkbox' class='Checkbox' name='rowCheck' value='"+item.memberid+"'></td>"
+			      			+"<td>"+item.mname+"</td>"
+			      			+"<td>"+item.mbirthdate+"</td>"
+			      			+"<td>"+formatPhoneNumber(item.mphone)+"</td>"
+			      			+"<td>"+item.groupResDate+"</td>"
+			      			+"<td id='groupjoinstatus"+item.memberid+"'>"+item.groupjoinstatus+"</td>"
+			      			+'</tr>';
+			document.querySelector('#personOutput').value = item.person;
+			document.querySelector('#pkgid').value = item.pkgid;
+			
+			})
+			
+			document.querySelector('#groupidOutput').value = map.groupid;
+			document.getElementById('contentList2').innerHTML = content;
+		})
+	}
 	
     function fetchPost(url, obj, callback){
     	try{
@@ -244,19 +249,26 @@
 		            	studentid: studentid
 		            	, groupjoinstatus: groupjoinstatus
 		            	, groupid : document.querySelector('#groupidOutput').value
+		            	, pkgid : document.querySelector('#pkgid').value
 		            }
 		            
 		            console.log(obj);
 					
 		            fetchPost('/geomin/joinStatus', obj, (map) => {
-		            	console.log(map.msg);
-		            	
-		            	groupjoinstatus = map.groupjoinstatusOne;
-		    			
+		            	deleteCount++;
+		                if (deleteCount === selectedCheckboxes.length) {
+		                    
+		                    alert(map.msg);
+		                    
+		                    studentJoin();
+
+		                   
+		                    deletingInProgress = false;
+		                }
 		    		})
 		    		
 		 		})
-		        
+		 		
 		 	}else {
 	 			alert("숙제 보내는 중 예외사항이 발생 하였습니다.");
 		    }
@@ -303,7 +315,8 @@
 							</select>           		
              		</div>
 					<div  id='contentList'>
-	             			<div class='groupidOutput'> 그룹명 : <input type="text" name="groupid" id="groupidOutput" value=""></div>
+	             			<input type="hidden" name="pkgid" id="pkgid" value="">
+	             			<div class='groupidOutput'>그룹명 : <input type="text" name="groupid" id="groupidOutput" value=""></div>
 	             			<div class='personOutput'>가입입원 : <input type="text" name="person" id="personOutput" value=""></div>
            			 
 	             		<form id='updateJoinStatus' name='updateJoinStatus'>

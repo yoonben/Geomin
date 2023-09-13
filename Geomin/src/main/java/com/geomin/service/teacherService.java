@@ -24,6 +24,10 @@ public interface teacherService {
 	
 	public int updateJoinStatus(String studentid);
 	
+	public int curpersonnelUP(String pkgid);
+	
+	public int curpersonnelDown(String pkgid);
+	
 	public groupstudentVO groupjoinstatusOne(String studentid);
 
 	List<contentVO> getSubGroup();

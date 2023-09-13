@@ -39,7 +39,18 @@ public class teacherServiceImpl implements teacherService{
 		return teachermapper.totalgroupmem(groupid);
 	}
 	
-
+	@Override
+	public int curpersonnelUP(String pkgid) {
+		// TODO Auto-generated method stub
+		return teachermapper.curpersonnelUP(pkgid);
+	}
+	
+	@Override
+	public int curpersonnelDown(String pkgid) {
+		// TODO Auto-generated method stub
+		return teachermapper.curpersonnelDown(pkgid);
+	}
+	
 	@Override
 	public groupstudentVO groupjoinstatusOne(String studentid) {
 		// TODO Auto-generated method stub
