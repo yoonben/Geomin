@@ -337,6 +337,8 @@ function groupList() {
 			map.groupList.forEach(function(item, index) {
 				content+='<option value="'+item.groupid+'">'+item.groupid+'</option>';
 			})
+		}else{
+			content += '<option selected>숙제를 부여할 그룹이 없습니다.</option>';
 		}
 		
 		document.querySelector('#homeworkGroupSelect').innerHTML = content;

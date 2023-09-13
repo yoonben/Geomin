@@ -143,13 +143,15 @@
 		console.log(obj);
 		
 		fetchPost('/geomin/joiningGroup', obj, (map) => {
-			
+			if(map.groupList.length > 0){
 			content += '<option selected>그룹을 선택해주세요</option>';
 			
 			map.groupList.forEach(function (item, index) {
 				content += '<option>'+item.groupid+'</option>';
 			})
-			
+			}else{
+				content += '<option selected>승인할 수 있는 그룹이 없습니다.</option>';
+			}
 			document.getElementById('contentSelect').innerHTML = content;
 		})
 
@@ -323,7 +325,9 @@
 								  </thead>
 								  
 							    <tbody id='contentList2'>
-								    
+							    <tr>
+							    	<th colspan='6' style="text-align: center;">그룹을 선택해 주세요</th>
+								<tr>
 							  </tbody>
 							  
 							</table>

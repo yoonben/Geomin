@@ -148,10 +148,8 @@
     	
 		let groupSelect = document.getElementById('groupSelect');
 		let groupCont = document.getElementById('groupCont');
-		groupCont.style.display = 'none';
 		
 		groupSelect.addEventListener('change', function(){
-			groupCont.style.display = '';
 			
 			console.log(groupSelect.value);
 			
@@ -238,6 +236,10 @@
 		                    i++;
 
 		            });
+		        }else{
+		        	content +="<tr>"
+		        	+"<th colspan = '6' style= 'text-align: center'>조회된 숙제가 없습니다.<th>"
+		        	+"<tr>"
 		        }
 		        
 		        document.querySelector('#homeworkList').innerHTML = content;
@@ -355,7 +357,7 @@ function workSubmit() {
 					
 					document.querySelector('#groupSelect').innerHTML = content;
 				}else{
-					alert(map.msg)
+					alert('검색된 선생님이 없습니다. 확인하고 다시 입력 해주십세요.');
 				}
 	        	
             } )

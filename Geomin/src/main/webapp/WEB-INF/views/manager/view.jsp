@@ -158,13 +158,28 @@ function goView(bno){
 	    }
 })
 
-
-
 	$(function() {
 	    $('#writeButton').click(function() {
 	        window.location.href = '/geomin/write';
 	    });
 	});
+}
+
+function boardDelete(bno) {
+    let obj = {
+        bno: bno
+    };
+
+    console.log(obj); // console.log를 사용하여 객체를 로깅
+
+    fetchPost('/geomin/boardDelete', obj, (map) => {
+        if (map.result == 'success') {
+            alert(map.msg);
+            go();
+        } else {
+            alert(map.msg);
+        }
+    });
 }
 </script>
 </head>
