@@ -55,7 +55,8 @@
             		</div>
             		<div>
             			<label>학습 가능 인원 : </label>
-            			<input type="text" id='groupperson'  name='groupperson' placeholder="인원 수 적기"> 명 / ${list1.personnel}명
+            			<input type="text" id='curGuoup'  name='curGuoup' placeholder="인원 수 적기"> 명
+            			<%-- <span>총 학습 가능 인원은 ${list1.personnel}명 이고, 배당된 총 학습 인원은 ${list1.groupMem}명 입니다.</span> --%>
             			<div id='grouppersonError'></div>
             		</div>
             		<div style="display: none"><!--  -->
@@ -579,7 +580,7 @@ function lastdayA() {
 			const rowData = {
 				groupid: groupid,
 				pkgId : pkgId,
-				Personnel : groupperson,
+				curGuoup : curGuoup,
 				studyStartDate : totalDateB,
 				studyEndDate : totalDateA
 			}

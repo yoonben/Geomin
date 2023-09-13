@@ -31,6 +31,10 @@ public class contentVO {
 	private Date studyStartDate;
 	private Date studyEndDate;
 	
+	private int curGuoup;
+	
+	private int groupMem;
+	
 	//모든 학습 컨텐츠 출력
 	public contentVO(String pkgId, String pkgName, int Personnel, String fixedPrice, String finalPrice, String difficulty,String pkgContent
 			) {

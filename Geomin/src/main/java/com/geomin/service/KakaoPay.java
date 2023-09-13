@@ -2,18 +2,22 @@ package com.geomin.service;
 
 import java.net.URI;
 import java.net.URISyntaxException;
- 
+import java.util.List;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.geomin.VO.KakaoPayApprovalVO;
 import com.geomin.VO.KakaoPayReadyVO;
+import com.geomin.VO.contentVO;
 
 import lombok.extern.java.Log;
  
@@ -26,8 +30,10 @@ public class KakaoPay {
     private KakaoPayReadyVO kakaoPayReadyVO;
     private KakaoPayApprovalVO kakaoPayApprovalVO;
     
+    //@PostMapping("/kakaoPaytoPay")
     public String kakaoPayReady() {
- 
+    	
+    	//System.out.println("checked_Datachecked_Data : " + checked_Data);
         RestTemplate restTemplate = new RestTemplate();
         System.out.println("kakaoPayReady 1차 도착");
         
@@ -69,11 +75,13 @@ public class KakaoPay {
             e.printStackTrace();
         }
         
-        return "/pay"; //??
+        return "/pay";
         
     }
-    public KakaoPayApprovalVO kakaoPayInfo(String pg_token) {
-    	 
+   // @PostMapping("/kakaoPaytoPay")
+    public KakaoPayApprovalVO kakaoPayInfo(String pg_token, @RequestBody List<contentVO> checked_Data) {
+    	System.out.println("checked_Datachecked_Data : " + checked_Data);
+    	
         log.info("KakaoPayInfoVO............................................");
         log.info("-----------------------------");
         
@@ -84,15 +92,18 @@ public class KakaoPay {
         headers.add("Authorization", "KakaoAK " + "243efb8b1cf253bae8fd948c4f4c417f");
         headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
         headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
- 
+        
+        
         // 서버로 요청할 Body
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("cid", "TC0ONETIME");
         params.add("tid", kakaoPayReadyVO.getTid());
-        params.add("partner_order_id", "1001");
-        params.add("partner_user_id", "gorany");
+        params.add("partner_user_id", "gorany");	//학습사(선생) 아이디
         params.add("pg_token", pg_token);
-        params.add("total_amount", "2100");
+        params.add("item_name", "");//패키지 이름
+        params.add("item_code", "");//패키지 코드
+        params.add("amount", "");//패키지 가격
+        //params.add("total_amount", "2100");
         
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
         

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.geomin.VO.contentVO;
+import com.geomin.service.KakaoPay;
 import com.geomin.service.contentService;
 
 import lombok.Setter;
@@ -28,6 +29,8 @@ public class contentController {
 	
 	@Autowired
 	private contentService contentService;
+	
+	@Autowired KakaoPay kakaoPay;
 	
 	@GetMapping("searchContent")
 	public String searchContent(Model model){
@@ -46,8 +49,9 @@ public class contentController {
 	public String searchContent(@RequestBody List<contentVO> checked_Data) {
 		System.out.println("checked_Data : " + checked_Data);
 		//체크박스가 선택된 라인의 데이터 처리
-		contentService.addSubContent(checked_Data);
 		
+		contentService.addSubContent(checked_Data);
+		//kakaoPay.kakaoPayInfo(checked_Data);
 		return "subscribe/searchContent";
 	}
 	
