@@ -22,6 +22,18 @@
 	font-size: 14px;
 }
 
+#section>.subNavi {
+    width: 180px;
+    height: 600px;
+    float: left;
+    border-right: 1px solid #D9D9D9;
+    box-sizing: border-box;
+    margin-top: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+    }
+    
+
 #introduction3 {
 	width: 630px;
 	text-align: center;
@@ -71,6 +83,61 @@ div#searchWordDiv {
 #mphone {
 	width: 140px;
 }
+
+
+				#container>#section>.subNavi>ul{
+    		/* text-align: left; */
+    		list-style-type: none;
+    		/* width: 150px; */
+			height:200px;
+			text-align: center;
+			
+    	}
+    	    #container>#section>.subNavi>ul> a{
+          /*   margin-top: 25px; */
+            font-size: 15px;
+            width: 150px;
+			height:50px;
+			text-align: center;
+			padding:auto;
+			margin-top: 25px;
+			margin-left: 25px;
+			font-family: 'GmarketSansMedium';
+    	}
+    	
+        #container>#section>.subNavi>ul>li{
+            margin-top: 15px;
+            margin-right: 30px;
+            padding-top: 15px;
+            font-size: 14px;
+            cursor: pointer;
+            width: 150px;
+			height:50px;
+			text-align: center;
+			border-top:1px solid #002A51;
+			border-bottom:1px solid #002A51;
+			font-family: 'GmarketSansMedium';
+    	}
+    	#container>#section>.subNavi>ul>li:hover{
+            margin-top: 15px;
+            margin-right: 30px;
+            padding-top: 10px;
+            font-size: 13px;
+            cursor: pointer;
+            color: #003C72;
+			width: 150px;
+			height:50px;
+			text-align: center;
+			box-shadow: 0px 3px 6px rgba(0, 0, 0.2, 0.2);
+			border-top:1px solid #002A51;
+			border-bottom:1px solid #002A51;
+			background-color: #CDE6FD;
+			font-size: 1.2rem;
+        	font-weight: 600;
+        	font-family: 'GmarketSansMedium';
+    	}
+    	
+
 </style>
 
 <title>Insert title here</title>
@@ -81,26 +148,26 @@ window.addEventListener('load', function(){
 	
 	groupList();
 	
-	const subnavi1 = document.getElementById('#subnavi1');
-	const subnavi2 = document.getElementById('#subnavi2');
-	const subnavi3 = document.getElementById('#subnavi3');
-	const subnavi4 = document.getElementById('#subnavi4');
+	const subNavi1 = document.getElementById('#subNavi1');
+	const subNavi2 = document.getElementById('#subNavi2');
+	const subNavi3 = document.getElementById('#subNavi3');
+	const subNavi4 = document.getElementById('#subNavi4');
 	
-	$('#subnavi1').click(function (){
-		console.log('#subnavi1 작동 개시');
+	$('#subNavi1').click(function (){
+		console.log('#subNavi1 작동 개시');
 		location.href="../teacher/groupRegist";
 	});
 	
-	$('#subnavi2').click(function (){
-		console.log('#subnavi2 작동 개시');
+	$('#subNavi2').click(function (){
+		console.log('#subNavi2 작동 개시');
 		location.href="../teacher/teacherMain";
 	});
-	$('#subnavi3').click(function (){
-		console.log('#subnavi3 작동 개시');
+	$('#subNavi3').click(function (){
+		console.log('#subNavi3 작동 개시');
 		location.href="../teacher/homeworkMain";
 	});
-	$('#subnavi4').click(function (){
-		console.log('#subnavi4 작동 개시');
+	$('#subNavi4').click(function (){
+		console.log('#subNavi4 작동 개시');
 		location.href="../teacher/homeworkEvaluation";
 	});
 	
@@ -409,19 +476,14 @@ function workSubmit() {
 	<div id='container'>
 		<%@include file="../header/header.jsp"%>
 		<div id='section'>
-			<div class='subnavi'>
+			<div class='subNavi'>
 				<ul>
-					<li><b>강사마당</b></li>
-					<li><label style="cursor: pointer;"><a id="subnavi1">학습
-								그룹 등록</a></label></li>
-					<li><label style="cursor: pointer;"><a id="subnavi2">그룹
-								가입 승인</a></label></li>
-					<li><label style="cursor: pointer;"><a id="subnavi3">숙제
-								전송</a></label></li>
-					<li><label style="cursor: pointer;"><a id="subnavi4">숙제
-								평가</a></label></li>
+					<a><b>강사마당</b></a>
+					<li><a id="subNavi1">학습그룹 등록</a></li>
+					<li><a id="subNavi2">그룹가입 승인</a></li>
+					<li><a id="subNavi3">숙제 전송</a></li>
+					<li><a id="subNavi4">숙제 평가</a></li>
 				</ul>
-
 			</div>
 			<div class='content'>
 				<input type="hidden" value="${sessionScope.member.memberid }"
@@ -533,12 +595,17 @@ function workSubmit() {
 					</div>
 				</div>
 			</div>
+			
+			<div class='banner'>
+            	<%@include file="../header/banner.jsp" %>
+            </div>
+            
 		</div>
 	</div>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
 		crossorigin="anonymous"></script>
-
+<%@include file="../header/footer.jsp" %>
 </body>
 </html>

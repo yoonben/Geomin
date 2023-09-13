@@ -8,23 +8,26 @@
 <meta charset="UTF-8">
 <title>searchContent페이지</title>
 <style type="text/css">
-#container>#section>.subNavi>ul {
-	text-align: left;
+#container>#section>.subnavi>ul {
+	text-align: center;
 	list-style-type: none;
+	margin-top: 25px;
 }
 
-#container>#section>.subNavi>ul>li {
-	padding-left: 60px;
+#container>#section>.subnavi>ul>li {
+	padding-left: 8px;
+	padding-top: 15px;
 	margin-top: 25px;
 	font-size: 14px;
 }
 #section>.subNavi {
-    width: 205px;
+    width: 180px;
     height: 600px;
     float: left;
     border-right: 1px solid #D9D9D9;
     box-sizing: border-box;
-    margin-right: 5px;
+    margin-top: 25px;
+    margin-left: 20px;
 }
 
 table{
@@ -32,7 +35,57 @@ table{
 }
 th, tr, td{
 	border: 1px solid;
-}
+	}
+		#container>#section>.subNavi>ul{
+    		/* text-align: left; */
+    		list-style-type: none;
+    		width: 150px;
+			height:200px;
+			text-align: center;
+			
+    	}
+    	    #container>#section>.subNavi>ul> a{
+          /*   margin-top: 25px; */
+            font-size: 15px;
+            width: 150px;
+			height:50px;
+			text-align: center;
+			padding:auto;
+			margin-top: 25px;
+			font-family: 'GmarketSansMedium';
+    	}
+    	
+        #container>#section>.subNavi>ul>li{
+            margin-top: 15px;
+            padding-top: 15px;
+            font-size: 14px;
+            cursor: pointer;
+            width: 150px;
+			height:50px;
+			text-align: center;
+			border-top:1px solid #002A51;
+			border-bottom:1px solid #002A51;
+			font-family: 'GmarketSansMedium';
+    	}
+    	#container>#section>.subNavi>ul>li:hover{
+            margin-top: 15px;
+            padding-top: 10px;
+            font-size: 13px;
+            cursor: pointer;
+            color: #003C72;
+			width: 150px;
+			height:50px;
+			text-align: center;
+			box-shadow: 0px 3px 6px rgba(0, 0, 0.2, 0.2);
+			border-top:1px solid #002A51;
+			border-bottom:1px solid #002A51;
+			background-color: #CDE6FD;
+			font-size: 1.2rem;
+        	font-weight: 600;
+        	font-family: 'GmarketSansMedium';
+    	}
+    	
+
 </style>
 </head>
 <body>
@@ -40,10 +93,10 @@ th, tr, td{
 		<%@include file="../header/header.jsp"%>
 		<div id='section'>
 			<div class="subNavi">
-				<h3>구독 서비스</h3>
 				<ul>
-					<li><a href="/geomin/subscribe/searchContent">학습 콘텐츠 검색 및 구독 신청</a></li>
-					<li><a href="/geomin/subscribe/subscribeSearchContent">구매한 학습 콘텐츠 검색</a></li>
+					<a><b>구독 서비스</b></a>
+					<li><a href="/geomin/subscribe/searchContent">학습콘텐츠 구독</a></li>
+					<li><a href="/geomin/subscribe/subscribeSearchContent">나의 학습콘텐츠</a></li>
 				</ul>
 			</div>
 				난이도 : 
@@ -142,8 +195,12 @@ th, tr, td{
     				<button>카카오페이로 결제하기</button>
 				</form>
 			</div>
-			<!-- <div class='banner'></div> -->
+				<!--  배너 -->
+				<div class='banner' >
+					<%@include file="../header/banner.jsp" %>
+				</div>
 		</div>
+		
 	</div>
 	카카오페이 결제가 정상적으로 완료되었습니다.
  
@@ -154,6 +211,9 @@ th, tr, td{
 결제금액:    [[${info.amount.total}]]<br/>
 결제방법:    [[${info.payment_method_type}]]<br/>
 <h2>[[${info}]]</h2>
+
+	<%@include file="../header/footer.jsp" %>	
+	
 </body>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
