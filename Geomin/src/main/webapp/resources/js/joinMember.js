@@ -107,6 +107,7 @@ window.addEventListener('load', function(){
 	    
 	    if (!regMname.test(mName.value)) {
 	        displayErrorMessage(nameErrorElement, "이름은 한글과 영문 대소문자만 입력 가능합니다.");
+	        alert("형식을 맞춰주세요");
 	        return false;
 	    }
 	});

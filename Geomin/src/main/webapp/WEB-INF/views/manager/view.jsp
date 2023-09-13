@@ -13,7 +13,7 @@
 	    		list-style-type: none;
 	    	}
 	        #container>#section>.subnavi>ul>li{
-	    		padding-left: 60px;
+	    		padding-left: 10px;
 	            margin-top: 25px;
 	            font-size: 14px;
 	    	}
@@ -56,6 +56,58 @@
 			.dv2{
 				padding: 20px;
 			}
+			
+			
+							#container>#section>.subnavi>ul{
+    		/* text-align: left; */
+    		list-style-type: none;
+    		width: 150px;
+			height:200px;
+			text-align: center;
+			
+    	}
+    	    #container>#section>.subnavi>ul> a{
+          /*   margin-top: 25px; */
+            font-size: 15px;
+            width: 150px;
+			height:50px;
+			text-align: center;
+			padding:auto;
+			margin-top: 25px;
+			font-family: 'GmarketSansMedium';
+    	}
+    	
+        #container>#section>.subnavi>ul>li{
+            margin-top: 15px;
+            padding-top: 15px;
+            font-size: 14px;
+            cursor: pointer;
+            width: 150px;
+			height:50px;
+			text-align: center;
+			border-top:1px solid #002A51;
+			border-bottom:1px solid #002A51;
+			font-family: 'GmarketSansMedium';
+    	}
+    	#container>#section>.subnavi>ul>li:hover{
+            margin-top: 15px;
+            padding-top: 12px;
+            font-size: 11px;
+            cursor: pointer;
+            color: #003C72;
+			width: 150px;
+			height:50px;
+			text-align: center;
+			box-shadow: 0px 3px 6px rgba(0, 0, 0.2, 0.2);
+			border-top:1px solid #002A51;
+			border-bottom:1px solid #002A51;
+			background-color: #CDE6FD;
+			font-size: 1.2rem;
+        	font-weight: 600;
+        	font-family: 'GmarketSansMedium';
+    	}
+    	
+    	
 	</style>
 <script type="text/javascript" src="/resources/js/common.js"></script>
 <script type="text/javascript" >
@@ -158,13 +210,28 @@ function goView(bno){
 	    }
 })
 
-
-
 	$(function() {
 	    $('#writeButton').click(function() {
 	        window.location.href = '/geomin/write';
 	    });
 	});
+}
+
+function boardDelete(bno) {
+    let obj = {
+        bno: bno
+    };
+
+    console.log(obj); // console.log를 사용하여 객체를 로깅
+
+    fetchPost('/geomin/boardDelete', obj, (map) => {
+        if (map.result == 'success') {
+            alert(map.msg);
+            go();
+        } else {
+            alert(map.msg);
+        }
+    });
 }
 </script>
 </head>
@@ -195,11 +262,14 @@ function goView(bno){
             </div>
   
           </div>
-            <div class='banner'>
-            
-            </div>
+            		<div class='banner' >
+						<%@include file="../header/banner.jsp" %>
+					</div>
       </div>
       </div>
          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+	<%@include file="../header/footer.jsp" %>	
+	
 </body>
 </html>
