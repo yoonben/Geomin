@@ -11,12 +11,14 @@
 <head>
 <style type="text/css">
 #container>#section>.subnavi>ul {
-	text-align: left;
+	text-align: center;
 	list-style-type: none;
+	margin-top: 25px;
 }
 
 #container>#section>.subnavi>ul>li {
-	padding-left: 60px;
+	padding-left: 8px;
+	padding-top: 15px;
 	margin-top: 25px;
 	font-size: 14px;
 }
@@ -77,6 +79,54 @@
  */
 
 
+		#container>#section>.subnavi>ul{
+    		/* text-align: left; */
+    		list-style-type: none;
+    		width: 150px;
+			height:200px;
+			text-align: center;
+			
+    	}
+    	    #container>#section>.subnavi>ul> a{
+          /*   margin-top: 25px; */
+            font-size: 15px;
+            width: 150px;
+			height:50px;
+			text-align: center;
+			padding:auto;
+			margin-top: 25px;
+			font-family: 'GmarketSansMedium';
+    	}
+    	
+        #container>#section>.subnavi>ul>li{
+            margin-top: 15px;
+            padding-top: 15px;
+            font-size: 14px;
+            cursor: pointer;
+            width: 150px;
+			height:50px;
+			text-align: center;
+			border-top:1px solid #002A51;
+			border-bottom:1px solid #002A51;
+			font-family: 'GmarketSansMedium';
+    	}
+    	#container>#section>.subnavi>ul>li:hover{
+            margin-top: 15px;
+            padding-top: 12px;
+            font-size: 11px;
+            cursor: pointer;
+            color: #003C72;
+			width: 150px;
+			height:50px;
+			text-align: center;
+			box-shadow: 0px 3px 6px rgba(0, 0, 0.2, 0.2);
+			border-top:1px solid #002A51;
+			border-bottom:1px solid #002A51;
+			background-color: #CDE6FD;
+			font-size: 1.2rem;
+        	font-weight: 600;
+        	font-family: 'GmarketSansMedium';
+    	}
 </style>
 
 
@@ -378,8 +428,8 @@ function workSubmit() {
 			
 			<div class='subnavi'>
 				<ul>
-					<li><b>학습서비스</b></li>
-					<li><label style="cursor: pointer;"><a id="subnavi1">학습	그룹 가입 신청</a></label></li>
+					<a><b>학습서비스</b></a>
+					<li><label style="cursor: pointer;"><a id="subnavi1">학습	그룹 신청</a></label></li>
 					<li><label style="cursor: pointer;"><a id="subnavi2">나의 숙제 제출</a></label></li>
 				</ul>
 			</div>
