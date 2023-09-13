@@ -22,4 +22,10 @@ public class mainController {
 	public String Main() {
 		return "main";
 	}
+	
+	@GetMapping("/header/utilization")
+	public String utilization() {
+		return "/header/utilization";
+	}
+	
 }

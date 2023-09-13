@@ -33,7 +33,7 @@
 
         #header>.gnb_box> .cnt_gnb_h {
         	
-            max-width: 400px;
+            max-width: 550px;
             position: absolute;
             top: 50%;
             left: 0;
@@ -41,27 +41,39 @@
         }
 
         #header>.gnb_box>.cnt_gnb {
-        	font-size: 2rem;
+        	font-size: 2.7rem;
+        	font-weight: 800;
+        	font-family: 'SBAggroB';
             position: absolute;
-            width: 380px;
+            width: 550px;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+
         }
         
         #header>.gnb_box>.cnt_gnb>h1 {
-        	font-size: 2rem;
+        	font-size: 2.7rem;
         	font-weight: 800;
+        	font-family: 'SBAggroB';
+        	background: #005DBA;
+			background: linear-gradient(to left, #005DBA 0%, #000000 100%);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
         }
+        
 	
         #header .gnb_box .gnb {
             float: right;
         }
 
-        #header .gnb_box .gnb a {
+         #header .gnb_box .gnb a {
             font-size: 17px;
             font-weight: 700;
-        }
+            font-family: 'GmarketSansMedium';
+        } 
+        
+
 
         #header .navi {
             border-top: 1px solid #D9D9D9;
@@ -92,6 +104,7 @@
             font-weight: 700;
             text-align: center;
             letter-spacing: -1px;
+            font-family: 'GmarketSansMedium';
         }
         
         #header .navi>ul>li>a:hover {
@@ -107,6 +120,7 @@
             border-top:1px solid #002A51;
 			border-bottom:1px solid #002A51;
 			color: #003C72;
+			font-family: 'GmarketSansMedium';
         }
         
 
@@ -151,7 +165,23 @@
             height: 600px;
             float: left;    
         }
+@font-face {
+    font-family: 'SBAggroB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+}
+
+}
+        
     </style>
 </head>
 <body>
