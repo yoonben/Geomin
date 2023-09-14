@@ -96,70 +96,69 @@
 		    font-weight: 700;
 		}
 		
-	.gobtn1{
-	width:130px; 
-	height:130px;
-	border:5px solid #003C72;
-	border-radius:100px;
-	margin-left:60px;
-	position:absolute;
-	background-color:#FFFFFF;
-	}
-	.gobtn1:hover{
-	width:130px; 
-	height:130px;
-	border:5px solid #003C72;
-	border-radius:100px;
-	margin-left:60px;
-	position:absolute;
-	background-color:#BCDFFF;
-	}
 		
-	.gobtn2{
-	width:130px; 
-	height:130px;
-	border:5px solid #003C72;
-	border-radius:100px;
-	margin-left:250px;
-	position:absolute;
-	background-color:#FFFFFF;
-	}	
-	.gobtn2:hover{
-	width:130px; 
-	height:130px;
-	border:5px solid #003C72;
-	border-radius:100px;
-	margin-left:250px;
-	position:absolute;
-	background-color:#BCDFFF;
-	}
-	
-	.gobtn3{
-	width:130px; 
-	height:130px;
-	border:5px solid #003C72;
-	border-radius:100px;
-	margin-right:60px;
-	margin-left:420px;
-	position:absolute;
-	background-color:#FFFFFF;
-	}
-	.gobtn3:hover{
-	width:130px; 
-	height:130px;
-	border:5px solid #003C72;
-	border-radius:100px;
-	margin-right:60px;
-	margin-left:420px;
-	position:absolute;
-	background-color:#BCDFFF;
-	}	
-		
-.radius_img_1{
-	width:80px; 
-	height:80px;
-	margin-top:18px;
+#goBtnBox {
+    width: 630px;
+    height: 110px;
+    margin: 20px auto;
+    position: relative;
+    text-align: center; /* 수평 가운데 정렬을 위해 추가 */
 }
+
+.gobtn-container {
+    width: 110px;
+    height: 110px;
+    margin: 0 30px; /* 좌우 여백 추가 */
+    display: inline-block;
+    position: relative;
+}
+
+.gobtn1,
+.gobtn2,
+.gobtn3 {
+    width: 100%; /* 부모 요소에 대해 100% 너비를 가지도록 설정 */
+    height: 100%; /* 부모 요소에 대해 100% 높이를 가지도록 설정 */
+    border: 5px solid #003C72;
+    border-radius: 100px;
+    position: absolute; /* 부모 요소에 대해 상대 위치로 설정 */
+    top: 0; /* 부모 요소의 위쪽에 정렬 */
+    left: 0; /* 부모 요소의 왼쪽에 정렬 */
+    transition: 0.4s;
+}
+
+.gobtn1 img,
+.gobtn2 img,
+.gobtn3 img {
+    width: 100%; /* 이미지를 부모 요소에 맞게 크기 조정 */
+    height: 100%;
+}
+
+.hover_text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    z-index: 1;
+    font-weight: 600;
+    font-size: 28px;
+    opacity: 0; /* 초기에 숨겨짐 */
+    transition: 0.4s;
+    font-family: 'GmarketSansMedium';
+}
+
+.gobtn-container:hover .hover_text {
+    opacity: 1; /* 마우스 오버 시 보이도록 함 */
+}
+
+.gobtn-container:hover .gobtn1,
+.gobtn-container:hover .gobtn2,
+.gobtn-container:hover .gobtn3 {
+    filter: brightness(0.5);
+    transform: scale(1.2);
+}
+
+
 		
 @font-face {
     font-family: 'GmarketSansMedium';
@@ -233,13 +232,28 @@
                          	간편한 규칙 설명과 튜토리얼을 통해 누구나 쉽게 바둑을 배울 수 있습니다. <br/>
                         	 언제 어디서나 접속하여 바둑의 재미를 느껴보세요.</h5>
                         	 
-                        	<!-- 바로가기 아이콘 --> 
-                        	<div id='goBtnBox' style='width:630px; height:130px; 
-                        								margin:20px auto; position:relative;'>
-                        		<div class='gobtn1'><a href='https://www.cosumi.net/ko/' target='_blank'><img src="../resources/img/mainbtn1.png" class="radius_img_1"></a></div>
-                        		<div class='gobtn2'><a href=''><img src="./img/puppy_.jpg" class="radius_img_1"></a></div>
-                        		<div class='gobtn3'><a href=''><img src="./img/puppy_.jpg" class="radius_img_1"></a></div>
-                        	</div>
+                        	<!-- 바로가기 아이콘 시작--> 
+                        	<div id='goBtnBox'>
+							    <div class="gobtn-container">
+							        <a href='https://www.cosumi.net/ko/' target='_blank'>
+							            <img src="../resources/img/mainBtn1.PNG" class='gobtn1'>
+							            <p class="hover_text">게임</p>
+							        </a>
+							    </div>
+							    <div class="gobtn-container">
+							        <a href='http://baduk.or.kr/record/schedule' target='_blank'>
+							            <img src="../resources/img/mainBtn3.PNG" class='gobtn2'>
+							            <p class="hover_text">대국</p>
+							        </a>
+							    </div>
+							    <div class="gobtn-container">
+							        <a href='https://search.naver.com/search.naver?where=news&query=%EB%B0%94%EB%91%91&sm=tab_tmr&nso=so:r,p:all,a:all&sort=0' target='_blank'>
+							            <img src="../resources/img/mainBtn2.PNG" class='gobtn3'>
+							            <p class="hover_text">뉴스</p>
+							        </a>
+							    </div>
+							</div>
+                       		<!-- 바로가기 아이콘 끝--> 
                         	
                         	
                         	 
@@ -255,7 +269,7 @@
 		                    		allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; 
 		                    				picture-in-picture; web-share" 
 		                    		allowfullscreen>
-                    		</iframe>
+                    		</iframe><br><br>
                     		
    	                        <c:if test="${empty memberid}" var="res">       
 						          <button type="button" class="btn btn-primary" onclick='location.href="/geomin/login"'>로그인</button>

@@ -6,7 +6,7 @@
 <style>
 
 .sideBanner {
-  border:3px solid; 
+  border:5px solid; 
   border-radius: 40px;
   position: absolute;
   width: 130px;
@@ -54,7 +54,7 @@ $(window).scroll(function() {
 			<a href='/geomin/board'>
 				<img src='/resources/img/sideBanner2.png' style='width:100px;height:80px; margin-bottom:40px; margin-left:13px;'>
 			</a>
-			<a href=''>
+			<a href='/geomin/studentStudy/groupjoin'>
 				<img src='/resources/img/sideBanner3.png' style='width:100px;height:80px; margin-left:13px;'>
 			</a>
 		</div>

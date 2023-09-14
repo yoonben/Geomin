@@ -66,6 +66,12 @@
         	font-weight: 600;
         	font-family: 'GmarketSansMedium';
     	}
+    	
+    	#container{
+    	    min-height: 100%;
+		    position: relative;
+		    padding-bottom: 100px;
+    	}
 	</style>
 <script type="text/javascript" src="/resources/js/common.js"></script>
 <script type="text/javascript" src="/resources/js/packge.js"></script>

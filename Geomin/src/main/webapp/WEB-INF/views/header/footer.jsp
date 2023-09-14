@@ -12,7 +12,8 @@ footer[data-v-03c581ac] {
     background: #D5EBFF;
     padding: 40px 0;
     position: relative;
-    transform: translateY(0%);
+    /* transform: translateY(0%); */
+    transform: translatY(-100%);
 	bottom: 0;
 }
 footer {
