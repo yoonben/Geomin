@@ -13,7 +13,7 @@
   height: 400px;
   /* top: 180px; */
   background-color: #FFFFFF;
-  color: #fffffff;
+  color: #004583;
   margin-left:50px;
   margin-top:20px;
 }

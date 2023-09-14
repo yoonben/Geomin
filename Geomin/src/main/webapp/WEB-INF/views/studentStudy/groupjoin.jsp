@@ -205,6 +205,7 @@
 			
 			let obj = {
 			        groupid : groupSelect.value
+			        ,mname : document.querySelector('#teacherName').value
 			    };
 			 	
 			fetchPost('/geomin/groupId', obj, (map) => {

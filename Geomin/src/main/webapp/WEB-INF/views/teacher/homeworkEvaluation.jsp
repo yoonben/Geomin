@@ -210,7 +210,7 @@ window.addEventListener('load', function(){
 					if(item.evaluation === "우수"){
 						content += "<td>"
 										+"<input type='hidden' value='"+item.homeworkno+"' id='"+item.homeworkno+"' name='homeworkno'>"
-										+"<select aria-label='Default select example' onchange='alert(this.value,"+item.homeworkno+")'>"
+										+"<select aria-label='Default select example' onchange=alert(this.value,'"+item.homeworkno+"')>"
 										    +"<option value='평가'>--</option>"
 										    +"<option value='우수' selected>우수</option>"
 										    +"<option value='보통'>보통</option>"
@@ -220,7 +220,7 @@ window.addEventListener('load', function(){
 					}else if(item.evaluation === "보통"){
 						content += "<td>"
 							+"<input type='hidden' value='"+item.homeworkno+"' id='"+item.homeworkno+"' name='homeworkno'>"
-							+"<select aria-label='Default select example' onchange='alert(this.value,"+item.homeworkno+")'>"
+							+"<select aria-label='Default select example' onchange=alert(this.value,'"+item.homeworkno+"')>"
 							    +"<option value='평가'>--</option>"
 							    +"<option value='우수'>우수</option>"
 							    +"<option value='보통' selected>보통</option>"
@@ -230,7 +230,7 @@ window.addEventListener('load', function(){
 					}else if(item.evaluation === "미흡"){
 						content += "<td>"
 							+"<input type='hidden' value='"+item.homeworkno+"' id='"+item.homeworkno+"' name='homeworkno'>"
-							+"<select aria-label='Default select example' onchange='alert(this.value,"+item.homeworkno+")'>"
+							+"<select aria-label='Default select example' onchange=alert(this.value,'"+item.homeworkno+"')>"
 							    +"<option value='평가'>--</option>"
 							    +"<option value='우수'>우수</option>"
 							    +"<option value='보통'>보통</option>"
@@ -240,7 +240,7 @@ window.addEventListener('load', function(){
 					}else{
 						content += "<td>"
 							+"<input type='hidden' value='"+item.homeworkno+"' id='"+item.homeworkno+"' name='homeworkno'>"
-							+"<select aria-label='Default select example' onchange='alert(this.value,"+item.homeworkno+")'>"
+							+"<select aria-label='Default select example' onchange=alert(this.value,'"+item.homeworkno+"')>"
 							    +"<option value='평가'>--</option>"
 							    +"<option value='우수'>우수</option>"
 							    +"<option value='보통'>보통</option>"
@@ -328,7 +328,7 @@ window.addEventListener('load', function(){
 					if(item.evaluation === "우수"){
 						content += "<td>"
 										+"<input type='hidden' value='"+item.homeworkno+"' id='"+item.homeworkno+"' name='homeworkno'>"
-										+"<select aria-label='Default select example' onchange='alert(this.value,"+item.homeworkno+")'>"
+										+"<select aria-label='Default select example' onchange=alert(this.value,"+item.homeworkno+")>"
 										    +"<option value='평가'>--</option>"
 										    +"<option value='우수' selected>우수</option>"
 										    +"<option value='보통'>보통</option>"
@@ -338,7 +338,7 @@ window.addEventListener('load', function(){
 					}else if(item.evaluation === "보통"){
 						content += "<td>"
 							+"<input type='hidden' value='"+item.homeworkno+"' id='"+item.homeworkno+"' name='homeworkno'>"
-							+"<select aria-label='Default select example' onchange='alert(this.value,"+item.homeworkno+")'>"
+							+"<select aria-label='Default select example' onchange=alert(this.value,'"+item.homeworkno+"')>"
 							    +"<option value='평가'>--</option>"
 							    +"<option value='우수'>우수</option>"
 							    +"<option value='보통' selected>보통</option>"
@@ -348,7 +348,7 @@ window.addEventListener('load', function(){
 					}else if(item.evaluation === "미흡"){
 						content += "<td>"
 							+"<input type='hidden' value='"+item.homeworkno+"' id='"+item.homeworkno+"' name='homeworkno'>"
-							+"<select aria-label='Default select example' onchange='alert(this.value,"+item.homeworkno+")'>"
+							+"<select aria-label='Default select example' onchange=alert(this.value,'"+item.homeworkno+"')>"
 							    +"<option value='평가'>--</option>"
 							    +"<option value='우수'>우수</option>"
 							    +"<option value='보통'>보통</option>"
@@ -358,7 +358,7 @@ window.addEventListener('load', function(){
 					}else{
 						content += "<td>"
 							+"<input type='hidden' value='"+item.homeworkno+"' id='"+item.homeworkno+"' name='homeworkno'>"
-							+"<select aria-label='Default select example' onchange='alert(this.value,"+item.homeworkno+")'>"
+							+"<select aria-label='Default select example' onchange=alert(this.value,'"+item.homeworkno+"')>"
 							    +"<option value='평가'>--</option>"
 							    +"<option value='우수'>우수</option>"
 							    +"<option value='보통'>보통</option>"
@@ -445,7 +445,7 @@ window.addEventListener('load', function(){
 					if(item.evaluation === "우수"){
 						content += "<td>"
 										+"<input type='hidden' value='"+item.homeworkno+"' id='"+item.homeworkno+"' name='homeworkno'>"
-										+"<select aria-label='Default select example' onchange='alert(this.value,"+item.homeworkno+")'>"
+										+"<select aria-label='Default select example' onchange=alert(this.value,'"+item.homeworkno+"')>"
 										    +"<option value='평가'>--</option>"
 										    +"<option value='우수' selected>우수</option>"
 										    +"<option value='보통'>보통</option>"
@@ -455,7 +455,7 @@ window.addEventListener('load', function(){
 					}else if(item.evaluation === "보통"){
 						content += "<td>"
 							+"<input type='hidden' value='"+item.homeworkno+"' id='"+item.homeworkno+"' name='homeworkno'>"
-							+"<select aria-label='Default select example' onchange='alert(this.value,"+item.homeworkno+")'>"
+							+"<select aria-label='Default select example' onchange=alert(this.value,'"+item.homeworkno+"')>"
 							    +"<option value='평가'>--</option>"
 							    +"<option value='우수'>우수</option>"
 							    +"<option value='보통' selected>보통</option>"
@@ -465,7 +465,7 @@ window.addEventListener('load', function(){
 					}else if(item.evaluation === "미흡"){
 						content += "<td>"
 							+"<input type='hidden' value='"+item.homeworkno+"' id='"+item.homeworkno+"' name='homeworkno'>"
-							+"<select aria-label='Default select example' onchange='alert(this.value,"+item.homeworkno+")'>"
+							+"<select aria-label='Default select example' onchange=alert(this.value,'"+item.homeworkno+"')>"
 							    +"<option value='평가'>--</option>"
 							    +"<option value='우수'>우수</option>"
 							    +"<option value='보통'>보통</option>"
@@ -475,7 +475,7 @@ window.addEventListener('load', function(){
 					}else{
 						content += "<td>"
 							+"<input type='hidden' value='"+item.homeworkno+"' id='"+item.homeworkno+"' name='homeworkno'>"
-							+"<select aria-label='Default select example' onchange='alert(this.value,"+item.homeworkno+")'>"
+							+"<select aria-label='Default select example' onchange=alert(this.value,'"+item.homeworkno+"')>"
 							    +"<option value='평가'>--</option>"
 							    +"<option value='우수'>우수</option>"
 							    +"<option value='보통'>보통</option>"
@@ -564,7 +564,7 @@ function go(pageNo) {
 				if(item.evaluation === "우수"){
 					content += "<td>"
 									+"<input type='hidden' value='"+item.homeworkno+"' id='"+item.homeworkno+"' name='homeworkno'>"
-									+"<select aria-label='Default select example' onchange='alert(this.value,"+item.homeworkno+")'>"
+									+"<select aria-label='Default select example' onchange=alert(this.value,'"+item.homeworkno+"')>"
 									    +"<option value='평가'>--</option>"
 									    +"<option value='우수' selected>우수</option>"
 									    +"<option value='보통'>보통</option>"
@@ -574,7 +574,7 @@ function go(pageNo) {
 				}else if(item.evaluation === "보통"){
 					content += "<td>"
 						+"<input type='hidden' value='"+item.homeworkno+"' id='"+item.homeworkno+"' name='homeworkno'>"
-						+"<select aria-label='Default select example' onchange='alert(this.value,"+item.homeworkno+")'>"
+						+"<select aria-label='Default select example' onchange=alert(this.value,'"+item.homeworkno+"')>"
 						    +"<option value='평가'>--</option>"
 						    +"<option value='우수'>우수</option>"
 						    +"<option value='보통' selected>보통</option>"
@@ -584,7 +584,7 @@ function go(pageNo) {
 				}else if(item.evaluation === "미흡"){
 					content += "<td>"
 						+"<input type='hidden' value='"+item.homeworkno+"' id='"+item.homeworkno+"' name='homeworkno'>"
-						+"<select aria-label='Default select example' onchange='alert(this.value,"+item.homeworkno+")'>"
+						+"<select aria-label='Default select example' onchange=alert(this.value,'"+item.homeworkno+"')>"
 						    +"<option value='평가'>--</option>"
 						    +"<option value='우수'>우수</option>"
 						    +"<option value='보통'>보통</option>"
@@ -594,7 +594,7 @@ function go(pageNo) {
 				}else{
 					content += "<td>"
 						+"<input type='hidden' value='"+item.homeworkno+"' id='"+item.homeworkno+"' name='homeworkno'>"
-						+"<select aria-label='Default select example' onchange='alert(this.value,"+item.homeworkno+")'>"
+						+"<select aria-label='Default select example' onchange=alert(this.value,'"+item.homeworkno+"')>"
 						    +"<option value='평가'>--</option>"
 						    +"<option value='우수'>우수</option>"
 						    +"<option value='보통'>보통</option>"
@@ -690,7 +690,7 @@ function alert(evaluation, homeworkno) {
 
 	let obj={
 		evaluation : evaluation
-		,homeworkno : homeworkno.value
+		,homeworkno : homeworkno
 	}
 	
 	console.log(obj);

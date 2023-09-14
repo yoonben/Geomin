@@ -70,8 +70,10 @@
     	#container{
     	    min-height: 100%;
 		    position: relative;
-		    padding-bottom: 100px;
+		    padding-bottom: 200px;
+        	flex: 1;
     	}
+
 	</style>
 <script type="text/javascript" src="/resources/js/common.js"></script>
 <script type="text/javascript" src="/resources/js/packge.js"></script>
@@ -81,18 +83,18 @@
 	<%@include file="../header/header.jsp" %>
 	<div id='section'>
             <div class='subnavi'>
-	    <ul>
-		   	<c:if test="${sessionScope.member.adminyn eq 'Y'}">
-		        	<li><a href="/geomin/manager">학습콘텐츠 등록</a></li>
-		    </c:if>
-		        <li><a href="/geomin/board">Q&A</a></li>
-		 	<c:if test="${sessionScope.member.adminyn eq 'Y'}">
-		        <li><a href="/geomin/salesTally">매출 관리</a></li>
-		        <li><a href="/geomin/salesTally">- 매출 집계</a></li>
-		        <li><a href="/geomin/salesInquiry">- 매출 조회</a></li>
-		 	</c:if>
-		</ul>
-	</div>
+			    <ul>
+				   	<c:if test="${sessionScope.member.adminyn eq 'Y'}">
+				        	<li><a href="/geomin/manager">학습콘텐츠 등록</a></li>
+				    </c:if>
+				        <li><a href="/geomin/board">Q&A</a></li>
+				 	<c:if test="${sessionScope.member.adminyn eq 'Y'}">
+				        <li><a href="/geomin/salesTally">매출 관리</a></li>
+				        <li><a href="/geomin/salesTally">- 매출 집계</a></li>
+				        <li><a href="/geomin/salesInquiry">- 매출 조회</a></li>
+				 	</c:if>
+				</ul>
+			</div>
              <div class='content'>
              	<input type="hidden" id="pkgnameCheck" value="0">
              	<input type="hidden" id="personnelCheck" value="0">
@@ -166,8 +168,9 @@
 					</div>
           </div>
       </div>
+      <br><br><br><br>
          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
-	<%@include file="../header/footer.jsp" %>	
+
 </body>
 </html>

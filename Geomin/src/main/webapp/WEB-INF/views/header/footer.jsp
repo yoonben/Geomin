@@ -9,12 +9,12 @@
 
 
 footer[data-v-03c581ac] {
-    background: #D5EBFF;
+    background: #003769;
     padding: 40px 0;
     position: relative;
-    /* transform: translateY(0%); */
     transform: translatY(-100%);
 	bottom: 0;
+	width: 100%;
 }
 footer {
     display: block;
@@ -47,11 +47,11 @@ li {
 footer .footerLinks li a[data-v-03c581ac] {
     font-family: NotoR;
     font-size: 15px;
-    color: #262626;
+    color: #FFFFFF;
 }
 
 footer .innerFoot address[data-v-03c581ac] {
-    color: #262626;
+    color: #FFFFFF;
     margin-left: 15px;
     position: relative;
     padding-left: 15px;

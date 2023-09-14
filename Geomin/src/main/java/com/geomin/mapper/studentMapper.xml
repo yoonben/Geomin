@@ -41,7 +41,7 @@
 			JOIN pkgsubsDetail s ON p.pkgid = s.pkgid
 			JOIN study_group g ON s.pkgid = g.pkgid
 			JOIN member m ON m.memberid = s.memberid
-			where g.groupid = #{groupid} 
+			where g.groupid = #{groupid} and m.mname = #{mname} 
   	</select>
   	
   	
