@@ -52,9 +52,9 @@ public class teacherServiceImpl implements teacherService{
 	}
 	
 	@Override
-	public groupstudentVO groupjoinstatusOne(String studentid) {
+	public groupstudentVO groupjoinstatusOne(String studentid, String groupid) {
 		// TODO Auto-generated method stub
-		return teachermapper.groupjoinstatusOne(studentid);
+		return teachermapper.groupjoinstatusOne(studentid, groupid);
 	}
 	
 /*	
@@ -81,8 +81,8 @@ public class teacherServiceImpl implements teacherService{
 //		return teachermapper.updateJoinStatus(memberIds);
 //	}
 	@Override
-	public int updateJoinStatus(String studentid) {
-		return teachermapper.updateJoinStatus(studentid);
+	public int updateJoinStatus(String studentid, String groupid) {
+		return teachermapper.updateJoinStatus(studentid, groupid);
 	}
 
 

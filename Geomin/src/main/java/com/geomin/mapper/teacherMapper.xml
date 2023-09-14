@@ -22,7 +22,7 @@
   	 </select>
 	
 	<select id='groupjoinstatusOne' resultType='com.geomin.VO.groupstudentVO'>
-  			select groupjoinstatus from groupStudent  where studentid = #{studentid}
+  			select * from groupStudent  where studentid = #{studentid} and groupid = #{groupid}
   	 </select>
 	
 	<select id='totalGroupStu' resultType='int'>
@@ -52,7 +52,7 @@
 	                            WHEN groupjoinstatus = 'N' THEN 'Y'
 	                            ELSE groupjoinstatus
 	                          END
-	    WHERE studentid = #{studentid}
+	    WHERE studentid = #{studentid} and groupid = #{groupid}
 	</update>
 	
 	

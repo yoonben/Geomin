@@ -2,6 +2,8 @@ package com.geomin.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.geomin.VO.contentVO;
 import com.geomin.VO.groupstudentVO;
 import com.geomin.VO.memberVO;
@@ -23,12 +25,12 @@ public interface teacherMapper {
 	
 	public int curpersonnelDown(String pkgid);
 	
-	public groupstudentVO groupjoinstatusOne(String studentid);
+	public groupstudentVO groupjoinstatusOne(@Param("studentid") String studentid,@Param("groupid") String groupid);
 	
 	public List<contentVO> regSubinfo();
 	
 	//그룹가입 승인
-	public int updateJoinStatus(String studentid);
+	public int updateJoinStatus(@Param("studentid") String studentid,@Param("groupid") String groupid);
 
 	List<contentVO> getSubGroup(String pkgName);
 

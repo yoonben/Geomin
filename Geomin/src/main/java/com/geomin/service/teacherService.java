@@ -2,6 +2,7 @@ package com.geomin.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import com.geomin.VO.contentVO;
@@ -22,13 +23,13 @@ public interface teacherService {
 	
 	public int totalgroupmem(String groupid);
 	
-	public int updateJoinStatus(String studentid);
+	public int updateJoinStatus(@Param("studentid") String studentid,@Param("groupid") String groupid);
 	
 	public int curpersonnelUP(String pkgid);
 	
 	public int curpersonnelDown(String pkgid);
 	
-	public groupstudentVO groupjoinstatusOne(String studentid);
+	public groupstudentVO groupjoinstatusOne(@Param("studentid") String studentid,@Param("groupid") String groupid);
 
 	List<contentVO> getSubGroup(String pkgName);
 

@@ -127,13 +127,13 @@ window.addEventListener('load', function(){
 	    let month = document.getElementById("month").value;
 	    let day = document.getElementById("day").value;
 	
-	    // 월과 일이 한 자리 수인 경우 두 자리로 변경
+	     // 월과 일이 한 자리 수인 경우 두 자리로 변경
 	    if (month.length === 1) {
 	        month = "0" + month;
 	    }
 	    if (day.length === 1) {
 	        day = "0" + day;
-	    }
+	    } 
 	
 	    // 변환된 생년월일 값을 문자열로 조합
 	    const formattedBirthdate = year + "-" + month + "-" + day;

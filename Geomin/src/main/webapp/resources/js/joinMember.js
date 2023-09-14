@@ -65,6 +65,8 @@ window.addEventListener('load', function(){
 	    } else if (!regPw.test(pwValue)) {
 	        displayErrorMessage(pwErrorElement, "8~15자 이내 영문 대소문자, 숫자, 특수문자를 조합하여 입력하세요.");
 	        return;
+	    } else if  (loginPwCheck.value !== loginPw.value) {
+	        displayErrorMessage(pwErrorElement, "비밀번호와 동일하지 않습니다.");
 	    }
 	});
 	

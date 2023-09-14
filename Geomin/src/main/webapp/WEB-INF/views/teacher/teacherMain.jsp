@@ -137,6 +137,7 @@
     	$('#subNavi1').click(function (){
     		console.log('#subNavi1 작동 개시');
     		redirectToGroupRegist("");
+    		location.href="../teacher/groupRegist";
     	});
     	
     	function redirectToGroupRegist(pkgName) {
@@ -320,13 +321,15 @@
 		            	, pkgid : document.querySelector('#pkgid').value
 		            }
 		        
+		        console.log(obj);
+		        
 		        fetchPost('/geomin/joinStatus', obj, (map) => {
 		        	alert(map.msg);
 		        	document.querySelector('#allCheck').checked = false;
 		        	studentJoin();
 		        })
-		 	}else {
-	 			alert("숙제 보내는 중 예외사항이 발생 하였습니다.");
+		 	} else {
+	 			alert("체크 박스를 선택해주시기 바랍니다.");
 		    }
 		
 	}

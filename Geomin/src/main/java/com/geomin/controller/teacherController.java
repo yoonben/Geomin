@@ -157,30 +157,29 @@ public class teacherController extends CommonRestController{
 	public @ResponseBody Map<String, Object> joinjoinStatus(@RequestBody groupstudentVO groupstudent) {
 	    try {
 	    	
-	    	System.out.println(groupstudent.getStudentidList());
 	    	
 	    	List<String> studentidList = groupstudent.getStudentidList();
 	    	
 	    	for (int i = 0; i < studentidList.size(); i++) {
 	    		
-	    	    System.out.println(studentidList.get(i));
+	    	    System.out.println("1 : "+studentidList.get(i)+","+groupstudent.getGroupid());
 	    	    
-	    	    groupstudentVO groupjoinstatusOne = teacherService.groupjoinstatusOne(studentidList.get(i));
+	    	    groupstudentVO groupjoinstatusOne = teacherService.groupjoinstatusOne(studentidList.get(i), groupstudent.getGroupid());
 	    	    
-	    	    System.out.println(studentidList.get(i)+" : "+groupjoinstatusOne);
+	    	    System.out.println("2 : "+studentidList.get(i)+" : "+groupjoinstatusOne);
 	    	    
 	    	    if ("Y".equals(groupjoinstatusOne.getGroupjoinstatus())) {
 		    		
-		    	    System.out.println(groupstudent);
+		    	    System.out.println("3 : "+groupstudent);
 		    	    
-		    	    int res = teacherService.updateJoinStatus(studentidList.get(i));
+		    	    int res = teacherService.updateJoinStatus(studentidList.get(i), groupstudent.getGroupid());
 		    	    
 	    	    	if(res > 0) {
 	    	    		
 	    	    		int res2 = teacherService.curpersonnelDown(groupstudent.getPkgid());
 	    	    		
 	    	    		if(res2 == 0) {
-	    	    			return responseMap(REST_FAIL, "패키지 인원 증가 중 예외사항이 발생하였습니다.");
+	    	    			return responseMap(REST_FAIL, "그룹 인원 증가 중 예외사항이 발생하였습니다.");
 	    	    		}
 		    	    	
 
@@ -188,24 +187,26 @@ public class teacherController extends CommonRestController{
 	    	    		return responseMap(REST_FAIL, "그룹 업데이트 중 예외사항이 발생하였습니다.");
 	    	    	}
 		    	} else if ("N".equals(groupjoinstatusOne.getGroupjoinstatus())) {
+		    		System.out.println("3 : "+groupstudent);
+		    		
 		    		int totalGroupStu = teacherService.totalGroupStu(groupstudent.getGroupid());
 			    	
 			    	int totalgroupmem = teacherService.totalgroupmem(groupstudent.getGroupid());
 			    	
 		    	    if(totalgroupmem > totalGroupStu) {
-		    	    	int res = teacherService.updateJoinStatus(studentidList.get(i));
+		    	    	int res = teacherService.updateJoinStatus(studentidList.get(i), groupstudent.getGroupid());
 		    	    	
 		    	    	if(res > 0) {
 		    	    		
 		    	    		int res2 = teacherService.curpersonnelUP(groupstudent.getPkgid());
 		    	    		
 		    	    		if(res2 == 0) {
-		    	    			return responseMap(REST_FAIL, "패키지 인원 증가 중 예외사항이 발생하였습니다.");
+		    	    			return responseMap(REST_FAIL, "그룹 인원 증가 중 예외사항이 발생하였습니다.");
 		    	    		}
 		    	    		
 		    	    		
 			    	    	Map<String, Object> map = responseMap(REST_SUCCESS, "그룹 승인 완료!");
-			    	    	
+			    	    	return map;
 		    	    	}else {
 		    	    		return responseMap(REST_FAIL, "그룹 업데이트 중 예외사항이 발생하였습니다.");
 		    	    	}
@@ -224,7 +225,8 @@ public class teacherController extends CommonRestController{
 	    	
 	       
 	    } catch (Exception e) {
-	       // e.printStackTrace();
+	        e.printStackTrace();
+	    	
 	        return responseMap(REST_FAIL, "패키지 등록중 예외사항이 발생 하였습니다.");
 	    }
 	}
