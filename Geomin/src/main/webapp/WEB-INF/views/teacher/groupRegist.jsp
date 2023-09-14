@@ -45,7 +45,6 @@
             		<div>
             			<label>그룹명 : </label>
             			<input type="text" id="groupid" name = "groupid" placeholder="그룹명을 입력해 주세요" ><input type='button' id='groupidCheck' name='groupidCheck'  value='중복확인버튼'>
-            			<!-- <div id='result'>아이디를 확인해주세요.</div> -->
             			<div id='result'></div>
             		</div>
             		<div>
@@ -55,7 +54,7 @@
             		<div>
             			<label>학습 가능 인원 : </label>
             			<input type="text" id='groupMem'  name='groupMem' placeholder="인원 수 적기"> 명 <br>
-            			<p>총 학습 가능 인원은 ${list1.personnel}명 이고, 학습 중인 총 인원은 ${list1.totalgroupMem}명으로, 최대 ${list1.possiblegroupMem }명을 입력 할 수 없어요.</p>
+            			<p>총 학습 가능 인원은 ${list1.personnel}명 이고, 학습 중인 총 인원은 ${list1.totalgroupMem}명으로, 최대 ${list1.possiblegroupMem }명을 입력 할 수 있어요.</p>
             			<div id='grouppersonError'></div>
             		</div>
             		<div style="display: none"><!--  -->
@@ -109,7 +108,7 @@
             		</div>
             		<div>
             			<label>그룹명 : </label>
-            			<input type="text" id="groupid2" name = "groupid" placeholder="그룹명을 입력해 주세요" ><input type='button' id='groupidCheck' name='groupidCheck'  value='중복확인버튼'>
+            			<input type="text" id="groupid2" name = "groupid" placeholder="그룹명을 입력해 주세요" ><input type='button' id='groupidCheck2' name='groupidCheck'  value='중복확인버튼'>
             			<!-- <div id='result'>아이디를 확인해주세요.</div> -->
             			<div id='result'></div>
             		</div>
@@ -120,7 +119,7 @@
             		<div>
             			<label>학습 가능 인원 : </label>
             			<input type="text" id='groupMem2'  name='groupMem' placeholder="인원 수 적기"> 명 <br>
-            			<p>총 학습 가능 인원은 ${list3.personnel}명 이고, 학습 중인 총 인원은 ${list3.totalgroupMem}명으로, 최대 ${list3.possiblegroupMem }명을 입력 할 수 없어요.</p>
+            			<p>총 학습 가능 인원은 <c:out value = "${list3.personnel}" /> 명 이고, 학습 중인 총 인원은 ${list3.totalgroupMem}명으로, 최대 ${list3.possiblegroupMem }명을 입력 할 수 있습니다..</p>
             			<div id='grouppersonError'></div>
             		</div>
             		<%-- <div style="display: none"><!--  -->
@@ -182,8 +181,8 @@ $(document).ready(function () {
     		   var list3 = data[0];
     		   //console.log("ListL2.groupId");
     		   $('#pkgId2').val(list3.pkgId); // 예시로 pkgId 필드 업데이트
-    		   $('personnel2').val(list3.personnel);
-    		   $('possiblegroupMem2').val(list3.possiblegroupMem);
+    		   $('#personnel2').val(list3.personnel);
+    		   $('#possiblegroupMem2').val(list3.possiblegroupMem);
     		   $('#pkgName2').val(list3.pkgName); // 예시로 pkgName 필드 업데이트
     		   $('#difficulty2').val(list3.difficulty);
     		   $('#pkgContent2').val(list3.pkgContent);
@@ -366,7 +365,37 @@ function lastdayA() {
 	        }
 	    });//$.ajax
 	})//#groupidCheck
-
+	
+	$("#groupidCheck2").click(function(){
+		console.log("groupidCheck2 클릭됨");
+		let groupid2 = document.getElementByName('groupid2').value;
+		console.log('groupid : ' , groupid);
+		
+		if(groupid2 == null){
+			$('#result').text("공백은 허용되지 않습니다");
+			$("#result").attr("style", "color:#f00"); 
+			return;
+		}
+		
+		//1. groupid 중복 체크
+		$.ajax({
+	        url:'/geomin/teacher/groupidCheck', //Controller에서 요청 받을 주소
+	        type:'POST', //POST 방식으로 전달
+	        data:{groupid : groupid},
+	        success:function(data){ //컨트롤러에서 넘어온 cnt값을 받는다 
+	        	console.log('cnt : ' , data);
+	            if(data == 1){ //cnt가0이 아니면(=1일 경우) -> 사용 불가능한 아이디 
+	                $('#result').text("이미 사용중인 그룹명 입니다."); 
+	                $("#result").attr("style", "color:#f00"); 
+	            } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
+	            	$('#result').text("사용가능한 그룹명 입니다."); 
+	            	$("#result").attr("style", "color:#00f");
+	            }
+	        }
+	    });//$.ajax
+	})//#groupidCheck2
+	
+	
 		//인원수 유효성 검사
 	    const groupMem = document.getElementById("groupMem");	//사용자가 입력한 값
 	    const groupMem2 = document.getElementById("groupMem2");	//사용자가 입력한 값

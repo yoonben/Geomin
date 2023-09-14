@@ -181,7 +181,7 @@ WHERE ROWNUM = 1 -->
 	</insert>
 	
 	<select id="getSubList2" resultType="com.geomin.VO.contentVO">
-	select    
+select DISTINCT    
     p.pkgName
 FROM 
     package p
@@ -199,6 +199,15 @@ ON
     D.pkgId = g.pkgId
 WHERE 
     p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6'
+    
+    
+    
+    
+    
+    
+    
+    
+    
 	<!-- p.pkgName
    
 FROM 
