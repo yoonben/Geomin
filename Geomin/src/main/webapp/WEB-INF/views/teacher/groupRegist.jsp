@@ -92,8 +92,9 @@
 				<%-- </c:if> --%>
 			</c:forEach>
 			
+			
+			
 			 <c:if test="${empty pkgName}">
-                <!-- pkgName이 비어있을 때 출력할 내용 -->
                	 패키지 선택 : 
                	 <select id="select_package">
         			<option selected="selected">패키지 선택</option>
@@ -101,7 +102,10 @@
             			<option class="optPkgName">${list2.pkgName}</option>
         			</c:forEach>
     			</select>
-               	<p id="personnel2">학습 가능 인원 : ${list3.personnel}</p> / <p id="possiblegroupMem2">등록 가능 인원 : ${list3.possiblegroupMem} </p>
+    			<br>
+               	학습 가능 인원 : <span id="personnel2"></span>명  / 등록 가능 인원 : <span id="possiblegroupMem2"></span> 명 
+               	<br> 
+               	 	<br>
                	 	<div> <!-- style="display: none;" -->
             			<label>컨텐츠 아이디 : </label>
             			<input name='pkgId' id = "pkgId2" value='<c:out value = "${list3.pkgId}" />' readonly="readonly" disabled="disabled">
@@ -119,17 +123,9 @@
             		<div>
             			<label>학습 가능 인원 : </label>
             			<input type="text" id='groupMem2'  name='groupMem' placeholder="인원 수 적기"> 명 <br>
-            			<p>총 학습 가능 인원은 <c:out value = "${list3.personnel}" /> 명 이고, 학습 중인 총 인원은 ${list3.totalgroupMem}명으로, 최대 ${list3.possiblegroupMem }명을 입력 할 수 있습니다..</p>
-            			<div id='grouppersonError'></div>
+            			<%-- <p>총 학습 가능 인원은 ${list3.personnel}명 이고, 학습 중인 총 인원은 ${list3.totalgroupMem}명으로, 최대 ${list3.possiblegroupMem }명을 입력 할 수 있습니다.</p> --%>
+            			<div id='grouppersonError2'></div>
             		</div>
-            		<%-- <div style="display: none"><!--  -->
-            			<label>최대 학습 가능 인원 : </label>
-            			<input type="text" id='maxgroupperson' name='maxgroupperson' data-value="${list3.personnel}" readonly="readonly" disabled="disabled"> value='<c:out value = "${list3.personnel}" />' 명
-            		</div>
-            		<div style="display: none"><!--  -->
-            			<label>학습 가능 인원 : </label>
-            			<input type="text" id='possiblegroupMem' name='possiblegroupMem' data-value="${list3.possiblegroupMem}" readonly="readonly" disabled="disabled"> value='<c:out value = "${list3.possiblegroupMem}" />' 명
-            		</div> --%>
             		<div>
             			<label>학습 수준 : </label>
             			<input name='difficulty' id = "difficulty2" value='<c:out value = "${list3.difficulty}" />' readonly="readonly" disabled="disabled">
@@ -165,8 +161,84 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
+	var model = {};
+	if (model.list1.pkgName !== null) {
+	//1-1. 중복 체크
+	$("#groupidCheck").click(function(){
+		let groupid = document.getElementById('groupid').value;
+		console.log('groupid : ' , groupid);
+		
+		if(groupid.length == 0){
+			$('#result').text("공백은 허용되지 않습니다");
+			$("#result").attr("style", "color:#f00"); 
+			return;
+		}
+		
+		$.ajax({
+	        url:'/geomin/teacher/groupidCheck', //Controller에서 요청 받을 주소
+	        type:'POST', //POST 방식으로 전달
+	        data:{groupid : groupid},
+	        success:function(data){ //컨트롤러에서 넘어온 cnt값을 받는다 
+	        	console.log('cnt : ' , data);
+	            if(data == 1){ //cnt가0이 아니면(=1일 경우) -> 사용 불가능한 아이디 
+	                $('#result').text("이미 사용중인 그룹명 입니다."); 
+	                $("#result").attr("style", "color:#f00"); 
+	            } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
+	            	$('#result').text("사용가능한 그룹명 입니다."); 
+	            	$("#result").attr("style", "color:#00f");
+	            }
+	        }
+	    });//$.ajax
+	})//#groupidCheck
+	
+	//1-2. 인원 수 유효성 검사
+    const groupMem = document.getElementById("groupMem");		//사용자가 입력한 값
+    const groupMemValue = groupMem.value;
+    const possiblegroupMem = document.getElementById("possiblegroupMem");
+    const possiblegroupMemValue = possiblegroupMem.value;
+    const personErrorElement = document.getElementById("grouppersonError");
+    const regGroupperson = /^[0-9]+$/;
     
-	//2. pkgName 이 없을 때
+    groupMem.addEventListener('input', function () {
+    	hideErrorMessage(personErrorElement);
+	});
+	 
+	groupMem.addEventListener('focusout', function () {
+	    const groupMemValue = parseInt(groupMem.value.trim());
+	    console.log("groupMemValue : " , groupMemValue);
+	    const possiblegroupMemValue = parseInt(possiblegroupMem.getAttribute("data-value"));
+	    console.log("possiblegroupMemValue : " , possiblegroupMemValue);
+	    
+	    //빈칸일 경우 아무것도 출력X
+	    if (groupMemValue.length === 0) {
+	        return;
+	    }
+	    
+	    if (possiblegroupMemValue.length === 0){
+	    	return;
+	    }
+	    
+	    if (!regGroupperson.test(groupMem.value)) {
+	        displayErrorMessage(personErrorElement, "숫자만 입력 가능합니다.");
+	        return;
+	    }
+
+	    if(groupMemValue > possiblegroupMemValue){
+	    	displayErrorMessage(personErrorElement, "학습 가능한 인원을 초과하였습니다.");
+	    	return;
+		}
+	});//groupMem.addEventListener
+    
+	function displayErrorMessage(element, message) {
+	    element.textContent = message;
+	    element.style.color = "#f00";
+	}
+	function hideErrorMessage(element) {
+	    element.textContent = "";
+	}
+	}// endpoint if(model.list1.pkgName !== null)
+	
+	//2-1. 셀렉트 및 인풋 데이터 불러오기
     $("#select_package").change(function() {
         // 선택된 option 요소의 값을 가져옵니다.
        var pkgName = $(this).val();
@@ -181,17 +253,83 @@ $(document).ready(function () {
     		   var list3 = data[0];
     		   //console.log("ListL2.groupId");
     		   $('#pkgId2').val(list3.pkgId); // 예시로 pkgId 필드 업데이트
-    		   $('#personnel2').val(list3.personnel);
-    		   $('#possiblegroupMem2').val(list3.possiblegroupMem);
     		   $('#pkgName2').val(list3.pkgName); // 예시로 pkgName 필드 업데이트
     		   $('#difficulty2').val(list3.difficulty);
     		   $('#pkgContent2').val(list3.pkgContent);
     		   $('#subsDate2').val(list3.subsDate);
-    		   
+    		   $('#personnel2').text(list3.personnel);
+    		   $('#possiblegroupMem2').text(list3.possiblegroupMem);
     	   }
        });
     }); //#select_package
 	
+  //2-2. 중복처리
+	$("#groupidCheck2").click(function(){
+		let groupid2 = document.getElementById('groupid2').value;
+		console.log('groupid2 : ' , groupid2);
+		
+		if(groupid2.length == 0){
+			$('#result').text("공백은 허용되지 않습니다");
+			$("#result").attr("style", "color:#f00"); 
+			return;
+		}
+		
+		$.ajax({
+	        url:'/geomin/teacher/groupidCheck', //Controller에서 요청 받을 주소
+	        type:'POST', //POST 방식으로 전달
+	        data:{groupid : groupid2},
+	        success:function(data){ //컨트롤러에서 넘어온 cnt값을 받는다 
+	        	console.log('cnt : ' , data);
+	            if(data == 1){ //cnt가0이 아니면(=1일 경우) -> 사용 불가능한 아이디 
+	                $('#result').text("이미 사용중인 그룹명 입니다."); 
+	                $("#result").attr("style", "color:#f00"); 
+	            } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
+	            	$('#result').text("사용가능한 그룹명 입니다."); 
+	            	$("#result").attr("style", "color:#00f");
+	            }
+	        }
+	    });//$.ajax
+	})//#groupidCheck2
+    
+	//2-3. 인원 수 유효성 검사
+    const groupMem2 = document.getElementById("groupMem2");		//사용자가 입력한 값
+    const groupMemValue2 = groupMem2.value;
+    const possiblegroupMem2 = document.getElementById("possiblegroupMem2");
+    const possiblegroupMemValue2 = possiblegroupMem2.value;
+    const personErrorElement2 = document.getElementById("grouppersonError2");
+    
+    groupMem2.addEventListener('input', function () {
+    	hideErrorMessage(personErrorElement2);
+	});
+	 
+    groupMem2.addEventListener('focusout', function () {
+	    const groupMemValue2 = parseInt(groupMem2.value.trim());
+	    console.log("groupMemValue2 : " , groupMemValue2);
+	    const possiblegroupMemValue2 = parseInt(possiblegroupMem2.getAttribute("data-value"));
+	    console.log("possiblegroupMemValue2 : " , possiblegroupMemValue2);
+	    
+	    //빈칸일 경우 아무것도 출력X
+	    if (groupMemValue2.length === 0) {
+	        return;
+	    }
+	    
+	    if (possiblegroupMemValue2.length === 0){
+	    	return;
+	    }
+	    
+	    if (!regGroupperson.test(groupMem2.value)) {
+	        displayErrorMessage(personErrorElement2, "숫자만 입력 가능합니다.");
+	        return;
+	    }
+
+	    if(groupMemValue2 > possiblegroupMemValue2){
+	    	displayErrorMessage(personErrorElement2, "학습 가능한 인원을 초과하였습니다.");
+	    	return;
+		}
+	});//groupMem.addEventListener
+    
+    
+    
     var start_year = "2023"; // 시작할 년도
     var today = new Date();
     var today_year = today.getFullYear();
@@ -336,122 +474,38 @@ function lastdayA() {
 		});	//endpoint $('#regStudy').click
 	
 		
-	//★그룹아이디 중복처리
-	$("#groupidCheck").click(function(){
-		console.log("groupidCheck 클릭됨");
-		let groupid = document.getElementByName('groupid').value;
-		console.log('groupid : ' , groupid);
-		
-		if(groupid == null){
-			$('#result').text("공백은 허용되지 않습니다");
-			$("#result").attr("style", "color:#f00"); 
-			return;
-		}
-		
-		//1. groupid 중복 체크
-		$.ajax({
-	        url:'/geomin/teacher/groupidCheck', //Controller에서 요청 받을 주소
-	        type:'POST', //POST 방식으로 전달
-	        data:{groupid : groupid},
-	        success:function(data){ //컨트롤러에서 넘어온 cnt값을 받는다 
-	        	console.log('cnt : ' , data);
-	            if(data == 1){ //cnt가0이 아니면(=1일 경우) -> 사용 불가능한 아이디 
-	                $('#result').text("이미 사용중인 그룹명 입니다."); 
-	                $("#result").attr("style", "color:#f00"); 
-	            } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
-	            	$('#result').text("사용가능한 그룹명 입니다."); 
-	            	$("#result").attr("style", "color:#00f");
-	            }
-	        }
-	    });//$.ajax
-	})//#groupidCheck
-	
-	$("#groupidCheck2").click(function(){
-		console.log("groupidCheck2 클릭됨");
-		let groupid2 = document.getElementByName('groupid2').value;
-		console.log('groupid : ' , groupid);
-		
-		if(groupid2 == null){
-			$('#result').text("공백은 허용되지 않습니다");
-			$("#result").attr("style", "color:#f00"); 
-			return;
-		}
-		
-		//1. groupid 중복 체크
-		$.ajax({
-	        url:'/geomin/teacher/groupidCheck', //Controller에서 요청 받을 주소
-	        type:'POST', //POST 방식으로 전달
-	        data:{groupid : groupid},
-	        success:function(data){ //컨트롤러에서 넘어온 cnt값을 받는다 
-	        	console.log('cnt : ' , data);
-	            if(data == 1){ //cnt가0이 아니면(=1일 경우) -> 사용 불가능한 아이디 
-	                $('#result').text("이미 사용중인 그룹명 입니다."); 
-	                $("#result").attr("style", "color:#f00"); 
-	            } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
-	            	$('#result').text("사용가능한 그룹명 입니다."); 
-	            	$("#result").attr("style", "color:#00f");
-	            }
-	        }
-	    });//$.ajax
-	})//#groupidCheck2
 	
 	
-		//인원수 유효성 검사
-	    const groupMem = document.getElementById("groupMem");	//사용자가 입력한 값
-	    const groupMem2 = document.getElementById("groupMem2");	//사용자가 입력한 값
-	   	//const maxgroupperson = document.getElementById("maxgroupperson").value;
-	    var possiblegroupMem = document.getElementById("possiblegroupMem");
-	    var possiblegroupMem2 = document.getElementById("possiblegroupMem2");
-		var possiblegroupMemValue = parseInt(possiblegroupMem.getAttribute("data-value"));	//DB에서 불러온 값(최종)
-		var possiblegroupMemValue2 = parseInt(possiblegroupMem2.getAttribute("data-value"));	//DB에서 불러온 값(최종)
 		
+	    
+	    
+	   /*  const groupMem2 = document.getElementById("groupMem2");		//사용자가 입력한 값
+	    const groupMem2Value = groupMem2.value;
+	    const possiblegroupMem2 = document.getElementById("possiblegroupMem2");
+	    
+	    
+	    const possiblegroupMemValue2 = parseInt(possiblegroupMem2.getAttribute("data-value"));	//DB에서 불러온 값(최종)
+	    
 	    //console.log('possibleCurgroup : ' , possibleCurgroup);
 	    const regGroupperson = /^[0-9]+$/;
+	    
 		const personErrorElement = document.getElementById("grouppersonError");
+		const personErrorElement2 = document.getElementById("grouppersonError2");
 		//const personErrorElement2 = document.getElementById("grouppersonError2");
 
-		if(groupMem != null){
-			groupMem.addEventListener('input', function () {
-		    	hideErrorMessage(personErrorElement);
-			});
-		}
-		// 
-		groupMem.addEventListener('focusout', function () {
-		    const groupMemValue = parseInt(groupMem.value.trim()); //내가 입력한 값(최종)
-		    console.log('groupMemValue : ' , groupMemValue);
-		    //const grouppersonValue2 = groupperson2.value.trim();
-		    
-		    //빈칸일 경우 아무것도 출력X
-		    if (groupMemValue.length === 0) {
-		        return;
-		    }
-		    
-		    if (possiblegroupMemValue.length === 0){
-		    	return;
-		    }
-		    
-		    if (!regGroupperson.test(groupMem.value)) {
-		        displayErrorMessage(personErrorElement, "숫자만 입력 가능합니다.");
-		        return;
-		    }
-
-		    if(groupMemValue > possiblegroupMemValue){
-		    	console.log('groupMemValue : ' , groupMemValue);
-		    	console.log('possiblegroupMemValue : ' , possiblegroupMemValue);
-		    	displayErrorMessage(personErrorElement, "학습 가능한 인원을 초과하였습니다.");
-		    	return;
-			}
-		});//groupMem.addEventListener
+		
 		
 		
 		
 		if(groupMem2 != null){
 			groupMem2.addEventListener('input', function () {
-		    	hideErrorMessage(personErrorElement);
+		    	hideErrorMessage(personErrorElement2);
 			});
 		}
 		// 
 		groupMem2.addEventListener('focusout', function () {
+			console.log('possiblegroupMemValue : ' , possiblegroupMemValue);
+			console.log('possiblegroupMemValue2 : ' , possiblegroupMemValue2);
 		    const groupMemValue2 = parseInt(groupMem2.value.trim()); //내가 입력한 값(최종)
 		    console.log('groupMemValue2 : ' , groupMemValue2);
 		    //const grouppersonValue2 = groupperson2.value.trim();
@@ -466,14 +520,14 @@ function lastdayA() {
 		    }
 		    
 		    if (!regGroupperson.test(groupMem2.value)) {
-		        displayErrorMessage(personErrorElement, "숫자만 입력 가능합니다.");
+		        displayErrorMessage(personErrorElement2, "숫자만 입력 가능합니다.");
 		        return;
 		    }
 
 		    if(groupMemValue2 > possiblegroupMemValue2){
 		    	console.log('groupMemValue2 : ' , groupMemValue2);
 		    	console.log('possiblegroupMemValue2 : ' , possiblegroupMemValue2);
-		    	displayErrorMessage(personErrorElement, "학습 가능한 인원을 초과하였습니다.");
+		    	displayErrorMessage(personErrorElement2, "학습 가능한 인원을 초과하였습니다.");
 		    	return;
 			}
 		});//groupMem.addEventListener
@@ -484,7 +538,7 @@ function lastdayA() {
 		}
 		function hideErrorMessage(element) {
 		    element.textContent = "";
-		}
+		} */
 		
 		//if(groupMem2 != null)
 });

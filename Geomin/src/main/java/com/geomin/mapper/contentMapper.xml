@@ -3,181 +3,147 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.geomin.mapper.contentMapper">
-	<!-- //모든 학습 컨텐츠 출력  -->
+	<!-- //모든 학습 컨텐츠 출력 -->
 	<select id="getList" resultType="com.geomin.VO.contentVO">
 		select
-			p.pkgId, p.pkgName, p.personnel, p.fixedPrice, p.finalPrice, p.difficulty, p.pkgContent
-		from 
+			p.pkgId, p.pkgName, p.personnel, p.fixedPrice, p.finalPrice, p.difficulty,
+			p.pkgContent
+		from
 			package p
-		where 
+		where
 			elimination = 'N'
 	</select>
-	
+
 	<!-- 구독한 학습 컨텐츠의 아이디 가져오기 -->
 	<select id="getpkgId" resultType="com.geomin.VO.contentVO">
-    	SELECT
-    		P.pkgId
-    	FROM
-    		package p
-    	JOIN
-    		PKGSUBSDETAIL D
-		ON  
-    		P.pkgId = D.pkgId
+		SELECT
+			P.pkgId
+		FROM
+			package p
 		JOIN
-    		member m
-		ON 
-    		D.memberID = m.memberID
-		LEFT JOIN
-    		STUDY_GROUP g
+			PKGSUBSDETAIL D
 		ON
-    		D.pkgId = g.pkgId
-    	WHERE 
-    		p.elimination = 'N'
+			P.pkgId = D.pkgId
+		JOIN
+			member m
+		ON
+			D.memberID = m.memberID
+		LEFT JOIN
+			STUDY_GROUP g
+		ON
+			D.pkgId = g.pkgId
+		WHERE
+			p.elimination = 'N'
 	</select>
-	
+
 	<!--구독 신청한 패키지 등록 -->
-	<insert id="addSubContent" parameterType="java.util.List"> 
-		<foreach collection="list" item="list"><!--  separator=";" -->
-    		INSERT INTO PKGSUBSDETAIL(pkgId, memberID, PKGNAME, SUBSDATE, PERSONNEL, CURPERSONNEL, SUBSPRICE)
-    		VALUES (#{list.pkgId}, 'memberID6', #{list.pkgName}, sysdate, #{list.personnel}, 0 ,#{list.finalPrice})
-    	</foreach>
+	<insert id="addSubContent" parameterType="java.util.List">
+		<foreach collection="list" item="list">
+			INSERT INTO PKGSUBSDETAIL(pkgId, memberID, PKGNAME, SUBSDATE, PERSONNEL, CURPERSONNEL, SUBSPRICE)
+			VALUES (#{list.pkgId}, 'memberID6', #{list.pkgName}, sysdate, #{list.personnel}, 0 ,#{list.finalPrice})
+		</foreach>
 	</insert>
-	
+
 	<!--구독 신청한 패키지 조회 --><!-- g.groupMem, -->
 	<select id="getSubList" resultType="com.geomin.VO.contentVO">
-	SELECT
-    P.pkgId,
-    p.pkgName,
-    m.memberID,
-    d.subsDate,
-    p.finalPrice,
-    p.difficulty,
-    p.personnel,
-    p.pkgContent,
-    (p.personnel - (
-        SELECT COALESCE(SUM(groupMem), 0)
-        FROM study_group
-        WHERE pkgId = P.pkgId
-    )) AS possiblegroupMem
-FROM 
-    package p
-JOIN
-    PKGSUBSDETAIL D
-ON  
-    P.pkgId = D.pkgId
-JOIN
-    member m
-ON 
-    D.memberID = m.memberID
-WHERE 
-    p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6'
-		<!-- SELECT
-    P.pkgId,
-    p.pkgName,
-    m.memberID,
-    d.subsDate,
-    p.finalPrice,
-    p.difficulty,
-    p.personnel,
-    p.pkgContent,
-   	g.groupMem,
-    NVL2(g.groupID, g.groupID, 'NOT GROUP') AS groupID,
-    (
-        SELECT COALESCE(SUM(groupMem), 0)
-        FROM study_group
-        WHERE pkgId = P.pkgId
-    ) AS totalgroupMem,
-    (p.personnel - (
-        SELECT COALESCE(SUM(groupMem), 0)
-        FROM study_group
-        WHERE pkgId = P.pkgId
-    )) AS possiblegroupMem
-FROM 
-    package p
-JOIN
-    PKGSUBSDETAIL D
-ON  
-    P.pkgId = D.pkgId
-JOIN
-    member m
-ON 
-    D.memberID = m.memberID
-LEFT JOIN
-    study_group g
-ON
-    D.pkgId = g.pkgId
-WHERE 
-    p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6' -->
-	</select>
-	
-	<select id="getSubMatchingList" resultType="com.geomin.VO.contentVO">
-		<!-- SELECT
-    		P.pkgId,
-    		p.pkgName,
-    		m.memberID,
-    		d.subsDate,
-    		p.finalPrice,
-    		p.difficulty,
-    		p.PERSONNEL,
-    		p.pkgContent,
-    		NVL2(g.groupID, g.groupID, 'NOT GROUP') AS groupID
-		FROM 
-    		package p
+		SELECT
+			P.pkgId,
+			p.pkgName,
+			m.memberID,
+			d.subsDate,
+			p.finalPrice,
+			p.difficulty,
+			p.personnel,
+			p.pkgContent,
+			(p.personnel - (
+				SELECT 
+					COALESCE(SUM(groupMem), 0)
+				FROM 
+					study_group
+				WHERE 
+					pkgId = P.pkgId
+			)) AS possiblegroupMem
+		FROM
+			package p
 		JOIN
-    		PKGSUBSDETAIL D
-		ON  
-    		P.pkgId = D.pkgId
-		JOIN
-    		member m
-		ON 
-    		D.memberID = m.memberID
-		LEFT JOIN
-    		study_group g
+			PKGSUBSDETAIL D
 		ON
-    		D.pkgId = g.pkgId
-		WHERE 
-    		p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6' and D.pkgName = #{pkgName} -->
-    	SELECT *
-FROM (
-select
-    P.pkgId,
-    p.pkgName,
-    m.memberID,
-    d.subsDate,
-    p.finalPrice,
-    p.difficulty,
-    p.personnel,
-    p.pkgContent,
-   	g.groupMem,
-    NVL2(g.groupID, g.groupID, 'NOT GROUP') AS groupID,
-    (
-        SELECT COALESCE(SUM(groupMem), 0)
-        FROM study_group
-        WHERE pkgId = P.pkgId
-    ) AS totalgroupMem,
-    (p.personnel - (
-        SELECT COALESCE(SUM(groupMem), 0)
-        FROM study_group
-        WHERE pkgId = P.pkgId
-    )) AS possiblegroupMem
-FROM 
-    package p
-JOIN
-    PKGSUBSDETAIL D
-ON  
-    P.pkgId = D.pkgId
-JOIN
-    member m
-ON 
-    D.memberID = m.memberID
-LEFT JOIN
-    study_group g
-ON
-    D.pkgId = g.pkgId
-WHERE 
-    p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6'and p.pkgName = #{pkgName}
-        		)
-WHERE ROWNUM = 1	
-    		
+			P.pkgId = D.pkgId
+		JOIN
+			member m
+		ON
+			D.memberID = m.memberID
+		WHERE
+			p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6'
+
 	</select>
+
+	<select id="getSubMatchingList"
+		resultType="com.geomin.VO.contentVO">
+
+		SELECT *
+			FROM (
+				select
+					P.pkgId,
+					p.pkgName,
+					m.memberID,
+					d.subsDate,
+					p.finalPrice,
+					p.difficulty,
+					p.personnel,
+					p.pkgContent,
+					g.groupMem,
+					NVL2(g.groupID, g.groupID, 'NOT GROUP') AS groupID,
+					(
+					SELECT C
+						OALESCE(SUM(groupMem), 0)
+					FROM 
+						study_group
+					WHERE 
+						pkgId = P.pkgId
+					) AS totalgroupMem,
+					(p.personnel - (
+						SELECT 
+							COALESCE(SUM(groupMem), 0)
+						FROM 
+							study_group
+		WHERE pkgId = P.pkgId
+		)) AS possiblegroupMem
+		FROM
+		package p
+		JOIN
+		PKGSUBSDETAIL D
+		ON
+		P.pkgId = D.pkgId
+		JOIN
+		member m
+		ON
+		D.memberID = m.memberID
+		LEFT JOIN
+		study_group g
+		ON
+		D.pkgId = g.pkgId
+		WHERE
+		p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6'and p.pkgName =
+		#{pkgName}
+		)
+		WHERE ROWNUM = 1
+
+	</select>
+
+	<!-- SELECT P.pkgId, p.pkgName, m.memberID, d.subsDate, p.finalPrice, p.difficulty, 
+		p.PERSONNEL, p.pkgContent, NVL2(g.groupID, g.groupID, 'NOT GROUP') AS groupID 
+		FROM package p JOIN PKGSUBSDETAIL D ON P.pkgId = D.pkgId JOIN member m ON 
+		D.memberID = m.memberID LEFT JOIN study_group g ON D.pkgId = g.pkgId WHERE 
+		p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6' and D.pkgName 
+		= #{pkgName} -->
+
+	<!-- SELECT P.pkgId, p.pkgName, m.memberID, d.subsDate, p.finalPrice, p.difficulty, 
+		p.personnel, p.pkgContent, g.groupMem, NVL2(g.groupID, g.groupID, 'NOT GROUP') 
+		AS groupID, ( SELECT COALESCE(SUM(groupMem), 0) FROM study_group WHERE pkgId 
+		= P.pkgId ) AS totalgroupMem, (p.personnel - ( SELECT COALESCE(SUM(groupMem), 
+		0) FROM study_group WHERE pkgId = P.pkgId )) AS possiblegroupMem FROM package 
+		p JOIN PKGSUBSDETAIL D ON P.pkgId = D.pkgId JOIN member m ON D.memberID = 
+		m.memberID LEFT JOIN study_group g ON D.pkgId = g.pkgId WHERE p.elimination 
+		= 'N' AND m.mType = 'T' AND m.memberID = 'memberID6' -->
 </mapper>
