@@ -280,7 +280,7 @@ function memberUpdate(){
 
 function InfoUpdate(){
 	let mname = document.querySelector('#mname').value;
-	let mbirthdate = document.querySelector('#year').value+"-"+formatMonth(document.querySelector('#month').value)+"-"+formatMonth(document.querySelector('#day').value);
+	let mbirthdate = document.querySelector('#year').value+"-"+formatMonth(document.querySelector('#month').value)+"-"+formatDay(document.querySelector('#day').value);
 	let maddr = document.querySelector('#maddr').value;
 	let memail = document.querySelector('#mail1').value+document.querySelector('#mail2').value;
 	let mphone = document.querySelector('#mphone').value;
@@ -327,7 +327,16 @@ function formatPhoneNumber(phoneNumber) {
 	}
 
 function formatMonth(month) {
+	 month = parseInt(month, 10); 
+	  console.log('month : '+month)
 	  return (month < 10 ? '0' : '') + month;
+	
+	}
+
+function formatDay(day) {
+	day = parseInt(day, 10); 
+	  console.log('day : '+day)
+	  return (day <= 9 ? '0' : '') + day;
 	}
 
 </script>
