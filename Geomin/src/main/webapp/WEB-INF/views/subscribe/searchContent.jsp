@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!-- 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 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -431,7 +430,7 @@ $("#check_module").click(function () {
                 contentType: "application/json",
                 dataType: "json",
 		        success: function(response) {
-		            //alert('성공');
+		            //alert('구독 성공');
 		            //console.log(response);
 		        },
 		        error: function(error) {

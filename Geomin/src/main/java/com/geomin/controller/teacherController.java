@@ -45,16 +45,19 @@ public class teacherController extends CommonRestController{
 	
 	@GetMapping("/teacher/groupRegist")
 	public String groupRegist(@RequestParam(name = "pkgName", required = false, defaultValue = "") String pkgName, Model model) { 
+		System.out.println("pkgName : " + pkgName);
 		
 		if (!pkgName.isEmpty()) {
-			List<contentVO> list1 = teacherService.getSubGroup();
+			System.err.println("패키지 이름 있을 때");
+			List<contentVO> list1 = teacherService.getSubGroup(pkgName);
+			System.err.println("list1 : " + list1);
 			model.addAttribute("list1", list1);
 			//System.out.println("pkgName : " + pkgName);
 		}	
 		model.addAttribute("pkgName", pkgName);
 		
 		if(pkgName.isEmpty()) { 
-			System.out.println("패키지 이름 없을 때");
+			System.err.println("패키지 이름 없을 때");
 			List<contentVO> list2 = teacherService.getSubList2();
 			model.addAttribute("list2", list2); 
 		}

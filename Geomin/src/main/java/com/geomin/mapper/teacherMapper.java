@@ -30,7 +30,7 @@ public interface teacherMapper {
 	//그룹가입 승인
 	public int updateJoinStatus(String studentid);
 
-	List<contentVO> getSubGroup();
+	List<contentVO> getSubGroup(String pkgName);
 
 	void regStudyGroup(List<contentVO> groupData);
 	

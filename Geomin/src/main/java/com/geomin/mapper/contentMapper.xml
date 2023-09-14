@@ -45,7 +45,33 @@
 	
 	<!--구독 신청한 패키지 조회 --><!-- g.groupMem, -->
 	<select id="getSubList" resultType="com.geomin.VO.contentVO">
-		SELECT
+	SELECT
+    P.pkgId,
+    p.pkgName,
+    m.memberID,
+    d.subsDate,
+    p.finalPrice,
+    p.difficulty,
+    p.personnel,
+    p.pkgContent,
+    (p.personnel - (
+        SELECT COALESCE(SUM(groupMem), 0)
+        FROM study_group
+        WHERE pkgId = P.pkgId
+    )) AS possiblegroupMem
+FROM 
+    package p
+JOIN
+    PKGSUBSDETAIL D
+ON  
+    P.pkgId = D.pkgId
+JOIN
+    member m
+ON 
+    D.memberID = m.memberID
+WHERE 
+    p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6'
+		<!-- SELECT
     P.pkgId,
     p.pkgName,
     m.memberID,
@@ -81,7 +107,7 @@ LEFT JOIN
 ON
     D.pkgId = g.pkgId
 WHERE 
-    p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6'
+    p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6' -->
 	</select>
 	
 	<select id="getSubMatchingList" resultType="com.geomin.VO.contentVO">
@@ -111,7 +137,9 @@ WHERE
     		D.pkgId = g.pkgId
 		WHERE 
     		p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6' and D.pkgName = #{pkgName} -->
-    		SELECT
+    	SELECT *
+FROM (
+select
     P.pkgId,
     p.pkgName,
     m.memberID,
@@ -147,6 +175,9 @@ LEFT JOIN
 ON
     D.pkgId = g.pkgId
 WHERE 
-    p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6' and D.pkgName = #{pkgName}
+    p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6'and p.pkgName = #{pkgName}
+        		)
+WHERE ROWNUM = 1	
+    		
 	</select>
 </mapper>

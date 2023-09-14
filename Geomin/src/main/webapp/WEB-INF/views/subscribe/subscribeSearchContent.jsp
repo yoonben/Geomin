@@ -131,20 +131,20 @@ th, tr, td{
 						<tr id="data-raw" class="data-raw" data-value="${list.subsDate}">
 							<td><input type="checkbox" name="check" value="check" id="check"></td>
 							 <td style="display: none;">${list.memberID }</td>
-							<td class="list_pkgName">${list.pkgName }</td> <!-- ?memberID='memberID22' --> <!-- <a href="geomin/teacher/groupRegist"></a> -->
+							<td class="list_pkgName" id="list_pkgName">${list.pkgName }</td> <!-- ?memberID='memberID22' --> <!-- <a href="geomin/teacher/groupRegist"></a> -->
 							<td class="list_subsDate">${list.subsDate }</td>
 							<td>${list.personnel}</td>
 							<td>${list.possiblegroupMem }</td>
 							<td>${list.finalPrice }</td>
 							<td>${list.difficulty }</td>
 							<%-- <td>${list.pkgContent }</td> --%>
-							<%--<c:url var="groupRegistURL" value="../teacher/groupRegist">
+							<c:url var="groupRegistURL" value="../teacher/groupRegist">
     							<c:param name="pkgName" value="${list.pkgName}" />
-							</c:url>--%>
+							</c:url>
 							<%-- <c:choose>
 								<c:when test="${list.groupid == 'NOT GROUP'}">  --%>
-									<%-- <td><button type='button' id="regButton" name='regButton' onclick='location.href="${groupRegistURL}"'>그룹 등록</button></td> --%>
-									<td><button type='button' id="regButton" name='regButton' onclick='location.href="../teacher/groupRegist?pkgName=${list.pkgName}"'>그룹 등록</button></td>
+									<td><button type='button' id="regButton" name='regButton' onclick='location.href="${groupRegistURL}"'>그룹 등록</button></td>
+									<%-- <td><button type='button' id="regButton" name='regButton' onclick='location.href="../teacher/groupRegist?pkgName=${list.pkgName}"'>그룹 등록</button></td> --%>
 								<%-- </c:when>
 								<c:otherwise>
 									<td>등록 완료</td>
@@ -155,7 +155,7 @@ th, tr, td{
 					</tbody>
 				</table>
 				<button id="reqSubscribe">구독 철회</button>
-				<button id="recent">날짜 순서 토글</button>
+				<!-- <button id="recent">날짜 순서 토글</button> -->
 				<!-- <button id="recent">날짜가 최근순</button>
 				<button id="oldest">날짜가 오래된순</button> -->
 			</div>
@@ -308,16 +308,24 @@ $(document).ready(function () {
     });
 	
     $('#regButton').click(function () {
-    	var pkgName = $(this).closest('tr').find('.list_pkgName').text();
+    	
+    	
+    	//alert('버튼 눌림')
+    	/* var pkgName = $(this).closest('tr').find('.list_pkgName').text();
+    	//var pkgNameValue = document.getElementById('list_pkgName').innerText;
+    	alert('pkgName : ' , pkgName);
+    	//alert('pkgNameValue : ' , pkgNameValue);
     	$.ajax({
             type: "GET", // HTTP 요청 방식 (GET 또는 POST)
             url: "/geomin/teacher/groupRegist", // JSP 페이지의 경로 또는 서블릿 URL
             data: { pkgName: pkgName }, // 전송할 데이터
             success: function(response) {
+            	alert('pkgName : ', pkgName);
             },
             error: function(xhr, status, error) {
+            	alert('pkgName : ' , pkgName);
             }
-        });
+        }); */
     });
 });
 </script>

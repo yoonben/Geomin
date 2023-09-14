@@ -36,8 +36,8 @@
             </div>
             <%-- <label>Title</label> <input name='title' value='<c:out value = "${board.title}" />' readonly="readonly"> --%>
             <div class='content'>
-            	<c:forEach items="${list1}" var="list1">
-            	<c:if test ="${list1.pkgName == pkgName}">
+            <c:forEach items="${list1}" var="list1">
+            	<%-- <c:if test ="${list1.pkgName == pkgName}"> --%>
             		<div style="display: none;">
             			<label>컨텐츠 아이디 : </label>
             			<input name='pkgId' id = "pkgId" value='<c:out value = "${list1.pkgId}" />' readonly="readonly" disabled="disabled">
@@ -90,9 +90,8 @@
 						<label>학습 내용 : </label>
             			<input name='content' value='<c:out value = "${list1.pkgContent}" />' readonly="readonly" disabled="disabled">
             		</div>
-				</c:if>
+				<%-- </c:if> --%>
 			</c:forEach>
-			
 			
 			 <c:if test="${empty pkgName}">
                 <!-- pkgName이 비어있을 때 출력할 내용 -->
@@ -116,11 +115,12 @@
             		</div>
             		<div>
             			<label>패키지명 : </label>
-            			<input name='pkgName' id = 'pkgName2' value='<c:out value = "${list3.pkgName}" />' readonly="readonly" disabled="disabled">
+            			<input name='pkgName' id ='pkgName2' value='<c:out value = "${list3.pkgName}" />' readonly="readonly" disabled="disabled">
             		</div>
             		<div>
             			<label>학습 가능 인원 : </label>
             			<input type="text" id='groupMem2'  name='groupMem' placeholder="인원 수 적기"> 명 <br>
+            			<p>총 학습 가능 인원은 ${list3.personnel}명 이고, 학습 중인 총 인원은 ${list3.totalgroupMem}명으로, 최대 ${list3.possiblegroupMem }명을 입력 할 수 없어요.</p>
             			<div id='grouppersonError'></div>
             		</div>
             		<%-- <div style="display: none"><!--  -->
@@ -191,9 +191,7 @@ $(document).ready(function () {
     		   
     	   }
        });
-       
-       
-    });
+    }); //#select_package
 	
     var start_year = "2023"; // 시작할 년도
     var today = new Date();
@@ -254,7 +252,7 @@ function lastdayB() {
     } else if (dayB < dayindex_lenB) {
         $selectDayB.find('option:gt(' + (dayB - 1) + ')').remove();
     }
-}
+}//lastdayB()
 
 function lastdayA() {
     var yearA = $('#select_yearA').val();
@@ -273,7 +271,7 @@ function lastdayA() {
     } else if (dayA < dayindex_lenA) {
         $selectDayA.find('option:gt(' + (dayA - 1) + ')').remove();
     }
-}
+}//lastdayA()
 
 	$('#regStudy').click(function() {
 		const groupid = document.getElementById('groupid').value;
@@ -295,6 +293,11 @@ function lastdayA() {
 		const timeDiff = dateA - dateB;
     	const daysDiff = timeDiff / (1000 * 3600 * 24);
 
+    	if(groupMem == null){
+    		alert('인원 수를 입력해주세요')
+    		return;
+    	}
+    	
     	// 3개월은 대략 90일로 가정
     	const threeMonthsInDays = 90;
 
@@ -333,11 +336,18 @@ function lastdayA() {
 			});
 		});	//endpoint $('#regStudy').click
 	
+		
 	//★그룹아이디 중복처리
 	$("#groupidCheck").click(function(){
 		console.log("groupidCheck 클릭됨");
 		let groupid = document.getElementByName('groupid').value;
 		console.log('groupid : ' , groupid);
+		
+		if(groupid == null){
+			$('#result').text("공백은 허용되지 않습니다");
+			$("#result").attr("style", "color:#f00"); 
+			return;
+		}
 		
 		//1. groupid 중복 체크
 		$.ajax({
@@ -354,15 +364,17 @@ function lastdayA() {
 	            	$("#result").attr("style", "color:#00f");
 	            }
 	        }
-	    });
-		
-	})
+	    });//$.ajax
+	})//#groupidCheck
 
-	// 인원수 유효성 검사
-	    const groupMem = document.getElementById("groupMem");
-	   // const maxgroupperson = document.getElementById("maxgroupperson").value;
+		//인원수 유효성 검사
+	    const groupMem = document.getElementById("groupMem");	//사용자가 입력한 값
+	    const groupMem2 = document.getElementById("groupMem2");	//사용자가 입력한 값
+	   	//const maxgroupperson = document.getElementById("maxgroupperson").value;
 	    var possiblegroupMem = document.getElementById("possiblegroupMem");
-		var possiblegroupMemValue = parseInt(possiblegroupMem.getAttribute("data-value"));	//내가 DB에서 불러온 값(최종)
+	    var possiblegroupMem2 = document.getElementById("possiblegroupMem2");
+		var possiblegroupMemValue = parseInt(possiblegroupMem.getAttribute("data-value"));	//DB에서 불러온 값(최종)
+		var possiblegroupMemValue2 = parseInt(possiblegroupMem2.getAttribute("data-value"));	//DB에서 불러온 값(최종)
 		
 	    //console.log('possibleCurgroup : ' , possibleCurgroup);
 	    const regGroupperson = /^[0-9]+$/;
@@ -371,10 +383,10 @@ function lastdayA() {
 
 		if(groupMem != null){
 			groupMem.addEventListener('input', function () {
-		    hideErrorMessage(personErrorElement);
-		});
-		
-		// 비밀번호 입력창 벗어났을 때 오류 보여줌
+		    	hideErrorMessage(personErrorElement);
+			});
+		}
+		// 
 		groupMem.addEventListener('focusout', function () {
 		    const groupMemValue = parseInt(groupMem.value.trim()); //내가 입력한 값(최종)
 		    console.log('groupMemValue : ' , groupMemValue);
@@ -396,12 +408,46 @@ function lastdayA() {
 
 		    if(groupMemValue > possiblegroupMemValue){
 		    	console.log('groupMemValue : ' , groupMemValue);
+		    	console.log('possiblegroupMemValue : ' , possiblegroupMemValue);
 		    	displayErrorMessage(personErrorElement, "학습 가능한 인원을 초과하였습니다.");
 		    	return;
 			}
+		});//groupMem.addEventListener
+		
+		
+		
+		if(groupMem2 != null){
+			groupMem2.addEventListener('input', function () {
+		    	hideErrorMessage(personErrorElement);
+			});
+		}
+		// 
+		groupMem2.addEventListener('focusout', function () {
+		    const groupMemValue2 = parseInt(groupMem2.value.trim()); //내가 입력한 값(최종)
+		    console.log('groupMemValue2 : ' , groupMemValue2);
+		    //const grouppersonValue2 = groupperson2.value.trim();
 		    
+		    //빈칸일 경우 아무것도 출력X
+		    if (groupMemValue2.length === 0) {
+		        return;
+		    }
 		    
-		});
+		    if (possiblegroupMemValue2.length === 0){
+		    	return;
+		    }
+		    
+		    if (!regGroupperson.test(groupMem2.value)) {
+		        displayErrorMessage(personErrorElement, "숫자만 입력 가능합니다.");
+		        return;
+		    }
+
+		    if(groupMemValue2 > possiblegroupMemValue2){
+		    	console.log('groupMemValue2 : ' , groupMemValue2);
+		    	console.log('possiblegroupMemValue2 : ' , possiblegroupMemValue2);
+		    	displayErrorMessage(personErrorElement, "학습 가능한 인원을 초과하였습니다.");
+		    	return;
+			}
+		});//groupMem.addEventListener
 		
 		function displayErrorMessage(element, message) {
 		    element.textContent = message;
@@ -410,8 +456,8 @@ function lastdayA() {
 		function hideErrorMessage(element) {
 		    element.textContent = "";
 		}
-	}	
-	
+		
+		//if(groupMem2 != null)
 });
 
 

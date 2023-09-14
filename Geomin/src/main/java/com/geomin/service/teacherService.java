@@ -30,7 +30,7 @@ public interface teacherService {
 	
 	public groupstudentVO groupjoinstatusOne(String studentid);
 
-	List<contentVO> getSubGroup();
+	List<contentVO> getSubGroup(String pkgName);
 
 	public void regStudyGroup(List<contentVO> groupData);
 
