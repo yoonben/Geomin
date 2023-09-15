@@ -106,7 +106,23 @@
         	font-weight: 600;
         	font-family: 'GmarketSansMedium';
     	}
-    	
+ #regTitle{
+	margin-top : 30px;
+	font-size: 35px;
+	text-align:center;
+	font-family: 'GmarketSansMedium';
+	}
+
+hr {
+  border : 5px solid #003A6F;
+}
+
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}   	
     	
 	</style>
 <script type="text/javascript" src="/resources/js/common.js"></script>
@@ -252,7 +268,12 @@ function boardDelete(bno) {
 		 	</c:if>
 		</ul>
 	</div>
+	
            <div class='content'>
+           
+           <p id='regTitle'>게시글</p>	
+		    <hr>
+		    
           	<input type="hidden" value="${board.bno}" id="bno" name="bno">
           	<input type="hidden" value="${sessionScope.member.memberid }" id="loginId" name="loginId">
           	<input type="hidden" value="${sessionScope.member.adminyn }" id="adminyn" name="adminyn">
