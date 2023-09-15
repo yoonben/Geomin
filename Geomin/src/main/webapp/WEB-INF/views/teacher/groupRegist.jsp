@@ -3,6 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+	crossorigin="anonymous">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -124,6 +129,12 @@
             </div>
             <%-- <label>Title</label> <input name='title' value='<c:out value = "${board.title}" />' readonly="readonly"> --%>
             <div class='content'>
+            <p id='regTitle'>그룹 등록</p>	
+		    <hr> 
+            
+            <!-- 나의 콘텐츠에서 그룹등록버튼 클릭시 진입 시작 -->
+            <div>
+            
             <c:if test="${not empty pkgName}">
             <c:forEach items="${list1}" var="list1">
             	<%-- <c:if test ="${list1.pkgName == pkgName}"> --%>
@@ -133,7 +144,8 @@
             		</div>
             		<div>
             			<label>그룹명 : </label>
-            			<input type="text" id="groupid" name = "groupid" placeholder="그룹명을 입력해 주세요" ><input type='button' id='groupidCheck' name='groupidCheck'  value='중복확인버튼'>
+            			<input type="text" id="groupid" name = "groupid" placeholder="그룹명을 입력해 주세요" >
+            			<input type='button' id='groupidCheck' name='groupidCheck'  value='중복확인버튼'>
             			<div id='result'></div>
             		</div>
             		<div>
@@ -146,11 +158,11 @@
             			<p>총 학습 가능 인원은 ${list1.personnel}명 이고, 학습 중인 총 인원은 ${list1.totalgroupMem}명으로, 최대 ${list1.possiblegroupMem }명을 입력 할 수 있어요.</p>
             			<div id='grouppersonError'></div>
             		</div>
-            		<div style="display: none"><!--  -->
+            		<div style="display: none">
             			<label>최대 학습 가능 인원 : </label>
             			<input type="text" id='maxgroupperson' name='maxgroupperson' data-value="${list1.personnel}" readonly="readonly" disabled="disabled">value='<c:out value = "${list1.personnel}" />' 명
             		</div>
-            		<div style="display: none"><!--  -->
+            		<div style="display: none">
             			<label>학습 가능 인원 : </label>
             			<input type="text" id='possiblegroupMem' name='possiblegroupMem' data-value="${list1.possiblegroupMem}" readonly="readonly" disabled="disabled">value='<c:out value = "${list1.possiblegroupMem}" />' 명
             		</div>
@@ -181,7 +193,11 @@
 				<%-- </c:if> --%>
 			</c:forEach>
 			</c:if>
+			</div>
+			<!-- 나의 콘텐츠에서 그룹등록버튼 클릭시 진입 끝 -->
 			
+			<!-- 강사마당으로 진입 (패키지명 선택 후 그룹등록) 시작 -->
+			<div>
 			 <c:if test="${empty pkgName}">
                	 패키지 선택 : 
                	 <span><select id="select_package">
@@ -200,7 +216,8 @@
             		</div>
             		<div>
             			<label>그룹명 : </label>
-            			<input type="text" id="groupid2" name = "groupid" placeholder="그룹명을 입력해 주세요" ><input type='button' id='groupidCheck2' name='groupidCheck'  value='중복확인버튼'>
+            			<input type="text" id="groupid2" name = "groupid" placeholder="그룹명을 입력해 주세요" >
+            			<input type='button' id='groupidCheck2' name='groupidCheck'  value='중복확인버튼'>
             			<!-- <div id='result'>아이디를 확인해주세요.</div> -->
             			<div id='result'></div>
             		</div>
@@ -223,7 +240,7 @@
             			<input name='subsDate' id="subsDate2" value='<c:out value = "${list3.subsDate}" />' readonly="readonly" disabled="disabled">
             		</div>
 					<div>
-						<label>학습 기간 : </label> 
+						<label>학습 기간 : 최대 3개월 </label> 
 							<select id="select_yearB" class= "select_yearB"></select>
 							<select id="select_monthB" class= "select_monthB"></select>
 							<select id="select_dayB" class= "select_dayB"></select>
@@ -242,7 +259,13 @@
             <br>
             	<button id="regStudy">학습그룹 등록</button>
 			</div>
-            	<div class='banner'></div>
+			<!-- 강사마당으로 진입 (패키지명 선택 후 그룹등록) 끝 -->
+			
+			</div>
+            	<div class='banner'>
+            		<%@include file="../header/banner.jsp" %>
+           		</div>
+            	
     </div>
 </div>	
 </body>
@@ -784,5 +807,9 @@ $(document).ready(function () {
 
 
 </script>
-
+<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+		crossorigin="anonymous">
+	</script>
 </html>

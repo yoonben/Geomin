@@ -3,6 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+	crossorigin="anonymous">
+	
 <head>
 <meta charset="UTF-8">
 <title>searchContent페이지</title>
@@ -30,13 +36,7 @@
 	margin-left: 20px;
 }
 
-table {
-	border: 1px solid;
-}
 
-th, tr, td {
-	border: 1px solid;
-}
 
 #container>#section>.subNavi>ul {
 	/* text-align: left; */
@@ -87,12 +87,108 @@ th, tr, td {
 	font-weight: 600;
 	font-family: 'GmarketSansMedium';
 }
+
+	#delSubscribe{
+	height:40px; 
+   	width:200px;
+   	margin-left:220px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+   	color:#000000;
+   	font-size: 16px;
+   	font-weight: 600;
+   	font-weight: 600;	
+}
+#delSubscribe:hover{
+	height:40px; 
+   	width:200px;
+   	margin-left:220px;
+   	background-color: #002F5A;
+   	color:#FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 5px;
+   	cursor: pointer;
+  	font-size: 16px;
+  	font-weight: 600;
+  	font-weight: 600;
+}
+
+	.dayBtn{
+	height:30px; 
+   	width:60px;
+   	margin-left:7px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+   	color:#000000;
+   	font-size: 14px;
+   	font-weight: 600;	
+	}
+	.dayBtn:hover{
+		height:30px; 
+	   	width:60px;
+	   	margin-left:7px;
+	   	background-color: #002F5A;
+	   	color:#FFFFFF;
+	   	border:1px solid #666666;
+	   	border-radius: 5px;
+	   	cursor: pointer;
+	  	font-size: 14px;
+	  	font-weight: 600;
+	}
+
+
+	#regButton{
+		height:30px; 
+	   	width:80px;
+	   	background-color: #FFFFFF;
+	   	border:1px solid #666666;
+	   	border-radius: 8px;
+	   	cursor: pointer;
+	   	color:#000000;
+	   	font-size: 15px;
+	   	font-weight: 600;	
+	}
+	#regButton:hover{
+		height:30px; 
+	   	width:80px;
+	   	background-color: #002F5A;
+	   	color:#FFFFFF;
+	   	border:1px solid #666666;
+	   	border-radius: 5px;
+	   	cursor: pointer;
+	  	font-size: 15px;
+	  	font-weight: 600;
+	}
+	
+	#regTitle{
+	margin-top : 30px;
+	font-size: 35px;
+	text-align:center;
+	font-family: 'GmarketSansMedium';
+}
+
+hr {
+  border : 5px solid #003A6F;
+}
+
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 </style>
 </head>
 <body>
 	<div id='container'>
 		<%@include file="../header/header.jsp"%>
 		<div id='section'>
+		
 			<div class="subNavi">
 				<ul>
 					<a><b>구독 서비스</b></a>
@@ -100,30 +196,36 @@ th, tr, td {
 					<li><a href="/geomin/subscribe/subscribeSearchContent">나의 학습콘텐츠</a></li>
 				</ul>
 			</div>
+			
 			<div class="content">
-				<button id="1day">1일 전</button>
-				<button id="3day">3일 전</button>
-				<button id="1month">1달 전</button>
-				<button id="3month">3달 전</button>
-				<button id="6month">6달 전</button>
-				<button id="1year">1년 전</button>				
+					<p id='regTitle'>나의 학습콘텐츠</p>	
+		            <hr> 
+				<button id="1day" class='dayBtn'>1일 전</button>
+				<button id="3day"class='dayBtn'>3일 전</button>
+				<button id="1month"class='dayBtn'>1달 전</button>
+				<button id="3month"class='dayBtn'>3달 전</button>
+				<button id="6month"class='dayBtn'>6달 전</button>
+				<button id="1year"class='dayBtn'>1년 전</button>				
 				
 				<!-- <button id="searchButton">조회</button> -->
-				<br>
-				<table id="result-table">
+				<br><br>
+				
+				<table id="result-table" class="table" border="1px solid" style="height: 50%; weight: 100%">
+				
 					<thead>
-					<tr>
-						<th style="font-weight: 900;">ㅁ</th>
-						<th style="display: none;">학습 관리자</th>
-						<th>콘텐츠 이름</th>
-						<th>콘텐츠 구독 날짜</th>
-						<th>최대 학습 인원</th>
-						<th>학습 가능 인원</th>
-						<th>콘텐츠 최종 가격</th>
-						<th>콘텐츠 수준</th>
-						<th>학습 그룹 등록</th>
-					</tr>
+						<tr  class="table-primary">
+							<th>ㅁ</th>
+							<th style="display: none;">학습 관리자</th>
+							<th>콘텐츠 <br>이름</th>
+							<th>콘텐츠 <br>구독날짜</th>
+							<th>최대 <br>학습<br>인원</th>
+							<th>학습 <br>가능<br>인원</th>
+							<th>콘텐츠 <br>최종<br>가격</th>
+							<th>학습 <br>난이도</th>
+							<th>학습그룹<br> 등록</th>
+						</tr>
 					</thead>
+					
 					<tbody>
 					<c:forEach var="list" items="${getSubList}">
 						<tr id="data-raw" class="data-raw" data-value="${list.subsDate}">
@@ -153,15 +255,18 @@ th, tr, td {
 					</c:forEach>
 					</tbody>
 				</table>
+				
+				<br>
+				
 				<button id="delSubscribe">구독 철회</button>
 				<!-- <button id="recent">날짜 순서 토글</button> -->
 				<!-- <button id="recent">날짜가 최근순</button>
 				<button id="oldest">날짜가 오래된순</button> -->
 			</div>
-				<!--  배너 -->
-				<div class='banner' >
-					<%@include file="../header/banner.jsp" %>
-				</div>
+		<!--  배너 -->
+		<div class='banner' >
+			<%@include file="../header/banner.jsp" %>
+		</div>
 		</div>
 	</div>
 	
@@ -343,4 +448,12 @@ $(document).ready(function () {
     }); */
 });
 </script>
+
+<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+		crossorigin="anonymous">
+	</script>
+	
+	
 </html>

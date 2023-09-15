@@ -403,21 +403,21 @@ public class loginController extends CommonRestController {
 		return "main";
 	}
 
-	/*
-	 * //회원정보 조회
-	 * 
-	 * @RequestMapping(value = "/geomin/joinMemberInfo", method =
-	 * {RequestMethod.GET, RequestMethod.POST}) public String getOne(HttpSession
-	 * session, memberVO vo, Model model) { try { memberVO member = (memberVO)
-	 * session.getAttribute("memberid"); //하나의 회원 조회 memberVO membervo =
-	 * loginService.getOne(member.getMemberid());
-	 * 
-	 * session.setAttribute("member", membervo);
-	 * 
-	 * return "/joinMemberInfo";
-	 * 
-	 * } catch (Exception e) { return ""; } }
-	 * 
-	 */
+	
+	  //회원정보 조회
+	  /*
+	  @RequestMapping(value = "/geomin/joinMemberInfo", method ={RequestMethod.GET, RequestMethod.POST}) 
+	  public String getOne(HttpSession session, memberVO vo, Model model) { 
+		  try { memberVO member = (memberVO)session.getAttribute("memberid"); //하나의 회원 조회 memberVO 
+		  
+		  	membervo = loginService.getOne(member.getMemberid());
+		  	session.setAttribute("member", membervo);
+	  
+		  	return "/joinMemberInfo";
+	  
+		  	} catch (Exception e) { return ""; } 
+		  }
+	  */
+	 
 
 }

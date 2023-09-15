@@ -102,9 +102,21 @@
         	font-weight: 600;
         	font-family: 'GmarketSansMedium';
     	}
-    	
-			
-			
+    #boardTitle{
+	margin-top : 30px;
+	font-size: 35px;
+	text-align:center;
+	font-family: 'GmarketSansMedium';
+}	
+hr {
+  border : 5px solid #003A6F;
+}			
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}			
 			
 	</style>
 <script type="text/javascript" src="/resources/js/common.js"></script>
@@ -130,6 +142,8 @@
              <div class='content'>
              	<!-- Q&A 게시판 시작 -->
              	<div id="boardList">
+             	<p id='boardTitle'>문의사항을 등록해주세요</p>	
+		            <hr> 
              		<form class="d-flex" role="search">
 						<select id="searchField" name="searchField" class="form-select" aria-label="Default select example">
 						   <option selected value="bno">게시글번호</option>

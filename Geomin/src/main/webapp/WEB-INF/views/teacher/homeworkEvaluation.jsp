@@ -140,7 +140,52 @@ div#searchWordDiv {
         	font-weight: 600;
         	font-family: 'GmarketSansMedium';
     	}
-    	
+#regTitle{
+	margin-top : 30px;
+	font-size: 35px;
+	font-weight: 600;
+	text-align:center;
+	font-family: 'GmarketSansMedium';
+}
+
+hr {
+  border : 5px solid #003A6F;
+}
+
+
+	#Search{
+	height:80%; 
+   	width:82px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+   	color:#000000;
+   	font-size: 16px;
+   	font-weight: 600;
+   	padding-top:8px;
+   	font-weight: 600;	
+}
+#Search:hover{
+	height:80%; 
+   	width:82px;
+   	background-color: #002F5A;
+   	color:#FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 5px;
+   	cursor: pointer;
+  	font-size: 16px;
+  	font-weight: 600;
+  	padding-top:8px;
+  	font-weight: 600;
+}
+
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}    	
     	
 </style>
 
@@ -728,9 +773,8 @@ function alert(evaluation, homeworkno) {
 				<!-- 숙제 전송 페이지-->
 				<div id="introduction3">
 					<div>
-						<h1>
-							<b>숙제 평가</b>
-						</h1>
+						<p id='regTitle'>숙제 평가</p>	
+		            	<hr> 	
 						<br>
 					</div>
 
@@ -761,13 +805,13 @@ function alert(evaluation, homeworkno) {
 							<input class="form-control me-2" id="searchWord" name="searchWord" type="search" placeholder="Search" aria-label="Search">
 						</div>
 						<div id="searchBtnDiv">
-							<button class="btn btn-outline-success" id="Search" type="submit">Search</button>
+							<button class="btn btn-outline-success" id="Search" type="submit">조회</button>
 						</div>
 					</div>
 
 					<table class="table" border="1px solid" style="height: 50%; weight: 100%">
 						<thead>
-							<tr class="table-success">
+							<tr class="table-primary">
 								<th>이름</th>
 								<th>숙제내용</th>
 								<th>제출기한</th>

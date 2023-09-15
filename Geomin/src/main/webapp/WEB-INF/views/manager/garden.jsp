@@ -18,7 +18,7 @@
 	            font-size: 14px;
 	    	}
 	    	
-	    					#container>#section>.subnavi>ul{
+	    	#container>#section>.subnavi>ul{
     		/* text-align: left; */
     		list-style-type: none;
     		width: 150px;
@@ -73,6 +73,57 @@
 		    padding-bottom: 200px;
         	flex: 1;
     	}
+    	#packgeList{
+    	font-size: 0.8rem;
+        font-weight: 600;
+    	}
+    	
+.pkgBtn{
+	height:35px; 
+   	width:150px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+   	font-size: 14px;
+   	
+}
+.pkgBtn:hover{
+	height:35px; 
+   	width:150px;
+   	background-color: #002F5A;
+   	color:#FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 5px;
+   	cursor: pointer;
+   	font-size: 14px;
+   	
+}
+
+#regTitle{
+	margin-top : 30px;
+	font-size: 35px;
+	text-align:center;
+	font-family: 'GmarketSansMedium';
+}
+
+hr {
+  border : 5px solid #003A6F;
+}
+
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Tenada';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 
 	</style>
 <script type="text/javascript" src="/resources/js/common.js"></script>
@@ -101,12 +152,10 @@
              	<input type="hidden" id="fixedpriceCheck" value="0">
              	<input type="hidden" id="discountrateCheck" value="0">
              	<input type="hidden" id="pkgcontentCheck" value="0">
-             	<div id="gardenBtn">
-             		<button type="button" class="btn btn-outline-primary" id="InsertBtn">등록</button>
-             		<button type="button" class="btn btn-outline-primary" id="ListBtn">조회</button>
-             	</div>
+             	
              	
              	<div id="packgeList" style="display: none;">
+             		
              		<form class="d-flex" role="search">
 						<select id="searchField" name="searchField" class="form-select" aria-label="Default select example">
 						  <option selected value="pkgname">콘텐츠명</option>
@@ -120,14 +169,14 @@
 					  <thead>
 					    <tr>
 					      <th scope="col"></th>
-					      <th scope="col">콘텐츠명</th>
-					      <th scope="col">학습 난이도</th>
-					      <th scope="col">학습 인원</th>
+					      <th scope="col">학습콘텐츠명</th>
+					      <th scope="col">학습<br>난이도</th>
+					      <th scope="col">학습<br>인원</th>
 					      <th scope="col">정가</th>
 					      <th scope="col">할인(%)</th>
 					      <th scope="col">판매가</th>
-					      <th scope="col">콘텐츠 내용</th>
-					      <th scope="col">삭제 처리</th>
+					      <th scope="col">학습콘텐츠 내용</th>
+					      <th scope="col">삭제<br>처리</th>
 					    </tr>
 					  </thead>
 					  <tbody class="table-group-divider" id="listTable">
@@ -135,17 +184,24 @@
 					  </tbody>
 					</table>
 					<nav aria-label="Page navigation example" id="pageNavi">
-				
 				  	</nav>
-				  	<button onclick='packDelete()'>패키지 삭제</button>
-				  	<button onclick='packUdate()'>패키지 수정</button>
+				  	
+				  	<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+					  	<button onclick='packDelete()' class="btn btn-outline-primary">콘텐츠 삭제</button>
+					  	<button onclick='packUdate()' class="btn btn-outline-primary">콘텐츠 수정</button>
+		             	<button type="button" class="btn btn-outline-primary" id="InsertBtn">콘텐츠 등록</button>	
+				  	</div>
+				  
              	</div>
              	
              	<div id="packgeInsert">
              		<form>
+	             	    
+	             	<p id='regTitle'>학습콘텐츠를 등록해주세요</p>	
+		            <hr> 	
+             		<div><p>학습콘텐츠명<p> <input id="pkgname" name="pkgname" class="form-control" type="text" 
+             									placeholder="한글,영문 대소문자, 숫자, 특수문자(괄호만) 최대 8자" aria-label="default input example"></div>
              		<div id="message"></div>
-             			
-             		<div><p>패키지명<p> <input id="pkgname" name="pkgname" class="form-control" type="text" placeholder="공백 없이 영어(대문자)/숫자 6자" aria-label="default input example"></div>
              		<div>
              			<p>학습 난이도</p>
              			<select id="difficulty" name="difficulty" class="form-select" aria-label="Default select example">
@@ -158,8 +214,9 @@
              		<div><p>정가(원)</p><input id="fixedprice" name="fixedprice" class="form-control" type="text" aria-label="default input example"></div>
              		<div><p>할인율</p><input id="discountrate" name="discountrate" class="form-control" type="text" placeholder="30 ~ 70(%)" aria-label="default input example"></div>
              		<div><p>판매가(원)</p><input id="finalprice" name="finalprice" class="form-control" type="text" aria-label="default input example"></div>
-             		<div><p>판매 내용</p> <textarea id="pkgcontent" name="pkgcontent" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea></div>
-             		<input id="packgeInsertbtn" type="submit" class="btn btn-outline-primary" value="패키지 등록">
+             		<div><p>판매 내용</p> <textarea id="pkgcontent" name="pkgcontent" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea></div><br>
+             		<input id="packgeInsertbtn" type="submit" class="btn btn-outline-primary" value="학습콘텐츠 등록">
+		            <button type="button" class="btn btn-outline-primary" id="ListBtn">학습콘텐츠 조회</button>
 	             	</form>
              	</div>
             </div>
@@ -171,6 +228,6 @@
       <br><br><br><br>
          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
-
+<%@include file="../header/footer.jsp" %>
 </body>
 </html>
