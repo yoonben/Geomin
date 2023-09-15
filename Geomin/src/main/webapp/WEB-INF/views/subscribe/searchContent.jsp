@@ -3,6 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+	crossorigin="anonymous">
+	
 <head>
 <meta charset="UTF-8">
 <title>searchContent페이지</title>
@@ -30,13 +37,17 @@
 	margin-left: 20px;
 }
 
-table {
-	border: 1px solid;
-}
 
-th, tr, td {
-	border: 1px solid;
-}
+
+ .cont {
+    width: 200px;
+  }
+.checkCont {
+   width: 10px;
+  }
+  .titleCont {
+   width: 130px;
+  }
 
 #container>#section>.subNavi>ul {
 	/* text-align: left; */
@@ -49,7 +60,7 @@ th, tr, td {
 #container>#section>.subNavi>ul>a {
 	/*   margin-top: 25px; */
 	font-size: 15px;
-	width: 150px;
+	width: 140px;
 	height: 50px;
 	text-align: center;
 	padding: auto;
@@ -62,7 +73,7 @@ th, tr, td {
 	padding-top: 15px;
 	font-size: 14px;
 	cursor: pointer;
-	width: 150px;
+	width: 140px;
 	height: 50px;
 	text-align: center;
 	border-top: 1px solid #002A51;
@@ -76,7 +87,7 @@ th, tr, td {
 	font-size: 13px;
 	cursor: pointer;
 	color: #003C72;
-	width: 150px;
+	width: 140px;
 	height: 50px;
 	text-align: center;
 	box-shadow: 0px 3px 6px rgba(0, 0, 0.2, 0.2);
@@ -87,6 +98,74 @@ th, tr, td {
 	font-weight: 600;
 	font-family: 'GmarketSansMedium';
 }
+
+#reqSubscribe{
+	height:45px; 
+   	width:170px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+   	color:#000000;
+   	font-size: 16px;
+   	font-weight: 600;
+   	margin-left:230px;
+}
+#reqSubscribe:hover{
+	height:45px; 
+   	width:170px;
+   	background-color: #003769;
+   	color:#FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 5px;
+   	cursor: pointer;
+   	font-size: 16px;
+   	font-weight: 600;
+   	margin-left:230px;
+}
+
+#regTitle{
+	margin-top : 30px;
+	font-size: 35px;
+	text-align:center;
+	font-family: 'GmarketSansMedium';
+}
+
+hr {
+  border : 5px solid #003A6F;
+}
+	#searchButton{
+	height:30px; 
+   	width:60px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+   	color:#000000;
+   	font-size: 16px;
+   	font-weight: 600;
+   	font-weight: 600;	
+}
+#searchButton:hover{
+	height:30px; 
+   	width:60px;
+   	background-color: #002F5A;
+   	color:#FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 5px;
+   	cursor: pointer;
+  	font-size: 16px;
+  	font-weight: 600;
+  	font-weight: 600;
+}
+
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 </style>
 </head>
 <body>
@@ -100,6 +179,10 @@ th, tr, td {
 					<li><a href="/geomin/subscribe/subscribeSearchContent">나의 학습콘텐츠</a></li>
 				</ul>
 			</div>
+			<div class='content'>
+				<p id='regTitle'>학습콘텐츠 구독신청</p>	
+		            <hr> 
+		            
 				난이도 : 
 				<select id="choiceDifficulty">
 					<option value="전체" selected="selected">전체</option>
@@ -118,49 +201,58 @@ th, tr, td {
 				<button id="searchButton">조회</button>
 				<br>
 			<div class="content">
-				<table id="result-table">
-    <thead>
-        <tr>
-            <th style="font-weight: 900;">ㅁ</th>
-            <th>패키지명</th>
-            <th>학습 인원</th>
-            <th>정가</th>
-            <th>최종가</th>
-            <th>학습 수준</th>
-            <th>학습 내용</th>
-            <!-- <th>구독</th> -->
-        </tr>
-    </thead>
-    <tbody>
-        <c:forEach var="pkgIdItem" items="${pkgId}">
-            <p id="pkgIdItem" data-value= "${pkgIdItem.pkgId}"></p>
-        </c:forEach>
-        <c:forEach var="list" items="${list}">
-            <tr data-pkgid="${list.pkgId}" id="data-raw" class="data-raw" data-value="${list.difficulty }">
-                <td><input type="checkbox" name="check" value="check" class="check"></td>
-                <td style="display: none" id="listpkgId">${list.pkgId}</td>
-                <td>${list.pkgName}</td>
-                <td>${list.personnel}</td>
-                <td>${list.fixedPrice}</td>
-                <td class="list_finalPrice">${list.finalPrice}</td>
-                <td>${list.difficulty}</td>
-                <td>${list.pkgContent}</td>
-                <%-- <td style="display: none">${sessionScope.member.memberid }</td> --%>
-            </tr>
-        </c:forEach>
-    </tbody>
-</table>
+			
+				<table id="result-table" class="table" border="1px solid" style="height: 50%; weight: 100%">
+				
+			    <thead>
+			        <tr class="table-primary">
+			            <th style="font-weight: 600;" class='checkCont'>□</th>
+			            <th class='titleCont'>패키지명</th>
+			            <th>학습 인원</th>
+			            <th>정가</th>
+			            <th>최종가</th>
+			            <th>학습 수준</th>
+			            <th class='cont'>학습 내용</th>
+			            <!-- <th>구독</th> -->
+			        </tr>
+			    </thead>
+			    
+			    <tbody>
+			        <c:forEach var="pkgIdItem" items="${pkgId}">
+			            <p id="pkgIdItem" data-value= "${pkgIdItem.pkgId}"></p>
+			        </c:forEach>
+			        <c:forEach var="list" items="${list}">
+			            <tr data-pkgid="${list.pkgId}" id="data-raw" class="data-raw" data-value="${list.difficulty }">
+			                <td><input type="checkbox" name="check" value="check" class="check"></td>
+			                <td style="display: none" id="listpkgId">${list.pkgId}</td>
+			                <td>${list.pkgName}</td>
+			                <td>${list.personnel}</td>
+			                <td>${list.fixedPrice}</td>
+			                <td class="list_finalPrice">${list.finalPrice}</td>
+			                <td>${list.difficulty}</td>
+			                <td>${list.pkgContent}</td>
+			                <%-- <td style="display: none">${sessionScope.member.memberid }</td> --%>
+			            </tr>
+			        </c:forEach>
+			    </tbody>
+			</table>
+			<nav aria-label="Page navigation example" id="pageNavi">
+					
+				  	</nav>
+				  	
+			<br>
 				 <button id="reqSubscribe">구독 신청</button>
 				<!--<form method="post" action="/kakaoPay">
     				<button>카카오페이로 결제하기</button>
 				</form> -->
 			</div>
+		</div>
 				<!--  배너 -->
 				<div class='banner' >
 					<%@include file="../header/banner.jsp" %>
 				</div>
-		</div>
 		
+		</div>
 	</div>
 <%-- 	카카오페이 결제가 정상적으로 완료되었습니다.
  
@@ -172,7 +264,7 @@ th, tr, td {
 결제방법:    [[${info.payment_method_type}]]<br/>
 <h2>[[${info}]]</h2> --%>
 
-	<%@include file="../header/footer.jsp" %>	
+<%-- <%@include file="../header/footer.jsp" %> --%>
 	
 </body>
 
@@ -449,4 +541,9 @@ $("#check_module").click(function () {
 	}); //endpoint $(document).ready
 </script>
 
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+		crossorigin="anonymous">
+	</script>
 </html>

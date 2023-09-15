@@ -82,7 +82,7 @@ window.addEventListener('load', function(){
 	// 패키지명 입력 제한
     pkgname.addEventListener("blur", function() {
         const inputValue = pkgname.value;
-        const regex = /^[가-힣a-zA-Z0-9()\\s]*$/; // 공백포함한 한글,영문 대소문자와 숫자, 특수문자() 최대 15자
+        const regex = /^[a-zA-Z0-9가-힣()]{1,8}$/; // 공백포함하지않은  한글,영문 대소문자와 숫자, 특수문자() 최대 15자
 
         if (!regex.test(inputValue)) {
         	document.getElementById('message').innerHTML = "한글, 영어(대소문자),숫자로 입력. 특수기호는 ()괄호만 사용가능합니다.";

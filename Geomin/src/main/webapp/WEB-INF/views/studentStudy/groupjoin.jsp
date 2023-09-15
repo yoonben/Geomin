@@ -608,8 +608,7 @@ function workSubmit() {
 						</div>
 					</div>
 
-					<table class="table" border="1px solid"
-						style="height: 50%; weight: 100%">
+					<table class="table" border="1px solid" style="height: 50%; weight: 100%">
 						<thead>
 							<tr class="table-primary">
 								<th scope="col"><input type='checkbox' id='allCheckbox' name='allCheck' onclick='toggleCheckboxes()'></th>

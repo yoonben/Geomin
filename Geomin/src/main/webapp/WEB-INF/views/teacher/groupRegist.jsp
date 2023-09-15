@@ -3,12 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+	crossorigin="anonymous">
+	
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-<<<<<<< HEAD
-=======
+
 #section>.subNavi {
 	width: 180px;
 	height: 600px;
@@ -19,75 +24,7 @@
 	margin-left: 10px;
 	margin-right: 10px;
 }
->>>>>>> refs/remotes/origin/master
 
-<<<<<<< HEAD
-    	#section>.subNavi {
-		    width: 180px;
-		    height: 600px;
-		    float: left;
-		    border-right: 1px solid #D9D9D9;
-		    box-sizing: border-box;
-		    margin-top: 25px;
-		    margin-left: 10px;
-		    margin-right: 10px;
-		    }
-    
-    	#container>#section>.subnavi>ul{
-    		/* text-align: left; */
-    		list-style-type: none;
-    		width: 140px;
-			height:200px;
-			text-align: center;
-			 margin-top: 25px;
-			 margin-left: 20px;
-			
-    	}
-    	#container>#section>.subnavi>ul> a{
-          /*   margin-top: 25px; */
-            font-size: 15px;
-            width: 140px;
-			height:50px;
-			text-align: center;
-			padding:auto;
-			margin-top: 25px;		
-			 margin-left: 50%;
-			font-family: 'GmarketSansMedium';
-    	}
-    	
-
-        #container>#section>.subnavi>ul>li{
-            margin-top: 15px;
-            font-size: 14px;
-            cursor: pointer;
-            width: 140px;
-			height:50px;
-			margin-left: 35px;	
-			text-align: center;
-			padding-top:13px;
-			border-top:1px solid #002A51;
-			border-bottom:1px solid #002A51;
-			font-family: 'GmarketSansMedium';
-    	}
-    	#container>#section>.subnavi>ul>li:hover{
-            margin-top: 15px;
-            font-size: 14px;
-            cursor: pointer;
-            color: #003C72;
-			width: 140px;
-			height:50px;
-			margin-left: 35px;	
-			text-align: center;
-			box-shadow: 0px 3px 6px rgba(0, 0, 0.2, 0.2);
-			border-top:1px solid #002A51;
-			border-bottom:1px solid #002A51;
-			background-color: #CDE6FD;
-			padding-top:11px;
-			font-size: 1.2rem;
-        	font-weight: 600;
-        	font-family: 'GmarketSansMedium';
-    	}
-=======
 #introduction1 {
 	width: 630px;
 	text-align: center;
@@ -175,7 +112,73 @@
 	font-weight: 600;
 	font-family: 'GmarketSansMedium';
 }
->>>>>>> refs/remotes/origin/master
+
+#regTitle{
+	margin-top : 30px;
+	font-size: 35px;
+	text-align:center;
+	font-family: 'GmarketSansMedium';
+	}
+
+hr {
+  border : 5px solid #003A6F;
+}
+
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+	#regStudy{
+	height:40px; 
+   	width:200px;
+   	margin-left:220px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+   	color:#000000;
+   	font-size: 16px;
+   	font-weight: 600;
+   	font-weight: 600;	
+}
+#regStudy:hover{
+	height:40px; 
+   	width:200px;
+   	margin-left:220px;
+   	background-color: #002F5A;
+   	color:#FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 5px;
+   	cursor: pointer;
+  	font-size: 16px;
+  	font-weight: 600;
+  	font-weight: 600;
+}
+
+#groupidCheck,
+#groupidCheck2{
+	height:100%; 
+   	width:120px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+}
+#groupidCheck:hover,
+#groupidCheck2:hover{
+	height:100%; 
+   	width:120px;
+   	background-color: #002F5A;
+   	color:#FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 5px;
+   	cursor: pointer;
+}
+
+
 </style>    	
 </head>
 <body>
@@ -195,6 +198,12 @@
             </div>
             <%-- <label>Title</label> <input name='title' value='<c:out value = "${board.title}" />' readonly="readonly"> --%>
             <div class='content'>
+            
+            <p id='regTitle'>그룹 등록</p>	
+		    <hr> 
+            
+            <!-- 나의 콘텐츠에서 그룹등록버튼 클릭시 진입 시작 -->
+            <div>
             <c:if test="${not empty pkgName}">
             <c:forEach items="${list1}" var="list1">
             	<%-- <c:if test ="${list1.pkgName == pkgName}"> --%>
@@ -204,7 +213,8 @@
             		</div>
             		<div>
             			<label>그룹명 : </label>
-            			<input type="text" id="groupid" name = "groupid" placeholder="그룹명을 입력해 주세요" ><input type='button' id='groupidCheck' name='groupidCheck'  value='중복확인버튼'>
+            			<input type="text" id="groupid" name = "groupid" placeholder="그룹명을 입력해 주세요" >
+            			<input type='button' id='groupidCheck' name='groupidCheck'  value='중복확인버튼'>
             			<div id='result'></div>
             		</div>
             		<div>
@@ -217,11 +227,11 @@
             			<p>총 학습 가능 인원은 ${list1.personnel}명 이고, 학습 중인 총 인원은 ${list1.totalgroupMem}명으로, 최대 ${list1.possiblegroupMem }명을 입력 할 수 있어요.</p>
             			<div id='grouppersonError'></div>
             		</div>
-            		<div style="display: none"><!--  -->
+            		<div style="display: none">
             			<label>최대 학습 가능 인원 : </label>
             			<input type="text" id='maxgroupperson' name='maxgroupperson' data-value="${list1.personnel}" readonly="readonly" disabled="disabled">value='<c:out value = "${list1.personnel}" />' 명
             		</div>
-            		<div style="display: none"><!--  -->
+            		<div style="display: none">
             			<label>학습 가능 인원 : </label>
             			<input type="text" id='possiblegroupMem' name='possiblegroupMem' data-value="${list1.possiblegroupMem}" readonly="readonly" disabled="disabled">value='<c:out value = "${list1.possiblegroupMem}" />' 명
             		</div>
@@ -252,8 +262,11 @@
 				<%-- </c:if> --%>
 			</c:forEach>
 			</c:if>
+			</div>
+			<!-- 나의 콘텐츠에서 그룹등록버튼 클릭시 진입 끝 -->
 			
-			
+			<!-- 강사마당으로 진입 (패키지명 선택 후 그룹등록) 시작 -->
+			<div>
 			 <c:if test="${empty pkgName}">
                	 패키지 선택 : 
                	 <span><select id="select_package">
@@ -272,7 +285,8 @@
             		</div>
             		<div>
             			<label>그룹명 : </label>
-            			<input type="text" id="groupid2" name = "groupid" placeholder="그룹명을 입력해 주세요" ><input type='button' id='groupidCheck2' name='groupidCheck'  value='중복확인버튼'>
+            			<input type="text" id="groupid2" name = "groupid" placeholder="그룹명을 입력해 주세요" >
+            			<input type='button' id='groupidCheck2' name='groupidCheck'  value='중복확인버튼'>
             			<!-- <div id='result'>아이디를 확인해주세요.</div> -->
             			<div id='result'></div>
             		</div>
@@ -313,6 +327,9 @@
              </c:if>
             <br>
             	<button id="regStudy">학습그룹 등록</button>
+			</div>
+			<!-- 강사마당으로 진입 (패키지명 선택 후 그룹등록) 끝 -->
+			
 			</div>
             	<div class='banner'>
             		<%@include file="../header/banner.jsp" %>
@@ -844,5 +861,9 @@ $(document).ready(function () {
 
 
 </script>
-
+<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+		crossorigin="anonymous">
+	</script>
 </html>

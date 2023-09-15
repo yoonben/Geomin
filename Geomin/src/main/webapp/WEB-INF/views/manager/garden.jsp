@@ -200,7 +200,7 @@ hr {
 	             	<p id='regTitle'>학습콘텐츠를 등록해주세요</p>	
 		            <hr> 	
              		<div><p>학습콘텐츠명<p> <input id="pkgname" name="pkgname" class="form-control" type="text" 
-             									placeholder="한글,영문 대소문자, 숫자, 특수문자(괄호만) 최대 15자" aria-label="default input example"></div>
+             									placeholder="한글,영문 대소문자, 숫자, 특수문자(괄호만) 최대 8자" aria-label="default input example"></div>
              		<div id="message"></div>
              		<div>
              			<p>학습 난이도</p>
