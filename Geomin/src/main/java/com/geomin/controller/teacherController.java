@@ -50,11 +50,9 @@ public class teacherController extends CommonRestController{
 		if (!pkgName.isEmpty()) {
 			System.err.println("패키지 이름 있을 때");
 			List<contentVO> list1 = teacherService.getSubGroup(pkgName);
-			System.err.println("list1 : " + list1);
 			model.addAttribute("list1", list1);
-			//System.out.println("pkgName : " + pkgName);
+			model.addAttribute("pkgName", pkgName);
 		}	
-		model.addAttribute("pkgName", pkgName);
 		
 		if(pkgName.isEmpty()) { 
 			System.err.println("패키지 이름 없을 때");
@@ -70,6 +68,21 @@ public class teacherController extends CommonRestController{
 		System.out.println("groupData : " + groupData);
 		teacherService.regStudyGroup(groupData);
 	}
+	
+	@PostMapping("/teacher/groupDelete")
+	@ResponseBody
+	public int groupDelete(@RequestParam(name = "pkgName") String pkgName) throws Exception {
+		System.out.println("groupDelete - pkgName : " + pkgName);
+		int result = teacherService.delStudyGroup(pkgName);
+		
+		if (result != 0) {
+			result = 1;
+		}else {
+			result = 0;
+		}
+		return result;
+	}
+	
 	
 //	@PostMapping("/teacher/groupidCheck")
 //	public int groupIdCheck(@RequestParam(name = "groupid") contentVO groupid) {
@@ -231,7 +244,6 @@ public class teacherController extends CommonRestController{
 	    }
 	}
 	
-	//@GetMapping("/teacher/groupRegist2")
 	@RequestMapping(value = "/teacher/groupRegist2", method = { RequestMethod.POST })
 	@ResponseBody 
 	public List<contentVO> groupRegist2(@RequestParam(name = "pkgName") String pkgName, Model model) { 

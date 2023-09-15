@@ -43,6 +43,8 @@ public interface teacherMapper {
 	
 	List<contentVO> getSubList2();
 
+	int delStudyGroup(String pkgName);
+
 	
 	
 }

@@ -35,7 +35,9 @@ public interface teacherService {
 
 	public void regStudyGroup(List<contentVO> groupData);
 
-	public int checkGroupid(String groupid) throws Exception;;
+	public int checkGroupid(String groupid) throws Exception;
 
 	List<contentVO> getSubList2();
+
+	int delStudyGroup(String pkgName) throws Exception;
 }

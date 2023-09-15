@@ -9,9 +9,10 @@ public interface contentMapper {
 	List<contentVO> getList();
 	
 	List<contentVO> getpkgId();
+	
 	List<contentVO> getSubList();
 	
-	void addSubContent(List<contentVO> checked_Data);
+	int addSubContent(List<contentVO> checked_Data);
 	
 	List<contentVO> regSubinfo();
 

@@ -60,13 +60,14 @@ public class contentVO {
 	}
 
 	//구독한 학습 컨텐츠 출력
-	public contentVO(String pkgName, int personnel, String difficulty, String pkgContent, Date subsDate, String groupid) {
+	public contentVO(String pkgName, int personnel, String difficulty, String pkgContent, Date subsDate, String groupid, String buyCheck) {
 		this.pkgName = pkgName;
 		this.personnel = personnel;
 		this.difficulty = difficulty;
 		this.pkgContent = pkgContent;
 		this.subsDate = subsDate;
 		this.groupid = groupid;
+		this.buyCheck = buyCheck;
 	}
 	
 	//
