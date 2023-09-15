@@ -127,6 +127,74 @@
         	font-weight: 600;
         	font-family: 'GmarketSansMedium';
     	}
+    	
+#introductionbtn{
+	height:45px; 
+   	width:170px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+   	color:#000000;
+   	font-size: 16px;
+   	font-weight: 600;
+   	margin-left:60px;
+}
+#introductionbtn:hover{
+	height:45px; 
+   	width:170px;
+   	background-color: #003769;
+   	color:#FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 5px;
+   	cursor: pointer;
+   	font-size: 16px;
+   	font-weight: 600;
+   	margin-left:60px;
+}
+
+#searchBtn{
+	height:80%; 
+   	width:100px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+   	color:#000000;
+   	font-size: 16px;
+   	font-weight: 600;
+   	padding-top:8px;	
+}
+#searchBtn:hover{
+	height:80%; 
+   	width:100px;
+   	background-color: #002F5A;
+   	color:#FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 5px;
+   	cursor: pointer;
+  	font-size: 16px;
+  	font-weight: 600;
+  	padding-top:8px;
+}
+#regTitle{
+	margin-top : 30px;
+	font-size: 35px;
+	text-align:center;
+	font-family: 'GmarketSansMedium';
+}
+
+hr {
+  border : 5px solid #003A6F;
+}
+
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 </style>
 
 
@@ -465,7 +533,7 @@ function workSubmit() {
 							</div>
 						</div>
 						<div style="width: 20%; float: left;">
-							<button type="button" class="btn btn-success" onclick="teacherSearch()">검색</button>
+							<button type="button" class="btn btn-success" id='searchBtn' onclick="teacherSearch()">검색</button>
 						</div>
 					</div>
 					<!-- 선생님 이름 검색 박스 끝 -->
@@ -473,7 +541,7 @@ function workSubmit() {
 					
 					<table class="table" border="1px solid" style="height: 50%; weight: 100%">
 						<thead>
-							<tr class="table-success">
+							<tr class="table-primary">
 								<th>그룹목록</th>
 								<td><select id='groupSelect' class="form-select" aria-label="Default select example">
 										<option selected>선생님을 검색해주세요</option>
@@ -512,8 +580,7 @@ function workSubmit() {
 						</tbody>
 
 					</table>
-					<button type="button" class="btn btn-success" id="introductionbtn">그룹
-						신청하기</button>
+					<button type="button" class="btn btn-success" id="introductionbtn">그룹 신청하기</button>
 				</form>
 			</div>
 
@@ -524,9 +591,8 @@ function workSubmit() {
 				<!-- 숙제 제출 페이지 -->
 				<div id="introduction2">
 					<div>
-						<h1>
-							<b>나의 숙제 제출</b>
-						</h1>
+						<p id='regTitle'>나의 숙제 제출</p>	
+		            <hr> 	
 						<br>
 					</div>
 					
@@ -538,14 +604,14 @@ function workSubmit() {
 							</div>
 						</div>
 						<div style="width: 20%; float: left;">
-							<button type="button" class="btn btn-success" onclick="homwerkList()">숙제 조회</button>
+							<button type="button" class="btn btn-success" id="searchBtn" onclick="homwerkList()">숙제 조회</button>
 						</div>
 					</div>
 
 					<table class="table" border="1px solid"
 						style="height: 50%; weight: 100%">
 						<thead>
-							<tr class="table-success">
+							<tr class="table-primary">
 								<th scope="col"><input type='checkbox' id='allCheckbox' name='allCheck' onclick='toggleCheckboxes()'></th>
 								<th style="width: 17%;" scope="col">학습컨텐츠</th>
 								<th style="width: 17%;" scope="col">학습선생님</th>

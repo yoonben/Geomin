@@ -7,16 +7,72 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-#container>#section>.subnavi>ul{
-	text-align: left;
-    list-style-type: none;
-}
 
-#container>#section>.subnavi>ul>li{
-    padding-left: 60px;
-    margin-top: 25px;
-    font-size: 14px;
-}
+    	#section>.subNavi {
+		    width: 180px;
+		    height: 600px;
+		    float: left;
+		    border-right: 1px solid #D9D9D9;
+		    box-sizing: border-box;
+		    margin-top: 25px;
+		    margin-left: 10px;
+		    margin-right: 10px;
+		    }
+    
+    	#container>#section>.subnavi>ul{
+    		/* text-align: left; */
+    		list-style-type: none;
+    		width: 140px;
+			height:200px;
+			text-align: center;
+			 margin-top: 25px;
+			 margin-left: 20px;
+			
+    	}
+    	#container>#section>.subnavi>ul> a{
+          /*   margin-top: 25px; */
+            font-size: 15px;
+            width: 140px;
+			height:50px;
+			text-align: center;
+			padding:auto;
+			margin-top: 25px;		
+			 margin-left: 50%;
+			font-family: 'GmarketSansMedium';
+    	}
+    	
+
+        #container>#section>.subnavi>ul>li{
+            margin-top: 15px;
+            font-size: 14px;
+            cursor: pointer;
+            width: 140px;
+			height:50px;
+			margin-left: 35px;	
+			text-align: center;
+			padding-top:13px;
+			border-top:1px solid #002A51;
+			border-bottom:1px solid #002A51;
+			font-family: 'GmarketSansMedium';
+    	}
+    	#container>#section>.subnavi>ul>li:hover{
+            margin-top: 15px;
+            font-size: 14px;
+            cursor: pointer;
+            color: #003C72;
+			width: 140px;
+			height:50px;
+			margin-left: 35px;	
+			text-align: center;
+			box-shadow: 0px 3px 6px rgba(0, 0, 0.2, 0.2);
+			border-top:1px solid #002A51;
+			border-bottom:1px solid #002A51;
+			background-color: #CDE6FD;
+			padding-top:11px;
+			font-size: 1.2rem;
+        	font-weight: 600;
+        	font-family: 'GmarketSansMedium';
+    	}
 </style>    	
 </head>
 <body>
@@ -26,7 +82,7 @@
 	<div id='section'>
             <div class='subnavi'>
             	<ul>
-            		<li><b>강사마당</b></li>
+            		<a><b>강사마당</b></a>
                     <li><label style="cursor:pointer;"><a id="subnavi1">학습 그룹 등록</a></label></li>
                    	<li><label style="cursor:pointer;"><a id="subnavi2">그룹 가입 승인</a></label></li>
                    	<li><label style="cursor:pointer;"><a id="subnavi3">숙제 전송</a></label></li>
@@ -154,10 +210,16 @@
             <br>
             	<button id="regStudy">학습그룹 등록</button>
 			</div>
-            	<div class='banner'></div>
+            	<div class='banner'>
+            		<%@include file="../header/banner.jsp" %>
+           		</div>
     </div>
 </div>	
+
+<%@include file="../header/footer.jsp" %>
 </body>
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {

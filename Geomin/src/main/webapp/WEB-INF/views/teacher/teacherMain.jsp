@@ -116,8 +116,49 @@
         	font-weight: 600;
         	font-family: 'GmarketSansMedium';
     	}
-    	
-		
+    	#introductionbtn{
+	height:40px; 
+   	width:200px;
+   	margin-left:60px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+   	font-size: 14px;
+   	color:#000000;
+   	font-size: 16px;
+   	font-weight: 600;
+	}
+	#introductionbtn:hover{
+		height:40px; 
+	   	width:200px;
+	   	margin-left:60px;
+	   	background-color: #003769;
+	   	color:#FFFFFF;
+	   	border:1px solid #666666;
+	   	border-radius: 5px;
+	   	cursor: pointer;
+	   	font-size: 16px;
+	   	font-weight: 600;
+	}
+#regTitle{
+	margin-top : 30px;
+	font-size: 35px;
+	font-weight: 600;
+	text-align:center;
+	font-family: 'GmarketSansMedium';
+}
+
+hr {
+  border : 5px solid #003A6F;
+}
+
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
     </style>
     
@@ -365,7 +406,8 @@
              	<!-- 그룹 가입 승인 페이지 -->
              	<div id="introduction2">
              		<div>
-             			<h1><b>그룹 가입 승인</b></h1><br>
+             				<p id='regTitle'>그룹 가입 승인</p>	
+		            <hr> 	
              		</div>
              		
              		<div>
@@ -383,7 +425,7 @@
 	           			
 			                <table class="table" border="1px solid" style="height:50%;weight:100%">
 								  <thead>
-								    <tr class="table-success">
+								    <tr class="table-primary">
 								      <th><input type='checkbox' id='allCheck' name='allCheck'></th>
 								      <th>학습자명</th>
 								      <th>나이</th>

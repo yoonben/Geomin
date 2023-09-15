@@ -66,7 +66,22 @@
         	font-weight: 600;
         	font-family: 'GmarketSansMedium';
     	}
-	    	
+    #boardTitle{
+	margin-top : 30px;
+	font-size: 35px;
+	text-align:center;
+	font-family: 'GmarketSansMedium';
+}	
+hr {
+  border : 5px solid #003A6F;
+}			
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}			
+		    	
 	    	
 	</style>
 <script type="text/javascript" src="/resources/js/common.js"></script>
@@ -181,6 +196,8 @@ function goView(){
 		    </ul>
 		</div>
 		<div class='content'>
+				<p id='boardTitle'>문의사항을 등록해주세요</p>	
+		        <hr> 
 			<form method="post">
 				<div id="boardRiter">
 						<input type="hidden" value="${member.memberid}" id="memberid" name="memberid">
@@ -211,7 +228,7 @@ function goView(){
 					    <c:otherwise>
 					    	<button type='button' class='btn btn-outline-primary' id='wirtbtn'>등록</button>
 					    	<button type='button' class='btn btn-outline-primary' onclick='goBoard()'>목록</button>
-					    	<input type="reset" class='btn btn-outline-primary' value="리셋">
+					    	<input type="reset" class='btn btn-outline-primary' value="다시작성">
 					    	<input type="hidden" class='btn btn-outline-primary' id='editbtn'>
 					    </c:otherwise>
 					</c:choose>
