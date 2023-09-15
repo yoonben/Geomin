@@ -27,9 +27,9 @@ public class contentServiceImpl implements contentService{
 	}
 
 	@Override
-	public void addSubContent(List<contentVO> checked_Data) {
+	public int addSubContent(List<contentVO> checked_Data) {
 		// TODO Auto-generated method stub
-		helloMapper.addSubContent(checked_Data);
+		return helloMapper.addSubContent(checked_Data);
 		
 	}
 

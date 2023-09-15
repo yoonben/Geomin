@@ -19,72 +19,74 @@
 	margin-top: 25px;
 	font-size: 14px;
 }
+
 #section>.subNavi {
-    width: 180px;
-    height: 600px;
-    float: left;
-    border-right: 1px solid #D9D9D9;
-    box-sizing: border-box;
-    margin-top: 25px;
-    margin-left: 20px;
+	width: 180px;
+	height: 600px;
+	float: left;
+	border-right: 1px solid #D9D9D9;
+	box-sizing: border-box;
+	margin-top: 25px;
+	margin-left: 20px;
 }
 
-table{
+table {
 	border: 1px solid;
 }
-th, tr, td{
-	border: 1px solid;
-}
-		#container>#section>.subNavi>ul{
-    		/* text-align: left; */
-    		list-style-type: none;
-    		width: 150px;
-			height:200px;
-			text-align: center;
-			
-    	}
-    	    #container>#section>.subNavi>ul> a{
-          /*   margin-top: 25px; */
-            font-size: 15px;
-            width: 150px;
-			height:50px;
-			text-align: center;
-			padding:auto;
-			margin-top: 25px;
-			font-family: 'GmarketSansMedium';
-    	}
-    	
-        #container>#section>.subNavi>ul>li{
-            margin-top: 15px;
-            padding-top: 15px;
-            font-size: 14px;
-            cursor: pointer;
-            width: 150px;
-			height:50px;
-			text-align: center;
-			border-top:1px solid #002A51;
-			border-bottom:1px solid #002A51;
-			font-family: 'GmarketSansMedium';
-    	}
-    	#container>#section>.subNavi>ul>li:hover{
-            margin-top: 15px;
-            padding-top: 10px;
-            font-size: 13px;
-            cursor: pointer;
-            color: #003C72;
-			width: 150px;
-			height:50px;
-			text-align: center;
-			box-shadow: 0px 3px 6px rgba(0, 0, 0.2, 0.2);
-			border-top:1px solid #002A51;
-			border-bottom:1px solid #002A51;
-			background-color: #CDE6FD;
-			font-size: 1.2rem;
-        	font-weight: 600;
-        	font-family: 'GmarketSansMedium';
-    	}
-    	
 
+th, tr, td {
+	border: 1px solid;
+}
+
+#container>#section>.subNavi>ul {
+	/* text-align: left; */
+	list-style-type: none;
+	width: 150px;
+	height: 200px;
+	text-align: center;
+}
+
+#container>#section>.subNavi>ul>a {
+	/*   margin-top: 25px; */
+	font-size: 15px;
+	width: 150px;
+	height: 50px;
+	text-align: center;
+	padding: auto;
+	margin-top: 25px;
+	font-family: 'GmarketSansMedium';
+}
+
+#container>#section>.subNavi>ul>li {
+	margin-top: 15px;
+	padding-top: 15px;
+	font-size: 14px;
+	cursor: pointer;
+	width: 150px;
+	height: 50px;
+	text-align: center;
+	border-top: 1px solid #002A51;
+	border-bottom: 1px solid #002A51;
+	font-family: 'GmarketSansMedium';
+}
+
+#container>#section>.subNavi>ul>li:hover {
+	margin-top: 15px;
+	padding-top: 10px;
+	font-size: 13px;
+	cursor: pointer;
+	color: #003C72;
+	width: 150px;
+	height: 50px;
+	text-align: center;
+	box-shadow: 0px 3px 6px rgba(0, 0, 0.2, 0.2);
+	border-top: 1px solid #002A51;
+	border-bottom: 1px solid #002A51;
+	background-color: #CDE6FD;
+	font-size: 1.2rem;
+	font-weight: 600;
+	font-family: 'GmarketSansMedium';
+}
 </style>
 </head>
 <body>
@@ -105,12 +107,8 @@ th, tr, td{
 				<button id="3month">3달 전</button>
 				<button id="6month">6달 전</button>
 				<button id="1year">1년 전</button>				
-				구독날짜 : 
-				<!-- <select>
-					
-				</select> -->
 				
-				<button id="searchButton">조회</button>
+				<!-- <button id="searchButton">조회</button> -->
 				<br>
 				<table id="result-table">
 					<thead>
@@ -129,12 +127,13 @@ th, tr, td{
 					<tbody>
 					<c:forEach var="list" items="${getSubList}">
 						<tr id="data-raw" class="data-raw" data-value="${list.subsDate}">
-							<td><input type="checkbox" name="check" value="check" id="check"></td>
-							 <td style="display: none;">${list.memberID }</td>
+							<td><input type="checkbox" name="check" class="check" value="check"></td>
+							<!-- <td><input type="checkbox" name="check" value="check" id="check"></td> -->
+							<td style="display: none;">${list.memberID }</td>
 							<td class="list_pkgName" id="list_pkgName">${list.pkgName }</td> <!-- ?memberID='memberID22' --> <!-- <a href="geomin/teacher/groupRegist"></a> -->
 							<td class="list_subsDate">${list.subsDate }</td>
-							<td>${list.personnel}</td>
-							<td>${list.possiblegroupMem }</td>
+							<td id = "personnel">${list.personnel}</td>
+							<td id = "possiblegroupMem">${list.possiblegroupMem }</td>
 							<td>${list.finalPrice }</td>
 							<td>${list.difficulty }</td>
 							<%-- <td>${list.pkgContent }</td> --%>
@@ -154,7 +153,7 @@ th, tr, td{
 					</c:forEach>
 					</tbody>
 				</table>
-				<button id="reqSubscribe">구독 철회</button>
+				<button id="delSubscribe">구독 철회</button>
 				<!-- <button id="recent">날짜 순서 토글</button> -->
 				<!-- <button id="recent">날짜가 최근순</button>
 				<button id="oldest">날짜가 오래된순</button> -->
@@ -172,19 +171,69 @@ th, tr, td{
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
-	
-	//var possibleMem = ${list.personnel} - ${list.groupMem};
-	//console.log('possibleMem : ' , possibleMem);
-    //document.getElementById('possbleMem').textContent = possibleMem;
+	/* $("#check").on("change", function () {
+		console.log('클릭됨');
+        if (this.checked) {
+            var $row = $(this).closest("tr"); // 현재 행 선택
+            var personnel = $row.find("#personnel").text(); // personnel 데이터 가져오기
+            var possiblegroupMem = $row.find("#possiblegroupMem").text(); // possiblegroupMem 데이터 가져오기
+
+            console.log("personnel 값: " + personnel);
+            console.log("possiblegroupMem 값: " + possiblegroupMem);
+            
+            $('#delSubscribe').click(function(){
+        		console.log('구독철회 버튼 클릭');
+            
+            });
+        }
+    }); */
+    $(".check").off("change").on("change", function () {
+        console.log('체크박스가 변경되었습니다.');
+
+        if (this.checked) {
+            const $row = $(this).closest("tr"); // 현재 행 선택
+            const pkgName = $row.find("#list_pkgName").text(); // personnel 데이터 가져오기
+            const personnel = $row.find("#personnel").text(); // personnel 데이터 가져오기
+            const possiblegroupMem = $row.find("#possiblegroupMem").text(); // possiblegroupMem 데이터 가져오기
+
+            $('#delSubscribe').off("click").click(function(){
+                console.log('구독철회 버튼 클릭');
+                console.log("pkgName 값 : " + pkgName);
+                console.log("personnel 값: " + personnel);
+                console.log("possiblegroupMem 값: " + possiblegroupMem);
+                
+                if(personnel == possiblegroupMem){
+                	console.log('같아요');
+                	if (confirm("구독을 철회하시겠습니까?")) {
+                		$.ajax({
+        	    	        url:'/geomin/teacher/groupDelete', 
+        	    	        type:'POST', //POST 방식으로 전달
+        	    	        data:{pkgName : pkgName},
+        	    	        success:function(data){ 
+        	    	        	if(data == 1){ 
+        	    	        		alert('철회가 완료되었습니다.');
+        	    	        		location.href = "../subscribe/subscribeSearchContent"
+        	 		            } else {
+        	 		            	console.log('처리가 완료되지 못하였습니다.');
+        	 		            }
+        	    	        }
+        	    	    });
+                	} else {
+                		alert('취소되었습니다.');
+                	}
+                }
+                if(personnel != possiblegroupMem){
+                	alert('이미 학습하는 인원이 있는 패키지는 환불이 불가능합니다. 자사의 환불규칙을 확인하시기 바랍니다.')
+                }
+                
+            });
+        }
+    });
 	
 	$('input[type="checkbox"][name="check"]').click(function(){
-		 
 		if($(this).prop('checked')){
-	 
 			$('input[type="checkbox"][name="check"]').prop('checked',false);
-		 
 		    $(this).prop('checked',true);
-		 
 		 }
 	});
 	
@@ -274,25 +323,11 @@ $(document).ready(function () {
     }
     
     
-    const tableBody = document.querySelector('#result-table tbody');
-    //const tableBody = document.querySelector('#result-table tbody');
-	//const dataRows = document.querySelectorAll("tr.data-raw");
+    /* const tableBody = document.querySelector('#result-table tbody');
 	const dataRows = Array.from(document.querySelectorAll("tr.data-raw"));
 	console.log('dataRows : ' , dataRows);
-	//const sortedData = Array.from(dataRows);
-	//var dataResult = null;
     $('#recent').click(function () {
     	$('tr.data-raw').hide();
-    	/* sortedData.sort((rowA, rowB) => {
-    		const dataA = new Date($(rowA).data('value'));
-    		console.log('dataA : ' , dataA);
-    		const dataB = new Date($(rowB).data('value'));
-    		console.log('dataB : ' , dataB);
-    		
-    		var dataResult = dataA - dataB;
-    		console.log('dataResult : ' , dataResult);
-        	return dataA - dataB; 
-    	}); */
     	dataRows.sort((rowA, rowB) => {
     	    const dateA = new Date($(rowA).find('.list_subsDate').text()); // 날짜 형식의 데이터를 Date 객체로 변환
     	    console.log('dateA : ' , dateA);
@@ -305,28 +340,7 @@ $(document).ready(function () {
     	dataRows.forEach(row => {
             tableBody.appendChild(row);
         });
-    });
-	
-    $('#regButton').click(function () {
-    	
-    	
-    	//alert('버튼 눌림')
-    	/* var pkgName = $(this).closest('tr').find('.list_pkgName').text();
-    	//var pkgNameValue = document.getElementById('list_pkgName').innerText;
-    	alert('pkgName : ' , pkgName);
-    	//alert('pkgNameValue : ' , pkgNameValue);
-    	$.ajax({
-            type: "GET", // HTTP 요청 방식 (GET 또는 POST)
-            url: "/geomin/teacher/groupRegist", // JSP 페이지의 경로 또는 서블릿 URL
-            data: { pkgName: pkgName }, // 전송할 데이터
-            success: function(response) {
-            	alert('pkgName : ', pkgName);
-            },
-            error: function(xhr, status, error) {
-            	alert('pkgName : ' , pkgName);
-            }
-        }); */
-    });
+    }); */
 });
 </script>
 </html>

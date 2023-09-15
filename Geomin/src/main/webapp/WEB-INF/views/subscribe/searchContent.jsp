@@ -19,72 +19,74 @@
 	margin-top: 25px;
 	font-size: 14px;
 }
+
 #section>.subNavi {
-    width: 180px;
-    height: 600px;
-    float: left;
-    border-right: 1px solid #D9D9D9;
-    box-sizing: border-box;
-    margin-top: 25px;
-    margin-left: 20px;
+	width: 180px;
+	height: 600px;
+	float: left;
+	border-right: 1px solid #D9D9D9;
+	box-sizing: border-box;
+	margin-top: 25px;
+	margin-left: 20px;
 }
 
-table{
+table {
 	border: 1px solid;
 }
-th, tr, td{
-	border: 1px solid;
-	}
-		#container>#section>.subNavi>ul{
-    		/* text-align: left; */
-    		list-style-type: none;
-    		width: 150px;
-			height:200px;
-			text-align: center;
-			
-    	}
-    	    #container>#section>.subNavi>ul> a{
-          /*   margin-top: 25px; */
-            font-size: 15px;
-            width: 150px;
-			height:50px;
-			text-align: center;
-			padding:auto;
-			margin-top: 25px;
-			font-family: 'GmarketSansMedium';
-    	}
-    	
-        #container>#section>.subNavi>ul>li{
-            margin-top: 15px;
-            padding-top: 15px;
-            font-size: 14px;
-            cursor: pointer;
-            width: 150px;
-			height:50px;
-			text-align: center;
-			border-top:1px solid #002A51;
-			border-bottom:1px solid #002A51;
-			font-family: 'GmarketSansMedium';
-    	}
-    	#container>#section>.subNavi>ul>li:hover{
-            margin-top: 15px;
-            padding-top: 10px;
-            font-size: 13px;
-            cursor: pointer;
-            color: #003C72;
-			width: 150px;
-			height:50px;
-			text-align: center;
-			box-shadow: 0px 3px 6px rgba(0, 0, 0.2, 0.2);
-			border-top:1px solid #002A51;
-			border-bottom:1px solid #002A51;
-			background-color: #CDE6FD;
-			font-size: 1.2rem;
-        	font-weight: 600;
-        	font-family: 'GmarketSansMedium';
-    	}
-    	
 
+th, tr, td {
+	border: 1px solid;
+}
+
+#container>#section>.subNavi>ul {
+	/* text-align: left; */
+	list-style-type: none;
+	width: 150px;
+	height: 200px;
+	text-align: center;
+}
+
+#container>#section>.subNavi>ul>a {
+	/*   margin-top: 25px; */
+	font-size: 15px;
+	width: 150px;
+	height: 50px;
+	text-align: center;
+	padding: auto;
+	margin-top: 25px;
+	font-family: 'GmarketSansMedium';
+}
+
+#container>#section>.subNavi>ul>li {
+	margin-top: 15px;
+	padding-top: 15px;
+	font-size: 14px;
+	cursor: pointer;
+	width: 150px;
+	height: 50px;
+	text-align: center;
+	border-top: 1px solid #002A51;
+	border-bottom: 1px solid #002A51;
+	font-family: 'GmarketSansMedium';
+}
+
+#container>#section>.subNavi>ul>li:hover {
+	margin-top: 15px;
+	padding-top: 10px;
+	font-size: 13px;
+	cursor: pointer;
+	color: #003C72;
+	width: 150px;
+	height: 50px;
+	text-align: center;
+	box-shadow: 0px 3px 6px rgba(0, 0, 0.2, 0.2);
+	border-top: 1px solid #002A51;
+	border-bottom: 1px solid #002A51;
+	background-color: #CDE6FD;
+	font-size: 1.2rem;
+	font-weight: 600;
+	font-family: 'GmarketSansMedium';
+}
 </style>
 </head>
 <body>
@@ -274,6 +276,7 @@ $("#check_module").click(function () {
 	});
 </script>
 <script type="text/javascript">
+
 	//fetch()
 	//.then((response) => response.json())
   	//.then((data) => console.log(data))
@@ -316,7 +319,6 @@ $("#check_module").click(function () {
 	        
 	        return false; // 현재 행의 pkgId가 배열에 포함되지 않은 경우 checkbox를 활성화합니다.
 	    });
-	    
 	    
 		const dataRows = document.querySelectorAll("tr.data-raw");
 		$('#searchButton').click(function() {
@@ -419,7 +421,7 @@ $("#check_module").click(function () {
 		            //memberID : $row.find('td:eq(8)').text()
 		        };
 		        checked_Data.push(rowData);
-		    });
+		    }); //endpoint $('input[name="check"]:checked').each(function()
 
 		    console.log(checked_Data);
 		    
@@ -429,61 +431,22 @@ $("#check_module").click(function () {
 		        data: JSON.stringify(checked_Data),
                 contentType: "application/json",
                 dataType: "json",
-		        success: function(response) {
-		            //alert('구독 성공');
-		            //console.log(response);
-		        },
-		        error: function(error) {
-		            //alert('실패');
-		            //console.error(error);
-		        }
-		    });
-		}); 
-	}); //$(document).ready EndPoint
-	
-	
-	// const choiceDifficulty = document.getElementById('choiceDifficulty').value;
-    //console.log('choiceDifficulty : ' , choiceDifficulty);
-    /*const searchContent = document.getElementById('searchContent').value;
-    const sortedData = Array.from(dataRows);
-    //console.log('sortedData : ' , sortedData);
-    const tableBody = document.querySelector('#result-table tbody');
-    sortedData.forEach(row => {
-        const difficultyValue = row.getAttribute("data-value");
-        //console.log('difficultyValue : ' , difficultyValue);
-        const content = row.querySelector("td:nth-child(8)").textContent;
-			//console.log('content : ' , content);
-        
-        // 첫 번째와 세 번째 조건을 순차적으로 적용
-        if ((choiceDifficulty === "전체" || difficultyValue === choiceDifficulty) &&
-            (searchContent === "" || content.includes(searchContent))
-        ){
-            row.style.display = 'tr.data-raw';
-        }
-    }); 
-    
-    // 두 번째 조건 적용
-    const selectedPrice = choicePrice.value;
-
-    if (selectedPrice === "높음") {
-        sortedData.sort((rowA, rowB) => {
-            const priceA = parseFloat(rowA.querySelector(".list_finalPrice").textContent);
-            console.log('priceA : ' , priceA);
-            const priceB = parseFloat(rowB.querySelector(".list_finalPrice").textContent);
-            return priceB - priceA;
-        });
-    } else if (selectedPrice === "낮음") {
-        sortedData.sort((rowA, rowB) => {
-            const priceA = parseFloat(rowA.querySelector(".list_finalPrice").textContent);
-            const priceB = parseFloat(rowB.querySelector(".list_finalPrice").textContent);
-            return priceA - priceB;
-        });
-    }
-    
-	//sortedData.forEach(row => {
-     	tableBody.appendChild(row);
-     });      
-});*/
+		        success: function(data) {
+		        	if(data == 1){ 
+    	        		alert('구독 신청이 완료되었습니다.');
+    	        		if (confirm("학습 그룹을 등록하시겠습니까?")) {
+    	        			location.href = "../subscribe/subscribeSearchContent"
+    	        		}else{
+    	        			location.href = "../subscribe/subscribeContent"
+    	        		}
+    	        		
+ 		            } else {
+ 		            	console.log('처리가 완료되지 못하였습니다.');
+ 		            }
+    	        }
+		    });//endpoint $.ajax
+		}); //endpoint #reqSubscribe
+	}); //endpoint $(document).ready
 </script>
 
 </html>

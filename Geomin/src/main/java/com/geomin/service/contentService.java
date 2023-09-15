@@ -17,7 +17,7 @@ public interface contentService {
 	List<contentVO> getpkgId();
 
 	//List<contentVO> addSubContent(List<contentVO> checked_Data);
-	void addSubContent(List<contentVO> checked_Data);
+	int addSubContent(List<contentVO> checked_Data);
 
 	List<contentVO> regSubinfo();
 

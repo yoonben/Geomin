@@ -46,13 +46,19 @@ public class contentController {
 	}
 	
 	@PostMapping("searchContent")
-	public String searchContent(@RequestBody List<contentVO> checked_Data) {
+	@ResponseBody
+	public int searchContent(@RequestBody List<contentVO> checked_Data) {
 		System.out.println("checked_Data : " + checked_Data);
 		//체크박스가 선택된 라인의 데이터 처리
-		
-		contentService.addSubContent(checked_Data);
+		int result = contentService.addSubContent(checked_Data);
+
+		if (result != 0) {
+			result = 1;
+		}else {
+			result = 0;
+		}
+		return result;
 		//kakaoPay.kakaoPayInfo(checked_Data);
-		return "subscribe/searchContent";
 	}
 	
 	@GetMapping("subscribeSearchContent")

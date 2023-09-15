@@ -39,8 +39,8 @@
 	<!--구독 신청한 패키지 등록 -->
 	<insert id="addSubContent" parameterType="java.util.List">
 		<foreach collection="list" item="list">
-			INSERT INTO PKGSUBSDETAIL(pkgId, memberID, PKGNAME, SUBSDATE, PERSONNEL, CURPERSONNEL, SUBSPRICE)
-			VALUES (#{list.pkgId}, 'memberID6', #{list.pkgName}, sysdate, #{list.personnel}, 0 ,#{list.finalPrice})
+			INSERT INTO PKGSUBSDETAIL(pkgId, memberID, PKGNAME, SUBSDATE, PERSONNEL, CURPERSONNEL, SUBSPRICE, BUYCHECK)
+			VALUES (#{list.pkgId}, 'memberID6', #{list.pkgName}, sysdate, #{list.personnel}, 0 ,#{list.finalPrice} , 'Y')
 		</foreach>
 	</insert>
 
@@ -55,6 +55,7 @@
 			p.difficulty,
 			p.personnel,
 			p.pkgContent,
+			<!-- d.BUYCHECK, -->
 			(p.personnel - (
 				SELECT 
 					COALESCE(SUM(groupMem), 0)
@@ -74,7 +75,7 @@
 		ON
 			D.memberID = m.memberID
 		WHERE
-			p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6'
+			p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6' <!-- and BUYCHECK = 'Y' -->
 
 	</select>
 
@@ -95,8 +96,8 @@
 					g.groupMem,
 					NVL2(g.groupID, g.groupID, 'NOT GROUP') AS groupID,
 					(
-					SELECT C
-						OALESCE(SUM(groupMem), 0)
+					SELECT 
+                        COALESCE(SUM(groupMem), 0)
 					FROM 
 						study_group
 					WHERE 
@@ -124,8 +125,7 @@
 		ON
 		D.pkgId = g.pkgId
 		WHERE
-		p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6'and p.pkgName =
-		#{pkgName}
+		p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6'and p.pkgName = #{pkgName}
 		)
 		WHERE ROWNUM = 1
 

@@ -97,6 +97,12 @@ public class teacherServiceImpl implements teacherService{
 		// TODO Auto-generated method stub
 		return teachermapper.getSubList2();
 	}
+
+	@Override
+	public int delStudyGroup(String pkgName) throws Exception{
+		return teachermapper.delStudyGroup(pkgName);
+		
+	}
 	
 	//★그룹아이디 중복처리
 	/*
