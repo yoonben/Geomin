@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.geomin.VO.contentVO;
 import com.geomin.VO.groupstudentVO;
 import com.geomin.VO.memberVO;
 import com.geomin.VO.packageVO;
 import com.geomin.service.contentService;
+import com.geomin.service.loginService;
 import com.geomin.service.teacherService;
 
 @Controller
@@ -34,7 +39,7 @@ public class teacherController extends CommonRestController{
 	@Autowired
 	teacherService teacherService;
 	
-
+	loginService loginService;
 	
 	/*
 	@GetMapping("/teacher/teacherMain")
@@ -44,18 +49,28 @@ public class teacherController extends CommonRestController{
 	*/
 	
 	@GetMapping("/teacher/groupRegist")
-	public String groupRegist(@RequestParam(name = "pkgName", required = false, defaultValue = "") String pkgName, Model model) { 
-		System.out.println("pkgName : " + pkgName);
+	public String groupRegist(@RequestParam(name = "pkgName", required = false, defaultValue = "") String pkgName, 
+			Model model, 
+			memberVO memberVO, 
+			HttpSession session,
+			@Param("memberM") String memberM) { 
+		//System.out.println("pkgName : " + pkgName);
+		
+		memberVO member = (memberVO) session.getAttribute("member");
+		memberM = member.getMemberid();
+		System.out.println("memberM1 : " + memberM);
 		
 		if (!pkgName.isEmpty()) {
 			System.err.println("패키지 이름 있을 때");
-			List<contentVO> list1 = teacherService.getSubGroup(pkgName);
+			System.out.println("memberM2 : " + memberM);
+			List<contentVO> list1 = teacherService.getSubGroup(pkgName, memberM);
 			model.addAttribute("list1", list1);
 			model.addAttribute("pkgName", pkgName);
 		}	
 		
 		if(pkgName.isEmpty()) { 
 			System.err.println("패키지 이름 없을 때");
+			System.out.println("memberM3 : " + memberM);
 			List<contentVO> list2 = teacherService.getSubList2();
 			model.addAttribute("list2", list2); 
 		}
@@ -64,9 +79,16 @@ public class teacherController extends CommonRestController{
 	}
 	
 	@PostMapping("/teacher/groupRegist")
-	public void groupRegist2(@RequestBody List<contentVO> groupData, Model model) {
+	public int groupRegist2(@RequestBody List<contentVO> groupData, Model model) {
 		System.out.println("groupData : " + groupData);
-		teacherService.regStudyGroup(groupData);
+		int result = teacherService.regStudyGroup(groupData);
+		
+		if (result != 0) {
+			result = 1;
+		}else {
+			result = 0;
+		}
+		return result;
 	}
 	
 	@PostMapping("/teacher/groupDelete")
@@ -246,11 +268,19 @@ public class teacherController extends CommonRestController{
 	
 	@RequestMapping(value = "/teacher/groupRegist2", method = { RequestMethod.POST })
 	@ResponseBody 
-	public List<contentVO> groupRegist2(@RequestParam(name = "pkgName") String pkgName, Model model) { 
+	public List<contentVO> groupRegist2(@RequestParam(name = "pkgName") String pkgName, Model model) throws JsonProcessingException{ 
 		System.out.println("pkgNamepkgName : " + pkgName);
 		List<contentVO> list3 = contentService.getSubMatchingList(pkgName);
 		System.out.println("listlist3 : " + list3);
 		return list3;
+//		ObjectMapper objectMapper = new ObjectMapper();
+//	    objectMapper.configure(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS, false);
+//	    
+//	    List<contentVO> list3 = contentService.getSubMatchingList(pkgName);
+//	    
+//	    String json = objectMapper.writeValueAsString(list3);
+//	    
+//	    return json;
 	}	
 
 	

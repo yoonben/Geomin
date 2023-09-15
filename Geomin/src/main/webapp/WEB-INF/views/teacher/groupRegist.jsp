@@ -163,7 +163,7 @@
             			<input name='subsDate' value='<c:out value = "${list1.subsDate}" />' readonly="readonly" disabled="disabled">
             		</div>
 					<div>
-						<label>학습 기간 : 최대 3개월</label> 
+						<label>학습 기간 : </label> 
 							<select id="select_yearB" class= "select_yearB"></select>
 							<select id="select_monthB" class= "select_monthB"></select>
 							<select id="select_dayB" class= "select_dayB"></select>
@@ -182,7 +182,6 @@
 			</c:forEach>
 			</c:if>
 			
-			
 			 <c:if test="${empty pkgName}">
                	 패키지 선택 : 
                	 <span><select id="select_package">
@@ -194,7 +193,7 @@
     			<br>
                	학습 가능 인원 : <span id="personnel2"></span>명  / 등록 가능 인원 : <span id="possiblegroupMem2"></span> 명 
                	<br> 
-               	 	<br>
+               	<br>
                	 	<div> <!-- style="display: none;" -->
             			<label>컨텐츠 아이디 : </label>
             			<input name='pkgId' id = "pkgId2" value='<c:out value = "${list3.pkgId}" />' readonly="readonly" disabled="disabled">
@@ -224,7 +223,7 @@
             			<input name='subsDate' id="subsDate2" value='<c:out value = "${list3.subsDate}" />' readonly="readonly" disabled="disabled">
             		</div>
 					<div>
-						<label>학습 기간 : 최대 3개월</label> 
+						<label>학습 기간 : </label> 
 							<select id="select_yearB" class= "select_yearB"></select>
 							<select id="select_monthB" class= "select_monthB"></select>
 							<select id="select_dayB" class= "select_dayB"></select>
@@ -497,9 +496,12 @@ $(document).ready(function () {
 				contentType: "application/json",
 				dataType: "json",
 				success: function(response) {
-		    		alert('성공');
-		    		//console.log(response);
-		    		location.href = "../subscribe/subscribeSearchContent";
+					if(data == 1){ 
+    	        		alert('학습 그룹 등록이 완료되었습니다.');
+    	        		location.href = "../subscribe/subscribeSearchContent"
+ 		            } else {
+ 		            	console.log('처리가 완료되지 못하였습니다.');
+ 		            }
 				},
 				error: function(error) {
 		    		//alert('실패');
@@ -508,7 +510,6 @@ $(document).ready(function () {
 			});
 		});	//endpoint $('#regStudy').click
 	 	}//endPoint - if (pkgName && pkgName.length < 0 && pkgName != null)
-	 		
 	 		
 	 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★	
 	 	//if (pkgName = null && pkgName.length <= 0) {
@@ -520,6 +521,18 @@ $(document).ready(function () {
 	 	        // 선택된 option 요소의 값을 가져옵니다.
 	 	       var pkgName = $(this).val();
 	 	       console.log('pkgName : ' , pkgName);
+	 	       
+	 	   	// JSON으로 받은 데이터 파싱
+	 	     /*  var list3 = JSON.parse(jsonData);
+
+	 	      // subsDate를 날짜 객체로 변환
+	 	      var subsDate = new Date(list3.subsDate);
+
+	 	      // 원하는 형식으로 날짜 문자열 만들기
+	 	      var formattedDate = subsDate.getFullYear() + '-' + (subsDate.getMonth() + 1).toString().padStart(2, '0') + '-' + subsDate.getDate().toString().padStart(2, '0');
+
+	 	      // formattedDate를 원하는 곳에 삽입
+ */	 	      
 	 	       
 	 	       $.ajax({
 	 	    	   url: "/geomin/teacher/groupRegist2",
@@ -536,6 +549,7 @@ $(document).ready(function () {
 	 	    		   $('#subsDate2').val(list3.subsDate);
 	 	    		   $('#personnel2').text(list3.personnel);
 	 	    		   $('#possiblegroupMem2').text(list3.possiblegroupMem);
+	 	    		  //document.getElementById('subsDate2').value = formattedDate;
 	 	    	   }
 	 	       });
 	 	    }); //#select_package
@@ -751,9 +765,12 @@ $(document).ready(function () {
 				contentType: "application/json",
 				dataType: "json",
 				success: function(response) {
-		    		alert('성공');
-		    		//console.log(response);
-		    		location.href = "../subscribe/subscribeSearchContent";
+					if(data == 1){ 
+    	        		alert('학습 그룹 등록이 완료되었습니다.');
+    	        		location.href = "../subscribe/subscribeSearchContent"
+ 		            } else {
+ 		            	console.log('처리가 완료되지 못하였습니다.');
+ 		            }
 				},
 				error: function(error) {
 		    		//alert('실패');

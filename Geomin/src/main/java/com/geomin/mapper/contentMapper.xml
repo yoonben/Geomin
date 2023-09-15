@@ -6,8 +6,7 @@
 	<!-- //모든 학습 컨텐츠 출력 -->
 	<select id="getList" resultType="com.geomin.VO.contentVO">
 		select
-			p.pkgId, p.pkgName, p.personnel, p.fixedPrice, p.finalPrice, p.difficulty,
-			p.pkgContent
+			p.pkgId, p.pkgName, p.personnel, p.fixedPrice, p.finalPrice, p.difficulty, p.pkgContent
 		from
 			package p
 		where
@@ -49,7 +48,7 @@
 		SELECT
 			P.pkgId,
 			p.pkgName,
-			m.memberID,
+			d.memberID,
 			d.subsDate,
 			p.finalPrice,
 			p.difficulty,
@@ -75,7 +74,7 @@
 		ON
 			D.memberID = m.memberID
 		WHERE
-			p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6' <!-- and BUYCHECK = 'Y' -->
+			p.elimination = 'N' AND m.mType = 'T' AND d.memberID = 'memberID6' <!-- and BUYCHECK = 'Y' -->
 
 	</select>
 
@@ -87,7 +86,7 @@
 				select
 					P.pkgId,
 					p.pkgName,
-					m.memberID,
+					d.memberID,
 					d.subsDate,
 					p.finalPrice,
 					p.difficulty,
@@ -125,7 +124,7 @@
 		ON
 		D.pkgId = g.pkgId
 		WHERE
-		p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6'and p.pkgName = #{pkgName}
+		p.elimination = 'N' AND m.mType = 'T' AND d.memberID = 'memberID6' and p.pkgName = #{pkgName}
 		)
 		WHERE ROWNUM = 1
 

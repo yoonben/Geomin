@@ -76,7 +76,7 @@ FROM (
 		SELECT
     		P.pkgId,
     		p.pkgName,
-    		m.memberID,
+    		d.memberID,
     		d.subsDate,
     		d.curGroup,
     		p.finalPrice,
@@ -109,7 +109,7 @@ FROM (
 		ON
     		D.pkgId = g.pkgId
 		WHERE 
-    		p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6' and p.pkgName = #{pkgName}
+    		p.elimination = 'N' AND m.mType = 'T' AND d.memberID = #{memberM} and p.pkgName = #{pkgName}
     		)
 WHERE ROWNUM = 1<!-- and p.pkgName = #{pkgName} -->
 

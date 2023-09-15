@@ -31,9 +31,9 @@ public interface teacherService {
 	
 	public groupstudentVO groupjoinstatusOne(@Param("studentid") String studentid,@Param("groupid") String groupid);
 
-	List<contentVO> getSubGroup(String pkgName);
+	List<contentVO> getSubGroup(@Param("pkgName") String pkgName, @Param("memberM") String memberM);
 
-	public void regStudyGroup(List<contentVO> groupData);
+	public int regStudyGroup(@Param("memberM")List<contentVO> groupData);
 
 	public int checkGroupid(String groupid) throws Exception;
 

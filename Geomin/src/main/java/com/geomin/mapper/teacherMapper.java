@@ -31,10 +31,10 @@ public interface teacherMapper {
 	
 	//그룹가입 승인
 	public int updateJoinStatus(@Param("studentid") String studentid,@Param("groupid") String groupid);
+	
+	List<contentVO> getSubGroup(@Param("pkgName") String pkgName, @Param("memberM") String memberM);
 
-	List<contentVO> getSubGroup(String pkgName);
-
-	void regStudyGroup(List<contentVO> groupData);
+	int regStudyGroup(List<contentVO> groupData);
 	
 	
 	//★그룹아이디 중복처리

@@ -434,10 +434,10 @@ $("#check_module").click(function () {
 		        success: function(data) {
 		        	if(data == 1){ 
     	        		alert('구독 신청이 완료되었습니다.');
-    	        		if (confirm("학습 그룹을 등록하시겠습니까?")) {
+    	        		if (confirm("구독한 학습 컨텐츠를 확인하시게씃ㅂ니까?")) {
     	        			location.href = "../subscribe/subscribeSearchContent"
     	        		}else{
-    	        			location.href = "../subscribe/subscribeContent"
+    	        			location.href = "../subscribe/searchContent"
     	        		}
     	        		
  		            } else {

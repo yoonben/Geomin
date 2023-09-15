@@ -2,6 +2,7 @@ package com.geomin.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,15 +65,15 @@ public class teacherServiceImpl implements teacherService{
 	}
 */
 
-	@Override
-	public List<contentVO> getSubGroup(String pkgName) {
+	@Override 
+	public List<contentVO> getSubGroup(String pkgName, String memberM) {
 		// TODO Auto-generated method stub
-		return teachermapper.getSubGroup(pkgName);
+		return teachermapper.getSubGroup(pkgName, memberM);
 	}
 
 	@Override
-	public void regStudyGroup(List<contentVO> groupData) {
-		teachermapper.regStudyGroup(groupData);
+	public int regStudyGroup(List<contentVO> groupData) {
+		return teachermapper.regStudyGroup(groupData);
 		
 	}
 
