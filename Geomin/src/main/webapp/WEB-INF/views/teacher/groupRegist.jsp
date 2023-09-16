@@ -131,13 +131,13 @@
             <div class='content'>
             <p id='regTitle'>그룹 등록</p>	
 		    <hr> 
-            
-            <!-- 나의 콘텐츠에서 그룹등록버튼 클릭시 진입 시작 -->
-            <div>
-            
+			<div>
+			<table>
+			
+			</table>
+			
             <c:if test="${not empty pkgName}">
             <c:forEach items="${list1}" var="list1">
-            	<%-- <c:if test ="${list1.pkgName == pkgName}"> --%>
             		<div style="display: none;">
             			<label>컨텐츠 아이디 : </label>
             			<input name='pkgId' id = "pkgId" value='<c:out value = "${list1.pkgId}" />' readonly="readonly" disabled="disabled">
@@ -190,10 +190,71 @@
 						<label>학습 내용 : </label>
             			<input name='content' value='<c:out value = "${list1.pkgContent}" />' readonly="readonly" disabled="disabled">
             		</div>
-				<%-- </c:if> --%>
 			</c:forEach>
 			</c:if>
 			</div>
+			
+			
+			            
+            <!-- 나의 콘텐츠에서 그룹등록버튼 클릭시 진입 시작 -->
+            <%-- <div>
+            <c:if test="${not empty pkgName}">
+            <c:forEach items="${list1}" var="list1">
+            		<div style="display: none;">
+            			<label>컨텐츠 아이디 : </label>
+            			<input name='pkgId' id = "pkgId" value='<c:out value = "${list1.pkgId}" />' readonly="readonly" disabled="disabled">
+            		</div>
+            		<div>
+            			<label>그룹명 : </label>
+            			<input type="text" id="groupid" name = "groupid" placeholder="그룹명을 입력해 주세요" >
+            			<input type='button' id='groupidCheck' name='groupidCheck'  value='중복확인버튼'>
+            			<div id='result'></div>
+            		</div>
+            		<div>
+            			<label>패키지명 : </label>
+            			<input name='pkgName' value='<c:out value = "${list1.pkgName}" />' readonly="readonly" disabled="disabled">
+            		</div>
+            		<div>
+            			<label>학습 가능 인원 : </label>
+            			<input type="text" id='groupMem'  name='groupMem' placeholder="인원 수 적기"> 명 <br>
+            			<p>총 학습 가능 인원은 ${list1.personnel}명 이고, 학습 중인 총 인원은 ${list1.totalgroupMem}명으로, 최대 ${list1.possiblegroupMem }명을 입력 할 수 있어요.</p>
+            			<div id='grouppersonError'></div>
+            		</div>
+            		<div style="display: none">
+            			<label>최대 학습 가능 인원 : </label>
+            			<input type="text" id='maxgroupperson' name='maxgroupperson' data-value="${list1.personnel}" readonly="readonly" disabled="disabled">value='<c:out value = "${list1.personnel}" />' 명
+            		</div>
+            		<div style="display: none">
+            			<label>학습 가능 인원 : </label>
+            			<input type="text" id='possiblegroupMem' name='possiblegroupMem' data-value="${list1.possiblegroupMem}" readonly="readonly" disabled="disabled">value='<c:out value = "${list1.possiblegroupMem}" />' 명
+            		</div>
+            		<div>
+            			<label>학습 수준 : </label>
+            			<input name='difficulty' value='<c:out value = "${list1.difficulty}" />' readonly="readonly" disabled="disabled">
+            		</div>
+            		<div>
+            			<label>구독 날짜 : </label>
+            			<input name='subsDate' value='<c:out value = "${list1.subsDate}" />' readonly="readonly" disabled="disabled">
+            		</div>
+					<div>
+						<label>학습 기간 : </label> 
+							<select id="select_yearB" class= "select_yearB"></select>
+							<select id="select_monthB" class= "select_monthB"></select>
+							<select id="select_dayB" class= "select_dayB"></select>
+						
+							~
+						
+							<select id="select_yearA" class= "select_yearA" ></select>
+							<select id="select_monthA" class= "select_monthA"></select>
+							<select id="select_dayA" class= "select_dayA"></select>
+						</div>
+            		<div>
+						<label>학습 내용 : </label>
+            			<input name='content' value='<c:out value = "${list1.pkgContent}" />' readonly="readonly" disabled="disabled">
+            		</div>
+			</c:forEach>
+			</c:if>
+			</div> --%>
 			<!-- 나의 콘텐츠에서 그룹등록버튼 클릭시 진입 끝 -->
 			
 			<!-- 강사마당으로 진입 (패키지명 선택 후 그룹등록) 시작 -->

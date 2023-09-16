@@ -1,6 +1,7 @@
 package com.geomin.VO;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,7 +37,7 @@ public class contentVO {
 	private int groupMem;
 	private int totalgroupMem;
 	private int possiblegroupMem;
-	
+
 	//모든 학습 컨텐츠 출력
 	public contentVO(String pkgId, String pkgName, int personnel, String fixedPrice, String finalPrice, String difficulty, String pkgContent
 			) {

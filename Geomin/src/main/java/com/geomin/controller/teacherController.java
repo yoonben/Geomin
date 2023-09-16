@@ -39,6 +39,7 @@ public class teacherController extends CommonRestController{
 	@Autowired
 	teacherService teacherService;
 	
+	@Autowired
 	loginService loginService;
 	
 	/*

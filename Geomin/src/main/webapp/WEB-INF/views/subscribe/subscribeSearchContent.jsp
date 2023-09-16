@@ -330,7 +330,6 @@ $(document).ready(function () {
                 if(personnel != possiblegroupMem){
                 	alert('이미 학습하는 인원이 있는 패키지는 환불이 불가능합니다. 자사의 환불규칙을 확인하시기 바랍니다.')
                 }
-                
             });
         }
     });

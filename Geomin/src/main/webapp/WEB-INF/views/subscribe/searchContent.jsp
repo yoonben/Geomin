@@ -182,7 +182,6 @@ hr {
 			<div class='content'>
 				<p id='regTitle'>학습콘텐츠 구독신청</p>	
 		            <hr> 
-		            
 				난이도 : 
 				<select id="choiceDifficulty">
 					<option value="전체" selected="selected">전체</option>
@@ -199,11 +198,10 @@ hr {
 				내용 검색 :
 				<input id="searchContent" type="text" width="150px" placeholder="내용을 검색해 주세요">
 				<button id="searchButton">조회</button>
+				
 				<br>
 			<div class="content">
-			
 				<table id="result-table" class="table" border="1px solid" style="height: 50%; weight: 100%">
-				
 			    <thead>
 			        <tr class="table-primary">
 			            <th style="font-weight: 600;" class='checkCont'>□</th>
@@ -216,11 +214,16 @@ hr {
 			            <!-- <th>구독</th> -->
 			        </tr>
 			    </thead>
-			    
 			    <tbody>
-			        <c:forEach var="pkgIdItem" items="${pkgId}">
-			            <p id="pkgIdItem" data-value= "${pkgIdItem.pkgId}"></p>
-			        </c:forEach>
+			        <%-- <c:forEach var="pkgIdItem" items="${pkgId}" > <!-- style="display: none" -->
+			            <p id="pkgIdPKG" data-value= "${pkgIdItem.pkgId}"></p>
+			        </c:forEach> --%>
+			        <%-- <c:forEach var="dbMemberId" items="${dbMemberId}">
+    					<p id="MemberIdDB" data-value="${dbMemberId.memberID}">아이디 : <c:out value="${dbMemberId.memberID}" />
+					</c:forEach> --%> 
+			        <c:forEach var="getsubId" items="${getsubId}">
+    					<p id="getsubId" data-value="${getsubId.pkgId}"><c:out value="${getsubId.pkgId}" />
+					</c:forEach>
 			        <c:forEach var="list" items="${list}">
 			            <tr data-pkgid="${list.pkgId}" id="data-raw" class="data-raw" data-value="${list.difficulty }">
 			                <td><input type="checkbox" name="check" value="check" class="check"></td>
@@ -231,14 +234,15 @@ hr {
 			                <td class="list_finalPrice">${list.finalPrice}</td>
 			                <td>${list.difficulty}</td>
 			                <td>${list.pkgContent}</td>
-			                <%-- <td style="display: none">${sessionScope.member.memberid }</td> --%>
+			                <%-- <td>${memberM.memberM}</td> --%>
+			                <td id="memberIdSession" style="display: none;"><c:out value="${memberId}" /></td>
 			            </tr>
 			        </c:forEach>
 			    </tbody>
 			</table>
-			<nav aria-label="Page navigation example" id="pageNavi">
-					
-				  	</nav>
+			<!-- <nav aria-label="Page navigation example" id="pageNavi"> </nav>-->
+			<nav aria-label="Page navigation example" id="pageNavi"></nav>
+				  	
 				  	
 			<br>
 				 <button id="reqSubscribe">구독 신청</button>
@@ -375,41 +379,83 @@ $("#check_module").click(function () {
   	
 	$(document).ready(function() {
 		$('input[type="checkbox"][name="check"]').click(function(){
-			 
 			if($(this).prop('checked')){
-		 
 				$('input[type="checkbox"][name="check"]').prop('checked',false);
-			 
 			    $(this).prop('checked',true);
-			 
 			 }
 		});
 	    
 	    $('.check').prop('disabled', function () {
-	    
-	    var pkgIdValues = []; // 데이터 속성 값을 저장할 배열을 만듭니다.
+	    	//세션에 저장된 멤버아이디 : memberIdValue
+	    	//DB에서 보낸 멤버아이디 : dbMemberIdValues(배열)
+	    	//DB에서 보낸 패키지아이디 : pkgIdValues(배열)
+	    	//DB에서 보낸 모든 패키지 중 선택된 행: listpkgId 
+	    	
+	    	//1. 세션에 저장된 아이디 가져오기
+	    	var memberIdSession = document.getElementById("memberIdSession");
+	    	var memberIdSessionValue = memberIdSession.textContent; // 또는 innerText를 사용할 수도 있습니다.
+	    	//console.log("memberIdSessionValue:", memberIdSessionValue);
 
-	    // 여러 개의 요소를 선택합니다.
-	    var pkgIdItems = document.querySelectorAll('#pkgIdItem');	//구독한 컨텐츠의 아이디
-
-	    // 각 요소의 데이터 속성 값을 배열에 저장합니다.
-	    pkgIdItems.forEach(function (element) {
-	        var pkgIdItemValue = element.getAttribute('data-value');
-	        pkgIdValues.push(pkgIdItemValue); // 배열에 값을 추가합니다.
-	    });
-		console.log('pkgIdValues : ' , pkgIdValues);
+	    	//2. DB에 저장된 아이디 가져오기
+	    	//var dbMemberIdValues = []
+	    	//var MemberIdDB = document.querySelectorAll('#MemberIdDB');	//구독한 컨텐츠의 아이디
+	    	//console.log('MemberIdDB : ' , MemberIdDB);
+	    	/* MemberIdDB.forEach(function (element) {	//최종 DB 멤버 아이디
+	        	var dbMemberIdItemValue = element.getAttribute('data-value');
+	        	dbMemberIdValues.push(dbMemberIdItemValue); // 배열에 값을 추가합니다.
+	    	}); */
+	    	
+	    	//3. DB에 저장된 패키지 아이디 가져오기
+	    	//var pkgIdValues = []; // 데이터 속성 값을 저장할 배열을 만듭니다.
 		
+	    	// 여러 개의 요소를 선택합니다.
+	    	//var pkgIdItems = document.querySelectorAll('#pkgIdPKG');	//구독한 컨텐츠의 아이디
+	    	//console.log('pkgIdItems : ' , pkgIdItems);
+	    	
+	    	// 각 요소의 데이터 속성 값을 배열에 저장합니다.
+	    	/* pkgIdItems.forEach(function (element) {	//최종 DB패키지 아이디
+	        	var pkgIdItemValue = element.getAttribute('data-value');
+	        	pkgIdValues.push(pkgIdItemValue); // 배열에 값을 추가합니다.
+	    	}); */
+	    	//console.log('pkgIdValues : ' , pkgIdValues);
+	    	
+	    	//4. 현재 행의 PKGID 값 가져오기
 	    	var listpkgId = $(this).closest('tr').data('pkgid'); // 현재 행의 pkgId 값을 가져옵니다.
 			console.log('listpkgId : ' , listpkgId);
 	        
-	        // pkgIdValues 배열을 순회하면서 현재 행의 pkgId와 비교합니다.
+	    	//5. dbMemberIdValues 에 있는 값 중 memberIdSessionValue 와 일치하는 값만 꺼내기
+			/* var matchingIdValues = dbMemberIdValues.filter(function(value) {
+				  return value === memberIdSessionValue;
+			}); */
+	    	//console.log('matchingValues : ' , matchingValues);
+	    	
+	    	//6. matchingIdValues 가 가지고 있는 값만 가져오기
+	    	var getsubIdValues = []
+	    	var getsubId = document.querySelectorAll('#getsubId');	//구독한 컨텐츠의 아이디
+	    	console.log('getsubId : ' , getsubId);
+	    	getsubId.forEach(function (element) {	//최종 DB 멤버 아이디
+	        	var getsubIdItemValue = element.getAttribute('data-value');
+	        	getsubIdValues.push(getsubIdItemValue); // 배열에 값을 추가합니다.
+	    	});
+	    	console.log("getsubIdValues : " , getsubIdValues);
+	    	
+	    	 var listpkgId = $(this).closest('tr').data('pkgid');
+
+	    	// 2. listpkgId가 getsubIdValues에 있는지 확인
+	    	var isListpkgIdInGetsubIdValues = getsubIdValues.includes(listpkgId);
+
+	    	// 3. 만약 listpkgId가 getsubIdValues에 있는 경우 checkbox를 비활성화하고, 아닌 경우 활성화합니다.
+	    	return isListpkgIdInGetsubIdValues;
+	    	
+	    	
+	    	
+	        /* // pkgIdValues 배열을 순회하면서 현재 행의 pkgId와 비교합니다.
 	        for (var i = 0; i < pkgIdValues.length; i++) {
 	            if (listpkgId === pkgIdValues[i]) {
 	                return true; // 현재 행의 pkgId가 배열에 포함된 경우 checkbox를 비활성화합니다.
 	            }
 	        }
-	        
-	        return false; // 현재 행의 pkgId가 배열에 포함되지 않은 경우 checkbox를 활성화합니다.
+	        return false; // 현재 행의 pkgId가 배열에 포함되지 않은 경우 checkbox를 활성화합니다. */
 	    });
 	    
 		const dataRows = document.querySelectorAll("tr.data-raw");
@@ -510,9 +556,10 @@ $("#check_module").click(function () {
 		            finalPrice: $row.find('td:eq(5)').text(),
 		            difficulty: $row.find('td:eq(6)').text(),
 		            pkgContent: $row.find('td:eq(7)').text(),
-		            //memberID : $row.find('td:eq(8)').text()
+		            memberID : $row.find('td:eq(8)').text()
 		        };
 		        checked_Data.push(rowData);
+		        console.log("checked_Data : " , checked_Data);
 		    }); //endpoint $('input[name="check"]:checked').each(function()
 
 		    console.log(checked_Data);
