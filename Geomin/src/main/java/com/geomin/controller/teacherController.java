@@ -54,25 +54,26 @@ public class teacherController extends CommonRestController{
 			Model model, 
 			memberVO memberVO, 
 			HttpSession session,
-			@Param("memberM") String memberM) { 
+			@Param("memberM") String memberID) { 
 		//System.out.println("pkgName : " + pkgName);
 		
 		memberVO member = (memberVO) session.getAttribute("member");
-		memberM = member.getMemberid();
-		System.out.println("memberM1 : " + memberM);
+		memberID = member.getMemberid();
+		System.out.println("memberID : " + memberID);
 		
 		if (!pkgName.isEmpty()) {
 			System.err.println("패키지 이름 있을 때");
-			System.out.println("memberM2 : " + memberM);
-			List<contentVO> list1 = teacherService.getSubGroup(pkgName, memberM);
+			System.out.println("memberID : " + memberID);
+			List<contentVO> list1 = teacherService.getSubGroup(pkgName, memberID);
 			model.addAttribute("list1", list1);
 			model.addAttribute("pkgName", pkgName);
+			model.addAttribute("memberID", memberID);
 		}	
 		
 		if(pkgName.isEmpty()) { 
 			System.err.println("패키지 이름 없을 때");
-			System.out.println("memberM3 : " + memberM);
-			List<contentVO> list2 = teacherService.getSubList2();
+			System.out.println("memberM3 : " + memberID);
+			List<contentVO> list2 = teacherService.getSubList2(/* memberID */);
 			model.addAttribute("list2", list2); 
 		}
 		

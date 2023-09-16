@@ -32,7 +32,7 @@ public interface teacherMapper {
 	//그룹가입 승인
 	public int updateJoinStatus(@Param("studentid") String studentid,@Param("groupid") String groupid);
 	
-	List<contentVO> getSubGroup(@Param("pkgName") String pkgName, @Param("memberM") String memberM);
+	List<contentVO> getSubGroup(@Param("pkgName") String pkgName, @Param("memberM") String memberID);
 
 	int regStudyGroup(List<contentVO> groupData);
 	

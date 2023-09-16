@@ -190,6 +190,10 @@
 						<label>학습 내용 : </label>
             			<input name='content' value='<c:out value = "${list1.pkgContent}" />' readonly="readonly" disabled="disabled">
             		</div>
+            		<div>
+						<label>멤버아이디 : </label>
+            			<input name='memberID' value='<c:out value = "${memberID}" />' readonly="readonly" disabled="disabled">
+            		</div>
 			</c:forEach>
 			</c:if>
 			</div>
@@ -532,6 +536,8 @@ $(document).ready(function () {
 		const groupid = document.getElementById('groupid').value;
 		const groupMem = document.getElementById('groupMem').value;
 		const pkgId = document.getElementById('pkgId').value;
+		const memberID = document.getElementById('memberID').value;
+		
 		
 		var yearB = document.getElementById('select_yearB').value;
 		var monthB = document.getElementById('select_monthB').value;
@@ -567,7 +573,8 @@ $(document).ready(function () {
 				pkgId : pkgId,
 				groupMem : groupMem,
 				studyStartDate : totalDateB,
-				studyEndDate : totalDateA
+				studyEndDate : totalDateA,
+				memberID : memberID
 			}
 			groupData.push(rowData);
 

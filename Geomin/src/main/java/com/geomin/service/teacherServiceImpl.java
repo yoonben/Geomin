@@ -66,9 +66,9 @@ public class teacherServiceImpl implements teacherService{
 */
 
 	@Override 
-	public List<contentVO> getSubGroup(String pkgName, String memberM) {
+	public List<contentVO> getSubGroup(String pkgName, String memberID) {
 		// TODO Auto-generated method stub
-		return teachermapper.getSubGroup(pkgName, memberM);
+		return teachermapper.getSubGroup(pkgName, memberID);
 	}
 
 	@Override
