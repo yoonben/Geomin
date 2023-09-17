@@ -376,8 +376,13 @@ $("#check_module").click(function () {
 	//fetch()
 	//.then((response) => response.json())
   	//.then((data) => console.log(data))
-  	
+  /* 	window.addEventListener('load', function(){
+  		
+		}
+  		
+  	}); */
 	$(document).ready(function() {
+		
 		$('input[type="checkbox"][name="check"]').click(function(){
 			if($(this).prop('checked')){
 				$('input[type="checkbox"][name="check"]').prop('checked',false);
@@ -544,6 +549,15 @@ $("#check_module").click(function () {
 		      }); */
 		
 		$('#reqSubscribe').click(function() {
+			console.log("memberIdSessionmemberIdSession : " , memberIdSession);
+			var memberIdSession = document.getElementById("memberIdSession");
+	    	var memberIdSessionValue = memberIdSession.textContent;
+	    	console.log("dddddddfdfdfdf")
+			if (!memberIdSessionValue) {
+				alert("로그인후 이용할 수 있습니다.")
+				location.href="/geomin/login";
+        		return;
+   			}
 			var checked_Data = [];
 
 		    $('input[name="check"]:checked').each(function() {
@@ -573,7 +587,7 @@ $("#check_module").click(function () {
 		        success: function(data) {
 		        	if(data == 1){ 
     	        		alert('구독 신청이 완료되었습니다.');
-    	        		if (confirm("구독한 학습 컨텐츠를 확인하시게씃ㅂ니까?")) {
+    	        		if (confirm("구독한 학습 컨텐츠를 확인하시겠습니까?")) {
     	        			location.href = "../subscribe/subscribeSearchContent"
     	        		}else{
     	        			location.href = "../subscribe/searchContent"

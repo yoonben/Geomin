@@ -45,13 +45,16 @@ public class contentController {
 		memberVO member = (memberVO) session.getAttribute("member");
 		//System.err.println("member2 : " + member);
 		if(member == null) {
-			member = (memberVO) session.getAttribute("member");
-			memberId = member.getMemberid();
-			System.err.println("memberId2 : " + memberId);
-			model.addAttribute("memberM", memberId);
-			
-			List<contentVO> getSubList = contentService.getSubList(memberId);
-			model.addAttribute("getSubList", getSubList);
+			//모든 학습 컨텐츠 출력
+			List<contentVO> list = contentService.getList();
+			model.addAttribute("list", list);
+//			member = (memberVO) session.getAttribute("member");
+//			memberId = member.getMemberid();
+//			System.err.println("memberId2 : " + memberId);
+//			model.addAttribute("memberM", memberId);
+//			
+//			List<contentVO> getSubList = contentService.getSubList(memberId);
+//			model.addAttribute("getSubList", getSubList);
 		}
 		if(member != null) {
 			memberId = member.getMemberid();
@@ -63,9 +66,8 @@ public class contentController {
 			model.addAttribute("getSubList", getSubList);
 		}
 		
-		//모든 학습 컨텐츠 출력
-		List<contentVO> list = contentService.getList();
-		model.addAttribute("list", list);
+		
+		
 		
 		return "subscribe/searchContent";
 	}

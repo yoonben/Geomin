@@ -54,7 +54,7 @@ public class teacherController extends CommonRestController{
 			Model model, 
 			memberVO memberVO, 
 			HttpSession session,
-			@Param("memberM") String memberID) { 
+			@Param("memberID") String memberID) { 
 		//System.out.println("pkgName : " + pkgName);
 		
 		memberVO member = (memberVO) session.getAttribute("member");
@@ -65,7 +65,9 @@ public class teacherController extends CommonRestController{
 			System.err.println("패키지 이름 있을 때");
 			System.out.println("memberID : " + memberID);
 			List<contentVO> list1 = teacherService.getSubGroup(pkgName, memberID);
+			//System.out.println("111111111111111111111");
 			model.addAttribute("list1", list1);
+			//System.out.println("2222222222222222222");
 			model.addAttribute("pkgName", pkgName);
 			model.addAttribute("memberID", memberID);
 		}	
@@ -73,7 +75,7 @@ public class teacherController extends CommonRestController{
 		if(pkgName.isEmpty()) { 
 			System.err.println("패키지 이름 없을 때");
 			System.out.println("memberM3 : " + memberID);
-			List<contentVO> list2 = teacherService.getSubList2(/* memberID */);
+			List<contentVO> list2 = teacherService.getSubList2(memberID);
 			model.addAttribute("list2", list2); 
 		}
 		
@@ -95,9 +97,13 @@ public class teacherController extends CommonRestController{
 	
 	@PostMapping("/teacher/groupDelete")
 	@ResponseBody
-	public int groupDelete(@RequestParam(name = "pkgName") String pkgName) throws Exception {
+	public int groupDelete(@RequestParam(name = "pkgName") String pkgName, 
+			@RequestParam(name = "memberID") String memberID,
+			memberVO memberVO, 
+			HttpSession session
+			/*@Param("memberID") String memberID*/) throws Exception {
 		System.out.println("groupDelete - pkgName : " + pkgName);
-		int result = teacherService.delStudyGroup(pkgName);
+		int result = teacherService.delStudyGroup(pkgName/* , memberID */);
 		
 		if (result != 0) {
 			result = 1;

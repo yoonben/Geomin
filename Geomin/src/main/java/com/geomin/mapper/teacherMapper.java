@@ -32,7 +32,7 @@ public interface teacherMapper {
 	//그룹가입 승인
 	public int updateJoinStatus(@Param("studentid") String studentid,@Param("groupid") String groupid);
 	
-	List<contentVO> getSubGroup(@Param("pkgName") String pkgName, @Param("memberM") String memberID);
+	List<contentVO> getSubGroup(@Param("pkgName") String pkgName, @Param("memberID") String memberID);
 
 	int regStudyGroup(List<contentVO> groupData);
 	
@@ -41,9 +41,9 @@ public interface teacherMapper {
 	//public int checkGroupid(String groupid);
 	public int checkGroupid(String groupid);
 	
-	List<contentVO> getSubList2();
+	List<contentVO> getSubList2(String memberID);
 
-	int delStudyGroup(String pkgName);
+	int delStudyGroup(@Param("pkgName") String pkgName/* , @Param("memberID") String memberID */);
 
 	
 	

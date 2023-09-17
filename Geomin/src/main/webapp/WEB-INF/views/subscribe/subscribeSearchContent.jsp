@@ -228,10 +228,10 @@ hr {
 					
 					<tbody>
 					<c:forEach var="list" items="${getSubList}">
-						<tr id="data-raw" class="data-raw" data-value="${list.subsDate}">
+						<tr id="data-raw" class="data-raw" data-value="${list.subsDate}" data-memberid="${list.memberID}">
 							<td><input type="checkbox" name="check" class="check" value="check"></td>
 							<!-- <td><input type="checkbox" name="check" value="check" id="check"></td> -->
-							<td style="display: none;">${list.memberID }</td>
+							<td id="list_memberID" class="list_memberID" style="display: none;">${list.memberID }</td> <!-- style="display: none;" -->
 							<td class="list_pkgName" id="list_pkgName">${list.pkgName }</td> <!-- ?memberID='memberID22' --> <!-- <a href="geomin/teacher/groupRegist"></a> -->
 							<td class="list_subsDate">${list.subsDate }</td>
 							<td id = "personnel">${list.personnel}</td>
@@ -241,6 +241,7 @@ hr {
 							<%-- <td>${list.pkgContent }</td> --%>
 							<c:url var="groupRegistURL" value="../teacher/groupRegist">
     							<c:param name="pkgName" value="${list.pkgName}" />
+    							<c:param name="memberID" value="${list.memberID}" />
 							</c:url>
 							<%-- <c:choose>
 								<c:when test="${list.groupid == 'NOT GROUP'}">  --%>
@@ -292,6 +293,7 @@ $(document).ready(function () {
             });
         }
     }); */
+    
     $(".check").off("change").on("change", function () {
         console.log('체크박스가 변경되었습니다.');
 
@@ -300,7 +302,9 @@ $(document).ready(function () {
             const pkgName = $row.find("#list_pkgName").text(); // personnel 데이터 가져오기
             const personnel = $row.find("#personnel").text(); // personnel 데이터 가져오기
             const possiblegroupMem = $row.find("#possiblegroupMem").text(); // possiblegroupMem 데이터 가져오기
-
+            const memberID = $row.find("#memberID").text();
+            console.log("ddddddddddddddddddddddd" , memberID);
+            
             $('#delSubscribe').off("click").click(function(){
                 console.log('구독철회 버튼 클릭');
                 console.log("pkgName 값 : " + pkgName);
@@ -313,7 +317,8 @@ $(document).ready(function () {
                 		$.ajax({
         	    	        url:'/geomin/teacher/groupDelete', 
         	    	        type:'POST', //POST 방식으로 전달
-        	    	        data:{pkgName : pkgName},
+        	    	        data:{pkgName: pkgName,
+        	                    memberID: memberID},
         	    	        success:function(data){ 
         	    	        	if(data == 1){ 
         	    	        		alert('철회가 완료되었습니다.');

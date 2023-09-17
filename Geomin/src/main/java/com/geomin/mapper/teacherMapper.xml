@@ -149,7 +149,7 @@ LEFT JOIN
 ON
     D.pkgId = g.pkgId
 WHERE 
-    p.elimination = 'N' AND m.mType = 'T' AND m.memberID = 'memberID6'
+    p.elimination = 'N' AND m.mType = 'T' AND m.memberID = #{memberId}
 
 	</select>
 	<delete id="delStudyGroup">
@@ -159,6 +159,6 @@ WHERE
 		 
 		 PKGSUBSDETAIL 
 		 
-		 WHERE pkgName = #{pkgName} and memberId = 'memberID6'
+		 WHERE pkgName = #{pkgName} <!-- and memberId = #{memberID} -->
 	</delete>
 </mapper>

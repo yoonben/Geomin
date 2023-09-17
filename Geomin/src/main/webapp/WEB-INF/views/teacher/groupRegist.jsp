@@ -192,7 +192,7 @@
             		</div>
             		<div>
 						<label>멤버아이디 : </label>
-            			<input name='memberID' value='<c:out value = "${memberID}" />' readonly="readonly" disabled="disabled">
+            			<input id="memberID" name='memberID' value='<c:out value = "${memberID}" />' readonly="readonly" disabled="disabled">
             		</div>
 			</c:forEach>
 			</c:if>
@@ -533,7 +533,8 @@ $(document).ready(function () {
 	    }//lastdayA()
 	    
 	    $('#regStudy').click(function() {
-		const groupid = document.getElementById('groupid').value;
+		console.log("그룹등록버튼 클릭")
+	    const groupid = document.getElementById('groupid').value;
 		const groupMem = document.getElementById('groupMem').value;
 		const pkgId = document.getElementById('pkgId').value;
 		const memberID = document.getElementById('memberID').value;
@@ -682,8 +683,9 @@ $(document).ready(function () {
 	 	    
 	 	    const possiblegroupMem2 = document.getElementById("possiblegroupMem2");
 	 	   	//const possiblegroupMemValue2 = possiblegroupMem2.value;
-	 	   	const possiblegroupMemValue2 = parseInt(possiblegroupMem2.getAttribute("data-value"));
-	 	    const personErrorElement2 = document.getElementById("grouppersonError2");
+	 	   	//const possiblegroupMemValue2 = parseInt(possiblegroupMem2.getAttribute("data-value"));
+	 	    const possiblegroupMemValue2 = parseInt(possiblegroupMem2.innerText.trim());
+	 	   	const personErrorElement2 = document.getElementById("grouppersonError2");
 	 	    const regGroupperson = /^[0-9]+$/;
 	 	   
 	 	    groupMem2.addEventListener('input', function () {
@@ -693,8 +695,10 @@ $(document).ready(function () {
 	 	    groupMem2.addEventListener('focusout', function () {
 	 		    const groupMemValue2 = parseInt(groupMem2.value.trim());
 	 		    console.log("groupMemValue2 : " , groupMemValue2);
-	 		    const possiblegroupMemValue2 = parseInt(possiblegroupMem2.getAttribute("data-value"));
+	 		    //const possiblegroupMemValue2 = parseInt(possiblegroupMem2.getAttribute("data-value"));
+	 		    const possiblegroupMemValue2 = parseInt(possiblegroupMem2.innerText.trim());
 	 		    console.log("possiblegroupMemValue2 : " , possiblegroupMemValue2);
+	 		    
 	 		    
 	 		    //빈칸일 경우 아무것도 출력X
 	 		    if (groupMemValue2.length === 0) {

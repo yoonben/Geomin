@@ -31,13 +31,13 @@ public interface teacherService {
 	
 	public groupstudentVO groupjoinstatusOne(@Param("studentid") String studentid,@Param("groupid") String groupid);
 
-	List<contentVO> getSubGroup(@Param("pkgName") String pkgName, @Param("memberM") String memberID);
+	List<contentVO> getSubGroup(@Param("pkgName") String pkgName, @Param("memberID") String memberID);
 
 	public int regStudyGroup(@Param("memberM")List<contentVO> groupData);
 
 	public int checkGroupid(String groupid) throws Exception;
 
-	List<contentVO> getSubList2();
+	List<contentVO> getSubList2(String memberID);
 
-	int delStudyGroup(String pkgName) throws Exception;
+	int delStudyGroup(@Param("pkgName") String pkgName/* , @Param("memberID") String memberID */) throws Exception;
 }

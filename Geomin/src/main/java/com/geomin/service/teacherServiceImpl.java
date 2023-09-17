@@ -94,14 +94,14 @@ public class teacherServiceImpl implements teacherService{
 	}
 	
 	@Override
-	public List<contentVO> getSubList2() {
+	public List<contentVO> getSubList2(String memberID) {
 		// TODO Auto-generated method stub
-		return teachermapper.getSubList2();
+		return teachermapper.getSubList2(memberID);
 	}
 
 	@Override
-	public int delStudyGroup(String pkgName) throws Exception{
-		return teachermapper.delStudyGroup(pkgName);
+	public int delStudyGroup(String pkgName/* , String memberID */) throws Exception{
+		return teachermapper.delStudyGroup(pkgName/* , memberID */);
 		
 	}
 	
