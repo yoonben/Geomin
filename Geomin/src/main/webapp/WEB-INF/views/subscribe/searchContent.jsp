@@ -381,6 +381,13 @@ $("#check_module").click(function () {
 		}
   		
   	}); */
+  	var memberIdSession = document.getElementById("memberIdSession");
+	var memberIdSessionValue = memberIdSession.textContent;
+	if(memberIdSessionValue == null){
+		alert('로그인후 이용가능합니다.')
+		location.href='/login'
+	}
+  	
 	$(document).ready(function() {
 		
 		$('input[type="checkbox"][name="check"]').click(function(){

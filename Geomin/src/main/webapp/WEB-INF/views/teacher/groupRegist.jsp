@@ -261,6 +261,7 @@ hr {
 						<label>멤버아이디 : </label>
             			<input id="memberID" name='memberID' value='<c:out value = "${memberID}" />' readonly="readonly" disabled="disabled">
             		</div>
+            		<button id="regStudy">학습그룹 등록</button>
 			</c:forEach>
 			</c:if>
 			</div>
@@ -387,9 +388,14 @@ hr {
 						<label>학습 내용 : </label>
             			<input name='content' id="pkgContent2" value='<c:out value = "${list3.pkgContent}" />' readonly="readonly" disabled="disabled">
             		</div>
+            		<div>
+						<label>멤버아이디 : </label>
+            			<input id="memberID2" name='memberID2' value='<c:out value = "${list3.memberID}" />' readonly="readonly" disabled="disabled">
+            		</div>
+            		<button id="regStudy2">학습그룹 등록</button>
              </c:if>
             <br>
-            	<button id="regStudy">학습그룹 등록</button>
+            	
 			</div>
 			<!-- 강사마당으로 진입 (패키지명 선택 후 그룹등록) 끝 -->
 			
@@ -605,7 +611,7 @@ $(document).ready(function () {
 		const groupMem = document.getElementById('groupMem').value;
 		const pkgId = document.getElementById('pkgId').value;
 		const memberID = document.getElementById('memberID').value;
-		
+		console.log('memberID : ' , memberID);
 		
 		var yearB = document.getElementById('select_yearB').value;
 		var monthB = document.getElementById('select_monthB').value;
@@ -708,6 +714,7 @@ $(document).ready(function () {
 	 	    		   $('#subsDate2').val(list3.subsDate);
 	 	    		   $('#personnel2').text(list3.personnel);
 	 	    		   $('#possiblegroupMem2').text(list3.possiblegroupMem);
+	 	    		   $('#memberID2').val(list3.memberID);
 	 	    		  //document.getElementById('subsDate2').value = formattedDate;
 	 	    	   }
 	 	       });
@@ -874,10 +881,12 @@ $(document).ready(function () {
 	 	        $selectDayA.find('option:gt(' + (dayA - 1) + ')').remove();
 	 	    }
 	 	}//lastdayA()
-	 	$('#regStudy').click(function() {
+	 	$('#regStudy2').click(function() {
 		const groupid2 = document.getElementById('groupid2').value;
 		const groupMem2 = document.getElementById('groupMem2').value;
 		const pkgId2 = document.getElementById('pkgId2').value;
+		const memberID2 = document.getElementById('memberID2').value;
+		console.log("memberID2 : " , memberID2);
 		
 		var yearB = document.getElementById('select_yearB').value;
 		var monthB = document.getElementById('select_monthB').value;
@@ -907,23 +916,24 @@ $(document).ready(function () {
         	return; // 간격이 3개월을 넘으면 AJAX 요청을 보내지 않고 종료
     	}
 		
-			const groupData = [];
+			const groupData2 = [];
 			const rowData = {
 				groupid: groupid2,
 				pkgId : pkgId2,
 				groupMem : groupMem2,
 				studyStartDate : totalDateB,
-				studyEndDate : totalDateA
+				studyEndDate : totalDateA,
+				memberID : memberID2
 			}
 			console.log('rowData : ' , rowData);
-			groupData.push(rowData);
+			groupData2.push(rowData);
 
-			console.log('groupData : ' , groupData);
+			console.log('groupData2 : ' , groupData2);
 
 			$.ajax({
-				url: '/geomin/teacher/groupRegist',
+				url: '/geomin/teacher/groupRegist3',
 				type: 'POST',
-				data: JSON.stringify(groupData),
+				data: JSON.stringify(groupData2),
 				contentType: "application/json",
 				dataType: "json",
 				success: function(response) {

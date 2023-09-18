@@ -22,6 +22,6 @@ public interface contentMapper {
 	int addSubContent(List<contentVO> checked_Data);
 	
 	//5.
-	List<contentVO> getSubMatchingList(String pkgName);
+	List<contentVO> getSubMatchingList(@Param("pkgName") String pkgName, @Param("memberID") String memberID);
 	
 }

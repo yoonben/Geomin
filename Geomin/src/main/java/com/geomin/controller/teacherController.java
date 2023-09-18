@@ -86,7 +86,6 @@ public class teacherController extends CommonRestController{
 	public int groupRegist2(@RequestBody List<contentVO> groupData, Model model) {
 		System.out.println("groupData : " + groupData);
 		int result = teacherService.regStudyGroup(groupData);
-		
 		if (result != 0) {
 			result = 1;
 		}else {
@@ -95,6 +94,18 @@ public class teacherController extends CommonRestController{
 		return result;
 	}
 	
+	@PostMapping("/teacher/groupRegist3")
+	public int groupRegist3(@RequestBody List<contentVO> groupData2, Model model) {
+		System.out.println("groupData2 : " + groupData2);
+		
+		int result2 = teacherService.regStudyGroup2(groupData2);
+		if (result2 != 0) {
+			result2 = 1;
+		}else {
+			result2 = 0;
+		}
+		return result2;
+	}
 	@PostMapping("/teacher/groupDelete")
 	@ResponseBody
 	public int groupDelete(@RequestParam(name = "pkgName") String pkgName, 
@@ -274,20 +285,18 @@ public class teacherController extends CommonRestController{
 	
 	@RequestMapping(value = "/teacher/groupRegist2", method = { RequestMethod.POST })
 	@ResponseBody 
-	public List<contentVO> groupRegist2(@RequestParam(name = "pkgName") String pkgName, Model model) throws JsonProcessingException{ 
-		System.out.println("pkgNamepkgName : " + pkgName);
-		List<contentVO> list3 = contentService.getSubMatchingList(pkgName);
-		System.out.println("listlist3 : " + list3);
+	public List<contentVO> groupRegist2(@RequestParam(name = "pkgName") String pkgName
+			, Model model
+			,memberVO memberVO
+			,HttpSession session
+			,@Param("memberID") String memberID) throws JsonProcessingException{ 
+		//System.out.println("pkgNamepkgName : " + pkgName);
+		memberVO member = (memberVO) session.getAttribute("member");
+		memberID = member.getMemberid();
+		List<contentVO> list3 = contentService.getSubMatchingList(pkgName, memberID);
+		System.out.println("list3 : " + list3);
+		//model.addAttribute("memberID", memberID);
+		//System.out.println("listlist3 : " + list3);
 		return list3;
-//		ObjectMapper objectMapper = new ObjectMapper();
-//	    objectMapper.configure(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS, false);
-//	    
-//	    List<contentVO> list3 = contentService.getSubMatchingList(pkgName);
-//	    
-//	    String json = objectMapper.writeValueAsString(list3);
-//	    
-//	    return json;
 	}	
-
-	
 }

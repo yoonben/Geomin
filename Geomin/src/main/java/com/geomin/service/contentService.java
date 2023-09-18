@@ -24,7 +24,7 @@ public interface contentService {
 	//int addSubContent(@Param("checked_Data") List<contentVO> checked_Data, @Param("memberId") String memberId);
 	
 	//5.
-	List<contentVO> getSubMatchingList(String pkgName);
+	List<contentVO> getSubMatchingList(@Param("pkgName") String pkgName, @Param("memberID") String memberID);
 
 
 	

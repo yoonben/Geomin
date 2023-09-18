@@ -53,8 +53,8 @@ public class contentController {
 			System.err.println("memberId2 : " + memberId);
 			model.addAttribute("memberM", memberId);
 			
-			List<contentVO> getSubList = contentService.getSubList(memberId);
-			model.addAttribute("getSubList", getSubList);
+	//		List<contentVO> getSubList = contentService.getSubList(memberId);
+	//		model.addAttribute("getSubList", getSubList);
 		}
 		if(member != null) {
 			memberId = member.getMemberid();
