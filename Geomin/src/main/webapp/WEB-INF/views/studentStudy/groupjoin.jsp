@@ -340,8 +340,9 @@ hr {
 		    		let i = 0;
 		            map.homeworklist.forEach(function (item, index) {
 		                content += "<input type='hidden' id='homeworkno"+i+"' name='homeworkno' value='"+item.homeworkno+"'>"
+		                	+ "<input type='hidden' id='studentid"+i+"' name='studentid' value='"+item.studentid+"'>"
 		                	+ "<tr>"
-		                	+ "<th scope='row'><input type='checkbox' class='Checkbox' name='Checkbox' value='" + item.studentid + "'></th>"
+		                	+ "<th scope='row'><input type='checkbox' class='Checkbox' name='Checkbox' value='"+i+"'></th>"
 		                    + "<td>" + item.pkgname + "</td>"
 		                    + "<td>" + item.mname + "</td>"
 		                    + "<td>" + item.homeworkcont + "</td>"
@@ -411,12 +412,12 @@ function workSubmit() {
 			        console.log('selectedCheckboxes.length:', selectedCheckboxes.length);
 			        
 			        let deleteCount = 0; // 실제 삭제된 패키지 수 추적
-					let i = 0;
 			        
 			        
 			        selectedCheckboxes.forEach(checkbox => {
-			            console.log(checkbox.value);
-						
+			            console.log("checkbox.value : "+checkbox.value);
+			            const i = checkbox.value;
+			           
 			            const studycont = document.querySelector('#studycont'+i).value.trim();
 					    
 					    if (studycont === "") {
@@ -443,7 +444,7 @@ function workSubmit() {
 			                }
 			            })
 			            
-			           i++
+			          
 			 		})
 			        
 			 	}else {
