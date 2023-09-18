@@ -207,7 +207,7 @@ hr {
     		
 
 
-		  // 목록 전체선택 /부분선택
+		  // 목록 전체선택 /부분선택	
 			$(function(){
 				var chkObj = document.getElementsByName('rowCheck');
 				var rowCnt = chkObj.length;

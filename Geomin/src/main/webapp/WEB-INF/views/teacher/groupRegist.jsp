@@ -110,6 +110,73 @@
 	font-weight: 600;
 	font-family: 'GmarketSansMedium';
 }
+
+#regTitle{
+	margin-top : 30px;
+	font-size: 35px;
+	font-weight: 600;
+	text-align:center;
+	font-family: 'GmarketSansMedium';
+}
+
+hr {
+  border : 5px solid #003A6F;
+}
+
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#groupidCheck,
+#groupidCheck2{
+	height:100%; 
+   	width:100px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+}
+#groupidCheck:hover,
+#groupidCheck2:hover{
+	height:100%; 
+   	width:100px;
+   	background-color: #002F5A;
+   	color:#FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 5px;
+   	cursor: pointer;
+}
+
+#regStudy{
+	height:45px; 
+   	width:170px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+   	color:#000000;
+   	font-size: 16px;
+   	font-weight: 600;
+   	margin-left:200px;
+}
+#regStudy:hover{
+	height:45px; 
+   	width:170px;
+   	background-color: #003769;
+   	color:#FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 5px;
+   	cursor: pointer;
+   	font-size: 16px;
+   	font-weight: 600;
+   	margin-left:200px;
+}
+
+
+
 </style>    	
 </head>
 <body>
@@ -117,16 +184,16 @@
 	<%@include file="../header/header.jsp" %>
 	
 	<div id='section'>
-            <div class='subnavi'>
+            <div class='subNavi'>
             	<ul>
-            		<li><b>강사마당</b></li>
-                    <li><label style="cursor:pointer;"><a id="subnavi1">학습 그룹 등록</a></label></li>
-                   	<li><label style="cursor:pointer;"><a id="subnavi2">그룹 가입 승인</a></label></li>
-                   	<li><label style="cursor:pointer;"><a id="subnavi3">숙제 전송</a></label></li>
-                   	<li><label style="cursor:pointer;"><a id="subnavi4">숙제 평가</a></label></li>
+            		<a><b>강사마당</b></a>
+                    <li><a id="subNavi1">학습 그룹 등록</a></li>
+                   	<li><a id="subNavi2">그룹 가입 승인</a></li>
+                   	<li><a id="subNavi3">숙제 전송</a></li>
+                   	<li><a id="subNavi4">숙제 평가</a></li>
                	</ul>
-				
             </div>
+            
             <%-- <label>Title</label> <input name='title' value='<c:out value = "${board.title}" />' readonly="readonly"> --%>
             <div class='content'>
             <p id='regTitle'>그룹 등록</p>	
@@ -194,6 +261,7 @@
 						<label>멤버아이디 : </label>
             			<input id="memberID" name='memberID' value='<c:out value = "${memberID}" />' readonly="readonly" disabled="disabled">
             		</div>
+            		<button id="regStudy">학습그룹 등록</button>
 			</c:forEach>
 			</c:if>
 			</div>
@@ -320,9 +388,14 @@
 						<label>학습 내용 : </label>
             			<input name='content' id="pkgContent2" value='<c:out value = "${list3.pkgContent}" />' readonly="readonly" disabled="disabled">
             		</div>
+            		<div>
+						<label>멤버아이디 : </label>
+            			<input id="memberID2" name='memberID2' value='<c:out value = "${list3.memberID}" />' readonly="readonly" disabled="disabled">
+            		</div>
+            		<button id="regStudy2">학습그룹 등록</button>
              </c:if>
             <br>
-            	<button id="regStudy">학습그룹 등록</button>
+            	
 			</div>
 			<!-- 강사마당으로 진입 (패키지명 선택 후 그룹등록) 끝 -->
 			
@@ -538,7 +611,7 @@ $(document).ready(function () {
 		const groupMem = document.getElementById('groupMem').value;
 		const pkgId = document.getElementById('pkgId').value;
 		const memberID = document.getElementById('memberID').value;
-		
+		console.log('memberID : ' , memberID);
 		
 		var yearB = document.getElementById('select_yearB').value;
 		var monthB = document.getElementById('select_monthB').value;
@@ -641,6 +714,7 @@ $(document).ready(function () {
 	 	    		   $('#subsDate2').val(list3.subsDate);
 	 	    		   $('#personnel2').text(list3.personnel);
 	 	    		   $('#possiblegroupMem2').text(list3.possiblegroupMem);
+	 	    		   $('#memberID2').val(list3.memberID);
 	 	    		  //document.getElementById('subsDate2').value = formattedDate;
 	 	    	   }
 	 	       });
@@ -807,10 +881,12 @@ $(document).ready(function () {
 	 	        $selectDayA.find('option:gt(' + (dayA - 1) + ')').remove();
 	 	    }
 	 	}//lastdayA()
-	 	$('#regStudy').click(function() {
+	 	$('#regStudy2').click(function() {
 		const groupid2 = document.getElementById('groupid2').value;
 		const groupMem2 = document.getElementById('groupMem2').value;
 		const pkgId2 = document.getElementById('pkgId2').value;
+		const memberID2 = document.getElementById('memberID2').value;
+		console.log("memberID2 : " , memberID2);
 		
 		var yearB = document.getElementById('select_yearB').value;
 		var monthB = document.getElementById('select_monthB').value;
@@ -840,23 +916,24 @@ $(document).ready(function () {
         	return; // 간격이 3개월을 넘으면 AJAX 요청을 보내지 않고 종료
     	}
 		
-			const groupData = [];
+			const groupData2 = [];
 			const rowData = {
 				groupid: groupid2,
 				pkgId : pkgId2,
 				groupMem : groupMem2,
 				studyStartDate : totalDateB,
-				studyEndDate : totalDateA
+				studyEndDate : totalDateA,
+				memberID : memberID2
 			}
 			console.log('rowData : ' , rowData);
-			groupData.push(rowData);
+			groupData2.push(rowData);
 
-			console.log('groupData : ' , groupData);
+			console.log('groupData2 : ' , groupData2);
 
 			$.ajax({
-				url: '/geomin/teacher/groupRegist',
+				url: '/geomin/teacher/groupRegist3',
 				type: 'POST',
-				data: JSON.stringify(groupData),
+				data: JSON.stringify(groupData2),
 				contentType: "application/json",
 				dataType: "json",
 				success: function(response) {

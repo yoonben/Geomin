@@ -42,9 +42,9 @@ public class contentServiceImpl implements contentService{
 	}
 
 	@Override
-	public List<contentVO> getSubMatchingList(String pkgName) {
+	public List<contentVO> getSubMatchingList(String pkgName, String memberID) {
 		// TODO Auto-generated method stub
-		return helloMapper.getSubMatchingList(pkgName);
+		return helloMapper.getSubMatchingList(pkgName, memberID);
 	}
 
 }

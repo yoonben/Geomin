@@ -104,6 +104,12 @@ public class teacherServiceImpl implements teacherService{
 		return teachermapper.delStudyGroup(pkgName/* , memberID */);
 		
 	}
+
+	@Override
+	public int regStudyGroup2(List<contentVO> groupData) {
+		// TODO Auto-generated method stub
+		return teachermapper.regStudyGroup2(groupData);
+	}
 	
 	//★그룹아이디 중복처리
 	/*
