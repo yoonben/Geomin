@@ -43,12 +43,17 @@ public class contentController {
 			@Param("memberM") String memberId){
 		
 		memberVO member = (memberVO) session.getAttribute("member");
+<<<<<<< HEAD
 		
 		
 		
+=======
+>>>>>>> branch 'master' of https://github.com/yoonben/Geomin.git
 		//System.err.println("member2 : " + member);
 		if(member == null) {
 			//모든 학습 컨텐츠 출력
+//			List<contentVO> list = contentService.getList();
+//			model.addAttribute("list", list);
 			member = (memberVO) session.getAttribute("member");
 			//member.getMemberid();
 			if(memberId == null) {
@@ -58,8 +63,8 @@ public class contentController {
 			}
 			//System.err.println("memberId2 : " + memberId);
 			
-//			List<contentVO> getSubList = contentService.getSubList(memberId);
-//			model.addAttribute("getSubList", getSubList);
+	//		List<contentVO> getSubList = contentService.getSubList(memberId);
+	//		model.addAttribute("getSubList", getSubList);
 		}
 		if(member != null) {
 			memberId = member.getMemberid();

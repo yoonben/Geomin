@@ -71,8 +71,15 @@ window.addEventListener('load', function(){
 				$('#packgeList').show();
 			    $('#packgeInsert').hide();
 			    $('#searchWord').val("");
-				
-				go(1);
+			    
+			    $('#pkgname').val("");
+			    $('#personnel').val("");
+			    $('#fixedprice').val("");
+			    $('#discountrate').val("");
+			    $('#finalprice').val("");
+			    $('#pkgcontent').val("");
+         		
+         		go(1);
 			}else{
 				document.getElementById('message').innerHTML = map.msg;
 			}

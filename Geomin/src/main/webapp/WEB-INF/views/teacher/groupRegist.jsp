@@ -110,6 +110,73 @@
 	font-weight: 600;
 	font-family: 'GmarketSansMedium';
 }
+
+#regTitle{
+	margin-top : 30px;
+	font-size: 35px;
+	font-weight: 600;
+	text-align:center;
+	font-family: 'GmarketSansMedium';
+}
+
+hr {
+  border : 5px solid #003A6F;
+}
+
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#groupidCheck,
+#groupidCheck2{
+	height:100%; 
+   	width:100px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+}
+#groupidCheck:hover,
+#groupidCheck2:hover{
+	height:100%; 
+   	width:100px;
+   	background-color: #002F5A;
+   	color:#FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 5px;
+   	cursor: pointer;
+}
+
+#regStudy{
+	height:45px; 
+   	width:170px;
+   	background-color: #FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 8px;
+   	cursor: pointer;
+   	color:#000000;
+   	font-size: 16px;
+   	font-weight: 600;
+   	margin-left:200px;
+}
+#regStudy:hover{
+	height:45px; 
+   	width:170px;
+   	background-color: #003769;
+   	color:#FFFFFF;
+   	border:1px solid #666666;
+   	border-radius: 5px;
+   	cursor: pointer;
+   	font-size: 16px;
+   	font-weight: 600;
+   	margin-left:200px;
+}
+
+
+
 </style>    	
 </head>
 <body>
@@ -117,16 +184,16 @@
 	<%@include file="../header/header.jsp" %>
 	
 	<div id='section'>
-            <div class='subnavi'>
+            <div class='subNavi'>
             	<ul>
-            		<li><b>강사마당</b></li>
-                    <li><label style="cursor:pointer;"><a id="subnavi1">학습 그룹 등록</a></label></li>
-                   	<li><label style="cursor:pointer;"><a id="subnavi2">그룹 가입 승인</a></label></li>
-                   	<li><label style="cursor:pointer;"><a id="subnavi3">숙제 전송</a></label></li>
-                   	<li><label style="cursor:pointer;"><a id="subnavi4">숙제 평가</a></label></li>
+            		<a><b>강사마당</b></a>
+                    <li><a id="subNavi1">학습 그룹 등록</a></li>
+                   	<li><a id="subNavi2">그룹 가입 승인</a></li>
+                   	<li><a id="subNavi3">숙제 전송</a></li>
+                   	<li><a id="subNavi4">숙제 평가</a></li>
                	</ul>
-				
             </div>
+            
             <%-- <label>Title</label> <input name='title' value='<c:out value = "${board.title}" />' readonly="readonly"> --%>
             <div class='content'>
             <p id='regTitle'>그룹 등록</p>	
