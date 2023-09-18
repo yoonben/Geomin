@@ -248,8 +248,6 @@ public class teacherController extends CommonRestController{
 		    	    		}
 		    	    		
 		    	    		
-			    	    	Map<String, Object> map = responseMap(REST_SUCCESS, "그룹 승인 완료!");
-			    	    	return map;
 		    	    	}else {
 		    	    		return responseMap(REST_FAIL, "그룹 업데이트 중 예외사항이 발생하였습니다.");
 		    	    	}
