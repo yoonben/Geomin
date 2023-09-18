@@ -133,7 +133,7 @@
 		ON
 		D.pkgId = g.pkgId
 		WHERE
-		p.elimination = 'N' AND m.mType = 'T' AND <!-- d.memberID = #{memberId} and --> p.pkgName = #{pkgName}
+		p.elimination = 'N' AND m.mType = 'T' AND d.memberID = #{memberID} and p.pkgName = #{pkgName}
 		)
 		WHERE ROWNUM = 1
 

@@ -33,11 +33,13 @@ public interface teacherService {
 
 	List<contentVO> getSubGroup(@Param("pkgName") String pkgName, @Param("memberID") String memberID);
 
-	public int regStudyGroup(@Param("memberM")List<contentVO> groupData);
 
 	public int checkGroupid(String groupid) throws Exception;
 
 	List<contentVO> getSubList2(String memberID);
 
 	int delStudyGroup(@Param("pkgName") String pkgName/* , @Param("memberID") String memberID */) throws Exception;
+
+	public int regStudyGroup(List<contentVO> groupData); //@Param("memberM")
+	public int regStudyGroup2(List<contentVO> groupData);
 }

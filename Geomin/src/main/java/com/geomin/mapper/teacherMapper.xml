@@ -124,10 +124,17 @@ WHERE ROWNUM = 1<!-- and p.pkgName = #{pkgName} -->
 			groupid = #{groupid}
 	</select>
 	
-	<insert id="regStudyGroup" parameterType="java.util.List">
+	<insert id="regStudyGroup" parameterType="java.util.List" >
 		<foreach collection="list" item="list"><!--  separator=";" -->
     		INSERT INTO STUDY_GROUP(GROUPID, PKGID, MEMBERID, GROUPMEM, STUDYSTARTDATE, STUDYENDDATE)
-    		VALUES (#{list.groupid}, #{list.pkgId}, 'memberID6', #{list.groupMem}, #{list.studyStartDate}, #{list.studyEndDate})
+    		VALUES (#{list.groupid}, #{list.pkgId}, #{list.memberID}, #{list.groupMem}, #{list.studyStartDate}, #{list.studyEndDate})
+    	</foreach>
+	</insert>
+	
+	<insert id="regStudyGroup2" parameterType="java.util.List">
+		<foreach collection="list" item="list"><!--  separator=";" -->
+    		INSERT INTO STUDY_GROUP(GROUPID, PKGID, MEMBERID, GROUPMEM, STUDYSTARTDATE, STUDYENDDATE)
+    		VALUES (#{list.groupid}, #{list.pkgId}, #{list.memberID}, #{list.groupMem}, #{list.studyStartDate}, #{list.studyEndDate})
     	</foreach>
 	</insert>
 	
