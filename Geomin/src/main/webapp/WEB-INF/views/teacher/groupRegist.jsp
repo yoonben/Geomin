@@ -769,7 +769,6 @@ $(document).ready(function () {
 	 	    groupMem2.addEventListener('focusout', function () {
 	 		    const groupMemValue2 = parseInt(groupMem2.value.trim());
 	 		    console.log("groupMemValue2 : " , groupMemValue2);
-	 		    //const possiblegroupMemValue2 = parseInt(possiblegroupMem2.getAttribute("data-value"));
 	 		    const possiblegroupMemValue2 = parseInt(possiblegroupMem2.innerText.trim());
 	 		    console.log("possiblegroupMemValue2 : " , possiblegroupMemValue2);
 	 		    

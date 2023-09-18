@@ -236,6 +236,7 @@ hr {
 			                <td>${list.pkgContent}</td>
 			                <%-- <td>${memberM.memberM}</td> --%>
 			                <td id="memberIdSession" style="display: none;"><c:out value="${memberId}" /></td>
+			            	<td id="checknum" style="display: none;"><c:out value="${1}" /></td>
 			            </tr>
 			        </c:forEach>
 			    </tbody>
@@ -276,6 +277,17 @@ hr {
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
+$(window).on('load', function() {
+	var checknum = document.getElementById("checknum");
+	var checknumValue = checknum.textContent;
+	if(checknumValue === 1){
+		alert('로그인후 이용가능합니다.')
+		location.href='/login'
+	}
+});
+
+
+
 $("#check_module").click(function () {
 	var checkedData = [];
 
@@ -372,21 +384,6 @@ $("#check_module").click(function () {
 	});
 </script>
 <script type="text/javascript">
-
-	//fetch()
-	//.then((response) => response.json())
-  	//.then((data) => console.log(data))
-  /* 	window.addEventListener('load', function(){
-  		
-		}
-  		
-  	}); */
-  	var memberIdSession = document.getElementById("memberIdSession");
-	var memberIdSessionValue = memberIdSession.textContent;
-	if(memberIdSessionValue == null){
-		alert('로그인후 이용가능합니다.')
-		location.href='/login'
-	}
   	
 	$(document).ready(function() {
 		
