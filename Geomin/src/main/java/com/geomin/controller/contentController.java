@@ -43,12 +43,6 @@ public class contentController {
 			@Param("memberM") String memberId){
 		
 		memberVO member = (memberVO) session.getAttribute("member");
-<<<<<<< HEAD
-		
-		
-		
-=======
->>>>>>> branch 'master' of https://github.com/yoonben/Geomin.git
 		//System.err.println("member2 : " + member);
 		if(member == null) {
 			//모든 학습 컨텐츠 출력
