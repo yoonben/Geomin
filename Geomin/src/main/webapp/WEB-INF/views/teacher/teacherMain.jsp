@@ -350,6 +350,8 @@ hr {
 				const studentidList = [];
 		        let studentid;
 		        let groupjoinstatus;
+
+		        
 		        selectedCheckboxes.forEach(checkbox => {	
 		            studentid = checkbox.value;
 		            

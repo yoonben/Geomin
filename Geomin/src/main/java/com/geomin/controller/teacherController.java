@@ -203,19 +203,22 @@ public class teacherController extends CommonRestController{
 	    	
 	    	List<String> studentidList = groupstudent.getStudentidList();
 	    	
+	    	System.out.println("0 : "+groupstudent);
+	    	
+	    	System.out.println(studentidList.size());
 	    	for (int i = 0; i < studentidList.size(); i++) {
 	    		
-	    	    System.out.println("1 : "+studentidList.get(i)+","+groupstudent.getGroupid());
+	    	    System.out.println("1 : "+studentidList.get(i)+", "+groupstudent.getGroupid());
 	    	    
 	    	    groupstudentVO groupjoinstatusOne = teacherService.groupjoinstatusOne(studentidList.get(i), groupstudent.getGroupid());
 	    	    
 	    	    System.out.println("2 : "+studentidList.get(i)+" : "+groupjoinstatusOne);
 	    	    
 	    	    if ("Y".equals(groupjoinstatusOne.getGroupjoinstatus())) {
-		    		
-		    	    System.out.println("3 : "+groupstudent);
-		    	    
+		    				    	    
 		    	    int res = teacherService.updateJoinStatus(studentidList.get(i), groupstudent.getGroupid());
+		    	    
+		    	    System.out.println("3 : " + res);
 		    	    
 	    	    	if(res > 0) {
 	    	    		
@@ -230,6 +233,7 @@ public class teacherController extends CommonRestController{
 	    	    		return responseMap(REST_FAIL, "그룹 업데이트 중 예외사항이 발생하였습니다.");
 	    	    	}
 		    	} else if ("N".equals(groupjoinstatusOne.getGroupjoinstatus())) {
+		    		
 		    		System.out.println("3 : "+groupstudent);
 		    		
 		    		int totalGroupStu = teacherService.totalGroupStu(groupstudent.getGroupid());
@@ -249,7 +253,7 @@ public class teacherController extends CommonRestController{
 		    	    		
 		    	    		
 			    	    	Map<String, Object> map = responseMap(REST_SUCCESS, "그룹 승인 완료!");
-			    	    	return map;
+			    	  
 		    	    	}else {
 		    	    		return responseMap(REST_FAIL, "그룹 업데이트 중 예외사항이 발생하였습니다.");
 		    	    	}
