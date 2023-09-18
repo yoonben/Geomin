@@ -150,7 +150,8 @@ hr {
    	cursor: pointer;
 }
 
-#regStudy{
+#regStudy,
+#regStudy2{
 	height:45px; 
    	width:170px;
    	background-color: #FFFFFF;
@@ -162,7 +163,8 @@ hr {
    	font-weight: 600;
    	margin-left:200px;
 }
-#regStudy:hover{
+#regStudy:hover,
+#regStudy2:hover{
 	height:45px; 
    	width:170px;
    	background-color: #003769;
@@ -209,22 +211,25 @@ hr {
             			<label>컨텐츠 아이디 : </label>
             			<input name='pkgId' id = "pkgId" value='<c:out value = "${list1.pkgId}" />' readonly="readonly" disabled="disabled">
             		</div>
+            		<p>학습 콘텐츠 명: ${list1.pkgName} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 학습 가능 인원 : ${list1.possiblegroupMem}명  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 그룹 등록 인원 : ${list1.totalgroupMem}</p>
+            		<br>
             		<div>
-            			<label>그룹명 : </label>
-            			<input type="text" id="groupid" name = "groupid" placeholder="그룹명을 입력해 주세요" >
+            			<label>그룹명 </label><br>
+            			<input type="text" id="groupid" name = "groupid" placeholder="그룹명을 입력해 주세요"  style="width: 450px">
             			<input type='button' id='groupidCheck' name='groupidCheck'  value='중복확인버튼'>
             			<div id='result'></div>
             		</div>
-            		<div>
-            			<label>패키지명 : </label>
-            			<input name='pkgName' value='<c:out value = "${list1.pkgName}" />' readonly="readonly" disabled="disabled">
+            		<div style="display: none">
+            			<label>패키지명 </label>
+            			<input style="width: 600px" name='pkgName' value='<c:out value = "${list1.pkgName}" />' readonly="readonly" disabled="disabled">
             		</div>
+            		<br>
             		<div>
-            			<label>학습 가능 인원 : </label>
+            			<label>학습 가능 인원 </label><br>
             			<input type="text" id='groupMem'  name='groupMem' placeholder="인원 수 적기"> 명 <br>
-            			<p>총 학습 가능 인원은 ${list1.personnel}명 이고, 학습 중인 총 인원은 ${list1.totalgroupMem}명으로, 최대 ${list1.possiblegroupMem }명을 입력 할 수 있어요.</p>
             			<div id='grouppersonError'></div>
             		</div>
+            		<br>
             		<div style="display: none">
             			<label>최대 학습 가능 인원 : </label>
             			<input type="text" id='maxgroupperson' name='maxgroupperson' data-value="${list1.personnel}" readonly="readonly" disabled="disabled">value='<c:out value = "${list1.personnel}" />' 명
@@ -234,15 +239,17 @@ hr {
             			<input type="text" id='possiblegroupMem' name='possiblegroupMem' data-value="${list1.possiblegroupMem}" readonly="readonly" disabled="disabled">value='<c:out value = "${list1.possiblegroupMem}" />' 명
             		</div>
             		<div>
-            			<label>학습 수준 : </label>
+            			<label>학습 수준 </label><br>
             			<input name='difficulty' value='<c:out value = "${list1.difficulty}" />' readonly="readonly" disabled="disabled">
             		</div>
+            		<br>
             		<div>
-            			<label>구독 날짜 : </label>
-            			<input name='subsDate' value='<c:out value = "${list1.subsDate}" />' readonly="readonly" disabled="disabled">
+            			<label>구독 날짜 </label><br>
+            			<input name='subsDate' value='<c:out value = "${list1.subsDate}" />' readonly="readonly" disabled="disabled"><!-- style="width: 600px"  -->
             		</div>
+            		<br>
 					<div>
-						<label>학습 기간 : </label> 
+						<label>학습 기간 </label><br>
 							<select id="select_yearB" class= "select_yearB"></select>
 							<select id="select_monthB" class= "select_monthB"></select>
 							<select id="select_dayB" class= "select_dayB"></select>
@@ -254,13 +261,16 @@ hr {
 							<select id="select_dayA" class= "select_dayA"></select>
 						</div>
             		<div>
-						<label>학습 내용 : </label>
-            			<input name='content' value='<c:out value = "${list1.pkgContent}" />' readonly="readonly" disabled="disabled">
+            		<br>
+						<label>학습 내용 </label>
+            			<input style="width: 600px" name='content' value='<c:out value = "${list1.pkgContent}" />' readonly="readonly" disabled="disabled">
             		</div>
-            		<div>
+            		<br>
+            		<div style="display: none">
 						<label>멤버아이디 : </label>
             			<input id="memberID" name='memberID' value='<c:out value = "${memberID}" />' readonly="readonly" disabled="disabled">
             		</div>
+            		<br>
             		<button id="regStudy">학습그룹 등록</button>
 			</c:forEach>
 			</c:if>
@@ -333,47 +343,52 @@ hr {
 			<div>
 			 <c:if test="${empty pkgName}">
                	 패키지 선택 : 
-               	 <span><select id="select_package">
+               	 <span>
+               	 <select id="select_package">
         			<option selected="selected">패키지 선택</option>
         			<c:forEach items="${list2}" var="list2">
             			<option class="optPkgName">${list2.pkgName}</option>
         			</c:forEach>
-    			</select></span>
-    			<br>
-               	학습 가능 인원 : <span id="personnel2"></span>명  / 등록 가능 인원 : <span id="possiblegroupMem2"></span> 명 
+    			</select>
+               	&nbsp;&nbsp;&nbsp;&nbsp; 학습 가능 인원 : <span id="personnel2"></span>명  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등록 가능 인원 : <span id="possiblegroupMem2"></span> 명 
+               	</span>
                	<br> 
                	<br>
-               	 	<div> <!-- style="display: none;" -->
-            			<label>컨텐츠 아이디 : </label>
+               	 	<div style="display: none;"> <!-- style="display: none;" -->
+            			<label>컨텐츠 아이디 </label><br>
             			<input name='pkgId' id = "pkgId2" value='<c:out value = "${list3.pkgId}" />' readonly="readonly" disabled="disabled">
             		</div>
             		<div>
-            			<label>그룹명 : </label>
-            			<input type="text" id="groupid2" name = "groupid" placeholder="그룹명을 입력해 주세요" >
+            			<label>그룹명 </label><br>
+            			<input type="text" id="groupid2" name = "groupid" placeholder="그룹명을 입력해 주세요" style="width: 500px">
             			<input type='button' id='groupidCheck2' name='groupidCheck'  value='중복확인버튼'>
             			<!-- <div id='result'>아이디를 확인해주세요.</div> -->
             			<div id='result'></div>
             		</div>
+            		<br>
             		<div>
-            			<label>패키지명 : </label>
-            			<input name='pkgName' id ='pkgName2' value='<c:out value = "${list3.pkgName}" />' readonly="readonly" disabled="disabled">
+            			<label>패키지명 </label><br>
+            			<input style="width: 600px" name='pkgName' id ='pkgName2' value='<c:out value = "${list3.pkgName}" />' readonly="readonly" disabled="disabled">
             		</div>
+            		<br>
             		<div>
-            			<label>학습 가능 인원 : </label>
+            			<label>학습 가능 인원 </label><br>
             			<input type="text" id='groupMem2'  name='groupMem' placeholder="인원 수 적기"> 명 <br>
             			<%-- <p>총 학습 가능 인원은 ${list3.personnel}명 이고, 학습 중인 총 인원은 ${list3.totalgroupMem}명으로, 최대 ${list3.possiblegroupMem }명을 입력 할 수 있습니다.</p> --%>
             			<div id='grouppersonError2'></div>
             		</div>
+            		<br>
             		<div>
-            			<label>학습 수준 : </label>
+            			<label>학습 수준 </label><br>
             			<input name='difficulty' id = "difficulty2" value='<c:out value = "${list3.difficulty}" />' readonly="readonly" disabled="disabled">
             		</div>
-            		<div>
-            			<label>구독 날짜 : </label>
+            		<br>
+            		<div style="display: none">
+            			<label>구독 날짜 </label><br>
             			<input name='subsDate' id="subsDate2" value='<c:out value = "${list3.subsDate}" />' readonly="readonly" disabled="disabled">
             		</div>
-					<div>
-						<label>학습 기간 : 최대 3개월 </label> 
+            		<div>
+						<label>학습 기간 </label><br> 
 							<select id="select_yearB" class= "select_yearB"></select>
 							<select id="select_monthB" class= "select_monthB"></select>
 							<select id="select_dayB" class= "select_dayB"></select>
@@ -385,10 +400,12 @@ hr {
 							<select id="select_dayA" class= "select_dayA"></select>
 						</div>
             		<div>
-						<label>학습 내용 : </label>
-            			<input name='content' id="pkgContent2" value='<c:out value = "${list3.pkgContent}" />' readonly="readonly" disabled="disabled">
+            		<br>
+						<label>학습 내용 </label><br>
+            			<input style="width: 600px" name='content' id="pkgContent2" value='<c:out value = "${list3.pkgContent}" />' readonly="readonly" disabled="disabled">
             		</div>
-            		<div>
+            		<br>
+            		<div style="display: none;">
 						<label>멤버아이디 : </label>
             			<input id="memberID2" name='memberID2' value='<c:out value = "${list3.memberID}" />' readonly="readonly" disabled="disabled">
             		</div>

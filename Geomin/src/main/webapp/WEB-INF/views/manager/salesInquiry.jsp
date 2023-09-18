@@ -254,7 +254,7 @@ fetchPost('/geomin/priceList', obj, (map) => {
 
 
 		    map.priceList.forEach(function(item, index) {
-		        content += "<tr onclick='goView("+item.pkgid+")'>"
+		        content += "<tr onclick=goView('"+item.pkgid+"')>"
 		            + "  <th scope='row'>" + item.pkgid + "</th>"
 		            + "  <td>" + item.pkgname + "</td>"
 		            + "  <td>" + item.transactioncnt + "</td>"
@@ -317,7 +317,7 @@ fetchPost('/geomin/priceList', obj, (map) => {
 
 
 		    map.priceList.forEach(function(item, index) {
-		        content += "<tr onclick='goView("+item.pkgid+")'>"
+		        content += "<tr onclick=goView('"+item.pkgid+"')>"
 		            + "  <th scope='row'>" + item.pkgid + "</th>"
 		            + "  <td>" + item.pkgname + "</td>"
 		            + "  <td>" + item.transactioncnt + "</td>"
@@ -370,9 +370,10 @@ function boardList(){
 function goView(pkgid){
 	document.getElementById('boardList').style.display = 'none';
 	document.getElementById('boardGraph').style.display = '';
-	document.getElementById('pkgid').value = pkgid;
 	document.querySelector('#searchElement').style.display ='none';
 	document.querySelector('#yearRadio').checked = 'checked';
+	
+	console.log("pkgid : "+pkgid);
 	
 	yearChart(pkgid);
 }
@@ -395,7 +396,9 @@ function yearChart(pkgid) {
     let obj = {
     		pkgid : pkgid
     }
-
+	
+   	console.log(obj);
+    
         fetchPost('/geomin/yearChart',obj, (map) => {
             if (map.result == 'success') {
             	

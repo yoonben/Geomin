@@ -164,7 +164,7 @@ FROM (
 	<sql id="reference">
     	<choose>
         <when test="pkgid != null and pkgid != ''">
-            AND TRIM(LEADING '0' FROM pkgid) = #{pkgid}
+            AND pkgid = #{pkgid}
         </when>
     	</choose>
 	</sql>
